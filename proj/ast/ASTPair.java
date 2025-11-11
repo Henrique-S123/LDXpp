@@ -16,7 +16,7 @@ public class ASTPair implements ASTNode {
     public IValue eval(Environment<IValue> e) throws InterpreterError {
         IValue v1 = first.eval(e);
         IValue v2 = second.eval(e);
-        return new VPair(v1, v2);
+        return new VPair(v1, v2, false);
     }
 
     public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {

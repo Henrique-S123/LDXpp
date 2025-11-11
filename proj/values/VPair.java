@@ -1,12 +1,13 @@
 package proj.values;
 
 public class VPair implements IValue {
-    IValue f;
-    IValue s;
+    IValue f, s;
+    boolean lin;
 
-    public VPair(IValue f0, IValue s0) {
+    public VPair(IValue f0, IValue s0, boolean l) {
         f = f0;
         s = s0;
+        lin = l;
     }
 
     public IValue getFirst() {
@@ -25,7 +26,12 @@ public class VPair implements IValue {
         s = s0;
     }
 
+    public boolean islin() {
+        return lin;
+    }
+
     public String toStr() {
-        return "(" + f.toStr() + "&" + s.toStr() + ")";
+        return lin ? "(" + f.toStr() + "@" + s.toStr() + ")"
+            : "(" + f.toStr() + "&" + s.toStr() + ")";
     }
 }

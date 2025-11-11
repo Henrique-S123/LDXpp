@@ -24,11 +24,6 @@ public class ASTSplit implements ASTNode {
 			en.assoc(id1, ((VPair) v).getFirst());
 			en.assoc(id2, ((VPair) v).getSecond());
 			return body.eval(en);
-		} else if (v instanceof VTensor) {
-			Environment<IValue> en = e.beginScope();
-			en.assoc(id1, ((VTensor) v).getFirst());
-			en.assoc(id2, ((VTensor) v).getSecond());
-			return body.eval(en);
 		} else {
 			throw new InterpreterError("split: pair expected, found " + v);
 		}
