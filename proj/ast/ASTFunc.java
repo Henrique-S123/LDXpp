@@ -21,7 +21,7 @@ public class ASTFunc implements ASTNode  {
     }
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {
-        return new VClos(e, id, body);
+        return new VClos(e, id, body, false);
     }
 
     public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
