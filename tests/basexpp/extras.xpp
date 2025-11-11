@@ -1,0 +1,23 @@
+let x = box 0; x++;;
+
+let x = box 0; x++; *x;;
+
+let x = box true; x++; *x;;
+
+let x = box 0; x--;;
+
+let x = box 0; x--; *x;;
+
+let x = box true; x--; *x;;
+
+let x = box 0; ++x;;
+
+let x = box 0; ++x; *x;;
+
+let x = box true; ++x; *x;;
+
+let x = box 0; --x;;
+
+let x = box 0; --x; *x;;
+
+let x = box true; --x; *x;;

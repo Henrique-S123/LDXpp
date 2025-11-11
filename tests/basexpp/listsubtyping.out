@@ -1,0 +1,21 @@
+type: list<blob1>, value: (struct {#a = 3; #b = 4}::nil)
+
+
+type: list<blob2>, value: (struct {#a = 3; #b = 4}::nil)
+
+
+class proj.errors.TypeCheckError: types to bind are not subtypes: list<struct {#a = int; #b = int}> and list<blob3>
+
+
+type: list<struct {#a = int}>, value: (struct {#a = 2}::nil)
+
+
+class proj.errors.TypeCheckError: types for cons first and second values are not subtypes: struct {#a = int} and list<struct {#a = int; #b = int}>
+
+
+type: list<struct {#a = int}>, value: (struct {#a = 3; #b = 4}::(struct {#a = 2}::nil))
+
+
+type: list<struct {#a = int}>, value: (struct {#c = 7; #a = 5; #b = 6}::(struct {#a = 3; #b = 4}::(struct {#a = 2}::nil)))
+
+

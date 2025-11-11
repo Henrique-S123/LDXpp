@@ -1,0 +1,36 @@
+type: int, value: 0
+
+
+type: int, value: 1
+
+
+class proj.errors.TypeCheckError: illegal type to postfix ++ operator reference: bool
+
+
+type: int, value: 0
+
+
+type: int, value: -1
+
+
+class proj.errors.TypeCheckError: illegal type to postfix ++ operator reference: bool
+
+
+type: int, value: 1
+
+
+type: int, value: 1
+
+
+class proj.errors.TypeCheckError: illegal types to + operator: bool and int
+
+
+type: int, value: -1
+
+
+type: int, value: -1
+
+
+class proj.errors.TypeCheckError: illegal types to - operator: bool and int
+
+

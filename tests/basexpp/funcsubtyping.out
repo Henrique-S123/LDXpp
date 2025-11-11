@@ -1,0 +1,6 @@
+type: int, value: 1
+
+
+class proj.errors.TypeCheckError: types for app func dom and arg are not subtypes: blob1->blob2 and struct {#a = int; #b = int}->struct {#c = int; #a = int; #b = int}
+
+

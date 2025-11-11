@@ -1,0 +1,24 @@
+type: (int&int), value: (1&1)
+
+
+type: (int&int), value: (1&2)
+
+
+type: int, value: 1
+
+
+type: int, value: 2
+
+
+type: int, value: 4
+
+
+class proj.errors.InterpreterError: Linear value of 'x' has already been consumed and cannot be used again.
+
+
+class proj.errors.TypeCheckError: two nonlinear types expected, found: linint and int
+
+
+class proj.errors.TypeCheckError: two nonlinear types expected, found: linint and linint
+
+

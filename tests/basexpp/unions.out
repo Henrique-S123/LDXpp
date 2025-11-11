@@ -1,0 +1,27 @@
+type: int, value: 3
+
+
+class proj.errors.TypeCheckError: match missing label #a
+
+
+class proj.errors.TypeCheckError: different types for match cases: string and int
+
+
+class proj.errors.TypeCheckError: different types for match cases: bool and int
+
+
+type: int, value: 7
+
+
+type: int, value: 2
+
+
+type: int, value: 3
+
+
+class proj.errors.TypeCheckError: match missing label #val
+
+
+type: int, value: 3
+
+

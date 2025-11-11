@@ -1,0 +1,31 @@
+type: int, value: 3
+
+
+1
+type: int, value: 1
+
+
+class proj.errors.TypeCheckError: nonlinear functions must have nonlinear types for arguments
+
+
+class proj.errors.TypeCheckError: nonlinear functions must not use external linear values
+
+
+class proj.errors.TypeCheckError: nonlinear functions must not use external linear values
+
+
+type: linint, value: 10l
+
+
+class proj.errors.TypeCheckError: there are unused linear values: [x: linint]
+
+
+class proj.errors.TypeCheckError: there are unused linear values: [x: linint]
+
+
+type: linint, value: 10l
+
+
+class proj.errors.TypeCheckError: nonlinear functions cannot take linear arguments
+
+

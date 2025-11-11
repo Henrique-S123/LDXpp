@@ -1,0 +1,15 @@
+type struct1 = struct { #a: int };
+let a: ref<struct1> = box({ #a = 10 });
+a;;
+
+type struct1 = struct { #a: int };
+let a: ref<struct1> = box({ #a = 10, #b = 10 });
+a;;
+
+type struct1 = struct { #a: int, #b: int };
+let a: ref<struct1> = box({ #a = 10 });
+a;;
+
+type struct1 = struct { #a: int, #b: int };
+let a: ref<struct1> = box({ #a = 10, #b = 30 });
+a;;

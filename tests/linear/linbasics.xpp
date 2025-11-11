@@ -1,0 +1,41 @@
+let x = 1l; x;;
+
+let x = 1l; 42;;
+
+let x = 2; let y = 1l; x;;
+
+let x = 2; let y = 1l; y; x;;
+
+let x = 2; let y = 1l; x; y;;
+
+let x = 1l; let y = x; x;;
+
+let x = 1l; let y = x; 2;;
+
+1 + 1l;;
+
+1l + 1;;
+
+1l + 1l;;
+
+let x = 1l; x + x;;
+
+let x = 1l; let y = x + 2l; y;;
+
+2 / 1l;;
+
+2l / 1;;
+
+2l / 1l;;
+
+2 - 1l;;
+
+2l - 1;;
+
+2l - 1l;;
+
+2 * 1l;;
+
+2l * 1;;
+
+2l * 1l;;

@@ -1,0 +1,18 @@
+let x = 1l; if (true) {x*2} else {x*3};;
+
+let x = 1l; if (false) {x*2} else {x*3};;
+
+let x = 1l; if (true) {x*2} else {10l};;
+
+let x = 1l; if (true) {10l} else {x*2};;
+
+let x = 1l; if (true) {5l} else {10l};;
+
+let x = 1l; let y = 2l;
+if (false) {x} else {if (false) {y} else {3l}};;
+
+let x = 1l; let y = 2l;
+if (false) {x} else {if (false) {y} else {y}};;
+
+let x = 1l; let y = 2l;
+if (false) {y - x} else {if (x > 0) {y} else {y}};;

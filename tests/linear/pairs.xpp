@@ -1,0 +1,16 @@
+let x = 1; x&x;;
+
+let x = 1; let y = 2; x&y;;
+
+let fst = fn x:pair(int&int) => {split x {f|s -> f}}; fst(1&2);;
+
+let snd = fn x:pair(int&int) => {split x {f|s -> s}}; snd(1&2);;
+
+let f = fn p:pair(int->int&int) => {split p {f|s -> f(s)}}; f((fn z:int => {z+2})&2);;
+
+
+let x = 1l; x&x;;
+
+let x = 1l; let y = 2; x&y;;
+
+let x = 1l; let y = 2l; x&y;;

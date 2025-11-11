@@ -1,0 +1,443 @@
+PARSER_BEGIN(Parser)
+
+package proj.parser;
+
+import proj.ast.*;
+import proj.*;
+import proj.types.*;
+import proj.errors.*;
+import proj.env.*;
+
+import java.util.*;
+
+public class Parser {
+}
+
+PARSER_END(Parser)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\r"
+| "\n"
+}
+
+TOKEN :
+{
+
+  < LET : "let" >
+  |
+  < Bool : ("true"|"false") >
+  |
+  < LinBool : ("truel"|"falsel") >
+  |
+  < NIL : "nil" >
+  |
+  < PLUS : "+" >
+  |
+  < DPLUS : "++" >
+  |
+  < MINUS : "-" >
+  |
+  < DMINUS : "--" >
+  |
+  < STAR : "*">
+  |
+  < DIV : "/">
+  |
+  < LPAR : "(" >
+  |
+  < RPAR : ")" >
+  |
+  < LBRA : "{" >
+  |
+  < RBRA : "}" >
+  |
+  < EQUAL : "=" >
+  |
+  < DOT : "." >
+  |
+  < COLON : ":" >
+  |
+  < CONS : "::" >
+  |
+  < LCONS : ":?" >
+  |
+  < SEMIC : ";" >
+  |
+  < TERM : ";;" >
+  |
+  < COMMA : "," >
+  |
+  < VERT : "|" >
+  |
+  < AND : "&&" >
+  |
+  < OR : "||" >
+  |
+  < EQ : "==" >
+  |  
+  < GT : ">" >
+  |
+  < LT : "<" >
+  |
+  < GTEQ : ">=" >
+  |
+  < LTEQ : "<=" >
+  |
+  < DIF : "~=" >
+  |
+  < NOT : "~" >
+  |
+  < ASSIGN : ":=" >
+  |
+  < BOX : "box" >
+  |
+  < IF : "if" >
+  |
+  < ELSE : "else" >
+  |
+  < WHILE : "while" >
+  |
+  < PRINT : "print" >
+  |
+  < PRINTLN : "println" >
+  |
+  < FN : "fn" >
+  |
+  < LFN : "lfn" >
+  |
+  < ARROW : "=>" >
+  |
+  < DLOLLIPOP : "=o" >
+  |
+  < LOLLIPOP : "-o" >
+  |
+  < SLIMARROW : "->" >
+  |
+  < TENSOR : "@" >
+  |
+  < PAIR : "&" >
+  |
+  < MATCH : "match" >
+  |
+  < TYPE : "type" >
+  |
+  < TINT : "int" >
+  |
+  < TUNIT : "()" >
+  |
+  < TBOOL : "bool" >
+  |
+  < TLBOOL : "linbool" >
+  |
+  < TSTRING  : "string" >  
+  |
+  < TLIST  : "list" >  
+  |
+  < TREF  : "ref" >  
+  |
+  < TUNION  : "union" >  
+  |
+  < TSTRUCT  : "struct" >
+  |
+  < TTENSOR : "tensor" >
+  |
+  < TPAIR : "pair" >
+  |
+  < TLINT : "linint" >
+  |
+  < SUMALL : "sumall" >
+  |
+  < TO : "to" >
+  |
+  < SPLIT : "split" >
+  |
+  < LABEL : "#" ["a"-"z", "A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* >
+  |
+  < String: "\"" ( (~["\"","\\"]) | ("\\" ( ["n","t","b","r","f","\\","\""] ) ) )* "\"" >
+  |
+  < Id: ["a"-"z","A"-"Z", "_"] ( ["_", "a"-"z","A"-"Z","0"-"9"] )* >
+  |
+  < LinNum: (["0"-"9"])+ "l" >
+  |
+  < Num: (["0"-"9"])+ >
+}
+
+ASTNode Start():
+{ ASTNode t; }
+{
+    <EOF> {return null;}
+  | t = Let() <TERM> { return t; }
+}
+
+ASTNode Let() :
+{ Token n; 
+  ASTNode t, e1, e2;
+  ASTType t1 = null;
+}
+{  
+    (
+      t = Seq()
+    | 
+    {  List<Bind> decls  = new ArrayList<Bind>(); }
+    ( ( LOOKAHEAD(2) <LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC> 
+      { decls.add(new Bind(n.image, t1, e1)); t1 = null;} )+
+        e2 = Let() { t = new ASTLet(decls, e2); }
+    )
+| 
+     {  HashMap<String,ASTType> lbl = new HashMap<String,ASTType>(); }
+   ( (LOOKAHEAD(2) <TYPE>  n=<Id>  <EQUAL> t1 = Type()  <SEMIC>
+      { if (lbl.containsKey(n.image)) { throw new ParseException("duplicate id"); } else { lbl.put(n.image, t1); } } )+
+        e2 = Let() { t = new ASTTypeDef(lbl, e2); }
+    )
+    )
+   { return t; }
+}
+
+ASTNode Seq() :
+{Token op;
+  ASTNode t1, t2;}
+{
+     t1 = SeqExp() ( ( op=<SEMIC> ) t2 = SeqExp() 
+ 		 {
+		 t1 = new ASTSeq(t1, t2);
+     } 
+		)*
+     { return t1; }  
+}
+
+ASTNode SeqExp() :
+{Token op;
+  ASTNode t1, t2, t;}
+{
+     t1 = BA() ( ( op=<ASSIGN> ) t2 = SeqExp() 
+ 		 {
+		 t1 = new ASTAssign(t1, t2);
+     } 
+		)?
+     { return t1; }
+}
+
+ASTNode BA() :
+{Token op;
+  ASTNode t1, t2;}
+{
+     t1 = BM() ( ( op=<OR> ) t2 = BM() 
+ 		 {
+     t1 = new ASTLogicOp(t1, t2, "||");
+		 } 
+		)*
+     { return t1; } 
+}
+
+ASTNode BM() :
+{Token op;
+  ASTNode t1, t2;}
+{
+     t1 = Rel() ( ( op=<AND> ) t2 = Rel() 
+ 		 {
+		 t1 = new ASTLogicOp(t1, t2, "&&");
+ 		 } 
+		)*
+     { return t1; } 
+}
+
+
+ASTNode Rel() :
+{Token op;
+  ASTNode t1, t2;}
+{
+     t1 = Exp() ( ( op=<EQ> | op=<GT> | op=<LT> | op=<GTEQ> | op=<LTEQ> | op=<DIF>) t2 = Exp() 
+     {
+      t1 = new ASTCmpOp(t1, t2, op.image);
+		 } 
+		)?
+     { return t1; } 
+}
+
+
+ASTNode Exp() :
+{ Token op;
+  ASTNode t1, t2; }
+{
+     t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term() 
+                 { if (op.kind == PLUS) 
+                         t1 = new ASTArithOp(t1,t2,"+");
+                   else  t1 = new ASTArithOp(t1,t2,"-");
+                 } 
+               ) *
+     { return t1; } 
+}
+
+ASTNode Term() :
+{Token op, n;
+  ASTNode t1, t2;}
+{
+     t1 = Field() ( (op=<CONS> | op=<LCONS> | op=<TENSOR> | op=<PAIR>) t2 = Term() {
+              if (op.kind == CONS) t1 = new ASTCons(t1,t2);
+              else if (op.kind == LCONS) t1 = new ASTLcons(t1,t2);
+              else if (op.kind == TENSOR) t1 = new ASTTensor(t1, t2);
+              else if (op.kind == PAIR) t1 = new ASTPair(t1, t2);
+     }
+    |
+    (
+     op=<STAR> t2 = Field()   { t1 = new ASTArithOp(t1,t2,"*"); }
+		 |
+		 op=<DIV> t2 = Field()  { t1 = new ASTArithOp(t1,t2,"/"); }
+		 |
+		 op = <LPAR> t2 = Let () <RPAR>  { t1 = new ASTApp(t1, t2); }
+     |
+     op = <TUNIT> { t1 = new ASTApp(t1, new ASTUnit()); }
+     |
+     op = <DPLUS> { t1 = new ASTPostinc(t1); }
+     |
+     op = <DMINUS> { t1 = new ASTPostdecr(t1); }
+    )*)
+     { return t1; }
+}
+
+ASTNode Field():
+{ Token n; 
+  ASTNode t;
+}
+{
+      t = Fact() (<DOT> n = <LABEL>  { t = new ASTSelect(t, n.image); })*
+     { return t; }
+}
+
+ASTNode Fact() :
+{ Token n, n2; 
+  ASTNode t, e1, e2, t2;
+  List<Bind> decls;
+  ASTNode body, alt;
+  ASTFunc tf, tc, tn;
+  ASTLFunc ltf, ltc, ltn;
+  ASTType type;
+  ExprBindList ll;
+}
+{
+   (
+      n=<Num> { t = new ASTInt(Integer.parseInt(n.image)); }
+    | n=<LinNum> { t = new ASTLInt(Integer.parseInt(n.image.substring(0, n.image.length()-1))); }
+    | n=<Bool> { t = new ASTBool(Boolean.parseBoolean(n.image)); }
+    | n=<LinBool> { t = new ASTLBool(Boolean.parseBoolean(n.image.substring(0, n.image.length()-1))); }
+    | n = <Id> { t = new ASTId(n.image); }
+    | n=<String> { t = new ASTString(n.image.substring(1, n.image.length()-1)); }
+    | <TUNIT> { t = new ASTUnit(); }
+    | <BOX> t=Fact() { t = new ASTBox(t); }
+    | <STAR> t=Fact() { t = new ASTDeref(t); }
+    | <MINUS> t=Fact() { t = new ASTArithOp(new ASTInt(0), t, "-u"); }
+    | <NOT> t=Fact() { t = new ASTLogicOp(new ASTBool(true), t, "~"); }
+    | <IF> t=BA() <LBRA> e1=Let() <RBRA> <ELSE> <LBRA> e2=Let() <RBRA> { t = new ASTIf(t, e1, e2); }
+    | <WHILE> t=BA() <LBRA> body=Let() <RBRA> { t = new ASTWhile(t, body); }
+    | <FN> n=<Id> <COLON> type = Type() { tf = new ASTFunc(n.image, null, type); tc = tf; }
+      	   	  (<COMMA> n=<Id> <COLON> type = Type() { tn = new ASTFunc(n.image, null, type); tc.setBody(tn); tc = tn; })*
+		          <ARROW> <LBRA> e2 = Let() <RBRA> { tc.setBody(e2); t = tf; }
+    | <LFN> n=<Id> <COLON> type = Type() { ltf = new ASTLFunc(n.image, null, type); ltc = ltf; }
+      	   	  (<COMMA> n=<Id> <COLON> type = Type() { ltn = new ASTLFunc(n.image, null, type); ltc.setBody(ltn); ltc = ltn; })*
+		          <DLOLLIPOP> <LBRA> e2 = Let() <RBRA> { ltc.setBody(e2); t = ltf; }
+    | <PRINT> t=Fact() { t = new ASTPrint(t, false); }
+    | <PRINTLN> t=Fact() { t = new ASTPrint(t, true); }
+    | n=<NIL> { t = new ASTNil(); }
+    | <MATCH> t2 = Let() <LBRA> t = Match(t2)
+    | <LBRA> ll = ExprList() <RBRA> { t = new ASTStruct(ll); }
+    | n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); }
+    | <DPLUS> t = Fact() { t = new ASTAssign(t, new ASTArithOp(new ASTDeref(t), new ASTInt(1), "+")); }
+    | <DMINUS> t = Fact() { t = new ASTAssign(t, new ASTArithOp(new ASTDeref(t), new ASTInt(1), "-")); }
+    | <SUMALL> n = <Id> <EQUAL> e1 = Fact() <TO> e2 = Fact() <LBRA> t = Let() <RBRA> { t = new ASTSumall(n.image, e1, e2, t); }
+    | <SPLIT> t = Let() <LBRA> n = <Id> <VERT> n2 = <Id> <SLIMARROW> t2 = Let() <RBRA> { t = new ASTSplit(t, n.image, n2.image, t2); }
+    | <LPAR> t=Let() <RPAR>
+    )
+   { return t; }
+}
+
+ASTNode Match(ASTNode p) :
+{
+  Token l, n, n2;
+  ASTNode t, e1, e2;
+  List<String> labels = new ArrayList<String>();
+  List<String> ids = new ArrayList<String>();
+  List<ASTNode> exprs = new ArrayList<ASTNode>();
+}
+{
+  (
+    <NIL> <SLIMARROW> e1 = Let()
+          <VERT> n = <Id> <CONS> n2 = <Id> <SLIMARROW> e2 = Let() <RBRA>
+          { t = new ASTMatchList(p, e1, n.image, n2.image, e2); }
+  | l = <LABEL> <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { labels.add(l.image); ids.add(n.image); exprs.add(e1); }
+          (<VERT> l = <LABEL> <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { if (labels.contains(l.image))
+                                              { throw new ParseException("duplicate label"); }
+                                              else { labels.add(l.image); ids.add(n.image); exprs.add(e1); } } )*
+          <RBRA> { t = new ASTMatchUnion(p, labels, ids, exprs); }
+  )
+  { return t; }
+}
+
+ASTType Type() : 
+{
+  ASTType t1, t2;
+}
+{        
+    t1 = TypeF() (
+      <SLIMARROW> t2 = Type() { t1 = new ASTTArrow(t1,t2);} |
+      <LOLLIPOP> t2 = Type() { t1 = new ASTTLollipop(t1, t2); })?
+    { return t1; }
+}
+
+ASTType TypeF() :
+{
+  ASTType t, t2;
+  TypeBindList ll;
+  Token n;
+}
+{
+    (
+          <TINT> { t = new ASTTInt(); }
+        | n=<Id> { t = new ASTTId(n.image); }
+        | <TBOOL> { t = new ASTTBool(); }
+        | <TLBOOL> { t = new ASTTLBool(); }
+        | <TUNIT> { t = new ASTTUnit(); }
+        | <TSTRING> { t = new ASTTString(); }
+        | <TREF> <LT> t=Type() <GT> { t = new ASTTRef(t); }
+        | <TLIST> <LT> t=Type() <GT> { t = new ASTTList(t); }
+        | <TSTRUCT> <LBRA> ll = LabelList() <RBRA> { t = new ASTTStruct(ll); }
+        | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll); }
+        | <TPAIR> <LPAR> t = Type() <PAIR> t2 = Type() <RPAR> { t = new ASTTPair(t, t2); }
+        | <TTENSOR> <LPAR> t = Type() <TENSOR> t2 = Type() <RPAR> { t = new ASTTTensor(t, t2); }
+        | <TLINT> { t = new ASTTLInt(); }
+        | <LPAR> t = Type() <RPAR>
+    )
+    { return t; }
+}
+
+ExprBindList ExprList() :
+{
+  ASTNode t;
+  HashMap<String, ASTNode> ll;
+  Token n;
+}
+{   { ll = new HashMap<String, ASTNode>() ; }
+    ( n=<LABEL>  <EQUAL> t = BA() { ll.put(n.image,t); } 
+              (<COMMA> n=<LABEL>  <EQUAL> t = BA() { if (ll.containsKey(n.image))
+                            {throw new ParseException("duplicate label");}
+                            else {ll.put(n.image,t);} } )*
+    )?
+    { return new ExprBindList(ll); }
+}
+
+TypeBindList LabelList() :
+{
+  ASTType t;
+  HashMap<String, ASTType> ll;
+  Token n;
+}
+{   { ll = new HashMap<String, ASTType>() ; }
+    ( n=<LABEL>  <COLON> t = Type() { ll.put(n.image,t); } 
+              (<COMMA> n=<LABEL>  <COLON> t = Type() { if (ll.containsKey(n.image))
+                            {throw new ParseException("duplicate label");}
+                            else {ll.put(n.image,t);} } )*
+    )?
+    { return new TypeBindList(ll); }
+}

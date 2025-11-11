@@ -1,0 +1,57 @@
+class proj.errors.InterpreterError: Linear value of 'x' has already been consumed and cannot be used again.
+
+
+type: (int@int), value: (1@2)
+
+
+type: (linint@int), value: (1l@2)
+
+
+type: (int@linint), value: (1@2l)
+
+
+type: (linint@linint), value: (1l@2l)
+
+
+type: (linint@linint), value: (1l@2l)
+
+
+class proj.errors.InterpreterError: Linear value of 'p1' has already been consumed and cannot be used again.
+
+
+type: int, value: 1
+
+
+type: int, value: 2
+
+
+type: int, value: 42
+
+
+type: linint, value: 1l
+
+
+class proj.errors.TypeCheckError: there are unused linear values: [f: linint]
+
+
+class proj.errors.TypeCheckError: there are unused linear values: [f: linint]
+
+
+class proj.errors.TypeCheckError: there are unused linear values: [s: linint]
+
+
+type: linint, value: 2l
+
+
+class proj.errors.TypeCheckError: there are unused linear values: [s: linint]
+
+
+class proj.errors.TypeCheckError: there are unused linear values: [s: linint]
+
+
+class proj.errors.TypeCheckError: there are unused linear values: [f: linint]
+
+
+class proj.errors.TypeCheckError: there are unused linear values: [s: linint; f: linint]
+
+

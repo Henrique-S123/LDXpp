@@ -1,0 +1,51 @@
+type: linbool, value: truel
+
+
+type: linbool, value: falsel
+
+
+type: linbool, value: truel
+
+
+type: linbool, value: truel
+
+
+type: linbool, value: truel
+
+
+type: linbool, value: falsel
+
+
+type: linbool, value: truel
+
+
+type: linbool, value: truel
+
+
+type: linbool, value: falsel
+
+
+type: linbool, value: truel
+
+
+type: linbool, value: truel
+
+
+type: linbool, value: truel
+
+
+type: linbool, value: falsel
+
+
+class proj.errors.TypeCheckError: illegal type to ~ unary operator: linint
+
+
+class proj.errors.TypeCheckError: illegal types to || operator: linint and string
+
+
+class proj.errors.TypeCheckError: illegal types to && operator: linint and linint
+
+
+class proj.errors.TypeCheckError: illegal types to && operator: linbool and linint
+
+

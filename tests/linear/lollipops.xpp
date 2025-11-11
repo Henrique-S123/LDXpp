@@ -1,0 +1,45 @@
+let f = lfn x:int =o {x+1; x+2; x+3}; f(5);;
+
+let f = lfn x:int =o {x+1; x+2; x+3}; f(5); f(6);;
+
+let f = lfn x:int =o {x+1l}; f(1);;
+
+let f = lfn x:linint =o {x+1l}; f(5l);;
+
+let f = lfn x:linint =o {x+1l}; f(5l); f(6l);;
+
+let f = lfn x:linint =o {x+1l; x+2l}; f(5l);;
+
+let f = lfn x:linint =o {x+x}; f(1l);;
+
+let f = lfn x:linint =o {1}; f(1l);;
+
+let f = lfn x:linint =o {x}; 2;;
+
+let f = lfn x:linint =o {x + 1l}; let y = f(2l); y;;
+
+let f = lfn x:linint =o {x + 1l}; let y = f(2l); y; y;;
+
+let f = lfn x:linint =o {x + 1l}; let y = f(2l); let z = f(y); z;;
+
+let f = lfn x:linint =o {lfn y:linint =o {println(y)}}; let z = 1l; f(z)(z);;
+
+let f = lfn x:linint =o {x; lfn y:linint =o {println(y)}}; let z = 1l; f(z)(z);;
+
+let f = lfn x:linint =o {x; lfn y:linint =o {println(y)}}; let z = 1l; let z2 = 1l; f(z)(z2);;
+
+let f = lfn x:linint =o {let f2 = lfn y:linint =o {y + 10l}; f2(x)}; f(1l);;
+
+let f = lfn x:linint =o {let f2 = lfn y:linint =o {y + 10l}; f2(x); f2(2l)}; f(1l);;
+
+let f = lfn x:linint =o {x + 1l}; f(1);;
+
+let sum_pairs = lfn p1:tensor(linint@linint), p2:tensor(linint@linint) =o {
+    split p1 {f1|s1 -> split p2 {f2|s2 -> (f1 + f2)@(s1 + s2)}}
+};
+let p1 = 2l@3l; let p2 = 4l@5l; sum_pairs(p1)(p2);;
+
+let sum_pairs = lfn p1:tensor(linint@linint), p2:tensor(linint@linint) =o {
+    split p1 {f1|s1 -> split p2 {f2|s2 -> (f1 + f2)@(s1 + 100l)}}
+};
+let p1 = 2l@3l; let p2 = 4l@5l; sum_pairs(p1)(p2);;

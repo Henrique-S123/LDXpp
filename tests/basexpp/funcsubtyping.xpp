@@ -1,0 +1,15 @@
+type blob1 = struct {#a:int};
+type blob2 = struct {#a:int, #b:int};
+type blob3 = struct {#a:int, #b:int, #c:int};
+let f = fn x:blob1 => {{#a = x.#a, #b = (x.#a)*2}};
+let g = fn x:blob2 => {{#a = x.#a, #b = x.#b, #c = (x.#a) + (x.#b)}};
+let h = fn x:blob1->blob2 => {1};
+h(f);;
+
+type blob1 = struct {#a:int};
+type blob2 = struct {#a:int, #b:int};
+type blob3 = struct {#a:int, #b:int, #c:int};
+let f = fn x:blob1 => {{#a = x.#a, #b = (x.#a)*2}};
+let g = fn x:blob2 => {{#a = x.#a, #b = x.#b, #c = (x.#a) + (x.#b)}};
+let h = fn x:blob1->blob2 => {1};
+h(g);;

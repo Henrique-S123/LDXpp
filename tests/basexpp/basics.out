@@ -1,0 +1,21 @@
+type: int, value: 2
+
+
+type: bool, value: false
+
+
+type: string, value: "abc"
+
+
+type: string, value: "a2"
+
+
+type: string, value: "2b"
+
+
+type: string, value: "ab"
+
+
+class proj.errors.TypeCheckError: illegal types to + operator: int and bool
+
+

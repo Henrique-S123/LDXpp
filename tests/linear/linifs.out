@@ -1,0 +1,24 @@
+type: linint, value: 2l
+
+
+type: linint, value: 3l
+
+
+class proj.errors.TypeCheckError: if conseq and alt branches must use the same linear values
+
+
+class proj.errors.TypeCheckError: if conseq and alt branches must use the same linear values
+
+
+class proj.errors.TypeCheckError: there are unused linear values: [x: linint]
+
+
+class proj.errors.TypeCheckError: if conseq and alt branches must use the same linear values
+
+
+class proj.errors.TypeCheckError: if conseq and alt branches must use the same linear values
+
+
+type: linint, value: 2l
+
+

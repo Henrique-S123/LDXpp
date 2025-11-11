@@ -1,0 +1,110 @@
+type: int, value: 3
+
+
+type: bool, value: true
+
+
+class proj.errors.TypeCheckError: illegal types to > operator: int and bool
+
+
+type: bool, value: false
+
+
+type: bool, value: false
+
+
+type: bool, value: false
+
+
+class proj.errors.TypeCheckError: illegal type to - unary operator: bool
+
+
+type: bool, value: true
+
+
+type: int, value: 2
+
+
+class proj.errors.TypeCheckError: if conseq and alt branches do not have compatible types: int and bool
+
+
+type: bool, value: false
+
+
+type: int, value: 10
+
+
+type: int, value: 72
+
+
+type: bool, value: true
+
+
+type: int, value: 49
+
+
+type: int, value: 49
+
+
+type: int, value: 7
+
+
+type: int, value: 5
+
+
+class proj.errors.TypeCheckError: types for app func dom and arg are not subtypes: int->bool and int->int
+
+
+type: int, value: 14
+
+
+type: int, value: 2
+
+
+class proj.errors.TypeCheckError: types to bind are not subtypes: int and bool
+
+
+type: int, value: 14
+
+
+type: int, value: 199
+
+
+type: int, value: 120
+
+
+type: int, value: 120
+
+
+type: int, value: 3628800
+
+
+type: int, value: 5051
+
+
+2
+4
+7
+11
+16
+22
+29
+37
+46
+56
+67
+79
+92
+106
+121
+137
+154
+172
+191
+211
+type: int, value: 211
+
+
+type: int, value: 1
+
+

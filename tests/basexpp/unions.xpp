@@ -1,0 +1,73 @@
+let x = #a(3); match x {#b(c) -> -c | #a(c) -> c};;
+
+let x = #a(3); match x {#b(c) -> -c | #d(c) -> c};;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> s + ".txt"
+        | #val(b) -> ~b
+    }
+};
+f(#num(6));;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> 2
+        | #val(b) -> ~b
+    }
+};
+f(#num(6));;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> 2
+        | #val(b) -> 3
+    }
+};
+f(#num(6));;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> 2
+        | #val(b) -> 3
+    }
+};
+f(#txt("abc"));;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> 2
+        | #val(b) -> 3
+    }
+};
+f(#val(true));;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> 2
+    }
+};
+f(#val(true));;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> 2
+        | #val(b) -> 3
+        | #deadcode(d) -> println("should not come here")
+    }
+};
+f(#val(true));;

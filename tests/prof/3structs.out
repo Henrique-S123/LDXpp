@@ -1,0 +1,42 @@
+type: struct {}, value: struct {}
+
+
+type: struct {#fst = int; #snd = int}, value: struct {#fst = 1; #snd = 2}
+
+
+type: int, value: 1
+
+
+type: int, value: 2
+
+
+class proj.errors.TypeCheckError: struct does not contain field #foo
+
+
+type: int, value: 3
+
+
+type: int, value: 3
+
+
+type: int, value: 3
+
+
+class proj.errors.TypeCheckError: types to bind are not subtypes: struct {#name = int} and struct {#age = int; #name = int}
+
+
+type: int, value: 5
+
+
+type: (), value: ()
+
+
+type: int, value: 2
+
+
+type: int, value: 2
+
+
+type: int, value: 3
+
+

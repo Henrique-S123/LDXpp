@@ -1,0 +1,12 @@
+type: ref<struct1>, value: ref(struct {#a = 10})
+
+
+class proj.errors.TypeCheckError: types to bind are not subtypes: ref<struct {#a = int; #b = int}> and ref<struct1>
+
+
+class proj.errors.TypeCheckError: types to bind are not subtypes: ref<struct {#a = int}> and ref<struct1>
+
+
+type: ref<struct1>, value: ref(struct {#a = 10; #b = 30})
+
+
