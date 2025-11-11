@@ -13,7 +13,7 @@ public class ASTLBool implements ASTNode  {
     }
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {
-        return new VLBool(b);                
+        return new VBool(b, true);                
     }
 
     public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError {

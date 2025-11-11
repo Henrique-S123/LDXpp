@@ -19,16 +19,17 @@ public class ASTLogicOp implements ASTNode {
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue v1 = lhs.eval(e);
 		IValue v2 = rhs.eval(e);
-		if ((v1 instanceof VBool || v1 instanceof VLBool) && (v2 instanceof VBool || v2 instanceof VLBool)) {
-			boolean i1 = v1 instanceof VLBool ? ((VLBool) v1).getval() : ((VBool) v1).getval();
-			boolean i2 = v2 instanceof VLBool ? ((VLBool) v2).getval() : ((VBool) v2).getval();
+		if (v1 instanceof VBool && v2 instanceof VBool) {
+			boolean i1 = ((VBool) v1).getval();
+			boolean i2 = ((VBool) v2).getval();
 			boolean res = switch (op) {
 				case "&&" -> i1 && i2;
 				case "||" -> i1 || i2;
 				case "~" -> !i2;
 				default -> throw new InterpreterError("unknown operation");
 			};
-			return (v1 instanceof VBool && v2 instanceof VBool) ? new VBool(res) : new VLBool(res);
+			boolean lin = (((VBool) v1).islin() || ((VBool) v2).islin());
+			return new VBool(res, lin);
 		} else {
 			String types = (op == "~" ? "" : (v1 + " and ")) + v2.toStr();
 			if (op == "~")

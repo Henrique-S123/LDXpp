@@ -30,7 +30,8 @@ public class ASTArithOp implements ASTNode {
 				case "-u" -> -i2;
 				default -> throw new InterpreterError("unknown operation");
 			};
-			return (!((VInt) v1).islin() && !((VInt) v2).islin()) ? new VInt(res, false) : new VInt(res, true);
+			boolean lin = (((VInt) v1).islin() || ((VInt) v2).islin());
+			return new VInt(res, lin);
 		} else if ((v1 instanceof VString || v1 instanceof VInt) && (v2 instanceof VInt || v2 instanceof VString) && op == "+") {
 			String s1 = v1 instanceof VString ? ((VString) v1).getval() : v1.toStr();
 			String s2 = v2 instanceof VString ? ((VString) v2).getval() : v2.toStr();

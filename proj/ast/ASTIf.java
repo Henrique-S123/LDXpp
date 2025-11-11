@@ -2,11 +2,10 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
-
-import java.util.HashSet;
-
 import proj.env.*;
 import proj.errors.*;
+
+import java.util.HashSet;
 
 public class ASTIf implements ASTNode {
 
@@ -14,10 +13,10 @@ public class ASTIf implements ASTNode {
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue vt = test.eval(e);
-		if (!(vt instanceof VBool || vt instanceof VLBool)) {
+		if (!(vt instanceof VBool)) {
 			throw new InterpreterError("if: bool condition expected, found " + vt);
 		} else {
-			boolean val = (vt instanceof VBool ? ((VBool) vt).getval() : ((VLBool) vt).getval());
+			boolean val = ((VBool) vt).getval();
 			if (val) {
 				return conseq.eval(e);
 			} else {

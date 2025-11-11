@@ -1,17 +1,22 @@
 package proj.values;
 
 public class VBool implements IValue {
-    boolean b;
+    boolean val, lin;
 
-    public VBool(boolean b0) {
-        b = b0;
+    public VBool(boolean v, boolean l) {
+        val = v;
+        lin = l;
     }
 
     public boolean getval() {
-        return b;
+        return val;
+    }
+
+    public boolean islin() {
+        return lin;
     }
 
     public String toStr() {
-        return Boolean.toString(b);
+        return Boolean.toString(val) + (lin ? "l" : "");
     }
 }
