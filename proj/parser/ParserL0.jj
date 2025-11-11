@@ -36,11 +36,7 @@ TOKEN :
   |
   < PLUS : "+" >
   |
-  < DPLUS : "++" >
-  |
   < MINUS : "-" >
-  |
-  < DMINUS : "--" >
   |
   < STAR : "*">
   |
@@ -90,15 +86,9 @@ TOKEN :
   |
   < NOT : "~" >
   |
-  < ASSIGN : ":=" >
-  |
-  < BOX : "box" >
-  |
   < IF : "if" >
   |
   < ELSE : "else" >
-  |
-  < WHILE : "while" >
   |
   < PRINT : "print" >
   |
@@ -134,9 +124,7 @@ TOKEN :
   |
   < TSTRING  : "string" >  
   |
-  < TLIST  : "list" >  
-  |
-  < TREF  : "ref" >  
+  < TLIST  : "list" >
   |
   < TUNION  : "union" >  
   |
@@ -147,10 +135,6 @@ TOKEN :
   < TPAIR : "pair" >
   |
   < TLINT : "linint" >
-  |
-  < SUMALL : "sumall" >
-  |
-  < TO : "to" >
   |
   < SPLIT : "split" >
   |
@@ -212,11 +196,7 @@ ASTNode SeqExp() :
 {Token op;
   ASTNode t1, t2, t;}
 {
-     t1 = BA() ( ( op=<ASSIGN> ) t2 = SeqExp() 
- 		 {
-		 t1 = new ASTAssign(t1, t2);
-     } 
-		)?
+     t1 = BA()
      { return t1; }
 }
 
@@ -290,10 +270,6 @@ ASTNode Term() :
 		 op = <LPAR> t2 = Let () <RPAR>  { t1 = new ASTApp(t1, t2); }
      |
      op = <TUNIT> { t1 = new ASTApp(t1, new ASTUnit()); }
-     |
-     op = <DPLUS> { t1 = new ASTPostinc(t1); }
-     |
-     op = <DMINUS> { t1 = new ASTPostdecr(t1); }
     )*)
      { return t1; }
 }
@@ -326,12 +302,9 @@ ASTNode Fact() :
     | n = <Id> { t = new ASTId(n.image); }
     | n=<String> { t = new ASTString(n.image.substring(1, n.image.length()-1)); }
     | <TUNIT> { t = new ASTUnit(); }
-    | <BOX> t=Fact() { t = new ASTBox(t); }
-    | <STAR> t=Fact() { t = new ASTDeref(t); }
     | <MINUS> t=Fact() { t = new ASTArithOp(new ASTInt(0), t, "-u"); }
     | <NOT> t=Fact() { t = new ASTLogicOp(new ASTBool(true), t, "~"); }
     | <IF> t=BA() <LBRA> e1=Let() <RBRA> <ELSE> <LBRA> e2=Let() <RBRA> { t = new ASTIf(t, e1, e2); }
-    | <WHILE> t=BA() <LBRA> body=Let() <RBRA> { t = new ASTWhile(t, body); }
     | <FN> n=<Id> <COLON> type = Type() { tf = new ASTFunc(n.image, null, type); tc = tf; }
       	   	  (<COMMA> n=<Id> <COLON> type = Type() { tn = new ASTFunc(n.image, null, type); tc.setBody(tn); tc = tn; })*
 		          <ARROW> <LBRA> e2 = Let() <RBRA> { tc.setBody(e2); t = tf; }
@@ -344,9 +317,6 @@ ASTNode Fact() :
     | <MATCH> t2 = Let() <LBRA> t = Match(t2)
     | <LBRA> ll = ExprList() <RBRA> { t = new ASTStruct(ll); }
     | n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); }
-    | <DPLUS> t = Fact() { t = new ASTAssign(t, new ASTArithOp(new ASTDeref(t), new ASTInt(1), "+")); }
-    | <DMINUS> t = Fact() { t = new ASTAssign(t, new ASTArithOp(new ASTDeref(t), new ASTInt(1), "-")); }
-    | <SUMALL> n = <Id> <EQUAL> e1 = Fact() <TO> e2 = Fact() <LBRA> t = Let() <RBRA> { t = new ASTSumall(n.image, e1, e2, t); }
     | <SPLIT> t = Let() <LBRA> n = <Id> <VERT> n2 = <Id> <SLIMARROW> t2 = Let() <RBRA> { t = new ASTSplit(t, n.image, n2.image, t2); }
     | <LPAR> t=Let() <RPAR>
     )
@@ -400,7 +370,6 @@ ASTType TypeF() :
         | <TLBOOL> { t = new ASTTLBool(); }
         | <TUNIT> { t = new ASTTUnit(); }
         | <TSTRING> { t = new ASTTString(); }
-        | <TREF> <LT> t=Type() <GT> { t = new ASTTRef(t); }
         | <TLIST> <LT> t=Type() <GT> { t = new ASTTList(t); }
         | <TSTRUCT> <LBRA> ll = LabelList() <RBRA> { t = new ASTTStruct(ll); }
         | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll); }

@@ -1,0 +1,39 @@
+type int2op = (int -> int -> int) ;
+type redtype = int2op -> int -> int -> int;
+let reduce: redtype = 
+fn g:int2op, b:int, k:int  => {
+    if (k == 0) { b }
+    else {
+         g (k) (reduce (g) (b) (k-1) )
+      }
+  };
+let tri = reduce (fn n:int, p:int => { println (n+p) }) (1) ;
+tri (20)
+;;
+
+type i2i = int->int;
+let sigfpe:int->int = fn x:int => {-1} ;
+let div = fn n:int,m:int => {
+      if (m==0) { sigfpe (n) }
+        else { n / m}
+};
+div (2) (0)
+;;
+
+type i2i = int->int;
+let sigfpe:i2i = fn x:int => {-1};
+let div = fn n:int,m:int => {
+      if (m==0) { sigfpe (n) }
+        else { n / m}
+};
+div (2) (0)
+;;
+
+type money = int;
+let x:money = 2;
+x+1;;
+
+let inc = fn r:int,z:int->int => {z (r+1)};
+let age = 1;
+inc (age) (fn x:int => { x + 1 })
+;;

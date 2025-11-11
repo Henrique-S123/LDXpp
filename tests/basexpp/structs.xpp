@@ -2,16 +2,12 @@
 
 {#a = 1} + 1;;
 
-let acc1 = {#num = 123, #balance = box 0};
-let acc2 = {#num = 124, #balance = box 20};
-acc1.#balance := *(acc1.#balance) + 10;
-acc2.#balance := *(acc2.#balance) - 10;
-println(*(acc1.#balance));
-println(*(acc2.#balance));;
+let acc1 = {#num = 123, #balance = 0};
+let acc2 = {#num = 124, #balance = 20};
+println(acc1.#balance);
+println(acc2.#balance);;
 
-let profile = {#name = "rui", #acc = {#num = 123, #balance = box 0}};
-let profile2 = {#name = "fabio", #acc = {#num = 124, #balance = box 2}};
-profile.#acc.#balance := *(profile.#acc.#balance) + 1;
-profile2.#acc.#balance := *(profile2.#acc.#balance) - 1;
+let profile = {#name = "rui", #acc = {#num = 123, #balance = 0}};
+let profile2 = {#name = "fabio", #acc = {#num = 124, #balance = 2}};
 println(profile);
 profile2;;

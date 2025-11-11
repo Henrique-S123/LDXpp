@@ -4,12 +4,12 @@ type: int, value: 2
 class proj.errors.TypeCheckError: illegal types to + operator: struct {#a = int} and int
 
 
-10
-10
-type: int, value: 10
+0
+20
+type: int, value: 20
 
 
-struct {#name = "rui"; #acc = struct {#num = 123; #balance = ref(1)}}
-type: struct {#name = string; #acc = struct {#num = int; #balance = ref<int>}}, value: struct {#name = "fabio"; #acc = struct {#num = 124; #balance = ref(1)}}
+struct {#name = "rui"; #acc = struct {#num = 123; #balance = 0}}
+type: struct {#name = string; #acc = struct {#num = int; #balance = int}}, value: struct {#name = "fabio"; #acc = struct {#num = 124; #balance = 2}}
 
 
