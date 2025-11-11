@@ -38,7 +38,7 @@ public class Xppint {
 				System.err.println(e.getMessage());
 			}
 		} else {
-			System.out.println("L0 interpreter PL MEIC 2024/25 (v0.0)\n");
+			System.out.println("LFX++ interpreter\n");
 			parser = new Parser(System.in); 
 			while (true) {
 			try {
