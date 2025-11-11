@@ -19,9 +19,9 @@ public class ASTCmpOp implements ASTNode {
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue v1 = lhs.eval(e);
 		IValue v2 = rhs.eval(e);
-		if ((v1 instanceof VInt || v1 instanceof VLInt) && (v2 instanceof VInt || v2 instanceof VLInt)) {
-			int i1 = v1 instanceof VLInt ? ((VLInt) v1).getval() : ((VInt) v1).getval();
-			int i2 = v2 instanceof VLInt ? ((VLInt) v2).getval() : ((VInt) v2).getval();
+		if (v1 instanceof VInt && v2 instanceof VInt) {
+			int i1 = ((VInt) v1).getval();
+			int i2 = ((VInt) v2).getval();
 			boolean res = switch (op) {
 				case "==" -> i1 == i2;
 				case "~=" -> i1 != i2;
@@ -31,7 +31,7 @@ public class ASTCmpOp implements ASTNode {
 				case "<=" -> i1 <= i2;
 				default -> throw new InterpreterError("unknown operation");
 			};
-			return (v1 instanceof VInt && v2 instanceof VInt) ? new VBool(res) : new VLBool(res);
+			return (!((VInt) v1).islin() && !((VInt) v2).islin()) ? new VBool(res) : new VLBool(res);
 		} else {
 			throw new InterpreterError(op + " operator: integers expected, found " + v1 + " and " + v2);
 		}

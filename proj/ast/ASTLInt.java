@@ -13,7 +13,7 @@ public class ASTLInt implements ASTNode  {
     }
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {
-        return new VLInt(v);
+        return new VInt(v, true);
     }
 
     public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError {;

@@ -19,9 +19,9 @@ public class ASTArithOp implements ASTNode {
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue v1 = lhs.eval(e);
 		IValue v2 = rhs.eval(e);
-		if ((v1 instanceof VInt || v1 instanceof VLInt) && (v2 instanceof VInt || v2 instanceof VLInt)) {
-			int i1 = v1 instanceof VLInt ? ((VLInt) v1).getval() : ((VInt) v1).getval();
-			int i2 = v2 instanceof VLInt ? ((VLInt) v2).getval() : ((VInt) v2).getval();
+		if (v1 instanceof VInt && v2 instanceof VInt) {
+			int i1 = ((VInt) v1).getval();
+			int i2 = ((VInt) v2).getval();
 			int res = switch (op) {
 				case "+" -> i1 + i2;
 				case "-" -> i1 - i2;
@@ -30,7 +30,7 @@ public class ASTArithOp implements ASTNode {
 				case "-u" -> -i2;
 				default -> throw new InterpreterError("unknown operation");
 			};
-			return (v1 instanceof VInt && v2 instanceof VInt) ? new VInt(res) : new VLInt(res);
+			return (!((VInt) v1).islin() && !((VInt) v2).islin()) ? new VInt(res, false) : new VInt(res, true);
 		} else if ((v1 instanceof VString || v1 instanceof VInt) && (v2 instanceof VInt || v2 instanceof VString) && op == "+") {
 			String s1 = v1 instanceof VString ? ((VString) v1).getval() : v1.toStr();
 			String s2 = v2 instanceof VString ? ((VString) v2).getval() : v2.toStr();

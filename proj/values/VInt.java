@@ -1,17 +1,23 @@
 package proj.values;
 
 public class VInt implements IValue {
-    int v;
+    int val;
+    boolean lin;
 
-    public VInt(int v0) {
-        v = v0;
+    public VInt(int v, boolean l) {
+        val = v;
+        lin = l;
     }
 
     public int getval() {
-        return v;
+        return val;
+    }
+
+    public boolean islin() {
+        return lin;
     }
 
     public String toStr() {
-        return Integer.toString(v);
+        return Integer.toString(val) + (lin ? "l" : "");
     }
 }
