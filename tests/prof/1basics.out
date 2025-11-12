@@ -52,7 +52,7 @@ type: int, value: 7
 type: int, value: 5
 
 
-class proj.errors.TypeCheckError: types for app func dom and arg are not subtypes: int->bool and int->int
+class proj.errors.TypeCheckError: func app: argument type (int->int) is not subtype of the function parameter (int->bool)
 
 
 type: int, value: 14
