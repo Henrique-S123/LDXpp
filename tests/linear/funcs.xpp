@@ -2,7 +2,7 @@ let f = fn x:int => {x + 1}; f(2);;
 
 let f = fn x:int => {fn y:int => {println(y)}}; let z = 1; f(z)(z);;
 
-let fl = fn x:linint => {x + 1l}; f(2l);;
+let f = fn x:linint => {x + 1l}; f(2l);;
 
 let x = 1l; let f = fn y:int => {x}; f(2);;
 

@@ -32,14 +32,12 @@ public class ASTApp implements ASTNode  {
         tf = e.unfold(tf);
         if (tf instanceof ASTTArrow) {
             ASTType ta = arg.typecheck(e);
-            if (ta instanceof ASTLinType) {
-                throw new TypeCheckError("nonlinear functions cannot take linear arguments");
-            } else if (ta instanceof ASTTUnit) {
+            if (ta instanceof ASTTUnit) {
                 return ((ASTTArrow) tf).getCodom();
             } else if (ta.isSubtypeOf(((ASTTArrow) tf).getDom(), e)) {
                 return ((ASTTArrow) tf).getCodom();
             } else {
-                throw new TypeCheckError("types for app func dom and arg are not subtypes: " + ((ASTTArrow) tf).getDom().toStr() + " and " + ta.toStr());
+                throw new TypeCheckError("func app: argument type (" + ta.toStr() + ") is not subtype of the function parameter (" + ((ASTTArrow) tf).getDom().toStr() + ")");
             }
         } else if (tf instanceof ASTTLollipop) {
             ASTType ta = arg.typecheck(e);
@@ -48,7 +46,7 @@ public class ASTApp implements ASTNode  {
             } else if (ta.isSubtypeOf(((ASTTLollipop) tf).getDom(), e)) {
                 return ((ASTTLollipop) tf).getCodom();
             } else {
-                throw new TypeCheckError("types for app func dom and arg are not subtypes: " + ((ASTTLollipop) tf).getDom().toStr() + " and " + ta.toStr());
+                throw new TypeCheckError("func app: argument type (" + ta.toStr() + ") is not subtype of the function parameter (" + ((ASTTArrow) tf).getDom().toStr() + ")");
             }
         } else {
             throw new TypeCheckError("illegal type for app func: " + tf.toStr());

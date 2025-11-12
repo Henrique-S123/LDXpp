@@ -26,10 +26,8 @@ public class ASTFunc implements ASTNode  {
 
     public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
         ASTType targtype = e.unfold(argtype);
-        if (targtype instanceof ASTLinType)
-            throw new TypeCheckError("nonlinear functions must have nonlinear types for arguments");
         Environment<ASTType> en = e.beginScope();
-        en.assoc(id, targtype);
+        en.assocUnrestricted(id, targtype);
         ASTType tb = body.typecheck(en);
         if (!en.getUsedLinears().isEmpty()) {
             throw new TypeCheckError("nonlinear functions must not use external linear values");

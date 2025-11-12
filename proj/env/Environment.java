@@ -65,6 +65,11 @@ public class Environment <E>{
         }
     }
 
+    public void assocUnrestricted(String id, E bind) throws InterpreterError {
+        if (gamma.containsKey(id)) throw new InterpreterError("Identifier " + id + " already declared!");
+        gamma.put(id, bind);
+    }
+
     public E find(String id) throws InterpreterError {
         Environment<E> curr = this;
         while (curr != null) {

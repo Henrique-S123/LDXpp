@@ -5,7 +5,7 @@ type: int, value: 3
 type: int, value: 1
 
 
-class proj.errors.TypeCheckError: nonlinear functions must have nonlinear types for arguments
+type: linint, value: 3l
 
 
 class proj.errors.TypeCheckError: nonlinear functions must not use external linear values
@@ -26,6 +26,6 @@ class proj.errors.TypeCheckError: there are unused linear values: [x: linint]
 type: linint, value: 10l
 
 
-class proj.errors.TypeCheckError: nonlinear functions cannot take linear arguments
+class proj.errors.TypeCheckError: func app: argument type (linint) is not subtype of the function parameter (int)
 
 
