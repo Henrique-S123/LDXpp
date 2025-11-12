@@ -10,7 +10,7 @@ all:
 	chmod +x x++
 
 clean:
-	rm -rf proj/values/*.class proj/parser/*.class proj/ast/*.class proj/*.class proj/types/*.class x++
+	rm -rf proj/env/*.class proj/errors/*.class proj/values/*.class proj/parser/*.class proj/ast/*.class proj/*.class proj/types/*.class x++
 
 run-tests:
 	@echo "Running tests recursively with ./x++..."

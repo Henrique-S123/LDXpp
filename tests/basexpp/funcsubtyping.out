@@ -1,6 +1,0 @@
-type: int, value: 1
-
-
-class proj.errors.TypeCheckError: func app: argument type (struct {#a = int; #b = int}->struct {#c = int; #a = int; #b = int}) is not subtype of the function parameter (blob1->blob2)
-
-

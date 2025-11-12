@@ -243,9 +243,8 @@ ASTNode Exp() :
   ASTNode t1, t2; }
 {
      t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term() 
-                 { if (op.kind == PLUS) 
-                         t1 = new ASTArithOp(t1,t2,"+");
-                   else  t1 = new ASTArithOp(t1,t2,"-");
+                 { 
+                  t1 = new ASTArithOp(t1,t2,op.image);
                  } 
                ) *
      { return t1; } 
@@ -255,32 +254,21 @@ ASTNode Term() :
 {Token op, n;
   ASTNode t1, t2;}
 {
-     t1 = Field() ( (op=<CONS> | op=<LCONS> | op=<TENSOR> | op=<PAIR>) t2 = Term() {
-              if (op.kind == CONS) t1 = new ASTCons(t1,t2);
-              else if (op.kind == LCONS) t1 = new ASTLcons(t1,t2);
-              else if (op.kind == TENSOR) t1 = new ASTTensor(t1, t2);
+     t1 = Fact() ( (op=<TENSOR> | op=<PAIR>) t2 = Term() {
+              if (op.kind == TENSOR) t1 = new ASTTensor(t1,t2);
               else if (op.kind == PAIR) t1 = new ASTPair(t1, t2);
      }
     |
     (
-     op=<STAR> t2 = Field()   { t1 = new ASTArithOp(t1,t2,"*"); }
+     op=<STAR> t2 = Fact()   { t1 = new ASTArithOp(t1,t2,"*"); }
 		 |
-		 op=<DIV> t2 = Field()  { t1 = new ASTArithOp(t1,t2,"/"); }
+		 op=<DIV> t2 = Fact()  { t1 = new ASTArithOp(t1,t2,"/"); }
 		 |
 		 op = <LPAR> t2 = Let () <RPAR>  { t1 = new ASTApp(t1, t2); }
      |
      op = <TUNIT> { t1 = new ASTApp(t1, new ASTUnit()); }
     )*)
      { return t1; }
-}
-
-ASTNode Field():
-{ Token n; 
-  ASTNode t;
-}
-{
-      t = Fact() (<DOT> n = <LABEL>  { t = new ASTSelect(t, n.image); })*
-     { return t; }
 }
 
 ASTNode Fact() :
@@ -291,7 +279,6 @@ ASTNode Fact() :
   ASTFunc tf, tc, tn;
   ASTLFunc ltf, ltc, ltn;
   ASTType type;
-  ExprBindList ll;
 }
 {
    (
@@ -313,36 +300,10 @@ ASTNode Fact() :
 		          <DLOLLIPOP> <LBRA> e2 = Let() <RBRA> { ltc.setBody(e2); t = ltf; }
     | <PRINT> t=Fact() { t = new ASTPrint(t, false); }
     | <PRINTLN> t=Fact() { t = new ASTPrint(t, true); }
-    | n=<NIL> { t = new ASTNil(); }
-    | <MATCH> t2 = Let() <LBRA> t = Match(t2)
-    | <LBRA> ll = ExprList() <RBRA> { t = new ASTStruct(ll); }
-    | n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); }
     | <SPLIT> t = Let() <LBRA> n = <Id> <VERT> n2 = <Id> <SLIMARROW> t2 = Let() <RBRA> { t = new ASTSplit(t, n.image, n2.image, t2); }
     | <LPAR> t=Let() <RPAR>
     )
    { return t; }
-}
-
-ASTNode Match(ASTNode p) :
-{
-  Token l, n, n2;
-  ASTNode t, e1, e2;
-  List<String> labels = new ArrayList<String>();
-  List<String> ids = new ArrayList<String>();
-  List<ASTNode> exprs = new ArrayList<ASTNode>();
-}
-{
-  (
-    <NIL> <SLIMARROW> e1 = Let()
-          <VERT> n = <Id> <CONS> n2 = <Id> <SLIMARROW> e2 = Let() <RBRA>
-          { t = new ASTMatchList(p, e1, n.image, n2.image, e2); }
-  | l = <LABEL> <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { labels.add(l.image); ids.add(n.image); exprs.add(e1); }
-          (<VERT> l = <LABEL> <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { if (labels.contains(l.image))
-                                              { throw new ParseException("duplicate label"); }
-                                              else { labels.add(l.image); ids.add(n.image); exprs.add(e1); } } )*
-          <RBRA> { t = new ASTMatchUnion(p, labels, ids, exprs); }
-  )
-  { return t; }
 }
 
 ASTType Type() : 
@@ -359,54 +320,20 @@ ASTType Type() :
 ASTType TypeF() :
 {
   ASTType t, t2;
-  TypeBindList ll;
   Token n;
 }
 {
     (
           <TINT> { t = new ASTTInt(); }
+        | <TLINT> { t = new ASTTLInt(); }
         | n=<Id> { t = new ASTTId(n.image); }
         | <TBOOL> { t = new ASTTBool(); }
         | <TLBOOL> { t = new ASTTLBool(); }
         | <TUNIT> { t = new ASTTUnit(); }
         | <TSTRING> { t = new ASTTString(); }
-        | <TLIST> <LT> t=Type() <GT> { t = new ASTTList(t); }
-        | <TSTRUCT> <LBRA> ll = LabelList() <RBRA> { t = new ASTTStruct(ll); }
-        | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll); }
         | <TPAIR> <LPAR> t = Type() <PAIR> t2 = Type() <RPAR> { t = new ASTTPair(t, t2); }
         | <TTENSOR> <LPAR> t = Type() <TENSOR> t2 = Type() <RPAR> { t = new ASTTTensor(t, t2); }
-        | <TLINT> { t = new ASTTLInt(); }
         | <LPAR> t = Type() <RPAR>
     )
     { return t; }
-}
-
-ExprBindList ExprList() :
-{
-  ASTNode t;
-  HashMap<String, ASTNode> ll;
-  Token n;
-}
-{   { ll = new HashMap<String, ASTNode>() ; }
-    ( n=<LABEL>  <EQUAL> t = BA() { ll.put(n.image,t); } 
-              (<COMMA> n=<LABEL>  <EQUAL> t = BA() { if (ll.containsKey(n.image))
-                            {throw new ParseException("duplicate label");}
-                            else {ll.put(n.image,t);} } )*
-    )?
-    { return new ExprBindList(ll); }
-}
-
-TypeBindList LabelList() :
-{
-  ASTType t;
-  HashMap<String, ASTType> ll;
-  Token n;
-}
-{   { ll = new HashMap<String, ASTType>() ; }
-    ( n=<LABEL>  <COLON> t = Type() { ll.put(n.image,t); } 
-              (<COMMA> n=<LABEL>  <COLON> t = Type() { if (ll.containsKey(n.image))
-                            {throw new ParseException("duplicate label");}
-                            else {ll.put(n.image,t);} } )*
-    )?
-    { return new TypeBindList(ll); }
 }

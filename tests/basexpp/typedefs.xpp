@@ -19,15 +19,3 @@ type a = int; type b = a; type c = b; let x:c = 1; let y:b = 2; x + y;;
 type a = int; type b = a;
 let f = fn x:b => {-x};
 f(5);;
-
-type a = int; type b = a;
-let f = fn x: struct {#val: b} => {-(x.#val)};
-f({#val = 5});;
-
-type a = int; type b = a;
-let f = fn x: union {#val: b} => {
-    match x {
-        #val(v) -> -v
-    }
-};
-f(#val(5));;
