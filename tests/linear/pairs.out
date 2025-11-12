@@ -16,9 +16,12 @@ type: int, value: 4
 class proj.errors.InterpreterError: Linear value of 'x' has already been consumed and cannot be used again.
 
 
-class proj.errors.TypeCheckError: two nonlinear types expected, found: linint and int
+type: (linint&int), value: (1l&2)
 
 
-class proj.errors.TypeCheckError: two nonlinear types expected, found: linint and linint
+type: (linint&linint), value: (1l&2l)
+
+
+class proj.errors.InterpreterError: Linear value of 'f' has already been consumed and cannot be used again.
 
 

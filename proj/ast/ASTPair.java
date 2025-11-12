@@ -22,9 +22,6 @@ public class ASTPair implements ASTNode {
     public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
-        if (t1 instanceof ASTLinType || t2 instanceof ASTLinType) {
-            throw new TypeCheckError("two nonlinear types expected, found: " + t1.toStr() + " and " + t2.toStr());
-        }
         return new ASTTPair(t1, t2);
     }
 }
