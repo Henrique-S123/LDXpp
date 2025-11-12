@@ -21,7 +21,7 @@ public class ASTTLollipop implements ASTLinType {
     }
 
     public String toStr() {
-        return dom.toStr()+"->"+codom.toStr();
+        return dom.toStr()+"-o"+codom.toStr();
     }
 
     public boolean isSubtypeOf(ASTType o, Environment<ASTType> e) throws InterpreterError {

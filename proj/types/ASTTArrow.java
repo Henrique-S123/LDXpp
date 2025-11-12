@@ -32,6 +32,10 @@ public class ASTTArrow implements ASTType {
             ASTType odom = ((ASTTArrow) o).getDom();
             ASTType ocodom = ((ASTTArrow) o).getCodom();
             return odom.isSubtypeOf(dom, e) && codom.isSubtypeOf(ocodom, e);
+        } else if (o instanceof ASTTLollipop) {
+            ASTType odom = ((ASTTLollipop) o).getDom();
+            ASTType ocodom = ((ASTTLollipop) o).getCodom();
+            return odom.isSubtypeOf(dom, e) && codom.isSubtypeOf(ocodom, e);
         }
         return false;
     }
