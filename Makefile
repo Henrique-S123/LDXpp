@@ -3,7 +3,7 @@ TESTS := $(shell find $(TEST_DIR) -type f -name '*.xpp')
 
 all:
 	rm -rf proj/values/*.class proj/parser/*.class proj/ast/*.class proj/*.class proj/types/*.class
-	javacc -OUTPUT_DIRECTORY=proj/parser/ proj/parser/ParserL0.jj
+	javacc -OUTPUT_DIRECTORY=proj/parser/ proj/parser/ParserLFXpp.jj
 	javac -Xlint:unchecked proj/values/*.java proj/parser/*.java proj/ast/*.java proj/*.java proj/types/*.java
 	echo '#!/bin/bash' > x++
 	echo 'java proj.Xppint "$$@"' >> x++
