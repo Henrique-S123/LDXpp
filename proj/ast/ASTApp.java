@@ -32,18 +32,14 @@ public class ASTApp implements ASTNode  {
         tf = e.unfold(tf);
         if (tf instanceof ASTTArrow) {
             ASTType ta = arg.typecheck(e);
-            if (ta instanceof ASTTUnit) {
-                return ((ASTTArrow) tf).getCodom();
-            } else if (ta.isSubtypeOf(((ASTTArrow) tf).getDom(), e)) {
+            if (ta instanceof ASTTUnit || ta.isSubtypeOf(((ASTTArrow) tf).getDom(), e)) {
                 return ((ASTTArrow) tf).getCodom();
             } else {
                 throw new TypeCheckError("func app: argument type (" + ta.toStr() + ") is not subtype of the function parameter (" + ((ASTTArrow) tf).getDom().toStr() + ")");
             }
         } else if (tf instanceof ASTTLollipop) {
             ASTType ta = arg.typecheck(e);
-            if (ta instanceof ASTTUnit) {
-                return ((ASTTLollipop) tf).getCodom();
-            } else if (ta.isSubtypeOf(((ASTTLollipop) tf).getDom(), e)) {
+            if (ta instanceof ASTTUnit || ta.isSubtypeOf(((ASTTLollipop) tf).getDom(), e)) {
                 return ((ASTTLollipop) tf).getCodom();
             } else {
                 throw new TypeCheckError("func app: argument type (" + ta.toStr() + ") is not subtype of the function parameter (" + ((ASTTArrow) tf).getDom().toStr() + ")");

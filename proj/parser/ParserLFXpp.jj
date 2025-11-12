@@ -32,8 +32,6 @@ TOKEN :
   |
   < LinBool : ("truel"|"falsel") >
   |
-  < NIL : "nil" >
-  |
   < PLUS : "+" >
   |
   < MINUS : "-" >
@@ -55,10 +53,6 @@ TOKEN :
   < DOT : "." >
   |
   < COLON : ":" >
-  |
-  < CONS : "::" >
-  |
-  < LCONS : ":?" >
   |
   < SEMIC : ";" >
   |
@@ -110,8 +104,6 @@ TOKEN :
   |
   < PAIR : "&" >
   |
-  < MATCH : "match" >
-  |
   < TYPE : "type" >
   |
   < TINT : "int" >
@@ -125,10 +117,6 @@ TOKEN :
   < TSTRING  : "string" >  
   |
   < TLIST  : "list" >
-  |
-  < TUNION  : "union" >  
-  |
-  < TSTRUCT  : "struct" >
   |
   < TTENSOR : "tensor" >
   |
