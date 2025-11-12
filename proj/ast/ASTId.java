@@ -6,7 +6,6 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTId implements ASTNode	{	
-
     String id;	
     
     public ASTId(String id)	{

@@ -8,8 +8,13 @@ import proj.errors.*;
 import java.util.HashSet;
 
 public class ASTIf implements ASTNode {
-
     ASTNode test, conseq, alt;
+
+	public ASTIf(ASTNode t, ASTNode c, ASTNode a) {
+		test = t;
+		conseq = c;
+		alt = a;
+    }
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue vt = test.eval(e);
@@ -17,18 +22,8 @@ public class ASTIf implements ASTNode {
 			throw new InterpreterError("if: bool condition expected, found " + vt);
 		} else {
 			boolean val = ((VBool) vt).getval();
-			if (val) {
-				return conseq.eval(e);
-			} else {
-				return alt.eval(e);
-			}
+			return val ? conseq.eval(e) : alt.eval(e);
 		}
-    }
-
-    public ASTIf(ASTNode t, ASTNode c, ASTNode a) {
-		test = t;
-		conseq = c;
-		alt = a;
     }
 
 	public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {

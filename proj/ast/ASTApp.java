@@ -16,12 +16,13 @@ public class ASTApp implements ASTNode  {
     public IValue eval(Environment<IValue> e) throws InterpreterError {
         IValue vfunc = func.eval(e);
         if (vfunc instanceof VClos) {
+            VClos vf = ((VClos) vfunc);
             IValue varg = arg.eval(e);
             if (varg instanceof VUnit)
-                return ((VClos) vfunc).getBody().eval(((VClos) vfunc).getEnv());
-            Environment<IValue> env = (((VClos) vfunc)).getEnv().beginScope();
-            env.assoc(((VClos) vfunc).getId(), varg);
-            return ((VClos) vfunc).getBody().eval(env);
+                return vf.getBody().eval(vf.getEnv());
+            Environment<IValue> env = vf.getEnv().beginScope();
+            env.assoc(vf.getId(), varg);
+            return vf.getBody().eval(env);
         } else {
             throw new InterpreterError("func app: closure expected, found " + vfunc);
         }          
@@ -30,22 +31,21 @@ public class ASTApp implements ASTNode  {
     public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
         ASTType tf = func.typecheck(e);
         tf = e.unfold(tf);
+        ASTType dom, codom;
         if (tf instanceof ASTTArrow) {
-            ASTType ta = arg.typecheck(e);
-            if (ta instanceof ASTTUnit || ta.isSubtypeOf(((ASTTArrow) tf).getDom(), e)) {
-                return ((ASTTArrow) tf).getCodom();
-            } else {
-                throw new TypeCheckError("func app: argument type (" + ta.toStr() + ") is not subtype of the function parameter (" + ((ASTTArrow) tf).getDom().toStr() + ")");
-            }
+            dom = ((ASTTArrow) tf).getDom();
+            codom = ((ASTTArrow) tf).getCodom();
         } else if (tf instanceof ASTTLollipop) {
-            ASTType ta = arg.typecheck(e);
-            if (ta instanceof ASTTUnit || ta.isSubtypeOf(((ASTTLollipop) tf).getDom(), e)) {
-                return ((ASTTLollipop) tf).getCodom();
-            } else {
-                throw new TypeCheckError("func app: argument type (" + ta.toStr() + ") is not subtype of the function parameter (" + ((ASTTArrow) tf).getDom().toStr() + ")");
-            }
+            dom = ((ASTTLollipop) tf).getDom();
+            codom = ((ASTTLollipop) tf).getCodom();
         } else {
-            throw new TypeCheckError("illegal type for app func: " + tf.toStr());
+            throw new TypeCheckError("illegal type for func app: " + tf.toStr());
+        }
+        ASTType ta = arg.typecheck(e);
+        if (ta instanceof ASTTUnit || ta.isSubtypeOf(dom, e)) {
+            return codom;
+        } else {
+            throw new TypeCheckError("func app: argument type (" + ta.toStr() + ") is not subtype of the function parameter (" + dom.toStr() + ")");
         }
 	}
 }

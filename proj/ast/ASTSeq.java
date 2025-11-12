@@ -6,7 +6,6 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTSeq implements ASTNode {
-
     ASTNode first, second;
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {

@@ -6,7 +6,6 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTLogicOp implements ASTNode {
-
     ASTNode lhs, rhs;
 	String op;
 
