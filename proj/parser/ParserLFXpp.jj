@@ -104,6 +104,8 @@ TOKEN :
   |
   < PAIR : "&" >
   |
+  < MATCH : "match" >
+  |
   < TYPE : "type" >
   |
   < TINT : "int" >
@@ -116,7 +118,7 @@ TOKEN :
   |
   < TSTRING  : "string" >  
   |
-  < TLIST  : "list" >
+  < TUNION  : "union" >
   |
   < TTENSOR : "tensor" >
   |
@@ -288,10 +290,31 @@ ASTNode Fact() :
 		          <DLOLLIPOP> <LBRA> e2 = Let() <RBRA> { ltc.setBody(e2); t = ltf; }
     | <PRINT> t=Fact() { t = new ASTPrint(t, false); }
     | <PRINTLN> t=Fact() { t = new ASTPrint(t, true); }
+    | <MATCH> t2 = Let() <LBRA> t = Match(t2)
+    |  n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); }
     | <SPLIT> t = Let() <LBRA> n = <Id> <VERT> n2 = <Id> <SLIMARROW> t2 = Let() <RBRA> { t = new ASTSplit(t, n.image, n2.image, t2); }
     | <LPAR> t=Let() <RPAR>
     )
    { return t; }
+}
+
+ASTNode Match(ASTNode p) :
+{
+  Token l, n, n2;
+  ASTNode t, e1, e2;
+  List<String> labels = new ArrayList<String>();
+  List<String> ids = new ArrayList<String>();
+  List<ASTNode> exprs = new ArrayList<ASTNode>();
+}
+{
+  (
+    l = <LABEL> <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { labels.add(l.image); ids.add(n.image); exprs.add(e1); }
+          (<VERT> l = <LABEL> <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { if (labels.contains(l.image))
+                                              { throw new ParseException("duplicate label"); }
+                                              else { labels.add(l.image); ids.add(n.image); exprs.add(e1); } } )*
+          <RBRA> { t = new ASTMatchUnion(p, labels, ids, exprs); }
+  )
+  { return t; }
 }
 
 ASTType Type() : 
@@ -309,6 +332,7 @@ ASTType TypeF() :
 {
   ASTType t, t2;
   Token n;
+  TypeBindList ll;
 }
 {
     (
@@ -321,7 +345,23 @@ ASTType TypeF() :
         | <TSTRING> { t = new ASTTString(); }
         | <TPAIR> <LPAR> t = Type() <PAIR> t2 = Type() <RPAR> { t = new ASTTPair(t, t2); }
         | <TTENSOR> <LPAR> t = Type() <TENSOR> t2 = Type() <RPAR> { t = new ASTTTensor(t, t2); }
+        | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll); }
         | <LPAR> t = Type() <RPAR>
     )
     { return t; }
+}
+
+TypeBindList LabelList() :
+{
+  ASTType t;
+  HashMap<String, ASTType> ll;
+  Token n;
+}
+{   { ll = new HashMap<String, ASTType>() ; }
+    ( n=<LABEL>  <COLON> t = Type() { ll.put(n.image,t); }
+              (<COMMA> n=<LABEL>  <COLON> t = Type() { if (ll.containsKey(n.image))
+                            {throw new ParseException("duplicate label");}
+                            else {ll.put(n.image,t);} } )*
+    )?
+    { return new TypeBindList(ll); }
 }
