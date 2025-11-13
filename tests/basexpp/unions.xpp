@@ -1,0 +1,243 @@
+let x = #a(3); match x {#b(c) -> -c | #a(c) -> c};;
+
+let x = #a(3); match x {#b(c) -> -c | #d(c) -> c};;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> s + ".txt"
+        | #val(b) -> ~b
+    }
+};
+f(#num(6));;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> 2
+        | #val(b) -> ~b
+    }
+};
+f(#num(6));;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> 2
+        | #val(b) -> 3
+    }
+};
+f(#num(6));;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> 2
+        | #val(b) -> 3
+    }
+};
+f(#txt("abc"));;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> 2
+        | #val(b) -> 3
+    }
+};
+f(#val(true));;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> 2
+    }
+};
+f(#val(true));;
+
+type un = union {#num: int, #txt: string, #val: bool};
+let f = fn x:un => {
+    match x {
+        #num(n) -> n + 1
+        | #txt(s) -> 2
+        | #val(b) -> 3
+        | #deadcode(d) -> println("should not come here")
+    }
+};
+f(#val(true));;
+
+type Opt = union { #none:(), #some:int};
+let l0:Opt = #none(());
+l0;;
+
+type Opt = union { #none:(), #some:int};
+let l0:Opt = #some(2);
+l0;;
+
+type Opt = union { #none:(), #some:int};
+let l0:Opt = #none(());
+match l0 {
+    #none(_) -> 1
+|   #some(i) -> i    
+};;
+
+type Opt = union { #none:(), #some:int};
+let l0:Opt = #some(42);
+match l0 {
+    #none(_) -> 1
+|   #some(i) -> i    
+};;
+
+type Opt = union { #none:(), #some:int};
+let l0:Opt = #some(42);
+match l0 {
+    #none(_) -> 1
+|   #some(i) -> i  
+|   #never(_) -> true * false
+};;
+
+type Opt = union { #none:(), #some:int};
+let l0:Opt = #some(42);
+match l0 {
+    #none(_) -> 1
+|   #some(i) -> (i && true)  
+};;
+
+type Opt = union { #none:(), #some:int};
+let l0:Opt = #some(42);
+match l0 {
+    #none(_) -> 1
+|   #some(i) -> (i > 2)  
+};;
+
+type Opt = union { #none:(), #some:int};
+let l0:Opt = #some(42);
+match l0 {
+    #none(_) -> 1
+};;
+
+type Opt = union { #none:(), #some:int};
+let l0:Opt = #none(());
+match l0 {
+    #some(x) -> x + 1
+};;
+
+let fst = fn p:pair(int&int) => {split p {f|s -> f}};
+let snd = fn p:pair(int&int) => {split p {f|s -> s}};
+type Circle = pair(int&int);
+type Rectangle = pair(int&int);
+type Blob = union { #circle: Circle, #rect: Rectangle };
+let r1 = #rect(10&20);
+match r1 {
+        #circle(c) -> let r = pi*(fst(c)); (r*r)/2
+    |   #rect(r) -> (fst(r)) * (snd(r))
+}
+;;
+
+let fst = fn p:pair(int&int) => {split p {f|s -> f}};
+let snd = fn p:pair(int&int) => {split p {f|s -> s}};
+type Circle = pair(int&int);
+type Rectangle = pair(int&int);
+type Blob = union { #circle: Circle, #rect: Rectangle };
+let r1:Blob = #rect(10&20);
+match r1 {
+        #circle(c) -> let r = 3*(fst(c)); (r*r)/2
+    |   #rect(r) -> (fst(r)) * (snd(r))
+}
+;;
+
+let fst = fn p:pair(int&int) => {split p {f|s -> f}};
+let snd = fn p:pair(int&int) => {split p {f|s -> s}};
+type Circle = pair(int&int);
+type Rectangle = pair(int&int);
+type Blob = union { #circle: Circle, #rect: Rectangle };
+let pi = 3142;
+let area = fn b:Blob => {
+  match b {
+        #circle(c) -> let r = pi*(fst(c)); (r*r)/2
+    |   #rect(r) -> (fst(r)) * (snd(r))
+    }
+};
+let r1 = #rect(10&20);
+area(r1);;
+
+let fst = fn p:pair(int&int) => {split p {f|s -> f}};
+let snd = fn p:pair(int&int) => {split p {f|s -> s}};
+type Circle = pair(int&int);
+type Rectangle = pair(int&int);
+type Blob = union { #circle: Circle, #rect: Rectangle };
+let pi = 3142;
+let area = fn b:Blob => {
+  match b {
+        #circle(c) -> let r = pi*(fst(c)); (r*r)/2
+    |   #rect(r) -> (fst(r)) * (snd(r))
+    }
+};
+let r1:Blob = #rect(10&20);
+area(r1);;
+
+let fst = fn p:pair(int&int) => {split p {f|s -> f}};
+let snd = fn p:pair(int&int) => {split p {f|s -> s}};
+type Circle = pair(int&int);
+type Rectangle = pair(int&int);
+type Blob = union { #circle: Circle, #rect: Rectangle };
+let pi = 3142;
+let area = fn b:union{ #circle: Circle } => {
+  match b {
+        #circle(c) -> let r = pi*(fst(c)); (r*r)/2
+    |   #rect(r) -> (fst(r)) * (snd(r))
+    }
+};
+let r1:Blob = #rect(10&20);
+area(r1);;
+
+let fst = fn p:pair(int&int) => {split p {f|s -> f}};
+let snd = fn p:pair(int&int) => {split p {f|s -> s}};
+type Circle = pair(int&int);
+type Rectangle = pair(int&int);
+type Blob = union { #circle: Circle, #rect: Rectangle };
+let pi = 3142;
+let area = fn b:union{ #rect: Rectangle } => {
+  match b {
+        #circle(c) -> let r = pi*(fst(c)); (r*r)/2
+    |   #rect(r) -> (fst(r)) * (snd(r))
+    }
+};
+let r1:Blob = #rect(10&20);
+area(r1);;
+
+let fst = fn p:pair(int&int) => {split p {f|s -> f}};
+let snd = fn p:pair(int&int) => {split p {f|s -> s}};
+type Circle = pair(int&int);
+type Rectangle = pair(int&int);
+type Blob = union { #circle: Circle, #rect: Rectangle };
+let pi = 3142;
+let area = fn b:union{ #rect: Rectangle } => {
+  match b {
+        #circle(c) -> let r = pi*(fst(c)); (r*r)/2
+    |   #rect(r) -> (fst(r)) * (snd(r))
+    }
+};
+let r1 = #rect(10&20);
+area(r1);;
+
+let fst = fn p:pair(int&int) => {split p {f|s -> f}};
+let snd = fn p:pair(int&int) => {split p {f|s -> s}};
+type Circle = pair(int&int);
+type Rectangle = pair(int&int);
+type Blob = union { #circle: Circle, #rect: Rectangle };
+let pi = 3;
+let area = fn b:Blob => {
+  match b {
+        #circle(c) -> let r = pi*(fst(c)); (r*r)/2
+    |   #rect(r) -> (fst(r)) * (snd(r))
+    }
+};
+let r1 = #circle(2&0);
+area(r1);;

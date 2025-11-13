@@ -24,7 +24,10 @@ public class ASTTPair implements ASTType {
     }
 
     public boolean isSubtypeOf(ASTType o, Environment<ASTType> e) throws InterpreterError {
-        if (o instanceof ASTTPair) {
+        if (o instanceof ASTTId) {
+            ASTType to = e.unfold(o);
+            return this.isSubtypeOf(to, e);
+        } else if (o instanceof ASTTPair) {
             return first.isSubtypeOf(((ASTTPair) o).getFirst(), e)
                 && second.isSubtypeOf(((ASTTPair) o).getSecond(), e);
         } else if (o instanceof ASTTTensor) {

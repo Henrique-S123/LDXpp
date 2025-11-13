@@ -24,8 +24,13 @@ public class ASTTTensor implements ASTLinType {
     }
 
     public boolean isSubtypeOf(ASTType o, Environment<ASTType> e) throws InterpreterError {
-        return (o instanceof ASTTTensor &&
-            first.isSubtypeOf(((ASTTTensor) o).getFirst(), e) &&
-            second.isSubtypeOf(((ASTTTensor) o).getSecond(), e));
+        if (o instanceof ASTTId) {
+            ASTType to = e.unfold(o);
+            return this.isSubtypeOf(to, e);
+        } else if (o instanceof ASTTTensor) {
+            return first.isSubtypeOf(((ASTTTensor) o).getFirst(), e)
+                && second.isSubtypeOf(((ASTTTensor) o).getSecond(), e);
+        }
+        return false;
     }
 }

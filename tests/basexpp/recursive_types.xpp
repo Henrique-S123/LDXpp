@@ -1,0 +1,69 @@
+type NODE = pair(int&LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (()) ;
+let l1:LIST = #cons ( (2&l0) ) ;
+let l2:LIST = #cons ( (3&l1) ) ;
+l2;;
+
+
+type NODE = pair(int&LIST);
+type LIST = union {
+        #nil: (),
+        #cons: NODE
+};
+let l0:LIST = #nil (()) ;
+let l1:LIST = #cons ( (2&l0) ) ;
+let l2:LIST = #cons ( (3&l1) ) ;
+let fst = fn p:pair(int&LIST) => {split p {f|s -> f}};
+let snd = fn p:pair(int&LIST) => {split p {f|s -> s}};
+let plist:LIST->() = fn
+    l:LIST => { 
+        match l {
+            #nil(_) -> println (-1000); ()
+        |   #cons(n) -> 
+                println (fst(n));
+                plist (snd(n))
+        }
+    }
+;
+plist (l2);;
+
+
+type NODE = pair(int&LIST);
+type LIST = union {
+        #nil: (),
+        #cons: NODE
+};
+let fst = fn p:pair(int&LIST) => {split p {f|s -> f}};
+let snd = fn p:pair(int&LIST) => {split p {f|s -> s}};
+let cons: int -> LIST -> LIST =
+    fn v:int, l:LIST =>
+        {#cons ( (v&l) )};
+let concat:LIST->LIST->LIST =
+    fn a:LIST, b:LIST => { 
+        match a {
+            #nil(_) -> b
+        |   #cons(n) -> 
+                cons (fst(n)) (concat (snd(n)) (b))
+        }
+    };
+let genlist: int -> LIST =
+    fn n:int => {
+        if (n==0) { #nil(()) }
+        else {
+            cons (n) (genlist (n-1))
+        }
+    };
+let print_list:LIST->() = fn
+    l:LIST => { 
+        match l {
+            #nil(_) -> ()
+        |   #cons(n) -> 
+                println (fst(n));
+                print_list (snd(n))
+        }
+    }
+;
+let l0 = genlist (20);
+let la = concat (l0) (l0);
+print_list (la);;

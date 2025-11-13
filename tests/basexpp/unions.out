@@ -1,0 +1,78 @@
+type: int, value: 3
+
+
+class proj.errors.TypeCheckError: match missing label #a
+
+
+class proj.errors.TypeCheckError: different types for match cases: string and int
+
+
+class proj.errors.TypeCheckError: different types for match cases: bool and int
+
+
+type: int, value: 7
+
+
+type: int, value: 2
+
+
+type: int, value: 3
+
+
+class proj.errors.TypeCheckError: match missing label #val
+
+
+type: int, value: 3
+
+
+type: union {#some = int; #none = ()}, value: union #none(())
+
+
+type: union {#some = int; #none = ()}, value: union #some(2)
+
+
+type: int, value: 1
+
+
+type: int, value: 42
+
+
+type: int, value: 42
+
+
+class proj.errors.TypeCheckError: illegal types to && operator: int and bool
+
+
+class proj.errors.TypeCheckError: different types for match cases: int and bool
+
+
+class proj.errors.TypeCheckError: match missing label #some
+
+
+class proj.errors.TypeCheckError: match missing label #none
+
+
+type: int, value: 200
+
+
+type: int, value: 200
+
+
+type: int, value: 200
+
+
+type: int, value: 200
+
+
+class proj.errors.TypeCheckError: func app: argument type (union {#circle = Circle; #rect = Rectangle}) is not subtype of the function parameter (union {#circle = Circle})
+
+
+class proj.errors.TypeCheckError: func app: argument type (union {#circle = Circle; #rect = Rectangle}) is not subtype of the function parameter (union {#rect = Rectangle})
+
+
+type: int, value: 200
+
+
+type: int, value: 18
+
+
