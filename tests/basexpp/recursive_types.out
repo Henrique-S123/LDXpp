@@ -1,4 +1,4 @@
-type: union {#nil = (); #cons = NODE}, value: union #cons(struct {#next = union #cons(struct {#next = union #nil(()); #val = 2}); #val = 3})
+type: union {#nil = (); #cons = NODE}, value: union #cons((3&union #cons((2&union #nil(())))))
 
 
 3
