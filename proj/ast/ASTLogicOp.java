@@ -30,7 +30,7 @@ public class ASTLogicOp implements ASTNode {
 			boolean lin = (((VBool) v1).islin() || ((VBool) v2).islin());
 			return new VBool(res, lin);
 		} else {
-			String types = (op == "~" ? "" : (v1 + " and ")) + v2.toStr();
+			String types = (op == "~" ? "" : (v1.toStr() + " and ")) + v2.toStr();
 			if (op == "~")
 				throw new InterpreterError("~ unary operator: boolean expected, found " + types);
 			else

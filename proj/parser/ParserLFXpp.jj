@@ -104,6 +104,10 @@ TOKEN :
   |
   < PAIR : "&" >
   |
+  < FST : "fst" >
+  |
+  < SND : "snd" >
+  |
   < MATCH : "match" >
   |
   < TYPE : "type" >
@@ -290,6 +294,8 @@ ASTNode Fact() :
 		          <DLOLLIPOP> <LBRA> e2 = Let() <RBRA> { ltc.setBody(e2); t = ltf; }
     | <PRINT> t=Fact() { t = new ASTPrint(t, false); }
     | <PRINTLN> t=Fact() { t = new ASTPrint(t, true); }
+    | <FST> <LPAR> t = Let() <RPAR> { t = new ASTChoice(t, 0); }
+    | <SND> <LPAR> t = Let() <RPAR> { t = new ASTChoice(t, 1); }
     | <MATCH> t2 = Let() <LBRA> t = Match(t2)
     |  n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); }
     | <SPLIT> t = Let() <LBRA> n = <Id> <VERT> n2 = <Id> <SLIMARROW> t2 = Let() <RBRA> { t = new ASTSplit(t, n.image, n2.image, t2); }

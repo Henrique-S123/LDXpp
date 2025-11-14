@@ -13,29 +13,29 @@ let p1 = 1l@2l; let p2 = p1; p2;;
 let p1 = 1l@2l; let p2 = p1; p1;;
 
 
-let fst = lfn x:tensor(int@int) =o {split x {f|s -> f}}; let p = 1@2; fst(p);;
+let lfst = lfn x:tensor(int@int) =o {split x {f|s -> f}}; let p = 1@2; lfst(p);;
 
-let snd = lfn x:tensor(int@int) =o {split x {f|s -> s}}; let p = 1@2; snd(p);;
+let lsnd = lfn x:tensor(int@int) =o {split x {f|s -> s}}; let p = 1@2; lsnd(p);;
 
-let ign = lfn x:tensor(int@int) =o {split x {f|s -> 42}}; let p = 1@2; ign(p);;
-
-
-let fst = lfn x:tensor(linint@int) =o {split x {f|s -> f}}; let p = 1l@2; fst(p);;
-
-let snd = lfn x:tensor(linint@int) =o {split x {f|s -> s}}; let p = 1l@2; snd(p);;
-
-let ign = lfn x:tensor(linint@int) =o {split x {f|s -> 42}}; let p = 1l@2; ign(p);;
+let lign = lfn x:tensor(int@int) =o {split x {f|s -> 42}}; let p = 1@2; lign(p);;
 
 
-let fst = lfn x:tensor(int@linint) =o {split x {f|s -> f}}; let p = 1@2l; fst(p);;
+let lfst = lfn x:tensor(linint@int) =o {split x {f|s -> f}}; let p = 1l@2; lfst(p);;
 
-let snd = lfn x:tensor(int@linint) =o {split x {f|s -> s}}; let p = 1@2l; snd(p);;
+let lsnd = lfn x:tensor(linint@int) =o {split x {f|s -> s}}; let p = 1l@2; lsnd(p);;
 
-let ign = lfn x:tensor(int@linint) =o {split x {f|s -> 42}}; let p = 1@2l; ign(p);;
+let lign = lfn x:tensor(linint@int) =o {split x {f|s -> 42}}; let p = 1l@2; lign(p);;
 
 
-let fst = lfn x:tensor(linint@linint) =o {split x {f|s -> f}}; let p = 1l@2l; fst(p);;
+let lfst = lfn x:tensor(int@linint) =o {split x {f|s -> f}}; let p = 1@2l; lfst(p);;
 
-let snd = lfn x:tensor(linint@linint) =o {split x {f|s -> s}}; let p = 1l@2l; snd(p);;
+let lsnd = lfn x:tensor(int@linint) =o {split x {f|s -> s}}; let p = 1@2l; lsnd(p);;
 
-let ign = lfn x:tensor(linint@linint) =o {split x {f|s -> 42}}; let p = 1l@2l; ign(p);;
+let lign = lfn x:tensor(int@linint) =o {split x {f|s -> 42}}; let p = 1@2l; lign(p);;
+
+
+let lfst = lfn x:tensor(linint@linint) =o {split x {f|s -> f}}; let p = 1l@2l; lfst(p);;
+
+let lsnd = lfn x:tensor(linint@linint) =o {split x {f|s -> s}}; let p = 1l@2l; lsnd(p);;
+
+let lign = lfn x:tensor(linint@linint) =o {split x {f|s -> 42}}; let p = 1l@2l; lign(p);;

@@ -22,6 +22,9 @@ type: (linint&int), value: (1l&2)
 type: (linint&linint), value: (1l&2l)
 
 
-class proj.errors.InterpreterError: Linear value of 'f' has already been consumed and cannot be used again.
+type: linint, value: 2l
+
+
+class proj.errors.InterpreterError: Linear value of 'y' has already been consumed and cannot be used again.
 
 

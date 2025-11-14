@@ -128,8 +128,6 @@ match l0 {
     #some(x) -> x + 1
 };;
 
-let fst = fn p:pair(int&int) => {split p {f|s -> f}};
-let snd = fn p:pair(int&int) => {split p {f|s -> s}};
 type Circle = pair(int&int);
 type Rectangle = pair(int&int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
@@ -140,8 +138,6 @@ match r1 {
 }
 ;;
 
-let fst = fn p:pair(int&int) => {split p {f|s -> f}};
-let snd = fn p:pair(int&int) => {split p {f|s -> s}};
 type Circle = pair(int&int);
 type Rectangle = pair(int&int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
@@ -152,8 +148,6 @@ match r1 {
 }
 ;;
 
-let fst = fn p:pair(int&int) => {split p {f|s -> f}};
-let snd = fn p:pair(int&int) => {split p {f|s -> s}};
 type Circle = pair(int&int);
 type Rectangle = pair(int&int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
@@ -167,8 +161,6 @@ let area = fn b:Blob => {
 let r1 = #rect(10&20);
 area(r1);;
 
-let fst = fn p:pair(int&int) => {split p {f|s -> f}};
-let snd = fn p:pair(int&int) => {split p {f|s -> s}};
 type Circle = pair(int&int);
 type Rectangle = pair(int&int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
@@ -182,8 +174,6 @@ let area = fn b:Blob => {
 let r1:Blob = #rect(10&20);
 area(r1);;
 
-let fst = fn p:pair(int&int) => {split p {f|s -> f}};
-let snd = fn p:pair(int&int) => {split p {f|s -> s}};
 type Circle = pair(int&int);
 type Rectangle = pair(int&int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
@@ -197,8 +187,6 @@ let area = fn b:union{ #circle: Circle } => {
 let r1:Blob = #rect(10&20);
 area(r1);;
 
-let fst = fn p:pair(int&int) => {split p {f|s -> f}};
-let snd = fn p:pair(int&int) => {split p {f|s -> s}};
 type Circle = pair(int&int);
 type Rectangle = pair(int&int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
@@ -212,8 +200,6 @@ let area = fn b:union{ #rect: Rectangle } => {
 let r1:Blob = #rect(10&20);
 area(r1);;
 
-let fst = fn p:pair(int&int) => {split p {f|s -> f}};
-let snd = fn p:pair(int&int) => {split p {f|s -> s}};
 type Circle = pair(int&int);
 type Rectangle = pair(int&int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
@@ -227,8 +213,6 @@ let area = fn b:union{ #rect: Rectangle } => {
 let r1 = #rect(10&20);
 area(r1);;
 
-let fst = fn p:pair(int&int) => {split p {f|s -> f}};
-let snd = fn p:pair(int&int) => {split p {f|s -> s}};
 type Circle = pair(int&int);
 type Rectangle = pair(int&int);
 type Blob = union { #circle: Circle, #rect: Rectangle };

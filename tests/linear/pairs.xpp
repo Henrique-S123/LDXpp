@@ -2,11 +2,11 @@ let x = 1; x&x;;
 
 let x = 1; let y = 2; x&y;;
 
-let fst = fn x:pair(int&int) => {split x {f|s -> f}}; fst(1&2);;
+fst(1&2);;
 
-let snd = fn x:pair(int&int) => {split x {f|s -> s}}; snd(1&2);;
+snd(1&2);;
 
-let f = fn p:pair(int->int&int) => {split p {f|s -> f(s)}}; f((fn z:int => {z+2})&2);;
+let f = fn p:pair(int->int&int) => {(fst(p)) (snd(p))}; f((fn z:int => {z+2})&2);;
 
 let x = 1l; x&x;;
 
@@ -14,4 +14,6 @@ let x = 1l; let y = 2; x&y;;
 
 let x = 1l; let y = 2l; x&y;;
 
-let p1 = 1l&2l; let double_fst = fn x:pair(linint&linint) => {split x {f|s -> f + f}}; double_fst(p1);;
+let p1 = 1l&2l; let double_fst = fn x:pair(linint&linint) => {fst(x) + fst(x)}; double_fst(p1);;
+
+let p1 = 1l&2l; let double_fst = fn x:pair(linint&linint) => {let y = fst(x); y + y}; double_fst(p1);;

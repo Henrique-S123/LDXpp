@@ -29,6 +29,8 @@ public class Parser implements ParserConstants {
     case PRINTLN:
     case FN:
     case LFN:
+    case FST:
+    case SND:
     case MATCH:
     case TYPE:
     case TUNIT:
@@ -65,6 +67,8 @@ public class Parser implements ParserConstants {
     case PRINTLN:
     case FN:
     case LFN:
+    case FST:
+    case SND:
     case MATCH:
     case TUNIT:
     case SPLIT:
@@ -480,6 +484,20 @@ public class Parser implements ParserConstants {
       t = Fact();
                            t = new ASTPrint(t, true);
       break;
+    case FST:
+      jj_consume_token(FST);
+      jj_consume_token(LPAR);
+      t = Let();
+      jj_consume_token(RPAR);
+                                      t = new ASTChoice(t, 0);
+      break;
+    case SND:
+      jj_consume_token(SND);
+      jj_consume_token(LPAR);
+      t = Let();
+      jj_consume_token(RPAR);
+                                      t = new ASTChoice(t, 1);
+      break;
     case MATCH:
       jj_consume_token(MATCH);
       t2 = Let();
@@ -714,14 +732,14 @@ public class Parser implements ParserConstants {
     finally { jj_save(1, xla); }
   }
 
-  static private boolean jj_3_2() {
-    if (jj_scan_token(TYPE)) return true;
+  static private boolean jj_3_1() {
+    if (jj_scan_token(LET)) return true;
     if (jj_scan_token(Id)) return true;
     return false;
   }
 
-  static private boolean jj_3_1() {
-    if (jj_scan_token(LET)) return true;
+  static private boolean jj_3_2() {
+    if (jj_scan_token(TYPE)) return true;
     if (jj_scan_token(Id)) return true;
     return false;
   }
@@ -749,7 +767,7 @@ public class Parser implements ParserConstants {
       jj_la1_0 = new int[] {0x800012e1,0x40000,0x800012e0,0x80000,0x1000000,0x800000,0x7e000000,0x7e000000,0x300,0x300,0x0,0x1c00,0x1c00,0x0,0x200000,0x200000,0x800012c0,0x400000,0x0,0x0,0x1000,0x200000,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x1f80b03d,0x0,0x1f80b03d,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xc00,0x8000,0x8000,0xc00,0x0,0x0,0x1f80903d,0x0,0x300,0x300,0x47fc000,0x0,0x1000000,};
+      jj_la1_1 = new int[] {0x7e02f03d,0x0,0x7e02f03d,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xc00,0x20000,0x20000,0xc00,0x0,0x0,0x7e02703d,0x0,0x300,0x300,0x11ff0000,0x0,0x4000000,};
    }
   static final private JJCalls[] jj_2_rtns = new JJCalls[2];
   static private boolean jj_rescan = false;
@@ -959,7 +977,7 @@ public class Parser implements ParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[61];
+    boolean[] la1tokens = new boolean[63];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -976,7 +994,7 @@ public class Parser implements ParserConstants {
         }
       }
     }
-    for (int i = 0; i < 61; i++) {
+    for (int i = 0; i < 63; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

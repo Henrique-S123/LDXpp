@@ -14,8 +14,6 @@ type LIST = union {
 let l0:LIST = #nil (()) ;
 let l1:LIST = #cons ( (2&l0) ) ;
 let l2:LIST = #cons ( (3&l1) ) ;
-let fst = fn p:pair(int&LIST) => {split p {f|s -> f}};
-let snd = fn p:pair(int&LIST) => {split p {f|s -> s}};
 let plist:LIST->() = fn
     l:LIST => { 
         match l {
@@ -34,8 +32,6 @@ type LIST = union {
         #nil: (),
         #cons: NODE
 };
-let fst = fn p:pair(int&LIST) => {split p {f|s -> f}};
-let snd = fn p:pair(int&LIST) => {split p {f|s -> s}};
 let cons: int -> LIST -> LIST =
     fn v:int, l:LIST =>
         {#cons ( (v&l) )};
