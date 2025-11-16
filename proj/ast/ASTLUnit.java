@@ -16,5 +16,4 @@ public class ASTLUnit implements ASTNode  {
     public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError {
 		return new ASTTLUnit();
 	}
-
 }

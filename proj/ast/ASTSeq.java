@@ -19,8 +19,11 @@ public class ASTSeq implements ASTNode {
     }
 
     public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-    first.typecheck(e);
-		return second.typecheck(e);
+        ASTType tf = first.typecheck(e);
+        if (tf instanceof ASTTUnit || tf instanceof ASTTLUnit) {
+            return second.typecheck(e);
+        } else {
+            throw new TypeCheckError("illegal type to sequential composition: " + tf.toStr());
+        }
 	}
-
 }
