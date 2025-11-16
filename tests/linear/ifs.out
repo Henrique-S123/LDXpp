@@ -22,3 +22,6 @@ class proj.errors.TypeCheckError: if conseq and alt branches must use the same l
 type: linint, value: 2l
 
 
+type: linint, value: 2l
+
+
