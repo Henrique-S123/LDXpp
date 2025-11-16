@@ -1,0 +1,21 @@
+let x = $a(3l); match x {$b(c) -> -c | $a(c) -> c} + match x {$b(c) -> -c | $a(c) -> c};;
+
+type un = linunion {$num: int, $val: bool};
+let x = 1l; let y = 2l; let f = lfn u:un =o {
+    match u {
+        $num(n) -> n > (y + x)
+        | $val(b) -> b && ((y + x) > 2)
+    }
+};
+let a = $num(6);
+f(a);;
+
+type un = linunion {$num: int, $val: bool};
+let x = 1l; let y = 2l; let f = lfn u:un =o {
+    match u {
+        $num(n) -> n > (y + x)
+        | $val(b) -> b && ((y + x) > 2)
+    }
+};
+let a = $num(0);
+f(a);;

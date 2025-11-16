@@ -1,0 +1,9 @@
+class proj.errors.InterpreterError: Linear value of 'x' has already been consumed and cannot be used again.
+
+
+type: linbool, value: truel
+
+
+type: linbool, value: falsel
+
+

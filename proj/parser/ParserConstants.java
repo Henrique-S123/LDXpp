@@ -109,25 +109,27 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int TUNION = 53;
   /** RegularExpression Id. */
-  int TTENSOR = 54;
+  int TLUNION = 54;
   /** RegularExpression Id. */
-  int TPAIR = 55;
+  int TTENSOR = 55;
   /** RegularExpression Id. */
-  int TLINT = 56;
+  int TPAIR = 56;
   /** RegularExpression Id. */
-  int SPLIT = 57;
+  int TLINT = 57;
   /** RegularExpression Id. */
-  int LABEL = 58;
+  int SPLIT = 58;
   /** RegularExpression Id. */
-  int LLABEL = 59;
+  int LABEL = 59;
   /** RegularExpression Id. */
-  int String = 60;
+  int LLABEL = 60;
   /** RegularExpression Id. */
-  int Id = 61;
+  int String = 61;
   /** RegularExpression Id. */
-  int LinNum = 62;
+  int Id = 62;
   /** RegularExpression Id. */
-  int Num = 63;
+  int LinNum = 63;
+  /** RegularExpression Id. */
+  int Num = 64;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -188,6 +190,7 @@ public interface ParserConstants {
     "\"linbool\"",
     "\"string\"",
     "\"union\"",
+    "\"linunion\"",
     "\"tensor\"",
     "\"pair\"",
     "\"linint\"",

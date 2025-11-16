@@ -124,6 +124,8 @@ TOKEN :
   |
   < TUNION  : "union" >
   |
+  < TLUNION : "linunion" >
+  |
   < TTENSOR : "tensor" >
   |
   < TPAIR : "pair" >
@@ -134,7 +136,7 @@ TOKEN :
   |
   < LABEL : "#" ["a"-"z", "A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* >
   |
-  < LLABEL : "@" ["a"-"z", "A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* >
+  < LLABEL : "$" ["a"-"z", "A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* >
   |
   < String: "\"" ( (~["\"","\\"]) | ("\\" ( ["n","t","b","r","f","\\","\""] ) ) )* "\"" >
   |
@@ -318,8 +320,8 @@ ASTNode Match(ASTNode p) :
 }
 {
   (
-    l = <LABEL> <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { labels.add(l.image); ids.add(n.image); exprs.add(e1); }
-          (<VERT> l = <LABEL> <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { if (labels.contains(l.image))
+    (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { labels.add(l.image); ids.add(n.image); exprs.add(e1); }
+          (<VERT> (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { if (labels.contains(l.image))
                                               { throw new ParseException("duplicate label"); }
                                               else { labels.add(l.image); ids.add(n.image); exprs.add(e1); } } )*
           <RBRA> { t = new ASTMatchUnion(p, labels, ids, exprs); }
@@ -356,6 +358,7 @@ ASTType TypeF() :
         | <TPAIR> <LPAR> t = Type() <PAIR> t2 = Type() <RPAR> { t = new ASTTPair(t, t2); }
         | <TTENSOR> <LPAR> t = Type() <TENSOR> t2 = Type() <RPAR> { t = new ASTTTensor(t, t2); }
         | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll); }
+        | <TLUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTLUnion(ll); }
         | <LPAR> t = Type() <RPAR>
     )
     { return t; }
@@ -368,8 +371,8 @@ TypeBindList LabelList() :
   Token n;
 }
 {   { ll = new HashMap<String, ASTType>() ; }
-    ( n=<LABEL>  <COLON> t = Type() { ll.put(n.image,t); }
-              (<COMMA> n=<LABEL>  <COLON> t = Type() { if (ll.containsKey(n.image))
+    ( (n=<LABEL>|n=<LLABEL>)  <COLON> t = Type() { ll.put(n.image,t); }
+              (<COMMA> (n=<LABEL>|n=<LLABEL>)  <COLON> t = Type() { if (ll.containsKey(n.image))
                             {throw new ParseException("duplicate label");}
                             else {ll.put(n.image,t);} } )*
     )?

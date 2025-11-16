@@ -5,7 +5,7 @@ import proj.errors.*;
 
 import java.util.HashMap;
 
-public class ASTTLUnion implements ASTType {
+public class ASTTLUnion implements ASTLinType {
 
     private TypeBindList ll;
 
@@ -35,8 +35,8 @@ public class ASTTLUnion implements ASTType {
         if (o instanceof ASTTId) {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);
-        } else if (o instanceof ASTTUnion) {
-            HashMap<String, ASTType> mb = ((ASTTUnion) o).getList().getMap();
+        } else if (o instanceof ASTTLUnion) {
+            HashMap<String, ASTType> mb = ((ASTTLUnion) o).getList().getMap();
             HashMap<String, ASTType> ma = ll.getMap();
             for (String s : ma.keySet()) {
                 if (!(mb.containsKey(s) && ma.get(s).isSubtypeOf(mb.get(s), e)))
