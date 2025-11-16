@@ -46,8 +46,8 @@ public class Environment <E>{
         return anc;
     }
 
-    public Environment<E> copy() {
-        Environment<E> e = new Environment<>(this.anc);
+    public Environment<E> copy(boolean deep) {
+        Environment<E> e = new Environment<>(deep ? (this.anc == null ? null : this.anc.copy(deep)) : this.anc);
         e.setGamma(new HashMap<String,E>(this.gamma));
         e.setDelta(new HashMap<String,E>(this.delta));
         e.setUsedLinears(new ArrayList<String>(this.usedLinears));

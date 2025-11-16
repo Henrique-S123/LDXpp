@@ -29,7 +29,7 @@ public class ASTIf implements ASTNode {
 	public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
 		ASTType tt = test.typecheck(e);
 		if (tt instanceof ASTTBool || tt instanceof ASTTLBool) {
-			Environment<ASTType> e2 = e.copy();
+			Environment<ASTType> e2 = e.copy(false);
 			ASTType vconseq = conseq.typecheck(e);
 			ASTType valt = alt.typecheck(e2);
 			if (!new HashSet<String>(e.getUsedLinears()).equals(new HashSet<String>(e2.getUsedLinears())))
