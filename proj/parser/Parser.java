@@ -37,6 +37,7 @@ public class Parser implements ParserConstants {
     case TUNIT:
     case SPLIT:
     case LABEL:
+    case LLABEL:
     case String:
     case Id:
     case LinNum:
@@ -75,6 +76,7 @@ public class Parser implements ParserConstants {
     case TUNIT:
     case SPLIT:
     case LABEL:
+    case LLABEL:
     case String:
     case Id:
     case LinNum:
@@ -517,6 +519,13 @@ public class Parser implements ParserConstants {
       jj_consume_token(RPAR);
                                              t = new ASTUnion(n.image, t);
       break;
+    case LLABEL:
+      n = jj_consume_token(LLABEL);
+      jj_consume_token(LPAR);
+      t = Let();
+      jj_consume_token(RPAR);
+                                              t = new ASTLUnion(n.image, t);
+      break;
     case SPLIT:
       jj_consume_token(SPLIT);
       t = Let();
@@ -773,7 +782,7 @@ public class Parser implements ParserConstants {
       jj_la1_0 = new int[] {0x800016e1,0x40000,0x800016e0,0x80000,0x1000000,0x800000,0x7e000000,0x7e000000,0x300,0x300,0x0,0x1c00,0x1c00,0x0,0x200000,0x200000,0x800016c0,0x400000,0x0,0x0,0x1000,0x200000,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x7e02f03d,0x0,0x7e02f03d,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xc00,0x20000,0x20000,0xc00,0x0,0x0,0x7e02703d,0x0,0x300,0x300,0x11ff0000,0x0,0x4000000,};
+      jj_la1_1 = new int[] {0xfe02f03d,0x0,0xfe02f03d,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xc00,0x20000,0x20000,0xc00,0x0,0x0,0xfe02703d,0x0,0x300,0x300,0x21ff0000,0x0,0x4000000,};
    }
   static final private JJCalls[] jj_2_rtns = new JJCalls[2];
   static private boolean jj_rescan = false;
@@ -983,7 +992,7 @@ public class Parser implements ParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[63];
+    boolean[] la1tokens = new boolean[64];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -1000,7 +1009,7 @@ public class Parser implements ParserConstants {
         }
       }
     }
-    for (int i = 0; i < 63; i++) {
+    for (int i = 0; i < 64; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

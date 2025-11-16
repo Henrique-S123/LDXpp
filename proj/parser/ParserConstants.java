@@ -119,13 +119,15 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int LABEL = 58;
   /** RegularExpression Id. */
-  int String = 59;
+  int LLABEL = 59;
   /** RegularExpression Id. */
-  int Id = 60;
+  int String = 60;
   /** RegularExpression Id. */
-  int LinNum = 61;
+  int Id = 61;
   /** RegularExpression Id. */
-  int Num = 62;
+  int LinNum = 62;
+  /** RegularExpression Id. */
+  int Num = 63;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -191,6 +193,7 @@ public interface ParserConstants {
     "\"linint\"",
     "\"split\"",
     "<LABEL>",
+    "<LLABEL>",
     "<String>",
     "<Id>",
     "<LinNum>",
