@@ -6,11 +6,11 @@ let f = lfn x:linbool =o {~x}; f(true);;
 
 let f = lfn x:linbool =o {x || x}; f(false);;
 
-let f = fn x:int->linint => {x}; f(fn x:linint => {5});;
+let f = fn x:int->linint => {x(0)}; f(fn x:linint => {5});;
 
-let f = fn x:int-olinint => {x}; f(lfn x:linint =o {x; 5});;
+let f = fn x:int-olinint => {x(0)}; f(lfn x:linint =o {x + 5});;
 
-let f = fn x:int-olinint => {x}; f(fn x:linint => {5});;
+let f = fn x:int-olinint => {x(0)}; f(fn x:linint => {5});;
 
 let f = fn x:pair(linint&linint) => {x}; f(1&2);;
 

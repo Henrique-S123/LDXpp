@@ -161,7 +161,7 @@ fn g:int->int->int, b:int, k:int  => {
          g (k) (reduce (g) (b) (k-1) )
       }
   };
-let tri = reduce (fn n:int, p:int => { println (n+p) }) (1) ;
+let tri = reduce (fn n:int, p:int => { println (n+p); n+p }) (1) ;
 tri (20)
 ;;
 

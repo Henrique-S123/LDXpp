@@ -1,14 +1,12 @@
-let f = lfn x:int =o {x+1; x+2; x+3}; f(5);;
+let f = lfn x:int =o {x + x + x}; f(5);;
 
-let f = lfn x:int =o {x+1; x+2; x+3}; f(5); f(6);;
+let f = lfn x:int =o {x + x + x}; f(5) + f(6);;
 
 let f = lfn x:int =o {x+1l}; f(1);;
 
 let f = lfn x:linint =o {x+1l}; f(5l);;
 
-let f = lfn x:linint =o {x+1l}; f(5l); f(6l);;
-
-let f = lfn x:linint =o {x+1l; x+2l}; f(5l);;
+let f = lfn x:linint =o {x+1l}; f(5l) + f(6l);;
 
 let f = lfn x:linint =o {x+x}; f(1l);;
 
@@ -18,19 +16,19 @@ let f = lfn x:linint =o {x}; 2;;
 
 let f = lfn x:linint =o {x + 1l}; let y = f(2l); y;;
 
-let f = lfn x:linint =o {x + 1l}; let y = f(2l); y; y;;
+let f = lfn x:linint =o {x + 1l}; let y = f(2l); y + y;;
 
 let f = lfn x:linint =o {x + 1l}; let y = f(2l); let z = f(y); z;;
 
-let f = lfn x:linint =o {lfn y:linint =o {println(y)}}; let z = 1l; f(z)(z);;
+let f = lfn x:linint =o {lfn y:linint =o {y}}; let z = 1l; f(z)(z);;
 
-let f = lfn x:linint =o {x; lfn y:linint =o {println(y)}}; let z = 1l; f(z)(z);;
+let f = lfn x:linint =o {lfn y:linint =o {y + x}}; let z = 1l; f(z)(z);;
 
-let f = lfn x:linint =o {x; lfn y:linint =o {println(y)}}; let z = 1l; let z2 = 1l; f(z)(z2);;
+let f = lfn x:linint =o {lfn y:linint =o {y + x}}; let z = 1l; let z2 = 1l; f(z)(z2);;
 
 let f = lfn x:linint =o {let f2 = lfn y:linint =o {y + 10l}; f2(x)}; f(1l);;
 
-let f = lfn x:linint =o {let f2 = lfn y:linint =o {y + 10l}; f2(x); f2(2l)}; f(1l);;
+let f = lfn x:linint =o {let f2 = lfn y:linint =o {y + 10l}; f2(x) + f2(2l)}; f(1l);;
 
 let f = lfn x:linint =o {x + 1l}; f(1);;
 

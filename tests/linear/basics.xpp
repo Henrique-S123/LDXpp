@@ -4,9 +4,9 @@ let x = 1l; 42;;
 
 let x = 2; let y = 1l; x;;
 
-let x = 2; let y = 1l; y; x;;
+let x = 2; let y = 1l; y*0 + x;;
 
-let x = 2; let y = 1l; x; y;;
+let x = 2; let y = 1l; x*0 + y;;
 
 let x = 1l; let y = x; x;;
 

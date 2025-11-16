@@ -10,13 +10,13 @@ type: linbool, value: false
 class proj.errors.InterpreterError: Linear value of 'x' has already been consumed and cannot be used again.
 
 
-type: int->linint, value: Closure with arg x and environment Gamma: [f: proj.values.VClos@5e2de80c], Delta: []
+type: linint, value: 5
 
 
-type: int-olinint, value: Linear closure with arg x and environment Gamma: [f: proj.values.VClos@3764951d], Delta: []
+type: linint, value: 5
 
 
-type: int-olinint, value: Closure with arg x and environment Gamma: [f: proj.values.VClos@4b1210ee], Delta: []
+type: linint, value: 5
 
 
 type: (linint&linint), value: (1&2)
