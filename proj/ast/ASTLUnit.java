@@ -5,16 +5,16 @@ import proj.types.*;
 import proj.env.*;
 import proj.errors.*;
 
-public class ASTUnit implements ASTNode  {
+public class ASTLUnit implements ASTNode  {
 
-    public ASTUnit() {}
+    public ASTLUnit() {}
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {
-        return new VUnit(false);                
+        return new VUnit(true);                
     }
 
     public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError {
-		return new ASTTUnit();
+		return new ASTTLUnit();
 	}
 
 }

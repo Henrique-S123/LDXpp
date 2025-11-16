@@ -283,6 +283,7 @@ ASTNode Fact() :
     | n = <Id> { t = new ASTId(n.image); }
     | n=<String> { t = new ASTString(n.image.substring(1, n.image.length()-1)); }
     | <TUNIT> { t = new ASTUnit(); }
+    | <STAR> { t = new ASTLUnit(); }
     | <MINUS> t=Fact() { t = new ASTArithOp(new ASTInt(0), t, "-u"); }
     | <NOT> t=Fact() { t = new ASTLogicOp(new ASTBool(true), t, "~"); }
     | <IF> t=BA() <LBRA> e1=Let() <RBRA> <ELSE> <LBRA> e2=Let() <RBRA> { t = new ASTIf(t, e1, e2); }

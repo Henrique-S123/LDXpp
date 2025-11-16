@@ -22,6 +22,7 @@ public class Parser implements ParserConstants {
     case Bool:
     case LinBool:
     case MINUS:
+    case STAR:
     case LPAR:
     case NOT:
     case IF:
@@ -60,6 +61,7 @@ public class Parser implements ParserConstants {
     case Bool:
     case LinBool:
     case MINUS:
+    case STAR:
     case LPAR:
     case NOT:
     case IF:
@@ -395,6 +397,10 @@ public class Parser implements ParserConstants {
     case TUNIT:
       jj_consume_token(TUNIT);
                 t = new ASTUnit();
+      break;
+    case STAR:
+      jj_consume_token(STAR);
+               t = new ASTLUnit();
       break;
     case MINUS:
       jj_consume_token(MINUS);
@@ -764,7 +770,7 @@ public class Parser implements ParserConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x800012e1,0x40000,0x800012e0,0x80000,0x1000000,0x800000,0x7e000000,0x7e000000,0x300,0x300,0x0,0x1c00,0x1c00,0x0,0x200000,0x200000,0x800012c0,0x400000,0x0,0x0,0x1000,0x200000,0x0,};
+      jj_la1_0 = new int[] {0x800016e1,0x40000,0x800016e0,0x80000,0x1000000,0x800000,0x7e000000,0x7e000000,0x300,0x300,0x0,0x1c00,0x1c00,0x0,0x200000,0x200000,0x800016c0,0x400000,0x0,0x0,0x1000,0x200000,0x0,};
    }
    private static void jj_la1_init_1() {
       jj_la1_1 = new int[] {0x7e02f03d,0x0,0x7e02f03d,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xc00,0x20000,0x20000,0xc00,0x0,0x0,0x7e02703d,0x0,0x300,0x300,0x11ff0000,0x0,0x4000000,};
