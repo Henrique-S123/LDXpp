@@ -43,3 +43,30 @@ let x = 1l; let y = 2l; let f = lfn u:un =o {
     }
 };
 f(#num(6));;
+
+type un = union {#num: int, #val: bool};
+let x = 1l; let y = 2l; let f = lfn u:un =o {
+    match u {
+        #num(n) -> n > (y)
+        | #val(b) -> b && ((y + x) > 2)
+    }
+};
+f(#num(6));;
+
+type un = union {#num: int, #val: bool};
+let x = 1l; let y = 2l; let f = lfn u:un =o {
+    match u {
+        #num(n) -> 5 > (y + x)
+        | #val(b) -> b && ((y + x) > 2)
+    }
+};
+f(#num(6));;
+
+type un = union {#num: linint, #val: bool};
+let x = 1l; let y = 2l; let f = lfn u:un =o {
+    match u {
+        #num(n) -> 5 > (y)
+        | #val(b) -> b && ((y + x) > 2)
+    }
+};
+f(#num(6));;

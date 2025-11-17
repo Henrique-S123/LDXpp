@@ -7,3 +7,12 @@ type: linbool, value: truel
 type: linbool, value: falsel
 
 
+class proj.errors.TypeCheckError: all match cases must use the same linear values
+
+
+type: linbool, value: truel
+
+
+class proj.errors.TypeCheckError: linear value n must be used
+
+

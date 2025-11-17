@@ -40,7 +40,7 @@ public class ASTMatchUnion implements ASTNode {
 	public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
 		ASTType tt = test.typecheck(e);
 		ASTType rettype = null, tcase;
-		ArrayList<String> matchUsedLinears = null;
+		HashSet<String> matchUsedLinears = null;
 		tt = e.unfold(tt);
 		if (tt instanceof ASTTUnion || tt instanceof ASTTLUnion) {
 			Environment<ASTType> en = e.copy(true), env;
@@ -52,26 +52,21 @@ public class ASTMatchUnion implements ASTNode {
 				if (index == -1)
 					throw new TypeCheckError("match missing label " + entry.getKey());
 
-				// when typechecking the first case
-				if (matchUsedLinears == null) {
-					env = e;
-				} else {
-					env = en.copy(true);
-				}
-
+				env = matchUsedLinears == null ? e : en.copy(true);
 				env.assoc(ids.get(index), e.unfold(entry.getValue()));
 				tcase = exprs.get(index).typecheck(env);
 
 				if (matchUsedLinears == null) {
-					matchUsedLinears = new ArrayList<String>(e.getUsedLinears());
+					matchUsedLinears = new HashSet<String>(e.getUsedLinears());
 					matchUsedLinears.remove(ids.get(index));
 				}
 
-				ArrayList<String> caseUsedLineares = new ArrayList<String>(env.getUsedLinears());
-				if (!caseUsedLineares.containsAll(matchUsedLinears))
-					throw new TypeCheckError("all match cases must use the same linear values");
+				HashSet<String> caseUsedLineares = new HashSet<String>(env.getUsedLinears());
 				if ((entry.getValue() instanceof ASTLinType) && !caseUsedLineares.contains(ids.get(index)))
 					throw new TypeCheckError("linear value " + ids.get(index) + " must be used");
+				caseUsedLineares.remove(ids.get(index));
+				if (!caseUsedLineares.equals(matchUsedLinears))
+					throw new TypeCheckError("all match cases must use the same linear values");
 				if ((tcase.isSubtypeOf(rettype, env) && rettype.isSubtypeOf(tcase, env)) || rettype == null) {
 					rettype = tcase;
 				} else {
