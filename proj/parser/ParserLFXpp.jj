@@ -258,13 +258,13 @@ ASTNode Term() :
      }
     |
     (
-     op=<STAR> t2 = Fact()   { t1 = new ASTArithOp(t1,t2,"*"); }
+     <STAR> t2 = Fact()   { t1 = new ASTArithOp(t1,t2,"*"); }
 		 |
-		 op=<DIV> t2 = Fact()  { t1 = new ASTArithOp(t1,t2,"/"); }
+		 <DIV> t2 = Fact()  { t1 = new ASTArithOp(t1,t2,"/"); }
 		 |
-		 op = <LPAR> t2 = Let () <RPAR>  { t1 = new ASTApp(t1, t2); }
+		 <LPAR> t2 = Let() <RPAR>  { t1 = new ASTApp(t1, t2); }
      |
-     op = <TUNIT> { t1 = new ASTApp(t1, new ASTUnit()); }
+     <TUNIT> { t1 = new ASTApp(t1, new ASTUnit()); }
     )*)
      { return t1; }
 }

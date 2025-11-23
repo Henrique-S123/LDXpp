@@ -333,24 +333,24 @@ public class Parser implements ParserConstants {
         }
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case STAR:
-          op = jj_consume_token(STAR);
+          jj_consume_token(STAR);
           t2 = Fact();
-                               t1 = new ASTArithOp(t1,t2,"*");
+                            t1 = new ASTArithOp(t1,t2,"*");
           break;
         case DIV:
-          op = jj_consume_token(DIV);
+          jj_consume_token(DIV);
           t2 = Fact();
-                                         t1 = new ASTArithOp(t1,t2,"/");
+                                      t1 = new ASTArithOp(t1,t2,"/");
           break;
         case LPAR:
-          op = jj_consume_token(LPAR);
+          jj_consume_token(LPAR);
           t2 = Let();
           jj_consume_token(RPAR);
-                                                   t1 = new ASTApp(t1, t2);
+                                             t1 = new ASTApp(t1, t2);
           break;
         case TUNIT:
-          op = jj_consume_token(TUNIT);
-                    t1 = new ASTApp(t1, new ASTUnit());
+          jj_consume_token(TUNIT);
+               t1 = new ASTApp(t1, new ASTUnit());
           break;
         default:
           jj_la1[12] = jj_gen;
