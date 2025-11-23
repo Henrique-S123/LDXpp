@@ -12,7 +12,11 @@ let x = 1l; x&x;;
 
 let x = 1l; let y = 2; x&y;;
 
+1l&2;;
+
 let x = 1l; let y = 2l; x&y;;
+
+1l&2l;;
 
 let p1 = 1l&2l; let double_fst = fn x:pair(linint&linint) => {fst(x) + fst(x)}; double_fst(p1);;
 
