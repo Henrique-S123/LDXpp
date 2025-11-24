@@ -1,23 +1,23 @@
-let x = 1; x&x;;
+let x = 1; (x,x);;
 
-let x = 1; let y = 2; x&y;;
+let x = 1; let y = 2; (x,y);;
 
-fst(1&2);;
+fst((1,2));;
 
-snd(1&2);;
+snd((1,2));;
 
-let f = fn p:pair(int->int&int) => {(fst(p)) (snd(p))}; f((fn z:int => {z+2})&2);;
+let f = fn p:pair(int->int&int) => {(fst(p)) (snd(p))}; f((fn z:int => {z+2}, 2));;
 
-let x = 1l; x&x;;
+let x = 1l; (x,x);;
 
-let x = 1l; let y = 2; x&y;;
+let x = 1l; let y = 2; (x,y);;
 
-1l&2;;
+(1l,2);;
 
-let x = 1l; let y = 2l; x&y;;
+let x = 1l; let y = 2l; (x,y);;
 
-1l&2l;;
+(1l,2l);;
 
-let p1 = 1l&2l; let double_fst = fn x:pair(linint&linint) => {fst(x) + fst(x)}; double_fst(p1);;
+let p1 = (1l,2l); let double_fst = fn x:pair(linint&linint) => {fst(x) + fst(x)}; double_fst(p1);;
 
-let p1 = 1l&2l; let double_fst = fn x:pair(linint&linint) => {let y = fst(x); y + y}; double_fst(p1);;
+let p1 = (1l,2l); let double_fst = fn x:pair(linint&linint) => {let y = fst(x); y + y}; double_fst(p1);;
