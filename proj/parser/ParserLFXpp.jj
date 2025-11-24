@@ -102,8 +102,6 @@ TOKEN :
   |
   < TENSOR : "@" >
   |
-  < PAIR : "&" >
-  |
   < FST : "fst" >
   |
   < SND : "snd" >
@@ -127,8 +125,6 @@ TOKEN :
   < TLUNION : "linunion" >
   |
   < TTENSOR : "tensor" >
-  |
-  < TPAIR : "pair" >
   |
   < TLINT : "linint" >
   |
@@ -371,13 +367,25 @@ ASTType TypeF() :
         | <TLBOOL> { t = new ASTTLBool(); }
         | <TUNIT> { t = new ASTTUnit(); }
         | <TSTRING> { t = new ASTTString(); }
-        | <TPAIR> <LPAR> t = Type() <PAIR> t2 = Type() <RPAR> { t = new ASTTPair(t, t2); }
         | <TTENSOR> <LPAR> t = Type() <TENSOR> t2 = Type() <RPAR> { t = new ASTTTensor(t, t2); }
         | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll); }
         | <TLUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTLUnion(ll); }
-        | <LPAR> t = Type() <RPAR>
+        | <LPAR> t = TypeList() <RPAR>
     )
     { return t; }
+}
+
+ASTType TypeList() :
+{
+  ASTType t, t2;
+}
+{
+  (
+    t = Type() (<COMMA> t2 = TypeList() { t = new ASTTPair(t, t2); })?
+    |
+    { t = new ASTTUnit(); }
+  )
+  { return t; }
 }
 
 TypeBindList LabelList() :
