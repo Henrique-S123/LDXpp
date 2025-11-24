@@ -19,12 +19,12 @@ type: linint, value: 5
 type: linint, value: 5
 
 
-type: (linint&linint), value: (1&2)
+type: (linint, linint), value: (1, 2)
 
 
 type: (linint@linint), value: (1@2)
 
 
-type: (linint@linint), value: (1&2)
+type: (linint@linint), value: (1, 2)
 
 

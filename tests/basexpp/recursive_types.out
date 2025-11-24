@@ -1,4 +1,4 @@
-type: union {#nil = (); #cons = NODE}, value: union #cons((3&union #cons((2&union #nil(())))))
+type: union {#nil = (); #cons = NODE}, value: union #cons((3, union #cons((2, union #nil(())))))
 
 
 3

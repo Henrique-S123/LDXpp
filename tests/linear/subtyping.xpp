@@ -12,7 +12,7 @@ let f = fn x:int-olinint => {x(0)}; f(lfn x:linint =o {x + 5});;
 
 let f = fn x:int-olinint => {x(0)}; f(fn x:linint => {5});;
 
-let f = fn x:pair(linint&linint) => {x}; f((1,2));;
+let f = fn x:(linint,linint) => {x}; f((1,2));;
 
 let f = fn x:tensor(linint@linint) => {x}; f(1@2);;
 

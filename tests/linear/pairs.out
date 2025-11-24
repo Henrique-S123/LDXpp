@@ -1,7 +1,7 @@
-type: (int&int), value: (1&1)
+type: (int, int), value: (1, 1)
 
 
-type: (int&int), value: (1&2)
+type: (int, int), value: (1, 2)
 
 
 type: int, value: 1
@@ -19,13 +19,13 @@ class proj.errors.TypeCheckError: cartesian pairs must not use external linear v
 class proj.errors.TypeCheckError: cartesian pairs must not use external linear values
 
 
-type: (linint&int), value: (1l&2)
+type: (linint, int), value: (1l, 2)
 
 
 class proj.errors.TypeCheckError: cartesian pairs must not use external linear values
 
 
-type: (linint&linint), value: (1l&2l)
+type: (linint, linint), value: (1l, 2l)
 
 
 type: linint, value: 2l

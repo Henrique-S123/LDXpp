@@ -128,28 +128,28 @@ match l0 {
     #some(x) -> x + 1
 };;
 
-type Circle = pair(int&int);
-type Rectangle = pair(int&int);
+type Circle = (int,int);
+type Rectangle = (int,int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
-let r1 = #rect(10&20);
+let r1 = #rect((10,20));
 match r1 {
         #circle(c) -> let r = pi*(fst(c)); (r*r)/2
     |   #rect(r) -> (fst(r)) * (snd(r))
 }
 ;;
 
-type Circle = pair(int&int);
-type Rectangle = pair(int&int);
+type Circle = (int,int);
+type Rectangle = (int,int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
-let r1:Blob = #rect(10&20);
+let r1:Blob = #rect((10,20));
 match r1 {
         #circle(c) -> let r = 3*(fst(c)); (r*r)/2
     |   #rect(r) -> (fst(r)) * (snd(r))
 }
 ;;
 
-type Circle = pair(int&int);
-type Rectangle = pair(int&int);
+type Circle = (int,int);
+type Rectangle = (int,int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
 let pi = 3142;
 let area = fn b:Blob => {
@@ -158,11 +158,11 @@ let area = fn b:Blob => {
     |   #rect(r) -> (fst(r)) * (snd(r))
     }
 };
-let r1 = #rect(10&20);
+let r1 = #rect((10,20));
 area(r1);;
 
-type Circle = pair(int&int);
-type Rectangle = pair(int&int);
+type Circle = (int,int);
+type Rectangle = (int,int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
 let pi = 3142;
 let area = fn b:Blob => {
@@ -171,11 +171,11 @@ let area = fn b:Blob => {
     |   #rect(r) -> (fst(r)) * (snd(r))
     }
 };
-let r1:Blob = #rect(10&20);
+let r1:Blob = #rect((10,20));
 area(r1);;
 
-type Circle = pair(int&int);
-type Rectangle = pair(int&int);
+type Circle = (int,int);
+type Rectangle = (int,int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
 let pi = 3142;
 let area = fn b:union{ #circle: Circle } => {
@@ -184,11 +184,11 @@ let area = fn b:union{ #circle: Circle } => {
     |   #rect(r) -> (fst(r)) * (snd(r))
     }
 };
-let r1:Blob = #rect(10&20);
+let r1:Blob = #rect((10,20));
 area(r1);;
 
-type Circle = pair(int&int);
-type Rectangle = pair(int&int);
+type Circle = (int,int);
+type Rectangle = (int,int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
 let pi = 3142;
 let area = fn b:union{ #rect: Rectangle } => {
@@ -197,11 +197,11 @@ let area = fn b:union{ #rect: Rectangle } => {
     |   #rect(r) -> (fst(r)) * (snd(r))
     }
 };
-let r1:Blob = #rect(10&20);
+let r1:Blob = #rect((10,20));
 area(r1);;
 
-type Circle = pair(int&int);
-type Rectangle = pair(int&int);
+type Circle = (int,int);
+type Rectangle = (int,int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
 let pi = 3142;
 let area = fn b:union{ #rect: Rectangle } => {
@@ -210,11 +210,11 @@ let area = fn b:union{ #rect: Rectangle } => {
     |   #rect(r) -> (fst(r)) * (snd(r))
     }
 };
-let r1 = #rect(10&20);
+let r1 = #rect((10,20));
 area(r1);;
 
-type Circle = pair(int&int);
-type Rectangle = pair(int&int);
+type Circle = (int,int);
+type Rectangle = (int,int);
 type Blob = union { #circle: Circle, #rect: Rectangle };
 let pi = 3;
 let area = fn b:Blob => {
@@ -223,5 +223,5 @@ let area = fn b:Blob => {
     |   #rect(r) -> (fst(r)) * (snd(r))
     }
 };
-let r1 = #circle(2&0);
+let r1 = #circle((2,0));
 area(r1);;
