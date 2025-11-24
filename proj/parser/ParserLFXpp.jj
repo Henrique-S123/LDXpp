@@ -252,9 +252,8 @@ ASTNode Term() :
 {Token op, n;
   ASTNode t1, t2;}
 {
-     t1 = Fact() ( (op=<TENSOR> | op=<PAIR>) t2 = Term() {
+     t1 = Fact() ( (op=<TENSOR>) t2 = Term() {
               if (op.kind == TENSOR) t1 = new ASTTensor(t1,t2);
-              else if (op.kind == PAIR) t1 = new ASTPair(t1, t2);
      }
     |
     (
@@ -262,11 +261,16 @@ ASTNode Term() :
 		 |
 		 <DIV> t2 = Fact()  { t1 = new ASTArithOp(t1,t2,"/"); }
 		 |
-		 <LPAR> t2 = Let() <RPAR>  { t1 = new ASTApp(t1, t2); }
-     |
-     <TUNIT> { t1 = new ASTApp(t1, new ASTUnit()); }
+     <LPAR> t2 = FuncArg() <RPAR> { t1 = new ASTApp(t1, t2); }
     )*)
      { return t1; }
+}
+
+ASTNode FuncArg() :
+{ ASTNode t; }
+{
+  (t = Let() | { t = new ASTUnit(); })
+  { return t; }
 }
 
 ASTNode Fact() :
@@ -287,7 +291,6 @@ ASTNode Fact() :
     | n = <Id> { t = new ASTId(n.image); }
     | n=<String> { t = new ASTString(n.image.substring(1, n.image.length()-1)); }
     | <TUNIT> { t = new ASTUnit(); }
-    | <STAR> { t = new ASTLUnit(); }
     | <MINUS> t=Fact() { t = new ASTArithOp(new ASTInt(0), t, "-u"); }
     | <NOT> t=Fact() { t = new ASTLogicOp(new ASTBool(true), t, "~"); }
     | <IF> t=BA() <LBRA> e1=Let() <RBRA> <ELSE> <LBRA> e2=Let() <RBRA> { t = new ASTIf(t, e1, e2); }
@@ -305,9 +308,22 @@ ASTNode Fact() :
     |  n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); }
     |  n = <LLABEL> <LPAR> t = Let() <RPAR> { t = new ASTLUnion(n.image, t); }
     | <SPLIT> t = Let() <LBRA> n = <Id> <VERT> n2 = <Id> <SLIMARROW> t2 = Let() <RBRA> { t = new ASTSplit(t, n.image, n2.image, t2); }
-    | <LPAR> t=Let() <RPAR>
+    | <LPAR> t = TermList() <RPAR>
     )
    { return t; }
+}
+
+ASTNode TermList() :
+{
+  ASTNode t, t2;
+}
+{
+  (
+    t = Let() (<COMMA> t2 = TermList() { t = new ASTPair(t, t2); })?
+    |
+    { t = new ASTUnit(); }
+  )
+  { return t; }
 }
 
 ASTNode Match(ASTNode p) :

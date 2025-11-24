@@ -20,7 +20,7 @@ public class ASTTPair implements ASTType {
     }
 
     public String toStr() {
-        return "(" + first.toStr() + "&" + second.toStr() + ")"; 
+        return "(" + first.toStr() + ", " + second.toStr() + ")"; 
     }
 
     public boolean isSubtypeOf(ASTType o, Environment<ASTType> e) throws InterpreterError {
