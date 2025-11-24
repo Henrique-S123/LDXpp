@@ -29,75 +29,75 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int RPAR = 13;
   /** RegularExpression Id. */
-  int LBRA = 14;
+  int LRPAR = 14;
   /** RegularExpression Id. */
-  int RBRA = 15;
+  int LBRA = 15;
   /** RegularExpression Id. */
-  int EQUAL = 16;
+  int RBRA = 16;
   /** RegularExpression Id. */
-  int DOT = 17;
+  int EQUAL = 17;
   /** RegularExpression Id. */
-  int COLON = 18;
+  int DOT = 18;
   /** RegularExpression Id. */
-  int SEMIC = 19;
+  int COLON = 19;
   /** RegularExpression Id. */
-  int TERM = 20;
+  int SEMIC = 20;
   /** RegularExpression Id. */
-  int COMMA = 21;
+  int TERM = 21;
   /** RegularExpression Id. */
-  int VERT = 22;
+  int COMMA = 22;
   /** RegularExpression Id. */
-  int AND = 23;
+  int VERT = 23;
   /** RegularExpression Id. */
-  int OR = 24;
+  int AND = 24;
   /** RegularExpression Id. */
-  int EQ = 25;
+  int OR = 25;
   /** RegularExpression Id. */
-  int GT = 26;
+  int EQ = 26;
   /** RegularExpression Id. */
-  int LT = 27;
+  int GT = 27;
   /** RegularExpression Id. */
-  int GTEQ = 28;
+  int LT = 28;
   /** RegularExpression Id. */
-  int LTEQ = 29;
+  int GTEQ = 29;
   /** RegularExpression Id. */
-  int DIF = 30;
+  int LTEQ = 30;
   /** RegularExpression Id. */
-  int NOT = 31;
+  int DIF = 31;
   /** RegularExpression Id. */
-  int IF = 32;
+  int NOT = 32;
   /** RegularExpression Id. */
-  int ELSE = 33;
+  int IF = 33;
   /** RegularExpression Id. */
-  int PRINT = 34;
+  int ELSE = 34;
   /** RegularExpression Id. */
-  int PRINTLN = 35;
+  int PRINT = 35;
   /** RegularExpression Id. */
-  int FN = 36;
+  int PRINTLN = 36;
   /** RegularExpression Id. */
-  int LFN = 37;
+  int FN = 37;
   /** RegularExpression Id. */
-  int ARROW = 38;
+  int LFN = 38;
   /** RegularExpression Id. */
-  int DLOLLIPOP = 39;
+  int ARROW = 39;
   /** RegularExpression Id. */
-  int LOLLIPOP = 40;
+  int DLOLLIPOP = 40;
   /** RegularExpression Id. */
-  int SLIMARROW = 41;
+  int LOLLIPOP = 41;
   /** RegularExpression Id. */
-  int TENSOR = 42;
+  int SLIMARROW = 42;
   /** RegularExpression Id. */
-  int FST = 43;
+  int TENSOR = 43;
   /** RegularExpression Id. */
-  int SND = 44;
+  int FST = 44;
   /** RegularExpression Id. */
-  int MATCH = 45;
+  int SND = 45;
   /** RegularExpression Id. */
-  int TYPE = 46;
+  int MATCH = 46;
   /** RegularExpression Id. */
-  int TINT = 47;
+  int TYPE = 47;
   /** RegularExpression Id. */
-  int TUNIT = 48;
+  int TINT = 48;
   /** RegularExpression Id. */
   int TBOOL = 49;
   /** RegularExpression Id. */
@@ -146,6 +146,7 @@ public interface ParserConstants {
     "\"/\"",
     "\"(\"",
     "\")\"",
+    "\"()\"",
     "\"{\"",
     "\"}\"",
     "\"=\"",
@@ -180,7 +181,6 @@ public interface ParserConstants {
     "\"match\"",
     "\"type\"",
     "\"int\"",
-    "\"()\"",
     "\"bool\"",
     "\"linbool\"",
     "\"string\"",

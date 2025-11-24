@@ -44,6 +44,8 @@ TOKEN :
   |
   < RPAR : ")" >
   |
+  < LRPAR : "()" >
+  |
   < LBRA : "{" >
   |
   < RBRA : "}" >
@@ -111,8 +113,6 @@ TOKEN :
   < TYPE : "type" >
   |
   < TINT : "int" >
-  |
-  < TUNIT : "()" >
   |
   < TBOOL : "bool" >
   |
@@ -257,16 +257,11 @@ ASTNode Term() :
 		 |
 		 <DIV> t2 = Fact()  { t1 = new ASTArithOp(t1,t2,"/"); }
 		 |
-     <LPAR> t2 = FuncArg() <RPAR> { t1 = new ASTApp(t1, t2); }
+     <LRPAR> { t1 = new ASTApp(t1, new ASTUnit()); }
+     |
+     <LPAR> t2 = Let() <RPAR> { t1 = new ASTApp(t1, t2); }
     )*)
      { return t1; }
-}
-
-ASTNode FuncArg() :
-{ ASTNode t; }
-{
-  (t = Let() | { t = new ASTUnit(); })
-  { return t; }
 }
 
 ASTNode Fact() :
@@ -286,7 +281,7 @@ ASTNode Fact() :
     | n=<LinBool> { t = new ASTLBool(Boolean.parseBoolean(n.image.substring(0, n.image.length()-1))); }
     | n = <Id> { t = new ASTId(n.image); }
     | n=<String> { t = new ASTString(n.image.substring(1, n.image.length()-1)); }
-    | <TUNIT> { t = new ASTUnit(); }
+    | <LRPAR> { t = new ASTUnit(); }
     | <MINUS> t=Fact() { t = new ASTArithOp(new ASTInt(0), t, "-u"); }
     | <NOT> t=Fact() { t = new ASTLogicOp(new ASTBool(true), t, "~"); }
     | <IF> t=BA() <LBRA> e1=Let() <RBRA> <ELSE> <LBRA> e2=Let() <RBRA> { t = new ASTIf(t, e1, e2); }
@@ -314,11 +309,7 @@ ASTNode TermList() :
   ASTNode t, t2;
 }
 {
-  (
-    t = Let() (<COMMA> t2 = TermList() { t = new ASTPair(t, t2); })?
-    |
-    { t = new ASTUnit(); }
-  )
+  t = Let() (<COMMA> t2 = TermList() { t = new ASTPair(t, t2); })?
   { return t; }
 }
 
@@ -365,7 +356,7 @@ ASTType TypeF() :
         | n=<Id> { t = new ASTTId(n.image); }
         | <TBOOL> { t = new ASTTBool(); }
         | <TLBOOL> { t = new ASTTLBool(); }
-        | <TUNIT> { t = new ASTTUnit(); }
+        | <LRPAR> { t = new ASTTUnit(); }
         | <TSTRING> { t = new ASTTString(); }
         | <TTENSOR> <LPAR> t = Type() <TENSOR> t2 = Type() <RPAR> { t = new ASTTTensor(t, t2); }
         | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll); }
