@@ -102,8 +102,6 @@ TOKEN :
   |
   < SLIMARROW : "->" >
   |
-  < TENSOR : "@" >
-  |
   < FST : "fst" >
   |
   < SND : "snd" >
@@ -123,8 +121,6 @@ TOKEN :
   < TUNION  : "union" >
   |
   < TLUNION : "linunion" >
-  |
-  < TTENSOR : "tensor" >
   |
   < TLINT : "linint" >
   |
@@ -248,10 +244,7 @@ ASTNode Term() :
 {Token op, n;
   ASTNode t1, t2;}
 {
-     t1 = Fact() ( (op=<TENSOR>) t2 = Term() {
-              if (op.kind == TENSOR) t1 = new ASTTensor(t1,t2);
-     }
-    |
+     t1 = Fact()
     (
      <STAR> t2 = Fact()   { t1 = new ASTArithOp(t1,t2,"*"); }
 		 |
@@ -260,7 +253,7 @@ ASTNode Term() :
      <LRPAR> { t1 = new ASTApp(t1, new ASTUnit()); }
      |
      <LPAR> t2 = Let() <RPAR> { t1 = new ASTApp(t1, t2); }
-    )*)
+    )*
      { return t1; }
 }
 
@@ -307,22 +300,22 @@ ASTNode Fact() :
 ASTNode TermList() :
 { ASTNode t, t2; }
 {
-  t = Let() (<COMMA> t2 = CommaList() { t = new ASTPair(t, t2); }
-            | <VERT> t2 = VertList() { t = new ASTTensor(t, t2); })?
+  t = Let() (<COMMA> t2 = TermCommaList() { t = new ASTPair(t, t2); }
+            | <VERT> t2 = TermVertList() { t = new ASTTensor(t, t2); })?
   { return t; }
 }
 
-ASTNode CommaList() :
+ASTNode TermCommaList() :
 { ASTNode t, t2; }
 {
-  t = Let() (<COMMA> t2 = CommaList() { t = new ASTPair(t, t2); })?
+  t = Let() (<COMMA> t2 = TermCommaList() { t = new ASTPair(t, t2); })?
   { return t; }
 }
 
-ASTNode VertList() :
+ASTNode TermVertList() :
 { ASTNode t, t2; }
 {
-  t = Let() (<VERT> t2 = VertList() { t = new ASTTensor(t, t2); })?
+  t = Let() (<VERT> t2 = TermVertList() { t = new ASTTensor(t, t2); })?
   { return t; }
 }
 
@@ -371,7 +364,6 @@ ASTType TypeF() :
         | <TLBOOL> { t = new ASTTLBool(); }
         | <LRPAR> { t = new ASTTUnit(); }
         | <TSTRING> { t = new ASTTString(); }
-        | <TTENSOR> <LPAR> t = Type() <TENSOR> t2 = Type() <RPAR> { t = new ASTTTensor(t, t2); }
         | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll); }
         | <TLUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTLUnion(ll); }
         | <LPAR> t = TypeList() <RPAR>
@@ -380,15 +372,24 @@ ASTType TypeF() :
 }
 
 ASTType TypeList() :
+{ ASTType t, t2; }
 {
-  ASTType t, t2;
+    t = Type() (<COMMA> t2 = TypeCommaList() { t = new ASTTPair(t, t2); }
+               | <VERT> t2 = TypeVertList() { t = new ASTTTensor(t, t2); })?
+  { return t; }
 }
+
+ASTType TypeCommaList() :
+{ ASTType t, t2; }
 {
-  (
-    t = Type() (<COMMA> t2 = TypeList() { t = new ASTTPair(t, t2); })?
-    |
-    { t = new ASTTUnit(); }
-  )
+  t = Type() (<COMMA> t2 = TypeCommaList() { t = new ASTTPair(t, t2); })?
+  { return t; }
+}
+
+ASTType TypeVertList() :
+{ ASTType t, t2; }
+{
+  t = Type() (<VERT> t2 = TypeVertList() { t = new ASTTTensor(t, t2); })?
   { return t; }
 }
 

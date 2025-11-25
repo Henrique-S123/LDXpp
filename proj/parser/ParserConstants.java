@@ -87,45 +87,41 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int SLIMARROW = 42;
   /** RegularExpression Id. */
-  int TENSOR = 43;
+  int FST = 43;
   /** RegularExpression Id. */
-  int FST = 44;
+  int SND = 44;
   /** RegularExpression Id. */
-  int SND = 45;
+  int MATCH = 45;
   /** RegularExpression Id. */
-  int MATCH = 46;
+  int TYPE = 46;
   /** RegularExpression Id. */
-  int TYPE = 47;
+  int TINT = 47;
   /** RegularExpression Id. */
-  int TINT = 48;
+  int TBOOL = 48;
   /** RegularExpression Id. */
-  int TBOOL = 49;
+  int TLBOOL = 49;
   /** RegularExpression Id. */
-  int TLBOOL = 50;
+  int TSTRING = 50;
   /** RegularExpression Id. */
-  int TSTRING = 51;
+  int TUNION = 51;
   /** RegularExpression Id. */
-  int TUNION = 52;
+  int TLUNION = 52;
   /** RegularExpression Id. */
-  int TLUNION = 53;
+  int TLINT = 53;
   /** RegularExpression Id. */
-  int TTENSOR = 54;
+  int SPLIT = 54;
   /** RegularExpression Id. */
-  int TLINT = 55;
+  int LABEL = 55;
   /** RegularExpression Id. */
-  int SPLIT = 56;
+  int LLABEL = 56;
   /** RegularExpression Id. */
-  int LABEL = 57;
+  int String = 57;
   /** RegularExpression Id. */
-  int LLABEL = 58;
+  int Id = 58;
   /** RegularExpression Id. */
-  int String = 59;
+  int LinNum = 59;
   /** RegularExpression Id. */
-  int Id = 60;
-  /** RegularExpression Id. */
-  int LinNum = 61;
-  /** RegularExpression Id. */
-  int Num = 62;
+  int Num = 60;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -175,7 +171,6 @@ public interface ParserConstants {
     "\"=o\"",
     "\"-o\"",
     "\"->\"",
-    "\"@\"",
     "\"fst\"",
     "\"snd\"",
     "\"match\"",
@@ -186,7 +181,6 @@ public interface ParserConstants {
     "\"string\"",
     "\"union\"",
     "\"linunion\"",
-    "\"tensor\"",
     "\"linint\"",
     "\"split\"",
     "<LABEL>",
