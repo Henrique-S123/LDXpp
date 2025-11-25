@@ -305,11 +305,24 @@ ASTNode Fact() :
 }
 
 ASTNode TermList() :
+{ ASTNode t, t2; }
 {
-  ASTNode t, t2;
+  t = Let() (<COMMA> t2 = CommaList() { t = new ASTPair(t, t2); }
+            | <VERT> t2 = VertList() { t = new ASTTensor(t, t2); })?
+  { return t; }
 }
+
+ASTNode CommaList() :
+{ ASTNode t, t2; }
 {
-  t = Let() (<COMMA> t2 = TermList() { t = new ASTPair(t, t2); })?
+  t = Let() (<COMMA> t2 = CommaList() { t = new ASTPair(t, t2); })?
+  { return t; }
+}
+
+ASTNode VertList() :
+{ ASTNode t, t2; }
+{
+  t = Let() (<VERT> t2 = VertList() { t = new ASTTensor(t, t2); })?
   { return t; }
 }
 

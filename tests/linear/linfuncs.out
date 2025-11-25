@@ -49,7 +49,7 @@ class proj.errors.InterpreterError: Linear value of 'f2' has already been consum
 type: linint, value: 2l
 
 
-type: (linint@linint), value: (6l@8l)
+type: (linint | linint), value: (6l | 8l)
 
 
 class proj.errors.TypeCheckError: there are unused linear values: [s2: linint]
