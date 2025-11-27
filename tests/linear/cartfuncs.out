@@ -8,10 +8,10 @@ type: int, value: 1
 type: linint, value: 3l
 
 
-class proj.errors.TypeCheckError: nonlinear functions must not use external linear values
+class proj.errors.InterpreterError: Undeclared identifier x.
 
 
-class proj.errors.TypeCheckError: nonlinear functions must not use external linear values
+class proj.errors.InterpreterError: Undeclared identifier x.
 
 
 type: linint, value: 10l

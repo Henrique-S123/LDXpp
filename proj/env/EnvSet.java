@@ -45,33 +45,57 @@ public class EnvSet {
         return usedLinears;
     }
 
-    public void clearDelta() {
+    public Environment<ASTType> popDelta() {
+        Environment<ASTType> tmp = this.delta;
         this.delta = new Environment<ASTType>();
+        return tmp;
+    }
+
+    public void setDelta(Environment<ASTType> d) {
+        this.delta = d;
+    }
+
+    public void newGammaScope() {
+        this.gamma = this.gamma.beginScope();
+    }
+
+    public void newDeltaScope() {
+        this.delta = this.delta.beginScope();
+    }
+
+    public void newPhiScope() {
+        this.phi = this.phi.beginScope();
     }
 
     public void assocGamma(String id, ASTType t) throws InterpreterError {
-        Environment<ASTType> en = this.gamma.beginScope();
         if (declaredIds.contains(id))
             throw new InterpreterError("Identifier " + id + " already declared!");
-        en.assoc(id, t);
-        this.gamma = en;
+        this.gamma.assoc(id, t);
     }
 
     public void assocDelta(String id, ASTType t) throws InterpreterError {
-        Environment<ASTType> en = this.delta.beginScope();
         if (declaredIds.contains(id))
             throw new InterpreterError("Identifier " + id + " already declared!");
         if (usedLinears.contains(id)) usedLinears.remove(id);
-        en.assoc(id, t);
-        this.delta = en;
+        this.delta.assoc(id, t);
     }
 
     public void assocPhi(String id, ASTType t) throws InterpreterError {
-        Environment<ASTType> en = this.phi.beginScope();
         if (declaredIds.contains(id))
             throw new InterpreterError("Identifier " + id + " already declared!");
-        en.assoc(id, t);
-        this.phi = en;
+        this.phi.assoc(id, t);
+    }
+    
+    public void assocVar(String id, ASTType t) throws InterpreterError {
+        if (declaredIds.contains(id))
+            throw new InterpreterError("Identifier " + id + " already declared!");
+        if (t instanceof ASTLinType) {
+            this.newDeltaScope();
+            this.assocDelta(id, t);
+        } else {
+            this.newGammaScope();
+            this.assocGamma(id, t);
+        }
     }
 
     public ASTType findVar(String id) throws InterpreterError {

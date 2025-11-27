@@ -20,10 +20,10 @@ public class ASTPair implements ASTNode {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
-        e.clearDelta();
+        Environment<ASTType> prevDelta = e.popDelta();
         ASTType t1 = first.typecheck(e);
-        e.clearDelta();
         ASTType t2 = second.typecheck(e);
+        e.setDelta(prevDelta);
         return new ASTTPair(t1, t2);
     }
 }

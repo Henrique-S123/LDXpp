@@ -26,8 +26,7 @@ public class ASTLFunc implements ASTNode  {
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
         ASTType targtype = e.getPhi().unfold(argtype);
-        if (targtype instanceof ASTLinType) e.assocDelta(id, targtype);
-        else e.assocGamma(id, targtype);
+        e.assocVar(id, targtype);
         ASTType tb = body.typecheck(e);
         if (!(e.getDelta().isEmpty()))
             throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());

@@ -13,16 +13,16 @@ type: int, value: 2
 type: int, value: 4
 
 
-class proj.errors.TypeCheckError: cartesian pairs must not use external linear values
+class proj.errors.InterpreterError: Undeclared identifier x.
 
 
-class proj.errors.TypeCheckError: cartesian pairs must not use external linear values
+class proj.errors.InterpreterError: Undeclared identifier x.
 
 
 type: (linint, int), value: (1l, 2)
 
 
-class proj.errors.TypeCheckError: cartesian pairs must not use external linear values
+class proj.errors.InterpreterError: Undeclared identifier x.
 
 
 type: (linint, linint), value: (1l, 2l)

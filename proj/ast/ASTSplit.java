@@ -35,11 +35,16 @@ public class ASTSplit implements ASTNode {
 		if (!(tt instanceof ASTTTensor))
 			throw new TypeCheckError("illegal type to split: " + tt.toStr());
 		ASTType t1 = e.getPhi().unfold(((ASTTTensor) tt).getFirst());
-		if (t1 instanceof ASTLinType) e.assocDelta(id1, t1);
-		else e.assocGamma(id1, t1);
+		e.assocVar(id1, t1);
 		ASTType t2 = e.getPhi().unfold(((ASTTTensor) tt).getSecond());
-		if (t2 instanceof ASTLinType) e.assocDelta(id2, t2);
-		else e.assocGamma(id2, t2);
+		boolean t1Lin = (t1 instanceof ASTLinType), t2Lin = (t2 instanceof ASTLinType);
+		if (t2Lin) {
+			if (!t1Lin) e.newDeltaScope();
+			e.assocDelta(id2, t2);
+		} else {
+			if (t1Lin) e.newGammaScope();
+			e.assocGamma(id2, t2);
+		}
 		ASTType rt = body.typecheck(e);
 		if (!(e.getDelta().isEmpty()))
             throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());

@@ -54,8 +54,7 @@ public class ASTMatchUnion implements ASTNode {
 
 				env = matchUsedLinears == null ? e : new EnvSet(en);
 				ASTType tlabel = e.getPhi().unfold(entry.getValue());
-				if (tlabel instanceof ASTLinType) env.assocDelta(ids.get(index), tlabel);
-				else env.assocGamma(ids.get(index), tlabel);
+				env.assocVar(ids.get(index), tlabel);
 				tcase = exprs.get(index).typecheck(env);
 
 				if (matchUsedLinears == null) {
