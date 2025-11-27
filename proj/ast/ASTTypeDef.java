@@ -21,10 +21,12 @@ public class ASTTypeDef implements ASTNode {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+        e.newPhiScope();
         for (String s : ltd.keySet()) {
             e.assocPhi(s, ltd.get(s));
         }
-
-        return this.body.typecheck(e);
+        ASTType ret = this.body.typecheck(e);
+        e.closePhiScope();
+        return ret;
     }
 }

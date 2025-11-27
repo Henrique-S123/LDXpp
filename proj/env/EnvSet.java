@@ -67,6 +67,18 @@ public class EnvSet {
         this.phi = this.phi.beginScope();
     }
 
+    public void closeGammaScope() {
+        this.gamma = this.gamma.endScope();
+    }
+
+    public void closeDeltaScope() {
+        this.delta = this.delta.endScope();
+    }
+
+    public void closePhiScope() {
+        this.phi = this.phi.endScope();
+    }
+
     public void assocGamma(String id, ASTType t) throws InterpreterError {
         if (declaredIds.contains(id))
             throw new InterpreterError("Identifier " + id + " already declared!");

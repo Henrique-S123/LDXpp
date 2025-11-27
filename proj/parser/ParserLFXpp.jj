@@ -154,13 +154,13 @@ ASTNode Let() :
 {  
     (
       t = Seq()
-    | 
+    |
     {  List<Bind> decls  = new ArrayList<Bind>(); }
-    ( ( LOOKAHEAD(2) <LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC> 
+    ( ( LOOKAHEAD(2) <LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC>
       { decls.add(new Bind(n.image, t1, e1)); t1 = null;} )+
         e2 = Let() { t = new ASTLet(decls, e2); }
     )
-| 
+    | 
      {  HashMap<String,ASTType> lbl = new HashMap<String,ASTType>(); }
    ( (LOOKAHEAD(2) <TYPE>  n=<Id>  <EQUAL> t1 = Type()  <SEMIC>
       { if (lbl.containsKey(n.image)) { throw new ParseException("duplicate id"); } else { lbl.put(n.image, t1); } } )+

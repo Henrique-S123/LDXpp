@@ -52,10 +52,12 @@ public class ASTMatchUnion implements ASTNode {
 				if (index == -1)
 					throw new TypeCheckError("match missing label " + entry.getKey());
 
-				env = matchUsedLinears == null ? e : new EnvSet(en);
+				env = (matchUsedLinears == null ? e : new EnvSet(en));
 				ASTType tlabel = e.getPhi().unfold(entry.getValue());
 				env.assocVar(ids.get(index), tlabel);
 				tcase = exprs.get(index).typecheck(env);
+				if (tlabel instanceof ASTLinType) env.closeDeltaScope();
+				else env.closeGammaScope();
 
 				if (matchUsedLinears == null) {
 					matchUsedLinears = new HashSet<String>(e.getUsedLinears());

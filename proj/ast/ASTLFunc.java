@@ -30,6 +30,8 @@ public class ASTLFunc implements ASTNode  {
         ASTType tb = body.typecheck(e);
         if (!(e.getDelta().isEmpty()))
             throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());
+        if (targtype instanceof ASTLinType) e.closeDeltaScope();
+        else e.closeGammaScope();
         return new ASTTLollipop(targtype, tb);
 	}
 }
