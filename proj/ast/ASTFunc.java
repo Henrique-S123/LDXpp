@@ -24,14 +24,11 @@ public class ASTFunc implements ASTNode  {
         return new VClos(e, id, body, false);
     }
 
-    public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-        ASTType targtype = e.unfold(argtype);
-        Environment<ASTType> en = e.beginScope();
-        en.assocUnrestricted(id, targtype);
-        ASTType tb = body.typecheck(en);
-        if (!en.getUsedLinears().isEmpty()) {
-            throw new TypeCheckError("nonlinear functions must not use external linear values");
-        }
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+        ASTType targtype = e.getPhi().unfold(argtype);
+        e.assocGamma(id, targtype);
+        e.clearDelta();
+        ASTType tb = body.typecheck(e);
         return new ASTTArrow(targtype, tb);
 	}
 }

@@ -18,7 +18,7 @@ public class ASTSeq implements ASTNode {
 		second = s;
     }
 
-    public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
         ASTType tf = first.typecheck(e);
         if (tf instanceof ASTTUnit) {
             return second.typecheck(e);

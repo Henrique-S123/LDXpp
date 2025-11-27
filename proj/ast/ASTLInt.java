@@ -16,7 +16,7 @@ public class ASTLInt implements ASTNode  {
         return new VInt(v, true);
     }
 
-    public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError {;
+    public ASTType typecheck(EnvSet e) throws TypeCheckError {;
 		return new ASTTLInt();
 	}
 

@@ -13,11 +13,11 @@ public class ASTId implements ASTNode	{
     }
 
     public IValue eval(Environment<IValue> env)	throws InterpreterError {
-        return env.find(id);
+        return env.find(id, false);
     }
 
-    public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-		return e.find(id);
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+		return e.findVar(id);
 	}
 
 }	

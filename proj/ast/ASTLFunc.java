@@ -24,13 +24,13 @@ public class ASTLFunc implements ASTNode  {
         return new VClos(e, id, body, true);
     }
 
-    public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-        ASTType targtype = e.unfold(argtype);
-        Environment<ASTType> en = e.beginScope();
-        en.assoc(id, targtype);
-        ASTType tb = body.typecheck(en);
-        if (!(en.getLinears().isEmpty()))
-            throw new TypeCheckError("there are unused linear values: " + en.deltaToStr());
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+        ASTType targtype = e.getPhi().unfold(argtype);
+        if (targtype instanceof ASTLinType) e.assocDelta(id, targtype);
+        else e.assocGamma(id, targtype);
+        ASTType tb = body.typecheck(e);
+        if (!(e.getDelta().isEmpty()))
+            throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());
         return new ASTTLollipop(targtype, tb);
 	}
 }

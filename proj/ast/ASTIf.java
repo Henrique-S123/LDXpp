@@ -26,17 +26,17 @@ public class ASTIf implements ASTNode {
 		}
     }
 
-	public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
+	public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
 		ASTType tt = test.typecheck(e);
 		if (tt instanceof ASTTBool || tt instanceof ASTTLBool) {
-			Environment<ASTType> e2 = e.copy(true);
+			EnvSet e2 = new EnvSet(e);
 			ASTType vconseq = conseq.typecheck(e);
 			ASTType valt = alt.typecheck(e2);
 			if (!new HashSet<String>(e.getUsedLinears()).equals(new HashSet<String>(e2.getUsedLinears())))
 				throw new TypeCheckError("if conseq and alt branches must use the same linear values");
-			if (vconseq.isSubtypeOf(valt, e)) {
+			if (vconseq.isSubtypeOf(valt, e.getPhi())) {
 				return vconseq;
-			} else if (valt.isSubtypeOf(vconseq, e)) {
+			} else if (valt.isSubtypeOf(vconseq, e.getPhi())) {
 				return valt;
 			} else {
 				throw new TypeCheckError("if conseq and alt branches do not have compatible types: " + vconseq.toStr() + " and " + valt.toStr());

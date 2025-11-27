@@ -13,7 +13,7 @@ public class ASTUnit implements ASTNode  {
         return new VUnit(false);                
     }
 
-    public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError {
 		return new ASTTUnit();
 	}
 

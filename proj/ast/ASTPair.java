@@ -19,15 +19,11 @@ public class ASTPair implements ASTNode {
         return new VPair(v1, v2, false);
     }
 
-    public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+        e.clearDelta();
         ASTType t1 = first.typecheck(e);
-        if (!e.getUsedLinears().isEmpty()) {
-            throw new TypeCheckError("cartesian pairs must not use external linear values");
-        }
+        e.clearDelta();
         ASTType t2 = second.typecheck(e);
-        if (!e.getUsedLinears().isEmpty()) {
-            throw new TypeCheckError("cartesian pairs must not use external linear values");
-        }
         return new ASTTPair(t1, t2);
     }
 }

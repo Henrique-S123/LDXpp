@@ -16,7 +16,7 @@ public class ASTBool implements ASTNode  {
         return new VBool(b, false);                
     }
 
-    public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError {
 		return new ASTTBool();
 	}
 

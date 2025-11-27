@@ -24,27 +24,28 @@ public class ASTLet implements ASTNode {
         body = b;
     }
 
-    public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-        Environment<ASTType> en = e.beginScope();
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
         for (Bind b : decls) {
             ASTType tt = b.getType();
             if (tt != null) {
-                tt = e.unfold(tt);
+                tt = e.getPhi().unfold(tt);
                 // premptive type binding
-                en.assoc(b.getId(), tt);
-                ASTType valuetype = b.getExp().typecheck(en);
-                if (!(valuetype.isSubtypeOf(tt, e))) {
+                if (tt instanceof ASTLinType) e.assocDelta(b.getId(), tt);
+                else e.assocGamma(b.getId(), tt);
+                ASTType valuetype = b.getExp().typecheck(e);
+                if (!(valuetype.isSubtypeOf(tt, e.getPhi()))) {
                     throw new TypeCheckError("types to bind are not subtypes: " + valuetype.toStr() + " and " + tt.toStr());
                 }
             } else {
-                ASTType t = b.getExp().typecheck(en);
-                t = e.unfold(t);
-                en.assoc(b.getId(), t);
+                ASTType t = b.getExp().typecheck(e);
+                t = e.getPhi().unfold(t);
+                if (t instanceof ASTLinType) e.assocDelta(b.getId(), t);
+                else e.assocGamma(b.getId(), t);
             }
         }
-        ASTType rt = body.typecheck(en);
-        if (!(en.getLinears().isEmpty()))
-            throw new TypeCheckError("there are unused linear values: " + en.deltaToStr());
+        ASTType rt = body.typecheck(e);
+        if (!(e.getDelta().isEmpty()))
+            throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());
         return rt;
 	}
 }

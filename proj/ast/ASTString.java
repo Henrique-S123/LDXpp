@@ -16,7 +16,7 @@ public class ASTString implements ASTNode  {
         return new VString(s);                
     }
 
-    public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError {
 		return new ASTTString();
 	}
 

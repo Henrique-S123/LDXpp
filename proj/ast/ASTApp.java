@@ -28,9 +28,9 @@ public class ASTApp implements ASTNode  {
         }          
     }
 
-    public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
         ASTType tf = func.typecheck(e);
-        tf = e.unfold(tf);
+        tf = e.getPhi().unfold(tf);
         ASTType dom, codom;
         if (tf instanceof ASTTArrow) {
             dom = ((ASTTArrow) tf).getDom();
@@ -42,7 +42,7 @@ public class ASTApp implements ASTNode  {
             throw new TypeCheckError("illegal type for func app: " + tf.toStr());
         }
         ASTType ta = arg.typecheck(e);
-        if (ta instanceof ASTTUnit || ta.isSubtypeOf(dom, e)) {
+        if (ta instanceof ASTTUnit || ta.isSubtypeOf(dom, e.getPhi())) {
             return codom;
         } else {
             throw new TypeCheckError("func app: argument type (" + ta.toStr() + ") is not subtype of the function parameter (" + dom.toStr() + ")");

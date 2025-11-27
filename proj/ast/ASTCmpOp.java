@@ -37,9 +37,9 @@ public class ASTCmpOp implements ASTNode {
 		}
     }
 
-	public ASTType typecheck(Environment<ASTType> te) throws TypeCheckError, InterpreterError {
-		ASTType tl = lhs.typecheck(te);
-		ASTType tr = rhs.typecheck(te);
+	public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+		ASTType tl = lhs.typecheck(e);
+		ASTType tr = rhs.typecheck(e);
 		if (tl instanceof ASTTInt && tr instanceof ASTTInt) {
 			return new ASTTBool();
 		} else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt)) {

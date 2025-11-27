@@ -20,13 +20,11 @@ public class ASTTypeDef implements ASTNode {
         return body.eval(env);
     }
 
-    public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError {
-        Environment<ASTType> en = e.beginScope();
-
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
         for (String s : ltd.keySet()) {
-            en.assoc(s, ltd.get(s));
+            e.assocPhi(s, ltd.get(s));
         }
 
-        return this.body.typecheck(en);
+        return this.body.typecheck(e);
     }
 }

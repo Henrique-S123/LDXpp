@@ -8,6 +8,6 @@ import proj.errors.*;
 public interface ASTNode {
     public IValue eval(Environment<IValue> e) throws InterpreterError;
 	
-    public ASTType typecheck(Environment<ASTType> e) throws TypeCheckError, InterpreterError;
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError;
 }
 
