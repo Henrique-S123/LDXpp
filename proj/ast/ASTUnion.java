@@ -23,7 +23,10 @@ public class ASTUnion implements ASTNode {
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
-		ll.put(label, expr.typecheck(e));
+		Environment<ASTType> prevDelta = e.popDelta();
+		ASTType t = expr.typecheck(e);
+		e.setDelta(prevDelta);
+		ll.put(label, t);
 		return new ASTTUnion(new TypeBindList(ll));
 	}
 }

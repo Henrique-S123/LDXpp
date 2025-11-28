@@ -1,6 +1,9 @@
 type: linint, value: 3l
 
 
+class proj.errors.InterpreterError: Undeclared identifier y.
+
+
 class proj.errors.TypeCheckError: linear value c must be used
 
 

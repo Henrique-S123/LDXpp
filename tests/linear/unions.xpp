@@ -1,5 +1,7 @@
 let x = #a(3l); match x {#b(c) -> -c | #a(c) -> c};;
 
+let y = 3l; let x = #a(y); match x {#b(c) -> -c | #a(c) -> c};;
+
 let x = #a(3l); match x {#b(c) -> -c | #a(c) -> 1};;
 
 let x = #a(3); match x {#b(c) -> -c | #a(c) -> c};;
