@@ -41,7 +41,7 @@ public class ASTMatchUnion implements ASTNode {
 		ASTType tt = test.typecheck(e);
 		ASTType rettype = null, tcase;
 		HashSet<String> matchUsedLinears = null;
-		tt = e.getPhi().unfold(tt);
+		tt = e.unfold(tt);
 		if (tt instanceof ASTTUnion || tt instanceof ASTTLUnion) {
 			EnvSet en = new EnvSet(e), env;
 			Set<Map.Entry<String, ASTType>> entries = tt instanceof ASTTUnion ?
@@ -53,7 +53,7 @@ public class ASTMatchUnion implements ASTNode {
 					throw new TypeCheckError("match missing label " + entry.getKey());
 
 				env = (matchUsedLinears == null ? e : new EnvSet(en));
-				ASTType tlabel = e.getPhi().unfold(entry.getValue());
+				ASTType tlabel = e.unfold(entry.getValue());
 				env.assocVar(ids.get(index), tlabel);
 				tcase = exprs.get(index).typecheck(env);
 				if (tlabel instanceof ASTLinType) env.closeDeltaScope();
@@ -70,7 +70,7 @@ public class ASTMatchUnion implements ASTNode {
 				caseUsedLineares.remove(ids.get(index));
 				if (!caseUsedLineares.equals(matchUsedLinears))
 					throw new TypeCheckError("all match cases must use the same linear values");
-				if ((tcase.isSubtypeOf(rettype, env.getPhi()) && rettype.isSubtypeOf(tcase, env.getPhi())) || rettype == null) {
+				if ((tcase.isSubtypeOf(rettype, env) && rettype.isSubtypeOf(tcase, env)) || rettype == null) {
 					rettype = tcase;
 				} else {
 					throw new TypeCheckError("different types for match cases: " + tcase.toStr() + " and " + rettype.toStr());

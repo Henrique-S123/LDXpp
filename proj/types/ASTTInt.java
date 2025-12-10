@@ -9,7 +9,7 @@ public class ASTTInt implements ASTType {
         return "int";
     }
 
-    public boolean isSubtypeOf(ASTType o, Environment<ASTType> e) throws InterpreterError {
+    public boolean isSubtypeOf(ASTType o, EnvSet e) throws InterpreterError {
         if (o instanceof ASTTId) {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);

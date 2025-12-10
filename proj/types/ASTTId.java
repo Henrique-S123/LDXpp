@@ -19,7 +19,7 @@ public	class ASTTId implements ASTType	{
         return id;
     }
 
-    public boolean isSubtypeOf(ASTType o, Environment<ASTType> e) throws InterpreterError {
+    public boolean isSubtypeOf(ASTType o, EnvSet e) throws InterpreterError {
         if (o instanceof ASTTId) {
             return id.equals(((ASTTId) o).getId());
         }

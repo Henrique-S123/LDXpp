@@ -1,7 +1,6 @@
 package proj.env;
 
 import proj.types.*;
-import proj.errors.*;
 
 import java.util.*;
 
@@ -45,7 +44,7 @@ public class Environment <E>{
         bindings.put(id, bind);
     }
 
-    public E find(String id, boolean consume) throws InterpreterError {
+    public E find(String id, boolean consume) {
         Environment<E> curr = this;
         while (curr != null) {
             E val = curr.bindings.get(id);
@@ -72,13 +71,5 @@ public class Environment <E>{
         }
 
         return res += "]";
-    }
-
-    public ASTType unfold(ASTType t) throws InterpreterError {
-        if (t instanceof ASTTId) {
-            return unfold((ASTType) find(((ASTTId) t).getId(), false));
-        } else {
-            return t;
-        }
     }
 }

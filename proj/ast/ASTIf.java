@@ -34,9 +34,9 @@ public class ASTIf implements ASTNode {
 			ASTType valt = alt.typecheck(e2);
 			if (!new HashSet<String>(e.getUsedLinears()).equals(new HashSet<String>(e2.getUsedLinears())))
 				throw new TypeCheckError("if conseq and alt branches must use the same linear values");
-			if (vconseq.isSubtypeOf(valt, e.getPhi())) {
+			if (vconseq.isSubtypeOf(valt, e)) {
 				return vconseq;
-			} else if (valt.isSubtypeOf(vconseq, e.getPhi())) {
+			} else if (valt.isSubtypeOf(vconseq, e)) {
 				return valt;
 			} else {
 				throw new TypeCheckError("if conseq and alt branches do not have compatible types: " + vconseq.toStr() + " and " + valt.toStr());

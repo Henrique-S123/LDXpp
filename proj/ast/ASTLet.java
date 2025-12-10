@@ -30,7 +30,7 @@ public class ASTLet implements ASTNode {
             ASTType tt = b.getType();
             if (tt != null) {
                 // premptive type binding
-                tt = e.getPhi().unfold(tt);
+                tt = e.unfold(tt);
                 if (tt instanceof ASTLinType) {
                     if (!deltaExpanded) e.newDeltaScope();
                     e.assocDelta(b.getId(), tt);
@@ -41,12 +41,12 @@ public class ASTLet implements ASTNode {
                     gammaExpanded = true;
                 }
                 ASTType valuetype = b.getExp().typecheck(e);
-                if (!(valuetype.isSubtypeOf(tt, e.getPhi()))) {
+                if (!(valuetype.isSubtypeOf(tt, e))) {
                     throw new TypeCheckError("types to bind are not subtypes: " + valuetype.toStr() + " and " + tt.toStr());
                 }
             } else {
                 ASTType t = b.getExp().typecheck(e);
-                t = e.getPhi().unfold(t);
+                t = e.unfold(t);
                 if (t instanceof ASTLinType) {
                     if (!deltaExpanded) e.newDeltaScope();
                     e.assocDelta(b.getId(), t);

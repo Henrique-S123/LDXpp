@@ -25,7 +25,7 @@ public class ASTFunc implements ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
-        ASTType targtype = e.getPhi().unfold(argtype);
+        ASTType targtype = e.unfold(argtype);
         e.newGammaScope();
         e.assocGamma(id, targtype);
         Environment<ASTType> prevDelta = e.popDelta();

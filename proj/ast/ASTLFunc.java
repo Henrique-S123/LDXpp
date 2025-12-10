@@ -25,7 +25,7 @@ public class ASTLFunc implements ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
-        ASTType targtype = e.getPhi().unfold(argtype);
+        ASTType targtype = e.unfold(argtype);
         e.assocVar(id, targtype);
         ASTType tb = body.typecheck(e);
         if (!(e.getDelta().isEmpty()))

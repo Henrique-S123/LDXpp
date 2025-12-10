@@ -31,12 +31,12 @@ public class ASTSplit implements ASTNode {
 	public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
 		if (id1.equals(id2)) throw new TypeCheckError("ids for split must be different");
 		ASTType tt = pair.typecheck(e);
-		tt = e.getPhi().unfold(tt);
+		tt = e.unfold(tt);
 		if (!(tt instanceof ASTTTensor))
 			throw new TypeCheckError("illegal type to split: " + tt.toStr());
-		ASTType t1 = e.getPhi().unfold(((ASTTTensor) tt).getFirst());
+		ASTType t1 = e.unfold(((ASTTTensor) tt).getFirst());
 		e.assocVar(id1, t1);
-		ASTType t2 = e.getPhi().unfold(((ASTTTensor) tt).getSecond());
+		ASTType t2 = e.unfold(((ASTTTensor) tt).getSecond());
 		boolean t1Lin = (t1 instanceof ASTLinType), t2Lin = (t2 instanceof ASTLinType);
 		if (t2Lin) {
 			if (!t1Lin) e.newDeltaScope();

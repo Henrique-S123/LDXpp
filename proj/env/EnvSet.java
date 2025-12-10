@@ -79,28 +79,29 @@ public class EnvSet {
         this.phi = this.phi.endScope();
     }
 
-    public void assocGamma(String id, ASTType t) throws InterpreterError {
+    private void checkAlreadyDeclared(String id) throws InterpreterError {
         if (declaredIds.contains(id))
             throw new InterpreterError("Identifier " + id + " already declared!");
+    }
+
+    public void assocGamma(String id, ASTType t) throws InterpreterError {
+        checkAlreadyDeclared(id);
         this.gamma.assoc(id, t);
     }
 
     public void assocDelta(String id, ASTType t) throws InterpreterError {
-        if (declaredIds.contains(id))
-            throw new InterpreterError("Identifier " + id + " already declared!");
+        checkAlreadyDeclared(id);
         if (usedLinears.contains(id)) usedLinears.remove(id);
         this.delta.assoc(id, t);
     }
 
     public void assocPhi(String id, ASTType t) throws InterpreterError {
-        if (declaredIds.contains(id))
-            throw new InterpreterError("Identifier " + id + " already declared!");
+        checkAlreadyDeclared(id);
         this.phi.assoc(id, t);
     }
     
     public void assocVar(String id, ASTType t) throws InterpreterError {
-        if (declaredIds.contains(id))
-            throw new InterpreterError("Identifier " + id + " already declared!");
+        checkAlreadyDeclared(id);
         if (t instanceof ASTLinType) {
             this.newDeltaScope();
             this.assocDelta(id, t);
@@ -126,5 +127,13 @@ public class EnvSet {
 
     public String toStr() {
         return "Gamma: " + gamma.toStr() + "; Delta: " + delta.toStr() + "; Phi: " + phi.toStr();
+    }
+
+    public ASTType unfold(ASTType t) {
+        if (t instanceof ASTTId) {
+            return unfold((ASTType) phi.find(((ASTTId) t).getId(), false));
+        } else {
+            return t;
+        }
     }
 }
