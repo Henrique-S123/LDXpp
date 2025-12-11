@@ -41,3 +41,7 @@ let sum_pairs = lfn p1:(linint|linint), p2:(linint|linint) =o {
     split p1 {f1|s1 -> split p2 {f2|s2 -> ((f1 + f2)|(s1 + 100l))}}
 };
 let p1 = (2l|3l); let p2 = (4l|5l); sum_pairs(p1)(p2);;
+
+let linswap = lfn p:(linint|linint) =o {split p {x|y -> (y | x)}};
+let p1 = (1l | 2l);
+linswap(p1);;

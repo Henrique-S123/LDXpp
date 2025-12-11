@@ -55,3 +55,6 @@ type: (linint | linint), value: (6l | 8l)
 class proj.errors.TypeCheckError: there are unused linear values: [s2: linint]
 
 
+type: (linint | linint), value: (2l | 1l)
+
+
