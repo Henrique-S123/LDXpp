@@ -1,4 +1,4 @@
-# LX++
-GIT repository for the Linear X++ language, created from the X++ language, developed in the LProg 24/25 course.
+# LDX++
+GIT repository for the Linear Dependent X++ language, created from the LX++ language.
 
 To build the executable, run `makeit.sh`. To run all tests, run `run_tests.sh`.
