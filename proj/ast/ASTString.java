@@ -20,4 +20,7 @@ public class ASTString implements ASTNode  {
 		return new ASTTString();
 	}
 
+    public ASTNode normalize() {
+        return this;
+    }
 }

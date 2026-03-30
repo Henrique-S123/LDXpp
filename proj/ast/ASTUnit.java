@@ -17,4 +17,7 @@ public class ASTUnit implements ASTNode  {
 		return new ASTTUnit();
 	}
 
+    public ASTNode normalize() {
+        return this;
+    }
 }

@@ -52,4 +52,8 @@ public class ASTSplit implements ASTNode {
 		else if (!t1Lin || !t2Lin) e.closeGammaScope();
 		return rt;
 	}
+
+	public ASTNode normalize() {
+        return this;
+    }
 }

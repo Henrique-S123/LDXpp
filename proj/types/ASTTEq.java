@@ -27,7 +27,7 @@ public class ASTTEq implements ASTType {
     }
 
     public String toStr() {
-        return term1+"≡"+ term2+":"+type.toStr();
+        return term1+" ≡ "+ term2+" : "+type.toStr();
     }
 
     public boolean isSubtypeOf(ASTType o, EnvSet e) throws InterpreterError {

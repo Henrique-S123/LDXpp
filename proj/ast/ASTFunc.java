@@ -34,4 +34,8 @@ public class ASTFunc implements ASTNode  {
         e.closeGammaScope();
         return new ASTTArrow(targtype, tb);
 	}
+
+    public ASTNode normalize() {
+        return this;
+    }
 }

@@ -65,4 +65,8 @@ public class ASTLet implements ASTNode {
         if (deltaExpanded) e.closeDeltaScope();
         return rt;
 	}
+
+    public ASTNode normalize() {
+        return this;
+    }
 }

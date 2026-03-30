@@ -34,4 +34,8 @@ public class ASTLFunc implements ASTNode  {
         else e.closeGammaScope();
         return new ASTTLollipop(targtype, tb);
 	}
+
+    public ASTNode normalize() {
+        return this;
+    }
 }

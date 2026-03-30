@@ -26,4 +26,8 @@ public class ASTLUnion implements ASTNode {
 		ll.put(label, expr.typecheck(e));
 		return new ASTTLUnion(new TypeBindList(ll));
 	}
+
+	public ASTNode normalize() {
+        return this;
+    }
 }

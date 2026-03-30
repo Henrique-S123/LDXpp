@@ -20,4 +20,7 @@ public class ASTId implements ASTNode	{
 		return e.findVar(id);
 	}
 
+    public ASTNode normalize() {
+        return this;
+    }
 }	

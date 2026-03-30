@@ -53,4 +53,8 @@ public class ASTLogicOp implements ASTNode {
 				throw new TypeCheckError("illegal types to " + op + " operator: " + types);
 		}
 	}
+
+	public ASTNode normalize() {
+        return this;
+    }
 }

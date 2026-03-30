@@ -48,4 +48,8 @@ public class ASTApp implements ASTNode  {
             throw new TypeCheckError("func app: argument type (" + ta.toStr() + ") is not subtype of the function parameter (" + dom.toStr() + ")");
         }
 	}
+
+    public ASTNode normalize() {
+        return this;
+    }
 }

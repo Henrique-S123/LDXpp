@@ -20,4 +20,7 @@ public class ASTLBool implements ASTNode  {
 		return new ASTTLBool();
 	}
 
+    public ASTNode normalize() {
+        return this;
+    }
 }

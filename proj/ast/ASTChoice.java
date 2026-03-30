@@ -14,6 +14,14 @@ public class ASTChoice implements ASTNode  {
         choice = c;
     }
 
+    public ASTNode getPair() {
+        return pair;
+    }
+
+    public int getChoice() {
+        return choice;
+    }
+
     public IValue eval(Environment<IValue> e) throws InterpreterError {
         IValue vp = pair.eval(e);
         if (vp instanceof VPair) {
@@ -31,4 +39,16 @@ public class ASTChoice implements ASTNode  {
             throw new TypeCheckError("illegal type to " + (choice > 0 ? "snd" : "fst") + ": " + tp.toStr());
         }
 	}
+
+    public ASTNode normalize() {
+        return choice == 0 ?
+            ((ASTPair) pair).getFirst().normalize():
+            ((ASTPair) pair).getSecond().normalize();
+    }
+
+    @Override
+    public String toString() {
+        String s = choice == 0 ? "fst %s" : "snd %s";
+        return String.format(s, pair.toString());
+    }
 }

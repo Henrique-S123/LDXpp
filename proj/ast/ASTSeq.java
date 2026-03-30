@@ -26,4 +26,8 @@ public class ASTSeq implements ASTNode {
             throw new TypeCheckError("illegal type to sequential composition: " + tf.toStr());
         }
 	}
+
+	public ASTNode normalize() {
+        return this;
+    }
 }

@@ -48,4 +48,8 @@ public class ASTCmpOp implements ASTNode {
 			throw new TypeCheckError("illegal types to " + op + " operator: " + tl.toStr() + " and " + tr.toStr());
 		}
 	}
+
+	public ASTNode normalize() {
+        return this;
+    }
 }

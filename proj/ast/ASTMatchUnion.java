@@ -81,4 +81,8 @@ public class ASTMatchUnion implements ASTNode {
 		}
 		return rettype;
 	}
+
+	public ASTNode normalize() {
+        return this;
+    }
 }

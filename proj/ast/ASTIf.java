@@ -46,4 +46,7 @@ public class ASTIf implements ASTNode {
 		}
 	}
 
+	public ASTNode normalize() {
+        return this;
+    }
 }

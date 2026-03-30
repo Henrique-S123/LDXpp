@@ -24,4 +24,8 @@ public class ASTTensor implements ASTNode {
         ASTType t2 = second.typecheck(e);
         return new ASTTTensor(t1, t2);
     }
+
+    public ASTNode normalize() {
+        return this;
+    }
 }

@@ -20,4 +20,7 @@ public class ASTLInt implements ASTNode  {
 		return new ASTTLInt();
 	}
 
+    public ASTNode normalize() {
+        return this;
+    }
 }

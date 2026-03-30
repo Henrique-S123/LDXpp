@@ -12,6 +12,14 @@ public class ASTPair implements ASTNode {
         first = f;
         second = s;
     }
+
+    public ASTNode getFirst() {
+        return first;
+    }
+
+    public ASTNode getSecond() {
+        return second;
+    }
     
     public IValue eval(Environment<IValue> e) throws InterpreterError {
         IValue v1 = first.eval(e);
@@ -25,5 +33,20 @@ public class ASTPair implements ASTNode {
         ASTType t2 = second.typecheck(e);
         e.setDelta(prevDelta);
         return new ASTTPair(t1, t2);
+    }
+
+    public ASTNode normalize() {
+        return new ASTPair(first.normalize(), second.normalize());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof ASTPair &&
+            first.equals(((ASTPair) o).getFirst()) && second.equals(((ASTPair) o).getSecond());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("(%s, %s)", first.toString(), second.toString());
     }
 }

@@ -29,4 +29,8 @@ public class ASTTypeDef implements ASTNode {
         e.closePhiScope();
         return ret;
     }
+
+    public ASTNode normalize() {
+        return this;
+    }
 }

@@ -4,7 +4,6 @@ import proj.values.*;
 import proj.types.*;
 import proj.env.*;
 import proj.errors.*;
-import proj.Equalizer;
 
 public class ASTCheck implements ASTNode {
     ASTNode left, right;
@@ -21,7 +20,13 @@ public class ASTCheck implements ASTNode {
     public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
         ASTType t = left.typecheck(e);
         ASTType t2 = right.typecheck(e);
-        if (Equalizer.defeq(left, right) || Equalizer.defeq(right, left)) return new ASTTEq(left, right, t);
+        if (!t.isSubtypeOf(t2, e) || !t2.isSubtypeOf(t, e))
+            throw new TypeCheckError("the two terms do not have the same type");
+        if (left.normalize().equals(right.normalize())) return new ASTTEq(left, right, t);
         throw new TypeCheckError("the two terms are not definitionally equal");
+    }
+
+    public ASTNode normalize() {
+        return this;
     }
 }
