@@ -52,6 +52,8 @@ TOKEN :
   |
   < EQUAL : "=" >
   |
+  < QUESTION : "?">
+  |
   < DOT : "." >
   |
   < COLON : ":" >
@@ -125,6 +127,8 @@ TOKEN :
   < TLINT : "linint" >
   |
   < SPLIT : "split" >
+  |
+  < CHECK : "check" >
   |
   < LABEL : "#" ["a"-"z", "A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* >
   |
@@ -250,6 +254,8 @@ ASTNode Term() :
 		 |
 		 <DIV> t2 = Fact()  { t1 = new ASTArithOp(t1,t2,"/"); }
 		 |
+     <QUESTION> t2 = Fact() { t1 = new ASTCheck(t1, t2); }
+     |
      <LRPAR> { t1 = new ASTApp(t1, new ASTUnit()); }
      |
      <LPAR> t2 = Let() <RPAR> { t1 = new ASTApp(t1, t2); }
@@ -292,6 +298,7 @@ ASTNode Fact() :
     |  n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); }
     |  n = <LLABEL> <LPAR> t = Let() <RPAR> { t = new ASTLUnion(n.image, t); }
     | <SPLIT> t = Let() <LBRA> n = <Id> <VERT> n2 = <Id> <SLIMARROW> t2 = Let() <RBRA> { t = new ASTSplit(t, n.image, n2.image, t2); }
+    | <CHECK> <LPAR> t = Let() <EQUAL> t2 = Let() <RPAR> { t = new ASTCheck(t, t2); }
     | <LPAR> t = TermList() <RPAR>
     )
    { return t; }
