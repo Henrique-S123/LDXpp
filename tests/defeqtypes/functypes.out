@@ -1,0 +1,42 @@
+class proj.errors.TypeCheckError: types int->bool and int->int are not definitionally equal
+
+
+class proj.errors.TypeCheckError: types int->bool and int->linbool are not definitionally equal
+
+
+type: (), value: true
+
+
+class proj.errors.TypeCheckError: types int->linint and int->int are not definitionally equal
+
+
+type: (), value: true
+
+
+type: (), value: true
+
+
+class proj.errors.TypeCheckError: types string->int and string->linint are not definitionally equal
+
+
+class proj.errors.TypeCheckError: types int-obool and int-oint are not definitionally equal
+
+
+class proj.errors.TypeCheckError: types int-obool and int-olinbool are not definitionally equal
+
+
+type: (), value: true
+
+
+class proj.errors.TypeCheckError: types int-olinint and int-oint are not definitionally equal
+
+
+type: (), value: true
+
+
+type: (), value: true
+
+
+class proj.errors.TypeCheckError: types string-oint and string-olinint are not definitionally equal
+
+

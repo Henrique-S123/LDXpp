@@ -1,0 +1,11 @@
+union{#a : int} ?T union{#b : int};;
+
+union{#a : int} ?T union{#a : linint};;
+
+union{#a : int} ?T union{#a : int};;
+
+union{#a : int, #b : bool} ?T union{#a : int};;
+
+union{#a : int, #b : bool} ?T union{#a : int, #c : bool};;
+
+union{#a : int, #b : bool} ?T union{#a : int, #b : bool};;

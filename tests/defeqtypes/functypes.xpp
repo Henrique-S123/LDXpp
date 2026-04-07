@@ -1,0 +1,27 @@
+int->bool ?T int->int;;
+
+int->bool ?T int->linbool;;
+
+int->bool ?T int->bool;;
+
+int->linint ?T int->int;;
+
+int->linint ?T int->linint;;
+
+string->int ?T string->int;;
+
+string->int ?T string->linint;;
+
+int-obool ?T int-oint;;
+
+int-obool ?T int-olinbool;;
+
+int-obool ?T int-obool;;
+
+int-olinint ?T int-oint;;
+
+int-olinint ?T int-olinint;;
+
+string-oint ?T string-oint;;
+
+string-oint ?T string-olinint;;

@@ -1,0 +1,19 @@
+int ?T int;;
+
+int ?T bool;;
+
+int ?T linint;;
+
+linint ?T int;;
+
+bool ?T bool;;
+
+bool ?T linbool;;
+
+linbool ?T linbool;;
+
+string ?T int;;
+
+string ?T bool;;
+
+string ?T string;;

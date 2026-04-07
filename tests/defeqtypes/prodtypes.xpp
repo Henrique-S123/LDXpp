@@ -1,0 +1,27 @@
+(int, bool) ?T (int, int);;
+
+(int, bool) ?T (int, linbool);;
+
+(int, bool) ?T (int, bool);;
+
+(int, linint) ?T (int, int);;
+
+(int, linint) ?T (int, linint);;
+
+(string, int) ?T (string, int);;
+
+(string, int) ?T (string, linint);;
+
+(int | bool) ?T (int | int);;
+
+(int | bool) ?T (int | linbool);;
+
+(int | bool) ?T (int | bool);;
+
+(int | linint) ?T (int | int);;
+
+(int | linint) ?T (int | linint);;
+
+(string | int) ?T (string | int);;
+
+(string | int) ?T (string | linint);;
