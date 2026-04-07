@@ -54,6 +54,8 @@ TOKEN :
   |
   < QUESTION : "?">
   |
+  < QUESTIONTYPES : "?T" >
+  |
   < DOT : "." >
   |
   < COLON : ":" >
@@ -246,8 +248,14 @@ ASTNode Exp() :
 
 ASTNode Term() :
 {Token op, n;
-  ASTNode t1, t2;}
+  ASTNode t1, t2;
+  ASTType tt1, tt2; }
 {
+    (LOOKAHEAD(Type() <QUESTIONTYPES>)
+     tt1 = Type() <QUESTIONTYPES> tt2 = Type() { t1 = new ASTCheckTypes(tt1, tt2); }
+    
+    |
+
      t1 = Fact()
     (
      <STAR> t2 = Fact()   { t1 = new ASTArithOp(t1,t2,"*"); }
@@ -261,6 +269,8 @@ ASTNode Term() :
      <LPAR> t2 = Let() <RPAR> { t1 = new ASTApp(t1, t2); }
     )*
      { return t1; }
+    )
+     { return t1; }
 }
 
 ASTNode Fact() :
@@ -270,7 +280,7 @@ ASTNode Fact() :
   ASTNode body, alt;
   ASTFunc tf, tc, tn;
   ASTLFunc ltf, ltc, ltn;
-  ASTType type;
+  ASTType type, type2;
 }
 {
    (
@@ -298,8 +308,9 @@ ASTNode Fact() :
     |  n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); }
     |  n = <LLABEL> <LPAR> t = Let() <RPAR> { t = new ASTLUnion(n.image, t); }
     | <SPLIT> t = Let() <LBRA> n = <Id> <VERT> n2 = <Id> <SLIMARROW> t2 = Let() <RBRA> { t = new ASTSplit(t, n.image, n2.image, t2); }
-    | <CHECK> <LPAR> t = Let() <EQUAL> t2 = Let() <RPAR> { t = new ASTCheck(t, t2); }
     | <LPAR> t = TermList() <RPAR>
+    | <QUESTION> <LPAR> t = Let() <COMMA> t2 = Let() <RPAR> { t = new ASTCheck(t, t2); }
+    | <QUESTIONTYPES> <LPAR> type = Type() <COMMA> type2 = Type() <RPAR> { t = new ASTCheckTypes(type, type2); }
     )
    { return t; }
 }
