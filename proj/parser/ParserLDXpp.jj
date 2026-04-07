@@ -238,7 +238,7 @@ ASTNode Exp() :
 { Token op;
   ASTNode t1, t2; }
 {
-     t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term() 
+     t1=Check() ( ( op=<PLUS> | op=<MINUS> ) t2=Check() 
                  { 
                   t1 = new ASTArithOp(t1,t2,op.image);
                  } 
@@ -246,30 +246,37 @@ ASTNode Exp() :
      { return t1; } 
 }
 
+ASTNode Check() :
+{
+  ASTNode t1, t2;
+  ASTType tt1, tt2; }
+{
+  (
+    LOOKAHEAD(Type() <QUESTIONTYPES>)
+    tt1 = Type() <QUESTIONTYPES> tt2 = Type() { t1 = new ASTCheckTypes(tt1, tt2); }
+  |
+    LOOKAHEAD(Term() <QUESTION>)
+    t1 = Term() <QUESTION> t2 = Term() { t1 = new ASTCheck(t1, t2); }
+  |
+    t1 = Term()
+  ) { return t1;}
+}
+
 ASTNode Term() :
 {Token op, n;
   ASTNode t1, t2;
   ASTType tt1, tt2; }
 {
-    (LOOKAHEAD(Type() <QUESTIONTYPES>)
-     tt1 = Type() <QUESTIONTYPES> tt2 = Type() { t1 = new ASTCheckTypes(tt1, tt2); }
-    
-    |
-
      t1 = Fact()
     (
      <STAR> t2 = Fact()   { t1 = new ASTArithOp(t1,t2,"*"); }
 		 |
 		 <DIV> t2 = Fact()  { t1 = new ASTArithOp(t1,t2,"/"); }
 		 |
-     <QUESTION> t2 = Fact() { t1 = new ASTCheck(t1, t2); }
-     |
      <LRPAR> { t1 = new ASTApp(t1, new ASTUnit()); }
      |
      <LPAR> t2 = Let() <RPAR> { t1 = new ASTApp(t1, t2); }
     )*
-     { return t1; }
-    )
      { return t1; }
 }
 
