@@ -15,6 +15,18 @@ public class ASTArithOp implements ASTNode {
 		op = o;
     }
 
+	public ASTNode getLhs() {
+		return lhs;
+	}
+
+	public ASTNode getRhs() {
+		return rhs;
+	}
+
+	public String getOp() {
+		return op;
+	}
+
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue v1 = lhs.eval(e);
 		IValue v2 = rhs.eval(e);
@@ -67,6 +79,15 @@ public class ASTArithOp implements ASTNode {
 	}
 
 	public ASTNode normalize() {
-        return this;
+		return new ASTArithOp(lhs.normalize(), rhs.normalize(), op);
     }
+
+	public boolean equals(Object o) {
+		return o instanceof ASTArithOp && ((ASTArithOp) o).getLhs().equals(lhs)
+			&& ((ASTArithOp) o).getRhs().equals(rhs) && ((ASTArithOp) o).getOp().equals(op);
+	}
+
+	public String toString() {
+		return String.format("%s %s %s", lhs.toString(), op, rhs.toString());
+	}
 }
