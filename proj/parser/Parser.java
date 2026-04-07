@@ -313,7 +313,7 @@ public class Parser implements ParserConstants {
  Token op, n;
   ASTNode t1, t2;
   ASTType tt1, tt2;
-    if (jj_2_3(2)) {
+    if (jj_2_3(2147483647)) {
       tt1 = Type();
       jj_consume_token(QUESTIONTYPES);
       tt2 = Type();
@@ -973,6 +973,7 @@ public class Parser implements ParserConstants {
 
   static private boolean jj_3R_26() {
     if (jj_scan_token(LOLLIPOP)) return true;
+    if (jj_3R_12()) return true;
     return false;
   }
 
@@ -988,6 +989,13 @@ public class Parser implements ParserConstants {
 
   static private boolean jj_3R_25() {
     if (jj_scan_token(SLIMARROW)) return true;
+    if (jj_3R_12()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_36() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_34()) return true;
     return false;
   }
 
@@ -999,15 +1007,39 @@ public class Parser implements ParserConstants {
     return false;
   }
 
+  static private boolean jj_3R_33() {
+    if (jj_scan_token(VERT)) return true;
+    if (jj_3R_35()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_35() {
+    if (jj_3R_12()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_37()) jj_scanpos = xsp;
+    return false;
+  }
+
   static private boolean jj_3_2() {
     if (jj_scan_token(TYPE)) return true;
     if (jj_scan_token(Id)) return true;
     return false;
   }
 
-  static private boolean jj_3_1() {
-    if (jj_scan_token(LET)) return true;
-    if (jj_scan_token(Id)) return true;
+  static private boolean jj_3R_32() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_34()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_30() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_32()) {
+    jj_scanpos = xsp;
+    if (jj_3R_33()) return true;
+    }
     return false;
   }
 
@@ -1017,26 +1049,48 @@ public class Parser implements ParserConstants {
     return false;
   }
 
-  static private boolean jj_3R_27() {
+  static private boolean jj_3_1() {
+    if (jj_scan_token(LET)) return true;
+    if (jj_scan_token(Id)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_34() {
     if (jj_3R_12()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_36()) jj_scanpos = xsp;
+    return false;
+  }
+
+  static private boolean jj_3R_28() {
+    if (jj_3R_12()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_30()) jj_scanpos = xsp;
     return false;
   }
 
   static private boolean jj_3R_24() {
     if (jj_scan_token(LPAR)) return true;
-    if (jj_3R_27()) return true;
+    if (jj_3R_28()) return true;
+    if (jj_scan_token(RPAR)) return true;
     return false;
   }
 
   static private boolean jj_3R_23() {
     if (jj_scan_token(TLUNION)) return true;
     if (jj_scan_token(LBRA)) return true;
+    if (jj_3R_27()) return true;
+    if (jj_scan_token(RBRA)) return true;
     return false;
   }
 
   static private boolean jj_3R_22() {
     if (jj_scan_token(TUNION)) return true;
     if (jj_scan_token(LBRA)) return true;
+    if (jj_3R_27()) return true;
+    if (jj_scan_token(RBRA)) return true;
     return false;
   }
 
@@ -1057,6 +1111,19 @@ public class Parser implements ParserConstants {
 
   static private boolean jj_3R_18() {
     if (jj_scan_token(TBOOL)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_31() {
+    if (jj_scan_token(COMMA)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(58)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(59)) return true;
+    }
+    if (jj_scan_token(COLON)) return true;
+    if (jj_3R_12()) return true;
     return false;
   }
 
@@ -1106,6 +1173,35 @@ public class Parser implements ParserConstants {
     }
     }
     }
+    return false;
+  }
+
+  static private boolean jj_3R_29() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(58)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(59)) return true;
+    }
+    if (jj_scan_token(COLON)) return true;
+    if (jj_3R_12()) return true;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_31()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_37() {
+    if (jj_scan_token(VERT)) return true;
+    if (jj_3R_35()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_27() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_29()) jj_scanpos = xsp;
     return false;
   }
 
