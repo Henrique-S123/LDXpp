@@ -33,5 +33,10 @@ public class ASTTEq implements ASTType {
     public boolean isSubtypeOf(ASTType o, EnvSet e) throws InterpreterError {
         return false;
     }
+
+    public boolean equals(Object o) {
+        return o instanceof ASTTEq && ((ASTTEq) o).getTerm1().equals(term1)
+            && ((ASTTEq) o).getTerm2().equals(term2) && ((ASTTEq) o).getType().equals(type);
+    }
 }
 

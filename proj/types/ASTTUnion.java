@@ -39,8 +39,20 @@ public class ASTTUnion implements ASTType {
             HashMap<String, ASTType> mb = o instanceof ASTTUnion ? ((ASTTUnion) o).getList().getMap() : ((ASTTLUnion) o).getList().getMap();
             HashMap<String, ASTType> ma = ll.getMap();
             for (String s : ma.keySet()) {
-                if (!(mb.containsKey(s) && ma.get(s).isSubtypeOf(mb.get(s), e)))
-                    return false;
+                if (!(mb.containsKey(s) && ma.get(s).isSubtypeOf(mb.get(s), e))) return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean equals(Object o) {
+        if (o instanceof ASTTUnion) {
+            HashMap<String, ASTType> own = ll.getMap();
+            HashMap<String, ASTType> other = ((ASTTUnion) o).getList().getMap();
+            if (own.size() != other.size()) return false;
+            for (String label : own.keySet()) {
+                if (!(other.containsKey(label) && own.get(label).equals(other.get(label)))) return false;
             }
             return true;
         }

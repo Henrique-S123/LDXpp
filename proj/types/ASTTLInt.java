@@ -16,6 +16,10 @@ public class ASTTLInt implements ASTLinType {
         }
         return o instanceof ASTTLInt;
     }
+
+    public boolean equals(Object o) {
+        return o instanceof ASTTLInt;
+    }
 }
 
 

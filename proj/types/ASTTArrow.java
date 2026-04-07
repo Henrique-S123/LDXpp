@@ -39,5 +39,10 @@ public class ASTTArrow implements ASTType {
         }
         return false;
     }
+
+    public boolean equals(Object o) {
+        return o instanceof ASTTArrow && ((ASTTArrow) o).getDom().equals(dom)
+            && ((ASTTArrow) o).getCodom().equals(codom);
+    }
 }
 

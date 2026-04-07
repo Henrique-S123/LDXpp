@@ -4,7 +4,6 @@ import proj.env.*;
 import proj.errors.*;
 
 public	class ASTTId implements ASTType	{	
-
     String id;	
     
     public ASTTId(String id)	{
@@ -24,5 +23,9 @@ public	class ASTTId implements ASTType	{
             return id.equals(((ASTTId) o).getId());
         }
         return e.unfold(this).isSubtypeOf(o, e);
+    }
+
+    public boolean equals(Object o) {
+        return o instanceof ASTTId && ((ASTTId) o).getId().equals(id);
     }
 }	

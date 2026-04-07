@@ -16,4 +16,8 @@ public class ASTTUnit implements ASTType {
         }
         return o instanceof ASTTUnit;
     }
+
+    public boolean equals(Object o) {
+        return o instanceof ASTTUnit;
+    }
 }

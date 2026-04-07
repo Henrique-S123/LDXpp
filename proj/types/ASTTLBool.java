@@ -16,4 +16,8 @@ public class ASTTLBool implements ASTLinType {
         }
         return o instanceof ASTTLBool;
     }
+
+    public boolean equals(Object o) {
+        return o instanceof ASTTLBool;
+    }
 }

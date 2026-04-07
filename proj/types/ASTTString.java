@@ -16,4 +16,8 @@ public class ASTTString implements ASTType {
         }
         return o instanceof ASTTString;
     }
+
+    public boolean equals(Object o) {
+        return o instanceof ASTTString;
+    }
 }
