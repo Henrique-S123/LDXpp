@@ -192,8 +192,24 @@ ASTNode SeqExp() :
 {Token op;
   ASTNode t1, t2, t;}
 {
-     t1 = BA()
+     t1 = Check()
      { return t1; }
+}
+
+ASTNode Check() :
+{
+  ASTNode t1, t2;
+  ASTType tt1, tt2; }
+{
+  (
+    LOOKAHEAD(Type() <QUESTIONTYPES>)
+    tt1 = Type() <QUESTIONTYPES> tt2 = Type() { t1 = new ASTCheckTypes(tt1, tt2); }
+  |
+    LOOKAHEAD(BA() <QUESTION>)
+    t1 = BA() <QUESTION> t2 = BA() { t1 = new ASTCheck(t1, t2); }
+  |
+    t1 = BA()
+  ) { return t1;}
 }
 
 ASTNode BA() :
@@ -238,28 +254,12 @@ ASTNode Exp() :
 { Token op;
   ASTNode t1, t2; }
 {
-     t1=Check() ( ( op=<PLUS> | op=<MINUS> ) t2=Check() 
+     t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term() 
                  { 
                   t1 = new ASTArithOp(t1,t2,op.image);
                  } 
                ) *
      { return t1; } 
-}
-
-ASTNode Check() :
-{
-  ASTNode t1, t2;
-  ASTType tt1, tt2; }
-{
-  (
-    LOOKAHEAD(Type() <QUESTIONTYPES>)
-    tt1 = Type() <QUESTIONTYPES> tt2 = Type() { t1 = new ASTCheckTypes(tt1, tt2); }
-  |
-    LOOKAHEAD(Term() <QUESTION>)
-    t1 = Term() <QUESTION> t2 = Term() { t1 = new ASTCheck(t1, t2); }
-  |
-    t1 = Term()
-  ) { return t1;}
 }
 
 ASTNode Term() :

@@ -15,6 +15,18 @@ public class ASTCmpOp implements ASTNode {
 		op = o;
     }
 
+	public ASTNode getLhs() {
+		return lhs;
+	}
+
+	public ASTNode getRhs() {
+		return rhs;
+	}
+
+	public String getOp() {
+		return op;
+	}
+
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue v1 = lhs.eval(e);
 		IValue v2 = rhs.eval(e);
@@ -50,6 +62,15 @@ public class ASTCmpOp implements ASTNode {
 	}
 
 	public ASTNode normalize() {
-        return this;
+		return new ASTCmpOp(lhs.normalize(), rhs.normalize(), op);
     }
+
+	public boolean equals(Object o) {
+		return o instanceof ASTCmpOp && ((ASTCmpOp) o).getLhs().equals(lhs)
+			&& ((ASTCmpOp) o).getRhs().equals(rhs) && ((ASTCmpOp) o).getOp().equals(op);
+	}
+
+	public String toString() {
+		return String.format("%s %s %s", lhs.toString(), op, rhs.toString());
+	}
 }
