@@ -17,3 +17,7 @@ string ?T int;;
 string ?T bool;;
 
 string ?T string;;
+
+unit ?T int;;
+
+unit ?T unit;;

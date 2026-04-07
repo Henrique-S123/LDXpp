@@ -20,4 +20,14 @@ public class ASTUnit implements ASTNode  {
     public ASTNode normalize() {
         return this;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof ASTUnit;
+    }
+
+    @Override
+    public String toString() {
+        return "()";
+    }
 }

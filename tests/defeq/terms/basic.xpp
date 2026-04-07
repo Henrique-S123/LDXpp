@@ -1,0 +1,29 @@
+1 ? 2;;
+
+1 ? 1;;
+
+1l ? 1;;
+
+1l ? 2l;;
+
+1l ? 1l;;
+
+true ? false;;
+
+true ? true;;
+
+truel ? true;;
+
+truel ? falsel;;
+
+truel ? truel;;
+
+"abc" ? "";;
+
+"abc" ? "ab";;
+
+"abc" ? "abc";;
+
+() ? 0;;
+
+() ? ();;

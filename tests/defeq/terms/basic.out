@@ -1,0 +1,45 @@
+class proj.errors.TypeCheckError: terms 1 and 2 are not definitionally equal
+
+
+type: 1 ≡ 1 : int, value: true
+
+
+class proj.errors.TypeCheckError: terms 1l and 1 do not have the same type
+
+
+class proj.errors.TypeCheckError: terms 1l and 2l are not definitionally equal
+
+
+type: 1l ≡ 1l : linint, value: true
+
+
+class proj.errors.TypeCheckError: terms true and false are not definitionally equal
+
+
+type: true ≡ true : bool, value: true
+
+
+class proj.errors.TypeCheckError: terms truel and true do not have the same type
+
+
+class proj.errors.TypeCheckError: terms truel and falsel are not definitionally equal
+
+
+type: truel ≡ truel : linbool, value: true
+
+
+class proj.errors.TypeCheckError: terms abc and  are not definitionally equal
+
+
+class proj.errors.TypeCheckError: terms abc and ab are not definitionally equal
+
+
+class proj.errors.TypeCheckError: terms abc and abc are not definitionally equal
+
+
+class proj.errors.TypeCheckError: terms () and 0 do not have the same type
+
+
+type: () ≡ () : (), value: true
+
+

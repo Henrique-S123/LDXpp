@@ -28,3 +28,9 @@ class proj.errors.TypeCheckError: types string and bool are not definitionally e
 type: (), value: true
 
 
+class proj.errors.TypeCheckError: types unit and int are not definitionally equal
+
+
+type: (), value: true
+
+

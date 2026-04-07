@@ -12,6 +12,10 @@ public class ASTBool implements ASTNode  {
         b = b0;
     }
 
+    public boolean getVal() {
+      return this.b;
+    }
+
     public IValue eval(Environment<IValue> e) throws InterpreterError {
         return new VBool(b, false);                
     }
@@ -22,5 +26,15 @@ public class ASTBool implements ASTNode  {
 
     public ASTNode normalize() {
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof ASTBool && ((ASTBool) o).getVal() == b;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(b);
     }
 }
