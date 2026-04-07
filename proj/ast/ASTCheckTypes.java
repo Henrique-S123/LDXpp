@@ -18,7 +18,7 @@ public class ASTCheckTypes implements ASTNode {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
-        if (left.normalize().equals(right.normalize())) return new ASTTUnit();
+        if (left.equals(right)) return new ASTTUnit();
         throw new TypeCheckError(String.format("types %s and %s are not definitionally equal", left.toStr(), right.toStr()));
     }
 
