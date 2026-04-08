@@ -1,0 +1,7 @@
+(int, int) -> (int, (bool | linint)) ?T (int, linint) -> (int, (bool | linint));;
+
+(int, int) -> (int, (bool | linint)) ?T (int, int) -> (int, (linbool | linint));;
+
+(int, int) -> (int, (bool | linint)) ?T (int, int) -> (linint, (bool | linint));;
+
+(int, int) -> (int, (bool | linint)) ?T (int, int) -> (int, (bool | linint));;
