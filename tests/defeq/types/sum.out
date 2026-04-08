@@ -16,3 +16,6 @@ class proj.errors.TypeCheckError: types union {#a = int; #b = bool} and union {#
 type: (), value: true
 
 
+type: (), value: true
+
+

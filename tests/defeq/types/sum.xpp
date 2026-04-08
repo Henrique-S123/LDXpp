@@ -9,3 +9,5 @@ union{#a : int, #b : bool} ?T union{#a : int};;
 union{#a : int, #b : bool} ?T union{#a : int, #c : bool};;
 
 union{#a : int, #b : bool} ?T union{#a : int, #b : bool};;
+
+union{#a : int, #b : bool} ?T union{#b : bool, #a : int};;
