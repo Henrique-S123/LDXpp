@@ -27,7 +27,7 @@ public class ASTSeq implements ASTNode {
         }
 	}
 
-	public ASTNode normalize() {
+	public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
 }

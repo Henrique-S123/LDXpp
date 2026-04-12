@@ -18,15 +18,15 @@ public class ASTCheck implements ASTNode {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
-        ASTType t = left.typecheck(e);
-        ASTType t2 = right.typecheck(e);
-        if (!t.isSubtypeOf(t2, e) || !t2.isSubtypeOf(t, e))
-            throw new TypeCheckError(String.format("terms %s and %s do not have the same type", left, right));
-        if (left.normalize().equals(right.normalize())) return new ASTTEq(left, right, t);
+        // ASTType t = left.typecheck(e);
+        // ASTType t2 = right.typecheck(e);
+        // if (!t.isSubtypeOf(t2, e) || !t2.isSubtypeOf(t, e))
+        //    throw new TypeCheckError(String.format("terms %s and %s do not have the same type", left, right));
+        if (left.normalize(e.getSigma()).equals(right.normalize(e.getSigma()))) return new ASTTEq(left, right, new ASTTUnit());
         throw new TypeCheckError(String.format("terms %s and %s are not definitionally equal", left, right));
     }
 
-    public ASTNode normalize() {
+    public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
 }

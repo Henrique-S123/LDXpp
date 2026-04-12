@@ -61,8 +61,8 @@ public class ASTCmpOp implements ASTNode {
 		}
 	}
 
-	public ASTNode normalize() {
-		return new ASTCmpOp(lhs.normalize(), rhs.normalize(), op);
+	public ASTNode normalize(Environment<ASTType> sigma) {
+		return new ASTCmpOp(lhs.normalize(sigma), rhs.normalize(sigma), op);
     }
 
 	public boolean equals(Object o) {

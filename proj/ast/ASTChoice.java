@@ -40,10 +40,10 @@ public class ASTChoice implements ASTNode  {
         }
 	}
 
-    public ASTNode normalize() {
+    public ASTNode normalize(Environment<ASTType> sigma) {
         return choice == 0 ?
-            ((ASTPair) pair).getFirst().normalize():
-            ((ASTPair) pair).getSecond().normalize();
+            ((ASTPair) pair.normalize(sigma)).getFirst().normalize(sigma):
+            ((ASTPair) pair.normalize(sigma)).getSecond().normalize(sigma);
     }
 
     @Override

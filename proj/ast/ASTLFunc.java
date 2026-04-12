@@ -35,7 +35,7 @@ public class ASTLFunc implements ASTNode  {
         return new ASTTLollipop(targtype, tb);
 	}
 
-    public ASTNode normalize() {
+    public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
 }

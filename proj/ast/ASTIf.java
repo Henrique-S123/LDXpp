@@ -16,6 +16,18 @@ public class ASTIf implements ASTNode {
 		alt = a;
     }
 
+	public ASTNode getTest() {
+		return test;
+	}
+
+	public ASTNode getConseq() {
+		return conseq;
+	}
+
+	public ASTNode getAlt() {
+		return alt;
+	}
+
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue vt = test.eval(e);
 		if (!(vt instanceof VBool)) {
@@ -46,7 +58,16 @@ public class ASTIf implements ASTNode {
 		}
 	}
 
-	public ASTNode normalize() {
-        return this;
+	public ASTNode normalize(Environment<ASTType> sigma) {
+        return new ASTIf(test.normalize(sigma), conseq.normalize(sigma), alt.normalize(sigma));
     }
+
+	public boolean equals(Object o) {
+		return o instanceof ASTIf && ((ASTIf) o).getTest().equals(test)
+			&& ((ASTIf) o).getConseq().equals(conseq) && ((ASTIf) o).getAlt().equals(alt);
+	}
+
+	public String toString() {
+		return String.format("if(%s, %s, %s)", test.toString(), conseq.toString(), alt.toString());
+	}
 }

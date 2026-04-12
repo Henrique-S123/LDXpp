@@ -24,7 +24,7 @@ public class ASTLBool implements ASTNode  {
 		return new ASTTLBool();
 	}
 
-    public ASTNode normalize() {
+    public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
 

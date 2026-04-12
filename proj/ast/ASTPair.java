@@ -35,8 +35,8 @@ public class ASTPair implements ASTNode {
         return new ASTTPair(t1, t2);
     }
 
-    public ASTNode normalize() {
-        return new ASTPair(first.normalize(), second.normalize());
+    public ASTNode normalize(Environment<ASTType> sigma) {
+        return new ASTPair(first.normalize(sigma), second.normalize(sigma));
     }
 
     @Override

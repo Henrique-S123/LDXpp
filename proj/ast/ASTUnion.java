@@ -30,7 +30,7 @@ public class ASTUnion implements ASTNode {
 		return new ASTTUnion(new TypeBindList(ll));
 	}
 
-	public ASTNode normalize() {
+	public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
 }

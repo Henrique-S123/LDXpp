@@ -82,7 +82,7 @@ public class ASTMatchUnion implements ASTNode {
 		return rettype;
 	}
 
-	public ASTNode normalize() {
+	public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
 }

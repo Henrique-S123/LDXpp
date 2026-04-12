@@ -22,7 +22,7 @@ public class ASTCheckTypes implements ASTNode {
         throw new TypeCheckError(String.format("types %s and %s are not definitionally equal", left.toStr(), right.toStr()));
     }
 
-    public ASTNode normalize() {
+    public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
 }

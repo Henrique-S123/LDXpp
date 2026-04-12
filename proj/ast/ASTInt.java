@@ -24,7 +24,7 @@ public class ASTInt implements ASTNode  {
 		return new ASTTInt();
 	}
 
-    public ASTNode normalize() {
+    public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
 

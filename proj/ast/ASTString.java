@@ -23,7 +23,7 @@ public class ASTString implements ASTNode  {
 		return new ASTTString();
 	}
 
-    public ASTNode normalize() {
+    public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
 

@@ -10,6 +10,6 @@ public interface ASTNode {
 	
     public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError;
 
-    public ASTNode normalize();
+    public ASTNode normalize(Environment<ASTType> sigma);
 }
 

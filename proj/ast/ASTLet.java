@@ -44,6 +44,7 @@ public class ASTLet implements ASTNode {
                 if (!(valuetype.isSubtypeOf(tt, e))) {
                     throw new TypeCheckError("types to bind are not subtypes: " + valuetype.toStr() + " and " + tt.toStr());
                 }
+                e.getSigma().addEq(new ASTTEq(new ASTId(b.getId()), b.getExp(), tt));
             } else {
                 ASTType t = b.getExp().typecheck(e);
                 t = e.unfold(t);
@@ -56,7 +57,9 @@ public class ASTLet implements ASTNode {
                     e.assocGamma(b.getId(), t);
                     gammaExpanded = true;
                 }
+                e.getSigma().addEq(new ASTTEq(new ASTId(b.getId()), b.getExp(), t));
             }
+            // TODO: add bindings to Σ
         }
         ASTType rt = body.typecheck(e);
         if (!(e.getDelta().isEmpty()))
@@ -66,7 +69,7 @@ public class ASTLet implements ASTNode {
         return rt;
 	}
 
-    public ASTNode normalize() {
+    public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
 }

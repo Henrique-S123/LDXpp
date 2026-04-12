@@ -33,8 +33,8 @@ public class ASTTensor implements ASTNode {
         return new ASTTTensor(t1, t2);
     }
 
-    public ASTNode normalize() {
-        return new ASTTensor(first.normalize(), second.normalize());
+    public ASTNode normalize(Environment<ASTType> sigma) {
+        return new ASTTensor(first.normalize(sigma), second.normalize(sigma));
     }
 
     @Override

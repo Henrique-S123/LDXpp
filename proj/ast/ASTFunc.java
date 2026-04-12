@@ -35,7 +35,7 @@ public class ASTFunc implements ASTNode  {
         return new ASTTArrow(targtype, tb);
 	}
 
-    public ASTNode normalize() {
+    public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
 }

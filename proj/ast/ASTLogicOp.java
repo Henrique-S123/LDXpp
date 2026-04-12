@@ -66,8 +66,8 @@ public class ASTLogicOp implements ASTNode {
 		}
 	}
 
-	public ASTNode normalize() {
-		return new ASTLogicOp(lhs.normalize(), rhs.normalize(), op);
+	public ASTNode normalize(Environment<ASTType> sigma) {
+		return new ASTLogicOp(lhs.normalize(sigma), rhs.normalize(sigma), op);
     }
 
 	public boolean equals(Object o) {

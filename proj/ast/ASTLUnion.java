@@ -27,7 +27,7 @@ public class ASTLUnion implements ASTNode {
 		return new ASTTLUnion(new TypeBindList(ll));
 	}
 
-	public ASTNode normalize() {
+	public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
 }
