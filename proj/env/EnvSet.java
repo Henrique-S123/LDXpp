@@ -3,16 +3,17 @@ package proj.env;
 import proj.errors.InterpreterError;
 import proj.types.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class EnvSet {
-    Environment<ASTType> gamma, delta, phi;
+    Environment<ASTType> gamma, delta, phi, sigma;
     ArrayList<String> declaredIds, usedLinears;
 
     public EnvSet() {
         gamma = new Environment<ASTType>();
         delta = new Environment<ASTType>();
         phi = new Environment<ASTType>();
+        sigma = new Environment<ASTType>();
         declaredIds = new ArrayList<String>();
         usedLinears = new ArrayList<String>();
     }
@@ -21,6 +22,7 @@ public class EnvSet {
         gamma = o.gamma.copy(true);
         delta = o.delta.copy(true);
         phi = o.phi.copy(true);
+        sigma = o.sigma.copy(true);
         declaredIds = new ArrayList<String>(o.getDeclaredIds());
         usedLinears = new ArrayList<String>(o.getUsedLinears());
     }
@@ -35,6 +37,10 @@ public class EnvSet {
 
     public Environment<ASTType> getPhi() {
         return phi;
+    }
+
+    public Environment<ASTType> getSigma() {
+        return sigma;
     }
 
     public ArrayList<String> getDeclaredIds() {

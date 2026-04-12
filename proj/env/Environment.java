@@ -1,5 +1,6 @@
 package proj.env;
 
+import proj.ast.ASTNode;
 import proj.types.*;
 
 import java.util.*;
@@ -53,6 +54,22 @@ public class Environment <E>{
                 return val;
             }
             curr = curr.anc;
+        }
+        return null;
+    }
+
+    public void addEq(E bind) {
+        String e = UUID.randomUUID().toString();
+        assoc(e, bind);
+    }
+
+    public E findEq(ASTNode n) {
+        for (Map.Entry<String, E> bind : bindings.entrySet()) {
+            if (bind.getValue() instanceof ASTTEq) {
+                ASTTEq eq = ((ASTTEq) bind.getValue());
+                if (eq.getTerm1().equals(n) || eq.getTerm2().equals(n))
+                    return bind.getValue();
+            }
         }
         return null;
     }
