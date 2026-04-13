@@ -5,10 +5,12 @@ import proj.errors.*;
 
 public class ASTTPair implements ASTType {
     ASTType first, second;
+    String id;
 
-    public ASTTPair(ASTType f, ASTType s) {
+    public ASTTPair(ASTType f, ASTType s, String i) {
         first = f;
         second = s;
+        id = i;
     }
 
     public ASTType getFirst() {
@@ -19,8 +21,12 @@ public class ASTTPair implements ASTType {
         return second;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String toStr() {
-        return "(" + first.toStr() + ", " + second.toStr() + ")"; 
+        return "(" + (id != null ? id + ":" : "") + first.toStr() + ", " + second.toStr() + ")";
     }
 
     public boolean isSubtypeOf(ASTType o, EnvSet e) throws InterpreterError {

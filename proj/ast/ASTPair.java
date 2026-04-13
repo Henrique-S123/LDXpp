@@ -32,7 +32,7 @@ public class ASTPair implements ASTNode {
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
         e.setDelta(prevDelta);
-        return new ASTTPair(t1, t2);
+        return new ASTTPair(t1, t2, null);
     }
 
     public ASTNode normalize(Environment<ASTType> sigma) {
