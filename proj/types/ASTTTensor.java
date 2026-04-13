@@ -34,8 +34,8 @@ public class ASTTTensor implements ASTLinType {
         return false;
     }
 
-    public boolean equals(Object o) {
-        return o instanceof ASTTTensor && ((ASTTTensor) o).getFirst().equals(first)
-            && ((ASTTTensor) o).getSecond().equals(second);
+    public boolean defequals(ASTType o) {
+        return o instanceof ASTTTensor && ((ASTTTensor) o).getFirst().defequals(first)
+            && ((ASTTTensor) o).getSecond().defequals(second);
     }
 }

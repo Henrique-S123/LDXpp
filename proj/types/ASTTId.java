@@ -25,7 +25,7 @@ public	class ASTTId implements ASTType	{
         return e.unfold(this).isSubtypeOf(o, e);
     }
 
-    public boolean equals(Object o) {
+    public boolean defequals(ASTType o) {
         return o instanceof ASTTId && ((ASTTId) o).getId().equals(id);
     }
 }	

@@ -17,7 +17,7 @@ public class ASTTBool implements ASTType {
         return o instanceof ASTTBool || o instanceof ASTTLBool;
     }
 
-    public boolean equals(Object o) {
+    public boolean defequals(ASTType o) {
         return o instanceof ASTTBool;
     }
 }

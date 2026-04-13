@@ -34,9 +34,9 @@ public class ASTTEq implements ASTType {
         return false;
     }
 
-    public boolean equals(Object o) {
+    public boolean defequals(ASTType o) {
         return o instanceof ASTTEq && ((ASTTEq) o).getTerm1().equals(term1)
-            && ((ASTTEq) o).getTerm2().equals(term2) && ((ASTTEq) o).getType().equals(type);
+            && ((ASTTEq) o).getTerm2().equals(term2) && ((ASTTEq) o).getType().defequals(type);
     }
 }
 

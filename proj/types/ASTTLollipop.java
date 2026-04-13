@@ -36,9 +36,9 @@ public class ASTTLollipop implements ASTLinType {
         return false;
     }
 
-    public boolean equals(Object o) {
-        return o instanceof ASTTLollipop && ((ASTTLollipop) o).getDom().equals(dom)
-            && ((ASTTLollipop) o).getCodom().equals(codom);
+    public boolean defequals(ASTType o) {
+        return o instanceof ASTTLollipop && ((ASTTLollipop) o).getDom().defequals(dom)
+            && ((ASTTLollipop) o).getCodom().defequals(codom);
     }
 }
 

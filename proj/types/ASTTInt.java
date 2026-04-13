@@ -17,7 +17,7 @@ public class ASTTInt implements ASTType {
         return o instanceof ASTTInt || o instanceof ASTTLInt;
     }
 
-    public boolean equals(Object o) {
+    public boolean defequals(ASTType o) {
         return o instanceof ASTTInt;
     }
 }

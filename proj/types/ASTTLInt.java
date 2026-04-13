@@ -17,7 +17,7 @@ public class ASTTLInt implements ASTLinType {
         return o instanceof ASTTLInt;
     }
 
-    public boolean equals(Object o) {
+    public boolean defequals(ASTType o) {
         return o instanceof ASTTLInt;
     }
 }

@@ -47,13 +47,13 @@ public class ASTTLUnion implements ASTLinType {
         return false;
     }
 
-    public boolean equals(Object o) {
+    public boolean defequals(ASTType o) {
         if (o instanceof ASTTLUnion) {
             HashMap<String, ASTType> own = ll.getMap();
             HashMap<String, ASTType> other = ((ASTTLUnion) o).getList().getMap();
             if (own.size() != other.size()) return false;
             for (String label : own.keySet()) {
-                if (!(other.containsKey(label) && own.get(label).equals(other.get(label)))) return false;
+                if (!(other.containsKey(label) && own.get(label).defequals(other.get(label)))) return false;
             }
             return true;
         }

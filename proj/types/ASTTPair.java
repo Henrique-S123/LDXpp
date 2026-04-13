@@ -37,8 +37,8 @@ public class ASTTPair implements ASTType {
         return false;
     }
 
-    public boolean equals(Object o) {
-        return o instanceof ASTTPair && ((ASTTPair) o).getFirst().equals(first)
-            && ((ASTTPair) o).getSecond().equals(second);
+    public boolean defequals(ASTType o) {
+        return o instanceof ASTTPair && ((ASTTPair) o).getFirst().defequals(first)
+            && ((ASTTPair) o).getSecond().defequals(second);
     }
 }
