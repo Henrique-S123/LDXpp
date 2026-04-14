@@ -224,8 +224,8 @@ static private int jjMoveStringLiteralDfa1_0(long active0)
       case 62:
          if ((active0 & 0x20000000000L) != 0L)
             return jjStopAtPos(1, 41);
-         else if ((active0 & 0x100000000000L) != 0L)
-            return jjStopAtPos(1, 44);
+         else if ((active0 & 0x80000000000L) != 0L)
+            return jjStopAtPos(1, 43);
          break;
       case 84:
          if ((active0 & 0x80000L) != 0L)
@@ -250,11 +250,7 @@ static private int jjMoveStringLiteralDfa1_0(long active0)
             return jjStartNfaWithStates_0(1, 39, 12);
          return jjMoveStringLiteralDfa2_0(active0, 0x42400000000000L);
       case 111:
-         if ((active0 & 0x40000000000L) != 0L)
-            return jjStopAtPos(1, 42);
-         else if ((active0 & 0x80000000000L) != 0L)
-            return jjStopAtPos(1, 43);
-         return jjMoveStringLiteralDfa2_0(active0, 0x8000000000000L);
+         return jjMoveStringLiteralDfa2_0(active0, 0x8140000000000L);
       case 112:
          return jjMoveStringLiteralDfa2_0(active0, 0x200000000000000L);
       case 113:
@@ -289,6 +285,12 @@ static private int jjMoveStringLiteralDfa2_0(long old0, long active0)
    }
    switch(curChar)
    {
+      case 62:
+         if ((active0 & 0x40000000000L) != 0L)
+            return jjStopAtPos(2, 42);
+         else if ((active0 & 0x100000000000L) != 0L)
+            return jjStopAtPos(2, 44);
+         break;
       case 100:
          if ((active0 & 0x400000000000L) != 0L)
             return jjStartNfaWithStates_0(2, 46, 12);
@@ -774,11 +776,11 @@ public static final String[] jjstrLiteralImages = {
 "\73", "\73\73", "\54", "\174", "\46\46", "\174\174", "\75\75", "\76", "\74", 
 "\76\75", "\74\75", "\176\75", "\176", "\151\146", "\145\154\163\145", 
 "\160\162\151\156\164", "\160\162\151\156\164\154\156", "\146\156", "\154\146\156", "\75\76", 
-"\75\157", "\55\157", "\55\76", "\146\163\164", "\163\156\144", "\155\141\164\143\150", 
-"\164\171\160\145", "\151\156\164", "\154\151\156\151\156\164", "\142\157\157\154", 
-"\154\151\156\142\157\157\154", "\163\164\162\151\156\147", "\165\156\151\157\156", 
-"\154\151\156\165\156\151\157\156", "\145\161", "\163\160\154\151\164", "\143\150\145\143\153", null, null, null, 
-null, null, null, };
+"\75\157\76", "\55\76", "\55\157\76", "\146\163\164", "\163\156\144", 
+"\155\141\164\143\150", "\164\171\160\145", "\151\156\164", "\154\151\156\151\156\164", 
+"\142\157\157\154", "\154\151\156\142\157\157\154", "\163\164\162\151\156\147", 
+"\165\156\151\157\156", "\154\151\156\165\156\151\157\156", "\145\161", "\163\160\154\151\164", 
+"\143\150\145\143\153", null, null, null, null, null, null, };
 
 /** Lexer state names. */
 public static final String[] lexStateNames = {

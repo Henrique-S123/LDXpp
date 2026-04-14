@@ -744,8 +744,8 @@ public class Parser implements ParserConstants {
   ASTType t1, t2;
     t1 = TypeF();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case LOLLIPOP:
     case SLIMARROW:
+    case LOLLIPOP:
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SLIMARROW:
         jj_consume_token(SLIMARROW);

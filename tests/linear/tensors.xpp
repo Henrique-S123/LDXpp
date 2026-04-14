@@ -13,29 +13,29 @@ let p1 = (1l|2l); let p2 = p1; p2;;
 let p1 = (1l|2l); let p2 = p1; p1;;
 
 
-let lfst = lfn x:(int|int) =o {split x {f|s -> f}}; let p = (1|2); lfst(p);;
+let lfst = lfn x:(int|int) =o> {split x {f|s -> f}}; let p = (1|2); lfst(p);;
 
-let lsnd = lfn x:(int|int) =o {split x {f|s -> s}}; let p = (1|2); lsnd(p);;
+let lsnd = lfn x:(int|int) =o> {split x {f|s -> s}}; let p = (1|2); lsnd(p);;
 
-let lign = lfn x:(int|int) =o {split x {f|s -> 42}}; let p = (1|2); lign(p);;
-
-
-let lfst = lfn x:(linint|int) =o {split x {f|s -> f}}; let p = (1l|2); lfst(p);;
-
-let lsnd = lfn x:(linint|int) =o {split x {f|s -> s}}; let p = (1l|2); lsnd(p);;
-
-let lign = lfn x:(linint|int) =o {split x {f|s -> 42}}; let p = (1l|2); lign(p);;
+let lign = lfn x:(int|int) =o> {split x {f|s -> 42}}; let p = (1|2); lign(p);;
 
 
-let lfst = lfn x:(int|linint) =o {split x {f|s -> f}}; let p = (1|2l); lfst(p);;
+let lfst = lfn x:(linint|int) =o> {split x {f|s -> f}}; let p = (1l|2); lfst(p);;
 
-let lsnd = lfn x:(int|linint) =o {split x {f|s -> s}}; let p = (1|2l); lsnd(p);;
+let lsnd = lfn x:(linint|int) =o> {split x {f|s -> s}}; let p = (1l|2); lsnd(p);;
 
-let lign = lfn x:(int|linint) =o {split x {f|s -> 42}}; let p = (1|2l); lign(p);;
+let lign = lfn x:(linint|int) =o> {split x {f|s -> 42}}; let p = (1l|2); lign(p);;
 
 
-let lfst = lfn x:(linint|linint) =o {split x {f|s -> f}}; let p = (1l|2l); lfst(p);;
+let lfst = lfn x:(int|linint) =o> {split x {f|s -> f}}; let p = (1|2l); lfst(p);;
 
-let lsnd = lfn x:(linint|linint) =o {split x {f|s -> s}}; let p = (1l|2l); lsnd(p);;
+let lsnd = lfn x:(int|linint) =o> {split x {f|s -> s}}; let p = (1|2l); lsnd(p);;
 
-let lign = lfn x:(linint|linint) =o {split x {f|s -> 42}}; let p = (1l|2l); lign(p);;
+let lign = lfn x:(int|linint) =o> {split x {f|s -> 42}}; let p = (1|2l); lign(p);;
+
+
+let lfst = lfn x:(linint|linint) =o> {split x {f|s -> f}}; let p = (1l|2l); lfst(p);;
+
+let lsnd = lfn x:(linint|linint) =o> {split x {f|s -> s}}; let p = (1l|2l); lsnd(p);;
+
+let lign = lfn x:(linint|linint) =o> {split x {f|s -> 42}}; let p = (1l|2l); lign(p);;

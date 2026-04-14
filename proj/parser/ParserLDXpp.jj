@@ -100,11 +100,11 @@ TOKEN :
   |
   < ARROW : "=>" >
   |
-  < DLOLLIPOP : "=o" >
-  |
-  < LOLLIPOP : "-o" >
+  < DLOLLIPOP : "=o>" >
   |
   < SLIMARROW : "->" >
+  |
+  < LOLLIPOP : "-o>" >
   |
   < FST : "fst" >
   |

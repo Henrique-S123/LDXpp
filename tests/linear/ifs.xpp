@@ -18,7 +18,7 @@ let x = 1l; let y = 2l;
 if (false) {y - x} else {if (x > 0) {y} else {y}};;
 
 let x = 1l; let y = 2l;
-let f = lfn z:int =o {
+let f = lfn z:int =o> {
     if (false) {y - x} else {if (x > 0) {y} else {y}}
 };
 f(5);;

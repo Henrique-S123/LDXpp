@@ -1,16 +1,16 @@
-let f = lfn x:linint =o {x*2}; f(1);;
+let f = lfn x:linint =o> {x*2}; f(1);;
 
-let f = lfn x:linint =o {x*x}; f(1);;
+let f = lfn x:linint =o> {x*x}; f(1);;
 
-let f = lfn x:linbool =o {~x}; f(true);;
+let f = lfn x:linbool =o> {~x}; f(true);;
 
-let f = lfn x:linbool =o {x || x}; f(false);;
+let f = lfn x:linbool =o> {x || x}; f(false);;
 
 let f = fn x:int->linint => {x(0)}; f(fn x:linint => {5});;
 
-let f = fn x:int-olinint => {x(0)}; f(lfn x:linint =o {x + 5});;
+let f = fn x:int-o>linint => {x(0)}; f(lfn x:linint =o> {x + 5});;
 
-let f = fn x:int-olinint => {x(0)}; f(fn x:linint => {5});;
+let f = fn x:int-o>linint => {x(0)}; f(fn x:linint => {5});;
 
 let f = fn x:(linint,linint) => {x}; f((1,2));;
 

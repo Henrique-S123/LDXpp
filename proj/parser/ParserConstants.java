@@ -87,9 +87,9 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int DLOLLIPOP = 42;
   /** RegularExpression Id. */
-  int LOLLIPOP = 43;
+  int SLIMARROW = 43;
   /** RegularExpression Id. */
-  int SLIMARROW = 44;
+  int LOLLIPOP = 44;
   /** RegularExpression Id. */
   int FST = 45;
   /** RegularExpression Id. */
@@ -178,9 +178,9 @@ public interface ParserConstants {
     "\"fn\"",
     "\"lfn\"",
     "\"=>\"",
-    "\"=o\"",
-    "\"-o\"",
+    "\"=o>\"",
     "\"->\"",
+    "\"-o>\"",
     "\"fst\"",
     "\"snd\"",
     "\"match\"",

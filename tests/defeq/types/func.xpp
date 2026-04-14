@@ -12,16 +12,16 @@ string->int ?T string->int;;
 
 string->int ?T string->linint;;
 
-int-obool ?T int-oint;;
+int-o>bool ?T int-o>int;;
 
-int-obool ?T int-olinbool;;
+int-o>bool ?T int-o>linbool;;
 
-int-obool ?T int-obool;;
+int-o>bool ?T int-o>bool;;
 
-int-olinint ?T int-oint;;
+int-o>linint ?T int-o>int;;
 
-int-olinint ?T int-olinint;;
+int-o>linint ?T int-o>linint;;
 
-string-oint ?T string-oint;;
+string-o>int ?T string-o>int;;
 
-string-oint ?T string-olinint;;
+string-o>int ?T string-o>linint;;
