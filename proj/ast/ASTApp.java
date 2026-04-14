@@ -45,7 +45,7 @@ public class ASTApp implements ASTNode  {
             if (((ASTPair) arg).check(e, ((ASTTPair) dom))) {
                 return codom;
             } else {
-                throw new TypeCheckError("func app: pair" + arg.toString() + " does not match expected type" + tf.toStr());
+                throw new TypeCheckError("func app: pair " + arg.toString() + " does not match expected type " + tf.toStr());
             }
         } else {
             ASTType ta = arg.typecheck(e);
