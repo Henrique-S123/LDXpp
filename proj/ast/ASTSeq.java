@@ -28,6 +28,6 @@ public class ASTSeq implements ASTNode {
 	}
 
 	public ASTNode normalize(Environment<ASTType> sigma) {
-        return this;
+        return new ASTSeq(first.normalize(sigma), second.normalize(sigma));
     }
 }

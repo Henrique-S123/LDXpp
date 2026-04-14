@@ -28,6 +28,6 @@ public class ASTLUnion implements ASTNode {
 	}
 
 	public ASTNode normalize(Environment<ASTType> sigma) {
-        return this;
+		return new ASTLUnion(label, expr.normalize(sigma));
     }
 }

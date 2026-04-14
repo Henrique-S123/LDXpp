@@ -31,6 +31,6 @@ public class ASTUnion implements ASTNode {
 	}
 
 	public ASTNode normalize(Environment<ASTType> sigma) {
-        return this;
+		return new ASTUnion(label, expr.normalize(sigma));
     }
 }
