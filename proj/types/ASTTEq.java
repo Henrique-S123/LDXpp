@@ -35,7 +35,8 @@ public class ASTTEq implements ASTType {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);
         }
-        return o instanceof ASTTEq && type.isSubtypeOf(((ASTTEq) o).getType(), e);
+        return o instanceof ASTTEq && type.isSubtypeOf(((ASTTEq) o).getType(), e)
+            && term1.equals(((ASTTEq) o).getTerm1()) && term2.equals(((ASTTEq) o).getTerm2());
     }
 
     public boolean defequals(ASTType o, Environment<ASTType> sigma) {
