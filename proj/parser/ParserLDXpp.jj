@@ -116,6 +116,8 @@ TOKEN :
   |
   < TINT : "int" >
   |
+  < TLINT : "linint" >
+  |
   < TBOOL : "bool" >
   |
   < TLBOOL : "linbool" >
@@ -126,7 +128,7 @@ TOKEN :
   |
   < TLUNION : "linunion" >
   |
-  < TLINT : "linint" >
+  < TEQ : "eq" >
   |
   < SPLIT : "split" >
   |
@@ -379,6 +381,7 @@ ASTType Type() :
 ASTType TypeF() :
 {
   ASTType t, t2;
+  ASTNode te, te2;
   Token n;
   TypeBindList ll;
 }
@@ -393,6 +396,7 @@ ASTType TypeF() :
         | <TSTRING> { t = new ASTTString(); }
         | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll); }
         | <TLUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTLUnion(ll); }
+        | <TEQ> <LPAR> te = Let() <EQUAL> te2 = Let() <COLON> t = Type() <RPAR> { t = new ASTTEq(te, te2, t); }
         | <LPAR> t = TypeList() <RPAR>
     )
     { return t; }

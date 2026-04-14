@@ -63,3 +63,18 @@ let print_list:LIST->() = fn
 let l0 = genlist (20);
 let la = concat (l0) (l0);
 print_list (la);;
+
+type NODE = (int,LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (()) ;
+let l1:LIST = #cons ( (2,l0) ) ;
+let l2:LIST = #cons ( (3,l1) ) ;
+let size:LIST->int = fn
+    l:LIST => {
+        match l {
+            #nil(_) -> 0
+            |
+            #cons(n) -> 1 + size(snd(n))
+        }
+    }
+; size(l0) + size(l1) + size(l2);;

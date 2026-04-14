@@ -101,33 +101,35 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int TINT = 49;
   /** RegularExpression Id. */
-  int TBOOL = 50;
+  int TLINT = 50;
   /** RegularExpression Id. */
-  int TLBOOL = 51;
+  int TBOOL = 51;
   /** RegularExpression Id. */
-  int TSTRING = 52;
+  int TLBOOL = 52;
   /** RegularExpression Id. */
-  int TUNION = 53;
+  int TSTRING = 53;
   /** RegularExpression Id. */
-  int TLUNION = 54;
+  int TUNION = 54;
   /** RegularExpression Id. */
-  int TLINT = 55;
+  int TLUNION = 55;
   /** RegularExpression Id. */
-  int SPLIT = 56;
+  int TEQ = 56;
   /** RegularExpression Id. */
-  int CHECK = 57;
+  int SPLIT = 57;
   /** RegularExpression Id. */
-  int LABEL = 58;
+  int CHECK = 58;
   /** RegularExpression Id. */
-  int LLABEL = 59;
+  int LABEL = 59;
   /** RegularExpression Id. */
-  int String = 60;
+  int LLABEL = 60;
   /** RegularExpression Id. */
-  int Id = 61;
+  int String = 61;
   /** RegularExpression Id. */
-  int LinNum = 62;
+  int Id = 62;
   /** RegularExpression Id. */
-  int Num = 63;
+  int LinNum = 63;
+  /** RegularExpression Id. */
+  int Num = 64;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -184,12 +186,13 @@ public interface ParserConstants {
     "\"match\"",
     "\"type\"",
     "\"int\"",
+    "\"linint\"",
     "\"bool\"",
     "\"linbool\"",
     "\"string\"",
     "\"union\"",
     "\"linunion\"",
-    "\"linint\"",
+    "\"eq\"",
     "\"split\"",
     "\"check\"",
     "<LABEL>",
