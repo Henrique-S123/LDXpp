@@ -29,4 +29,9 @@ public class ASTCheck implements ASTNode {
     public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s ? %s", left.toString(), right.toString());
+    }
 }

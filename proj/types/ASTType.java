@@ -8,7 +8,7 @@ public interface ASTType  {
 
     boolean isSubtypeOf(ASTType o, EnvSet e) throws InterpreterError;
 
-    boolean defequals(ASTType o);
+    boolean defequals(ASTType o, Environment<ASTType> sigma);
 }
 
 

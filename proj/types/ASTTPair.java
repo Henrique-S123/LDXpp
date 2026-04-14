@@ -43,8 +43,8 @@ public class ASTTPair implements ASTType {
         return false;
     }
 
-    public boolean defequals(ASTType o) {
-        return o instanceof ASTTPair && ((ASTTPair) o).getFirst().defequals(first)
-            && ((ASTTPair) o).getSecond().defequals(second);
+    public boolean defequals(ASTType o, Environment<ASTType> sigma) {
+        return o instanceof ASTTPair && ((ASTTPair) o).getFirst().defequals(first, sigma)
+            && ((ASTTPair) o).getSecond().defequals(second, sigma);
     }
 }

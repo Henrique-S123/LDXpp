@@ -40,9 +40,9 @@ public class ASTTArrow implements ASTType {
         return false;
     }
 
-    public boolean defequals(ASTType o) {
-        return o instanceof ASTTArrow && ((ASTTArrow) o).getDom().defequals(dom)
-            && ((ASTTArrow) o).getCodom().defequals(codom);
+    public boolean defequals(ASTType o, Environment<ASTType> sigma) {
+        return o instanceof ASTTArrow && ((ASTTArrow) o).getDom().defequals(dom, sigma)
+            && ((ASTTArrow) o).getCodom().defequals(codom, sigma);
     }
 }
 

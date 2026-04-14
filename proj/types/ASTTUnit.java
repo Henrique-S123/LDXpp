@@ -17,7 +17,7 @@ public class ASTTUnit implements ASTType {
         return o instanceof ASTTUnit;
     }
 
-    public boolean defequals(ASTType o) {
+    public boolean defequals(ASTType o, Environment<ASTType> sigma) {
         return o instanceof ASTTUnit;
     }
 }

@@ -46,13 +46,13 @@ public class ASTTUnion implements ASTType {
         return false;
     }
 
-    public boolean defequals(ASTType o) {
+    public boolean defequals(ASTType o, Environment<ASTType> sigma) {
         if (o instanceof ASTTUnion) {
             HashMap<String, ASTType> own = ll.getMap();
             HashMap<String, ASTType> other = ((ASTTUnion) o).getList().getMap();
             if (own.size() != other.size()) return false;
             for (String label : own.keySet()) {
-                if (!(other.containsKey(label) && own.get(label).defequals(other.get(label)))) return false;
+                if (!(other.containsKey(label) && own.get(label).defequals(other.get(label), sigma))) return false;
             }
             return true;
         }

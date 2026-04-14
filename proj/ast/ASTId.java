@@ -28,7 +28,7 @@ public class ASTId implements ASTNode	{
         ASTType e = sigma.findEq(this);
         if (e == null) return this;
         ASTTEq eq = ((ASTTEq) e);
-        return (eq.getTerm1().equals(this)) ? eq.getTerm2() : eq.getTerm1();
+        return eq.getTerm2().normalize(sigma);
     }
 
     public boolean equals(Object o) {

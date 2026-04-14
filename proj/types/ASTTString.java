@@ -17,7 +17,7 @@ public class ASTTString implements ASTType {
         return o instanceof ASTTString;
     }
 
-    public boolean defequals(ASTType o) {
+    public boolean defequals(ASTType o, Environment<ASTType> sigma) {
         return o instanceof ASTTString;
     }
 }

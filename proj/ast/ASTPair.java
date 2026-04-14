@@ -35,6 +35,14 @@ public class ASTPair implements ASTNode {
         return new ASTTPair(t1, t2, null);
     }
 
+    public boolean check(EnvSet e, ASTTPair t) throws TypeCheckError, InterpreterError {
+        ASTTPair tinfer = ((ASTTPair) this.typecheck(e));
+        if (!(tinfer.getFirst().defequals(t.getFirst(), e.getSigma()))) return false;
+        e.getSigma().addEq(new ASTTEq(new ASTId(t.getId()), first, tinfer.getFirst()));
+        if (!(tinfer.getSecond().defequals(t.getSecond(), e.getSigma()))) return false;
+        return true;
+    }
+
     public ASTNode normalize(Environment<ASTType> sigma) {
         return new ASTPair(first.normalize(sigma), second.normalize(sigma));
     }

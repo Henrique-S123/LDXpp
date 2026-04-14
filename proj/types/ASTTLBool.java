@@ -17,7 +17,7 @@ public class ASTTLBool implements ASTLinType {
         return o instanceof ASTTLBool;
     }
 
-    public boolean defequals(ASTType o) {
+    public boolean defequals(ASTType o, Environment<ASTType> sigma) {
         return o instanceof ASTTLBool;
     }
 }
