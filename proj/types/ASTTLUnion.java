@@ -1,7 +1,6 @@
 package proj.types;
 
 import proj.env.*;
-import proj.errors.*;
 
 import java.util.HashMap;
 
@@ -31,7 +30,7 @@ public class ASTTLUnion implements ASTLinType {
         return ll;
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e) throws InterpreterError {
+    public boolean isSubtypeOf(ASTType o, EnvSet e) {
         if (o instanceof ASTTId) {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);

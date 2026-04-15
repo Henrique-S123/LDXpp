@@ -2,7 +2,6 @@ package proj.types;
 
 import proj.ast.*;
 import proj.env.*;
-import proj.errors.*;
 
 public class ASTTEq implements ASTType {
     ASTNode term1, term2;
@@ -30,7 +29,7 @@ public class ASTTEq implements ASTType {
         return term1+" ≡ "+ term2+" : "+type.toStr();
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e) throws InterpreterError {
+    public boolean isSubtypeOf(ASTType o, EnvSet e) {
         if (o instanceof ASTTId) {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);

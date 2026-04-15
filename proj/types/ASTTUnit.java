@@ -1,7 +1,6 @@
 package proj.types;
 
 import proj.env.*;
-import proj.errors.*;
 
 public class ASTTUnit implements ASTType {
 
@@ -9,7 +8,7 @@ public class ASTTUnit implements ASTType {
         return "()";
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e) throws InterpreterError {
+    public boolean isSubtypeOf(ASTType o, EnvSet e) {
         if (o instanceof ASTTId) {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);

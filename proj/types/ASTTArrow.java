@@ -1,7 +1,6 @@
 package proj.types;
 
 import proj.env.*;
-import proj.errors.*;
 
 public class ASTTArrow implements ASTType {
     ASTType dom;
@@ -24,7 +23,7 @@ public class ASTTArrow implements ASTType {
         return dom.toStr()+"->"+codom.toStr();
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e) throws InterpreterError {
+    public boolean isSubtypeOf(ASTType o, EnvSet e) {
         if (o instanceof ASTTId) {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);
