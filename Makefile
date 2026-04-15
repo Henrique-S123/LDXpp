@@ -4,13 +4,13 @@ TESTS := $(shell find $(TEST_DIR) -type f -name '*.xpp')
 all:
 	rm -rf proj/values/*.class proj/parser/*.class proj/ast/*.class proj/*.class proj/types/*.class
 	javacc -OUTPUT_DIRECTORY=proj/parser/ proj/parser/ParserLDXpp.jj
-	javac -Xlint:unchecked proj/values/*.java proj/parser/*.java proj/ast/*.java proj/*.java proj/types/*.java
+	javac -d proj/out/ -Xlint:unchecked proj/values/*.java proj/parser/*.java proj/ast/*.java proj/*.java proj/types/*.java
 	echo '#!/bin/bash' > x++
 	echo 'java proj.Xppint "$$@"' >> x++
 	chmod +x x++
 
 clean:
-	rm -rf proj/env/*.class proj/errors/*.class proj/values/*.class proj/parser/*.class proj/ast/*.class proj/*.class proj/types/*.class x++
+	rm -rf proj/out/ x++
 
 run-tests:
 	@echo "Running tests recursively with ./x++..."
