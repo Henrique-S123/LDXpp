@@ -10,7 +10,7 @@ public class ASTUnit implements ASTNode  {
     public ASTUnit() {}
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {
-        return new VUnit(false);                
+        return new VUnit();                
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError {
