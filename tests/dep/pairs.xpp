@@ -1,7 +1,22 @@
-let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)}; f((true, refl(true)));;
+let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)};
+f((true, refl(true)));;
 
-let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)}; f((false, refl(true)));;
+let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)};
+f((false, refl(true)));;
 
-let f = fn p:(bool:x, eq(x=false:bool)) => {fst(p)}; f((false, refl(false)));;
+let f = fn p:(bool:x, eq(x=false:bool)) => {fst(p)};
+f((false, refl(false)));;
 
-let y = true; let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)}; f((y, refl(true)));;
+let y = true;
+let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)};
+f((y, refl(true)));;
+
+let y = true;
+let z = y;
+let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)};
+f((z, refl(true)));;
+
+let y = false;
+let z = y;
+let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)};
+f((z, refl(true)));;
