@@ -13,7 +13,7 @@ type: linint, value: 2l
 type: linint, value: 1l
 
 
-class proj.errors.InterpreterError: Linear value of 'x' has already been consumed and cannot be used again.
+class proj.errors.EnvironmentError: Linear value of 'x' has already been consumed and cannot be used again.
 
 
 class proj.errors.TypeCheckError: there are unused linear values: [y: linint]
@@ -28,7 +28,7 @@ type: linint, value: 2l
 type: linint, value: 2l
 
 
-class proj.errors.InterpreterError: Linear value of 'x' has already been consumed and cannot be used again.
+class proj.errors.EnvironmentError: Linear value of 'x' has already been consumed and cannot be used again.
 
 
 type: linint, value: 3l

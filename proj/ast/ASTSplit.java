@@ -28,7 +28,7 @@ public class ASTSplit implements ASTNode {
 		}
     }
 
-	public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		if (id1.equals(id2)) throw new TypeCheckError("ids for split must be different");
 		ASTType tt = pair.typecheck(e);
 		tt = e.unfold(tt);

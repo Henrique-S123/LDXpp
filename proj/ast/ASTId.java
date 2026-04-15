@@ -20,7 +20,7 @@ public class ASTId implements ASTNode	{
         return env.find(id, false);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		return e.findVar(id);
 	}
 

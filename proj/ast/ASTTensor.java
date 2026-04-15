@@ -27,7 +27,7 @@ public class ASTTensor implements ASTNode {
         return new VPair(v1, v2, true);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
         return new ASTTTensor(t1, t2);

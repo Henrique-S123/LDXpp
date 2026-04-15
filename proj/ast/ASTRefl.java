@@ -20,7 +20,7 @@ public class ASTRefl implements ASTNode  {
         return new VUnit();                
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         return new ASTTEq(term, term, term.typecheck(e));
 	}
 

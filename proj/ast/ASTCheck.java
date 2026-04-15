@@ -17,7 +17,7 @@ public class ASTCheck implements ASTNode {
         return new VBool(true, false);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType t = left.typecheck(e);
         ASTType t2 = right.typecheck(e);
         if (!t.isSubtypeOf(t2, e) || !t2.isSubtypeOf(t, e))

@@ -28,7 +28,7 @@ public class ASTApp implements ASTNode  {
         }          
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType tf = func.typecheck(e);
         tf = e.unfold(tf);
         ASTType dom, codom;

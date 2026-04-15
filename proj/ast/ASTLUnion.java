@@ -21,7 +21,7 @@ public class ASTLUnion implements ASTNode {
 		return new VUnion(label, expr.eval(e), true);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
 		ll.put(label, expr.typecheck(e));
 		return new ASTTLUnion(new TypeBindList(ll));

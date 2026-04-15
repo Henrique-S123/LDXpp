@@ -1,13 +1,13 @@
 type: linint, value: 2
 
 
-class proj.errors.InterpreterError: Linear value of 'x' has already been consumed and cannot be used again.
+class proj.errors.EnvironmentError: Linear value of 'x' has already been consumed and cannot be used again.
 
 
 type: linbool, value: false
 
 
-class proj.errors.InterpreterError: Linear value of 'x' has already been consumed and cannot be used again.
+class proj.errors.EnvironmentError: Linear value of 'x' has already been consumed and cannot be used again.
 
 
 type: linint, value: 5

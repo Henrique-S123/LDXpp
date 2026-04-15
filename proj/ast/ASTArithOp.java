@@ -60,7 +60,7 @@ public class ASTArithOp implements ASTNode {
 		}
     }
 
-	public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		ASTType tl = lhs.typecheck(e);
 		ASTType tr = rhs.typecheck(e);
 		if (tl instanceof ASTTInt && tr instanceof ASTTInt) {

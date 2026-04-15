@@ -21,7 +21,7 @@ public class ASTPrint implements ASTNode {
 		return v0;
     }
 
-	public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		exp.typecheck(e);
 		return new ASTTUnit();
 	}

@@ -38,7 +38,7 @@ public class ASTIf implements ASTNode {
 		}
     }
 
-	public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		ASTType tt = test.typecheck(e);
 		if (tt instanceof ASTTBool || tt instanceof ASTTLBool) {
 			EnvSet e2 = new EnvSet(e);

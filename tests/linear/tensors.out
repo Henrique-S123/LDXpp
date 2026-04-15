@@ -1,4 +1,4 @@
-class proj.errors.InterpreterError: Linear value of 'x' has already been consumed and cannot be used again.
+class proj.errors.EnvironmentError: Linear value of 'x' has already been consumed and cannot be used again.
 
 
 type: (int | int), value: (1 | 2)
@@ -16,7 +16,7 @@ type: (linint | linint), value: (1l | 2l)
 type: (linint | linint), value: (1l | 2l)
 
 
-class proj.errors.InterpreterError: Linear value of 'p1' has already been consumed and cannot be used again.
+class proj.errors.EnvironmentError: Linear value of 'p1' has already been consumed and cannot be used again.
 
 
 type: int, value: 1

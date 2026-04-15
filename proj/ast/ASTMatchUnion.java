@@ -37,7 +37,7 @@ public class ASTMatchUnion implements ASTNode {
 		}
     }
 
-	public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		ASTType tt = test.typecheck(e);
 		ASTType rettype = null, tcase;
 		HashSet<String> matchUsedLinears = null;

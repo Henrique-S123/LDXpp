@@ -27,7 +27,7 @@ public class ASTPair implements ASTNode {
         return new VPair(v1, v2, false);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         Environment<ASTType> prevDelta = e.popDelta();
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
@@ -35,7 +35,7 @@ public class ASTPair implements ASTNode {
         return new ASTTPair(t1, t2, null);
     }
 
-    public boolean check(EnvSet e, ASTTPair t) throws TypeCheckError, InterpreterError {
+    public boolean check(EnvSet e, ASTTPair t) throws TypeCheckError, EnvironmentError {
         ASTTPair tinfer = ((ASTTPair) this.typecheck(e));
         if (!(tinfer.getFirst().defequals(t.getFirst(), e.getSigma()))) return false;
         e.getSigma().addEq(new ASTTEq(new ASTId(t.getId()), first, tinfer.getFirst()));

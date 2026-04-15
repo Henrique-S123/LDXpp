@@ -31,7 +31,7 @@ public class ASTChoice implements ASTNode  {
         }           
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		ASTType tp = pair.typecheck(e);
         if (tp instanceof ASTTPair) {
             return choice > 0 ? ((ASTTPair) tp).getSecond() : ((ASTTPair) tp).getFirst();

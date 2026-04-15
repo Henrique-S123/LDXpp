@@ -20,7 +20,7 @@ public class ASTTypeDef implements ASTNode {
         return body.eval(env);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         e.newPhiScope();
         for (String s : ltd.keySet()) {
             e.assocPhi(s, ltd.get(s));

@@ -24,7 +24,7 @@ public class ASTLet implements ASTNode {
         body = b;
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         boolean gammaExpanded = false, deltaExpanded = false;
         for (Bind b : decls) {
             ASTType tt = b.getType();

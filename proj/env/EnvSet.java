@@ -1,6 +1,6 @@
 package proj.env;
 
-import proj.errors.InterpreterError;
+import proj.errors.EnvironmentError;
 import proj.types.*;
 
 import java.util.*;
@@ -85,28 +85,28 @@ public class EnvSet {
         this.phi = this.phi.endScope();
     }
 
-    private void checkAlreadyDeclared(String id) throws InterpreterError {
+    private void checkAlreadyDeclared(String id) throws EnvironmentError {
         if (declaredIds.contains(id))
-            throw new InterpreterError("Identifier " + id + " already declared!");
+            throw new EnvironmentError("Identifier " + id + " already declared!");
     }
 
-    public void assocGamma(String id, ASTType t) throws InterpreterError {
+    public void assocGamma(String id, ASTType t) throws EnvironmentError {
         checkAlreadyDeclared(id);
         this.gamma.assoc(id, t);
     }
 
-    public void assocDelta(String id, ASTType t) throws InterpreterError {
+    public void assocDelta(String id, ASTType t) throws EnvironmentError {
         checkAlreadyDeclared(id);
         if (usedLinears.contains(id)) usedLinears.remove(id);
         this.delta.assoc(id, t);
     }
 
-    public void assocPhi(String id, ASTType t) throws InterpreterError {
+    public void assocPhi(String id, ASTType t) throws EnvironmentError {
         checkAlreadyDeclared(id);
         this.phi.assoc(id, t);
     }
     
-    public void assocVar(String id, ASTType t) throws InterpreterError {
+    public void assocVar(String id, ASTType t) throws EnvironmentError {
         checkAlreadyDeclared(id);
         if (t instanceof ASTLinType) {
             this.newDeltaScope();
@@ -117,7 +117,7 @@ public class EnvSet {
         }
     }
 
-    public ASTType findVar(String id) throws InterpreterError {
+    public ASTType findVar(String id) throws EnvironmentError {
         ASTType ret = gamma.find(id, false);
         if (ret != null) return ret;
         ret = delta.find(id, true);
@@ -126,8 +126,8 @@ public class EnvSet {
             return ret;
         } else {
             if (usedLinears.contains(id))
-                throw new InterpreterError("Linear value of '" + id + "' has already been consumed and cannot be used again.");
-            else throw new InterpreterError("Undeclared identifier " + id + ".");
+                throw new EnvironmentError("Linear value of '" + id + "' has already been consumed and cannot be used again.");
+            else throw new EnvironmentError("Undeclared identifier " + id + ".");
         }
     }
 

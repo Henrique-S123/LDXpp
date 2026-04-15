@@ -24,7 +24,7 @@ public class ASTFunc implements ASTNode  {
         return new VClos(e, id, body, false);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, InterpreterError {
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType targtype = e.unfold(argtype);
         e.newGammaScope();
         e.assocGamma(id, targtype);

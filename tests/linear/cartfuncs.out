@@ -8,10 +8,10 @@ type: int, value: 1
 type: linint, value: 3l
 
 
-class proj.errors.InterpreterError: Undeclared identifier x.
+class proj.errors.EnvironmentError: Undeclared identifier x.
 
 
-class proj.errors.InterpreterError: Undeclared identifier x.
+class proj.errors.EnvironmentError: Undeclared identifier x.
 
 
 type: linint, value: 10l
