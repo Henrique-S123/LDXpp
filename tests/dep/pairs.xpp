@@ -1,5 +1,7 @@
-let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)}; f((true, true ? true));;
+let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)}; f((true, refl(true)));;
 
-let f = fn p:(bool:x, eq(x=false:bool)) => {fst(p)}; f((false, false ? false));;
+let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)}; f((false, refl(true)));;
 
-let y = true; let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)}; f((y, y ? true));;
+let f = fn p:(bool:x, eq(x=false:bool)) => {fst(p)}; f((false, refl(false)));;
+
+let y = true; let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)}; f((y, refl(true)));;
