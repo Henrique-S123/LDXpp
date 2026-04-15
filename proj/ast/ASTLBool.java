@@ -3,7 +3,6 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
-import proj.errors.*;
 
 public class ASTLBool implements ASTNode  {
     boolean b;
@@ -16,11 +15,11 @@ public class ASTLBool implements ASTNode  {
       return this.b;
     }
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Environment<IValue> e) {
         return new VBool(b, true);                
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError {
+    public ASTType typecheck(EnvSet e) {
 		return new ASTTLBool();
 	}
 

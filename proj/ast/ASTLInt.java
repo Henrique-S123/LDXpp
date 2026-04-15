@@ -3,7 +3,6 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
-import proj.errors.*;
 
 public class ASTLInt implements ASTNode  {
     int v;
@@ -16,11 +15,11 @@ public class ASTLInt implements ASTNode  {
         return v;
     }
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Environment<IValue> e) {
         return new VInt(v, true);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError {;
+    public ASTType typecheck(EnvSet e) {;
 		return new ASTTLInt();
 	}
 

@@ -3,17 +3,16 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
-import proj.errors.*;
 
 public class ASTUnit implements ASTNode  {
 
     public ASTUnit() {}
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Environment<IValue> e) {
         return new VUnit();                
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError {
+    public ASTType typecheck(EnvSet e) {
 		return new ASTTUnit();
 	}
 
