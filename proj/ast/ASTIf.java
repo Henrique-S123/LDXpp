@@ -59,7 +59,8 @@ public class ASTIf implements ASTNode {
 	}
 
 	public ASTNode normalize(Environment<ASTType> sigma) {
-        return new ASTIf(test.normalize(sigma), conseq.normalize(sigma), alt.normalize(sigma));
+		return (test.normalize(sigma).equals(new ASTBool(true)) || test.normalize(sigma).equals(new ASTLBool(true))) ? 
+			conseq.normalize(sigma) : alt.normalize(sigma);
     }
 
 	public boolean equals(Object o) {

@@ -1,0 +1,18 @@
+type: if(true, 5, 3) ≡ 5 : int, value: true
+
+
+class proj.errors.TypeCheckError: terms if(true, 5, 3) and 3 are not definitionally equal
+
+
+type: if(truel, 5, 3) ≡ 5 : int, value: true
+
+
+type: if(false, 5, 3) ≡ 3 : int, value: true
+
+
+type: if(falsel, 5, 3) ≡ 3 : int, value: true
+
+
+type: if(x, 5, 3) ≡ 5 : int, value: true
+
+

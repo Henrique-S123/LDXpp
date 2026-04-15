@@ -1,0 +1,11 @@
+if true {5} else {3} ? 5;;
+
+if true {5} else {3} ? 3;;
+
+if truel {5} else {3} ? 5;;
+
+if false {5} else {3} ? 3;;
+
+if falsel {5} else {3} ? 3;;
+
+let x = true; if x {5} else {3} ? 5;;
