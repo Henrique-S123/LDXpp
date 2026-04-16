@@ -63,11 +63,13 @@ public class ASTIf implements ASTNode {
 			conseq.normalize(sigma) : alt.normalize(sigma);
     }
 
+	@Override
 	public boolean equals(Object o) {
 		return o instanceof ASTIf && ((ASTIf) o).getTest().equals(test)
 			&& ((ASTIf) o).getConseq().equals(conseq) && ((ASTIf) o).getAlt().equals(alt);
 	}
 
+	@Override
 	public String toString() {
 		return String.format("if(%s, %s, %s)", test.toString(), conseq.toString(), alt.toString());
 	}

@@ -20,6 +20,14 @@ public class ASTLet implements ASTNode {
         body = b;
     }
 
+    public Bind getBind() {
+        return bind;
+    }
+
+    public ASTNode getBody() {
+        return body;
+    } 
+
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         boolean gammaExpanded = false, deltaExpanded = false;
         e.newSigmaScope();
@@ -73,6 +81,15 @@ public class ASTLet implements ASTNode {
         return body.normalize(env);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof ASTLet && ((ASTLet) o).getBind().getId() == bind.getId()
+            && ((ASTLet) o).getBind().getExp().equals(bind.getExp())
+            && ((ASTLet) o).getBind().getType().defequals(bind.getType(), null)
+            && ((ASTLet) o).getBody().equals(body);
+    }
+
+    @Override
     public String toString() {
         ASTType tt = bind.getType();
         String typeString = (tt == null ? "" : String.format(" %s,", tt.toStr()));
