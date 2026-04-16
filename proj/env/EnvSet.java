@@ -73,6 +73,10 @@ public class EnvSet {
         this.phi = this.phi.beginScope();
     }
 
+    public void newSigmaScope() {
+        this.sigma = this.sigma.beginScope();
+    }
+
     public void closeGammaScope() {
         this.gamma = this.gamma.endScope();
     }
@@ -83,6 +87,10 @@ public class EnvSet {
 
     public void closePhiScope() {
         this.phi = this.phi.endScope();
+    }
+
+    public void closeSigmaScope() {
+        this.sigma = this.sigma.endScope();
     }
 
     private void checkAlreadyDeclared(String id) throws EnvironmentError {

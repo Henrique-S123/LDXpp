@@ -26,6 +26,7 @@ public class ASTLet implements ASTNode {
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         boolean gammaExpanded = false, deltaExpanded = false;
+        e.newSigmaScope();
         for (Bind b : decls) {
             ASTType tt = b.getType();
             if (tt != null) {
@@ -66,6 +67,7 @@ public class ASTLet implements ASTNode {
             throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());
         if (gammaExpanded) e.closeGammaScope();
         if (deltaExpanded) e.closeDeltaScope();
+        e.closeSigmaScope();
         return rt;
 	}
 

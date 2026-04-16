@@ -64,12 +64,16 @@ public class Environment <E>{
     }
 
     public E findEq(ASTNode n) {
-        for (Map.Entry<String, E> bind : bindings.entrySet()) {
-            if (bind.getValue() instanceof ASTTEq) {
-                ASTTEq eq = ((ASTTEq) bind.getValue());
-                if (eq.getTerm1().equals(n))
-                    return bind.getValue();
+        Environment<E> curr = this;
+        while (curr != null) {
+            for (Map.Entry<String, E> bind : curr.bindings.entrySet()) {
+                if (bind.getValue() instanceof ASTTEq) {
+                    ASTTEq eq = ((ASTTEq) bind.getValue());
+                    if (eq.getTerm1().equals(n))
+                        return bind.getValue();
+                }
             }
+            curr = curr.anc;
         }
         return null;
     }

@@ -20,3 +20,11 @@ let y = false;
 let z = y;
 let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)};
 f((z, refl(true)));;
+
+let x = false;
+let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)};
+f((true, refl(true)));;
+
+let f = fn p:(bool:x, eq(x=true:bool)) => {fst(p)};
+let x = false;
+f((true, refl(true)));;
