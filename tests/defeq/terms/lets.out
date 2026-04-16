@@ -1,0 +1,21 @@
+type: fst x ≡ snd y : int, value: true
+
+
+type: x ≡ 1 : int, value: true
+
+
+type: y ≡ 1 : int, value: true
+
+
+type: let(x, 1, x) ≡ 1 : int, value: true
+
+
+type: let(x, int, 1, x) ≡ 1 : int, value: true
+
+
+class proj.errors.TypeCheckError: terms let(x, 2, x) and 1 are not definitionally equal
+
+
+class proj.errors.TypeCheckError: terms let(x, int, 2, x) and 1 are not definitionally equal
+
+

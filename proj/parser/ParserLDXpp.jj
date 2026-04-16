@@ -160,22 +160,19 @@ ASTNode Let() :
 { Token n; 
   ASTNode t, e1, e2;
   ASTType t1 = null;
+  Bind b;
 }
 {  
     (
       t = Check()
     |
-    {  List<Bind> decls  = new ArrayList<Bind>(); }
-    ( ( LOOKAHEAD(2) <LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC>
-      { decls.add(new Bind(n.image, t1, e1)); t1 = null;} )+
-        e2 = Let() { t = new ASTLet(decls, e2); }
-    )
+      ( <LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC> { b = new Bind(n.image, t1, e1); }
+          e2 = Let() { t = new ASTLet(b, e2); } )
     | 
-     {  HashMap<String,ASTType> lbl = new HashMap<String,ASTType>(); }
-   ( (LOOKAHEAD(2) <TYPE>  n=<Id>  <EQUAL> t1 = Type()  <SEMIC>
-      { if (lbl.containsKey(n.image)) { throw new ParseException("duplicate id"); } else { lbl.put(n.image, t1); } } )+
-        e2 = Let() { t = new ASTTypeDef(lbl, e2); }
-    )
+      {  HashMap<String,ASTType> lbl = new HashMap<String,ASTType>(); }
+      ( (LOOKAHEAD(2) <TYPE>  n=<Id>  <EQUAL> t1 = Type()  <SEMIC>
+        { if (lbl.containsKey(n.image)) { throw new ParseException("duplicate id"); } else { lbl.put(n.image, t1); } } )+
+          e2 = Let() { t = new ASTTypeDef(lbl, e2); } )
     )
    { return t; }
 }
