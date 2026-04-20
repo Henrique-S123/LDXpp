@@ -29,19 +29,18 @@ public class ASTLet implements ASTNode {
     } 
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        boolean gammaExpanded = false, deltaExpanded = false;
         e.newSigmaScope();
         boolean explicitType = (bind.getType() != null);
         ASTType tt = (explicitType) ? bind.getType() : bind.getExp().typecheck(e);
+        boolean linear = (tt instanceof ASTLinType);
+
         tt = e.unfold(tt);
-        if (tt instanceof ASTLinType) {
-            if (!deltaExpanded) e.newDeltaScope();
+        if (linear) {
+            e.newDeltaScope();
             e.assocDelta(bind.getId(), tt);
-            deltaExpanded = true;
         } else {
-            if (!gammaExpanded) e.newGammaScope();
+            e.newGammaScope();
             e.assocGamma(bind.getId(), tt);
-            gammaExpanded = true;
         }
         if (explicitType) {
             ASTType valuetype = bind.getExp().typecheck(e);
@@ -55,8 +54,8 @@ public class ASTLet implements ASTNode {
         ASTType rt = body.typecheck(e);
         if (!(e.getDelta().isEmpty()))
             throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());
-        if (gammaExpanded) e.closeGammaScope();
-        if (deltaExpanded) e.closeDeltaScope();
+        if (linear) e.closeDeltaScope();
+        else e.closeGammaScope();
         e.closeSigmaScope();
         return rt;
 	}
