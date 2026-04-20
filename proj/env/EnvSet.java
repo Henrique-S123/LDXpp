@@ -125,6 +125,15 @@ public class EnvSet {
         }
     }
 
+    public void assocSigma(String id, ASTType t) throws EnvironmentError {
+        checkAlreadyDeclared(id);
+        this.sigma.assoc(id, t);
+    }
+
+    public void addEq(ASTTEq t) {
+        this.sigma.addEq(t);
+    }
+
     public ASTType findVar(String id) throws EnvironmentError {
         ASTType ret = gamma.find(id, false);
         if (ret != null) return ret;
