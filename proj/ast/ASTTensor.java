@@ -37,10 +37,9 @@ public class ASTTensor implements ASTNode {
         return new ASTTensor(first.normalize(sigma), second.normalize(sigma));
     }
 
-    @Override
-    public boolean equals(Object o) {
+    public boolean defequals(ASTNode o) {
         return o instanceof ASTTensor &&
-            first.equals(((ASTTensor) o).getFirst()) && second.equals(((ASTTensor) o).getSecond());
+            first.defequals(((ASTTensor) o).getFirst()) && second.defequals(((ASTTensor) o).getSecond());
     }
 
     @Override

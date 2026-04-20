@@ -51,10 +51,9 @@ public class ASTPair implements ASTNode {
         return new ASTPair(first.normalize(sigma), second.normalize(sigma));
     }
 
-    @Override
-    public boolean equals(Object o) {
+    public boolean defequals(ASTNode o) {
         return o instanceof ASTPair &&
-            first.equals(((ASTPair) o).getFirst()) && second.equals(((ASTPair) o).getSecond());
+            first.defequals(((ASTPair) o).getFirst()) && second.defequals(((ASTPair) o).getSecond());
     }
 
     @Override

@@ -38,4 +38,9 @@ public class ASTLFunc implements ASTNode  {
     public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
+
+    public boolean defequals(ASTNode o) {
+        // TODO
+        return false;
+    }
 }

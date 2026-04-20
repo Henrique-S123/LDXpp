@@ -69,7 +69,7 @@ public class Environment <E>{
             for (Map.Entry<String, E> bind : curr.bindings.entrySet()) {
                 if (bind.getValue() instanceof ASTTEq) {
                     ASTTEq eq = ((ASTTEq) bind.getValue());
-                    if (eq.getTerm1().equals(n))
+                    if (eq.getTerm1().defequals(n))
                         return bind.getValue();
                 }
             }

@@ -30,4 +30,9 @@ public class ASTSeq implements ASTNode {
 	public ASTNode normalize(Environment<ASTType> sigma) {
         return new ASTSeq(first.normalize(sigma), second.normalize(sigma));
     }
+
+    public boolean defequals(ASTNode o) {
+        // TODO
+        return false;
+    }
 }

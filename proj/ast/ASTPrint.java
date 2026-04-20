@@ -29,4 +29,9 @@ public class ASTPrint implements ASTNode {
 	public ASTNode normalize(Environment<ASTType> sigma) {
 		return new ASTPrint(exp.normalize(sigma), newline);
     }
+
+	public boolean defequals(ASTNode o) {
+        // TODO
+        return false;
+    }
 }

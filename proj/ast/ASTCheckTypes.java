@@ -25,4 +25,8 @@ public class ASTCheckTypes implements ASTNode {
     public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }
+
+    public boolean defequals(ASTNode o) {
+        return false;
+    }
 }

@@ -81,12 +81,11 @@ public class ASTLet implements ASTNode {
         return body.normalize(env);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        return o instanceof ASTLet && ((ASTLet) o).getBind().getId() == bind.getId()
-            && ((ASTLet) o).getBind().getExp().equals(bind.getExp())
+    public boolean defequals(ASTNode o) {
+        return o instanceof ASTLet && ((ASTLet) o).getBind().getId().equals(bind.getId())
+            && ((ASTLet) o).getBind().getExp().defequals(bind.getExp())
             && ((ASTLet) o).getBind().getType().defequals(bind.getType(), null)
-            && ((ASTLet) o).getBody().equals(body);
+            && ((ASTLet) o).getBody().defequals(body);
     }
 
     @Override

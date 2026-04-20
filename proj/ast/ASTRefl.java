@@ -28,9 +28,8 @@ public class ASTRefl implements ASTNode  {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        return o instanceof ASTRefl && ((ASTRefl) o).getTerm().equals(term);
+    public boolean defequals(ASTNode o) {
+        return o instanceof ASTRefl && ((ASTRefl) o).getTerm().defequals(term);
     }
 
     @Override

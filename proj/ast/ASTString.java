@@ -26,8 +26,7 @@ public class ASTString implements ASTNode  {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    public boolean defequals(ASTNode o) {
         return o instanceof ASTString && ((ASTString) o).getVal() == s;
     }
 

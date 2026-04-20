@@ -27,8 +27,7 @@ public class ASTInt implements ASTNode  {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    public boolean defequals(ASTNode o) {
         return o instanceof ASTInt && ((ASTInt) o).getVal() == v;
     }
 

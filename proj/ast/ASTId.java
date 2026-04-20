@@ -31,7 +31,7 @@ public class ASTId implements ASTNode	{
         return eq.getTerm2().normalize(sigma);
     }
 
-    public boolean equals(Object o) {
+    public boolean defequals(ASTNode o) {
         return o instanceof ASTId && ((ASTId) o).getId().equals(id);
     }
 

@@ -27,8 +27,7 @@ public class ASTLBool implements ASTNode  {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    public boolean defequals(ASTNode o) {
         return o instanceof ASTLBool && ((ASTLBool) o).getVal() == b;
     }
 

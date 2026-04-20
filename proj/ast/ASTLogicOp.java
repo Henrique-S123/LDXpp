@@ -70,9 +70,9 @@ public class ASTLogicOp implements ASTNode {
 		return new ASTLogicOp(lhs.normalize(sigma), rhs.normalize(sigma), op);
     }
 
-	public boolean equals(Object o) {
-		return o instanceof ASTLogicOp && ((ASTLogicOp) o).getLhs().equals(lhs)
-			&& ((ASTLogicOp) o).getRhs().equals(rhs) && ((ASTLogicOp) o).getOp().equals(op);
+	public boolean defequals(ASTNode o) {
+		return o instanceof ASTLogicOp && ((ASTLogicOp) o).getLhs().defequals(lhs)
+			&& ((ASTLogicOp) o).getRhs().defequals(rhs) && ((ASTLogicOp) o).getOp().equals(op);
 	}
 
 	public String toString() {

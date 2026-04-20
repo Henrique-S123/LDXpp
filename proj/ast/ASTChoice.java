@@ -46,6 +46,12 @@ public class ASTChoice implements ASTNode  {
             ((ASTPair) pair.normalize(sigma)).getSecond().normalize(sigma);
     }
 
+    public boolean defequals(ASTNode o) {
+        // TODO
+        return o instanceof ASTChoice && ((ASTChoice) o).getChoice() == choice &&
+            ((ASTChoice) o).getPair().defequals(pair);
+    }
+
     @Override
     public String toString() {
         String s = choice == 0 ? "fst %s" : "snd %s";

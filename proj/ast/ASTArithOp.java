@@ -82,9 +82,9 @@ public class ASTArithOp implements ASTNode {
 		return new ASTArithOp(lhs.normalize(sigma), rhs.normalize(sigma), op);
     }
 
-	public boolean equals(Object o) {
-		return o instanceof ASTArithOp && ((ASTArithOp) o).getLhs().equals(lhs)
-			&& ((ASTArithOp) o).getRhs().equals(rhs) && ((ASTArithOp) o).getOp().equals(op);
+	public boolean defequals(ASTNode o) {
+		return o instanceof ASTArithOp && ((ASTArithOp) o).getLhs().defequals(lhs)
+			&& ((ASTArithOp) o).getRhs().defequals(rhs) && ((ASTArithOp) o).getOp().equals(op);
 	}
 
 	public String toString() {
