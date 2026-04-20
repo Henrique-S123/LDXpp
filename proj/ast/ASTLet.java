@@ -31,40 +31,27 @@ public class ASTLet implements ASTNode {
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         boolean gammaExpanded = false, deltaExpanded = false;
         e.newSigmaScope();
-        ASTType tt = bind.getType();
-        if (tt != null) {
-            // premptive type binding
-            tt = e.unfold(tt);
-            if (tt instanceof ASTLinType) {
-                if (!deltaExpanded) e.newDeltaScope();
-                e.assocDelta(bind.getId(), tt);
-                deltaExpanded = true;
-            } else {
-                if (!gammaExpanded) e.newGammaScope();
-                e.assocGamma(bind.getId(), tt);
-                gammaExpanded = true;
-            }
+        boolean explicitType = (bind.getType() != null);
+        ASTType tt = (explicitType) ? bind.getType() : bind.getExp().typecheck(e);
+        tt = e.unfold(tt);
+        if (tt instanceof ASTLinType) {
+            if (!deltaExpanded) e.newDeltaScope();
+            e.assocDelta(bind.getId(), tt);
+            deltaExpanded = true;
+        } else {
+            if (!gammaExpanded) e.newGammaScope();
+            e.assocGamma(bind.getId(), tt);
+            gammaExpanded = true;
+        }
+        if (explicitType) {
             ASTType valuetype = bind.getExp().typecheck(e);
             if (!(valuetype.isSubtypeOf(tt, e))) {
                 throw new TypeCheckError("types to bind are not subtypes: " + valuetype.toStr() + " and " + tt.toStr());
             }
-            e.getSigma().addEq(new ASTTEq(new ASTId(bind.getId()), bind.getExp(), tt));
-            e.getSigma().assoc(bind.getId(), tt);
-        } else {
-            ASTType t = bind.getExp().typecheck(e);
-            t = e.unfold(t);
-            if (t instanceof ASTLinType) {
-                if (!deltaExpanded) e.newDeltaScope();
-                e.assocDelta(bind.getId(), t);
-                deltaExpanded = true;
-            } else {
-                if (!gammaExpanded) e.newGammaScope();
-                e.assocGamma(bind.getId(), t);
-                gammaExpanded = true;
-            }
-            e.getSigma().addEq(new ASTTEq(new ASTId(bind.getId()), bind.getExp(), t));
-            e.getSigma().assoc(bind.getId(), t);
         }
+        e.getSigma().addEq(new ASTTEq(new ASTId(bind.getId()), bind.getExp(), tt));
+        e.getSigma().assoc(bind.getId(), tt);
+
         ASTType rt = body.typecheck(e);
         if (!(e.getDelta().isEmpty()))
             throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());
