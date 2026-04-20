@@ -29,11 +29,12 @@ public class ASTLet implements ASTNode {
     } 
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+        e.newSigmaScope();
         try {
             ASTType tt = (bind.getType() != null) ? bind.getType() : bind.getExp().typecheck(e);
             tt = e.unfold(tt);
             e.assocVar(bind.getId(), tt);
-            
+
             if (bind.getType() != null) {
                 ASTType exprType = bind.getExp().typecheck(e);
                 if (!(exprType.isSubtypeOf(tt, e))) {
@@ -41,7 +42,6 @@ public class ASTLet implements ASTNode {
                 }
             }
 
-            e.newSigmaScope();
             e.addEq(new ASTTEq(new ASTId(bind.getId()), bind.getExp(), tt));
             e.assocSigma(bind.getId(), tt);
 
