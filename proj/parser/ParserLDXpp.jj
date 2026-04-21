@@ -3,11 +3,8 @@ PARSER_BEGIN(Parser)
 package proj.parser;
 
 import proj.ast.*;
-import proj.*;
 import proj.types.*;
-import proj.errors.*;
 import proj.env.*;
-
 import java.util.*;
 
 public class Parser {
