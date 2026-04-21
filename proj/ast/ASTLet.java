@@ -3,6 +3,7 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTLet implements ASTNode {
@@ -29,32 +30,32 @@ public class ASTLet implements ASTNode {
     } 
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        e.newSigmaScope();
-        try {
-            ASTType tt = (bind.getType() != null) ? bind.getType() : bind.getExp().typecheck(e);
-            tt = e.unfold(tt);
-            e.assocVar(bind.getId(), tt);
+        ASTType tt = (bind.getType() != null) ? bind.getType() : bind.getExp().typecheck(e);
+        tt = e.unfold(tt);
 
-            if (bind.getType() != null) {
-                ASTType exprType = bind.getExp().typecheck(e);
-                if (!(exprType.isSubtypeOf(tt, e))) {
-                    throw new TypeCheckError("types to bind are not subtypes: " + exprType.toStr() + " and " + tt.toStr());
-                }
+        ENV env = (tt instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
+        e.openEnvScope(env);
+        e.openEnvScope(ENV.SIGMA);
+
+        e.bindVar(bind.getId(), tt);
+        if (bind.getType() != null) {
+            ASTType exprType = bind.getExp().typecheck(e);
+            if (!(exprType.isSubtypeOf(tt, e))) {
+                throw new TypeCheckError("types to bind are not subtypes: " + exprType.toStr() + " and " + tt.toStr());
             }
-
-            e.addEq(new ASTTEq(new ASTId(bind.getId()), bind.getExp(), tt));
-            e.assocSigma(bind.getId(), tt);
-
-            ASTType rt = body.typecheck(e);
-
-            if (!(e.getDelta().isEmpty()))
-                throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());
-            if (tt instanceof ASTLinType) e.closeDeltaScope();
-            else e.closeGammaScope();
-            return rt;
-        } finally {
-            e.closeSigmaScope();
         }
+
+        e.addEq(new ASTTEq(new ASTId(bind.getId()), bind.getExp(), tt));
+        e.assocSigma(bind.getId(), tt);
+
+        ASTType rt = body.typecheck(e);
+        if (!(e.getDelta().isEmpty()))
+            throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());
+
+        e.closeEnvScope(env);
+        e.closeEnvScope(ENV.SIGMA);
+
+        return rt;
 	}
 
     public ASTNode normalize(Environment<ASTType> sigma) {

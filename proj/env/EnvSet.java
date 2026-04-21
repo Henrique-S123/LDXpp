@@ -27,6 +27,8 @@ public class EnvSet {
         usedLinears = new ArrayList<String>(o.getUsedLinears());
     }
 
+    public static enum ENV { GAMMA, DELTA, PHI, SIGMA }
+
     public Environment<ASTType> getGamma() {
         return gamma;
     }
@@ -61,6 +63,8 @@ public class EnvSet {
         this.delta = d;
     }
 
+    /* Open scopes */
+
     public void newGammaScope() {
         this.gamma = this.gamma.beginScope();
     }
@@ -77,6 +81,17 @@ public class EnvSet {
         this.sigma = this.sigma.beginScope();
     }
 
+    public void openEnvScope(ENV env) {
+        switch (env) {
+            case GAMMA -> this.gamma = this.gamma.beginScope();
+            case DELTA -> this.delta = this.delta.beginScope();
+            case PHI -> this.phi = this.phi.beginScope();
+            case SIGMA -> this.sigma = this.sigma.beginScope();
+        }
+    }
+
+    /* Close scopes */
+
     public void closeGammaScope() {
         this.gamma = this.gamma.endScope();
     }
@@ -92,6 +107,17 @@ public class EnvSet {
     public void closeSigmaScope() {
         this.sigma = this.sigma.endScope();
     }
+
+    public void closeEnvScope(ENV env) {
+        switch (env) {
+            case GAMMA -> this.gamma = this.gamma.endScope();
+            case DELTA -> this.delta = this.delta.endScope();
+            case PHI -> this.phi = this.phi.endScope();
+            case SIGMA -> this.sigma = this.sigma.endScope();
+        }
+    }
+
+    /* Bind new ids */
 
     private void checkAlreadyDeclared(String id) throws EnvironmentError {
         if (declaredIds.contains(id))
@@ -125,6 +151,15 @@ public class EnvSet {
         }
     }
 
+    public void bindVar(String id, ASTType t) throws EnvironmentError {
+        checkAlreadyDeclared(id);
+        if (t instanceof ASTLinType) {
+            this.assocDelta(id, t);
+        } else {
+            this.assocGamma(id, t);
+        }
+    }
+
     public void assocSigma(String id, ASTType t) throws EnvironmentError {
         checkAlreadyDeclared(id);
         this.sigma.assoc(id, t);
@@ -133,6 +168,8 @@ public class EnvSet {
     public void addEq(ASTTEq t) {
         this.sigma.addEq(t);
     }
+
+    /* Find binds */
 
     public ASTType findVar(String id) throws EnvironmentError {
         ASTType ret = gamma.find(id, false);
