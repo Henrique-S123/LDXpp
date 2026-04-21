@@ -37,7 +37,7 @@ public class ASTLet implements ASTNode {
         e.openEnvScope(env);
         e.openEnvScope(ENV.SIGMA);
 
-        e.bindVar(bind.getId(), tt);
+        e.bindToEnv(env, bind.getId(), tt);
         if (bind.getType() != null) {
             ASTType exprType = bind.getExp().typecheck(e);
             if (!(exprType.isSubtypeOf(tt, e))) {

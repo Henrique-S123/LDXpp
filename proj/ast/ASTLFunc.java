@@ -27,11 +27,12 @@ public class ASTLFunc implements ASTNode  {
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType targtype = e.unfold(argtype);
-        e.assocVar(id, targtype);
+        ENV env = (targtype instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
+        e.openEnvScope(env);
+        e.bindToEnv(env, id, targtype);
         ASTType tb = body.typecheck(e);
         if (!(e.getEnv(ENV.DELTA).isEmpty()))
             throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA).toStr());
-        ENV env = (targtype instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
         e.closeEnvScope(env);
         return new ASTTLollipop(targtype, tb);
 	}

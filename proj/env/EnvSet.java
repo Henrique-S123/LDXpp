@@ -82,8 +82,7 @@ public class EnvSet {
         }
     }
 
-    /* Bind new ids */
-
+    /* Populate environments */
     private void checkAlreadyDeclared(String id) throws EnvironmentError {
         if (declaredIds.contains(id))
             throw new EnvironmentError("Identifier " + id + " already declared!");
@@ -104,30 +103,20 @@ public class EnvSet {
         checkAlreadyDeclared(id);
         this.phi.assoc(id, t);
     }
-    
-    public void assocVar(String id, ASTType t) throws EnvironmentError {
-        checkAlreadyDeclared(id);
-        if (t instanceof ASTLinType) {
-            this.openEnvScope(ENV.DELTA);
-            this.assocDelta(id, t);
-        } else {
-            this.openEnvScope(ENV.GAMMA);
-            this.assocGamma(id, t);
-        }
-    }
-
-    public void bindVar(String id, ASTType t) throws EnvironmentError {
-        checkAlreadyDeclared(id);
-        if (t instanceof ASTLinType) {
-            this.assocDelta(id, t);
-        } else {
-            this.assocGamma(id, t);
-        }
-    }
 
     public void assocSigma(String id, ASTType t) throws EnvironmentError {
         checkAlreadyDeclared(id);
         this.sigma.assoc(id, t);
+    }
+
+    public void bindToEnv(ENV env, String id, ASTType t) throws EnvironmentError {
+        checkAlreadyDeclared(id);
+        switch (env) {
+            case GAMMA -> gamma.assoc(id, t);
+            case DELTA -> { if (usedLinears.contains(id)) usedLinears.remove(id); delta.assoc(id, t); }
+            case PHI -> phi.assoc(id, t);
+            case SIGMA -> sigma.assoc(id, t);
+        }
     }
 
     public void addEq(ASTTEq t) {
@@ -135,7 +124,6 @@ public class EnvSet {
     }
 
     /* Find binds */
-
     public ASTType findVar(String id) throws EnvironmentError {
         ASTType ret = gamma.find(id, false);
         if (ret != null) return ret;

@@ -36,7 +36,9 @@ public class ASTSplit implements ASTNode {
 		if (!(tt instanceof ASTTTensor))
 			throw new TypeCheckError("illegal type to split: " + tt.toStr());
 		ASTType t1 = e.unfold(((ASTTTensor) tt).getFirst());
-		e.assocVar(id1, t1);
+		ENV env = (t1 instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
+        e.openEnvScope(env);
+        e.bindToEnv(env, id1, t1);
 		ASTType t2 = e.unfold(((ASTTTensor) tt).getSecond());
 		boolean t1Lin = (t1 instanceof ASTLinType), t2Lin = (t2 instanceof ASTLinType);
 		if (t2Lin) {
