@@ -65,22 +65,6 @@ public class EnvSet {
 
     /* Open scopes */
 
-    public void newGammaScope() {
-        this.gamma = this.gamma.beginScope();
-    }
-
-    public void newDeltaScope() {
-        this.delta = this.delta.beginScope();
-    }
-
-    public void newPhiScope() {
-        this.phi = this.phi.beginScope();
-    }
-
-    public void newSigmaScope() {
-        this.sigma = this.sigma.beginScope();
-    }
-
     public void openEnvScope(ENV env) {
         switch (env) {
             case GAMMA -> this.gamma = this.gamma.beginScope();
@@ -143,10 +127,10 @@ public class EnvSet {
     public void assocVar(String id, ASTType t) throws EnvironmentError {
         checkAlreadyDeclared(id);
         if (t instanceof ASTLinType) {
-            this.newDeltaScope();
+            this.openEnvScope(ENV.DELTA);
             this.assocDelta(id, t);
         } else {
-            this.newGammaScope();
+            this.openEnvScope(ENV.GAMMA);
             this.assocGamma(id, t);
         }
     }

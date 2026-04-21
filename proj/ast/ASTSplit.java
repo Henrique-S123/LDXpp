@@ -3,6 +3,7 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTSplit implements ASTNode {
@@ -39,10 +40,10 @@ public class ASTSplit implements ASTNode {
 		ASTType t2 = e.unfold(((ASTTTensor) tt).getSecond());
 		boolean t1Lin = (t1 instanceof ASTLinType), t2Lin = (t2 instanceof ASTLinType);
 		if (t2Lin) {
-			if (!t1Lin) e.newDeltaScope();
+			if (!t1Lin) e.openEnvScope(ENV.DELTA);
 			e.assocDelta(id2, t2);
 		} else {
-			if (t1Lin) e.newGammaScope();
+			if (t1Lin) e.openEnvScope(ENV.GAMMA);
 			e.assocGamma(id2, t2);
 		}
 		ASTType rt = body.typecheck(e);

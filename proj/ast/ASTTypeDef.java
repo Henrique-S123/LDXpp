@@ -3,6 +3,7 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class ASTTypeDef implements ASTNode {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        e.newPhiScope();
+        e.openEnvScope(ENV.PHI);
         for (String s : ltd.keySet()) {
             e.assocPhi(s, ltd.get(s));
         }

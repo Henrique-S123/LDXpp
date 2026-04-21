@@ -3,6 +3,7 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTFunc implements ASTNode  {
@@ -26,7 +27,7 @@ public class ASTFunc implements ASTNode  {
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType targtype = e.unfold(argtype);
-        e.newGammaScope();
+        e.openEnvScope(ENV.GAMMA);
         e.assocGamma(id, targtype);
         Environment<ASTType> prevDelta = e.popDelta();
         ASTType tb = body.typecheck(e);
