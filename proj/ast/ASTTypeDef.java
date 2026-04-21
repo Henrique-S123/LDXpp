@@ -27,7 +27,7 @@ public class ASTTypeDef implements ASTNode {
             e.assocPhi(s, ltd.get(s));
         }
         ASTType ret = this.body.typecheck(e);
-        e.closePhiScope();
+        e.closeEnvScope(ENV.PHI);
         return ret;
     }
 

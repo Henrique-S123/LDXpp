@@ -42,7 +42,7 @@ public class ASTPair implements ASTNode {
         e.openEnvScope(ENV.SIGMA);
         e.getSigma().addEq(new ASTTEq(new ASTId(t.getId()), first, tinfer.getFirst()));
         if (!(tinfer.getSecond().defequals(t.getSecond(), e.getSigma()))) {
-            e.closeSigmaScope();
+            e.closeEnvScope(ENV.SIGMA);
             return false;
         }
         return true;

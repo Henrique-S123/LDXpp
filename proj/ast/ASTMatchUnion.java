@@ -3,6 +3,7 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 import java.util.*;
@@ -56,8 +57,8 @@ public class ASTMatchUnion implements ASTNode {
 				ASTType tlabel = e.unfold(entry.getValue());
 				env.assocVar(ids.get(index), tlabel);
 				tcase = exprs.get(index).typecheck(env);
-				if (tlabel instanceof ASTLinType) env.closeDeltaScope();
-				else env.closeGammaScope();
+				if (tlabel instanceof ASTLinType) env.closeEnvScope(ENV.DELTA);
+				else env.closeEnvScope(ENV.GAMMA);
 
 				if (matchUsedLinears == null) {
 					matchUsedLinears = new HashSet<String>(e.getUsedLinears());

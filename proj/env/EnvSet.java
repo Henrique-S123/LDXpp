@@ -64,7 +64,6 @@ public class EnvSet {
     }
 
     /* Open scopes */
-
     public void openEnvScope(ENV env) {
         switch (env) {
             case GAMMA -> this.gamma = this.gamma.beginScope();
@@ -75,23 +74,6 @@ public class EnvSet {
     }
 
     /* Close scopes */
-
-    public void closeGammaScope() {
-        this.gamma = this.gamma.endScope();
-    }
-
-    public void closeDeltaScope() {
-        this.delta = this.delta.endScope();
-    }
-
-    public void closePhiScope() {
-        this.phi = this.phi.endScope();
-    }
-
-    public void closeSigmaScope() {
-        this.sigma = this.sigma.endScope();
-    }
-
     public void closeEnvScope(ENV env) {
         switch (env) {
             case GAMMA -> this.gamma = this.gamma.endScope();

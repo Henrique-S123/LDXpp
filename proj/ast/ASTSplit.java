@@ -49,8 +49,8 @@ public class ASTSplit implements ASTNode {
 		ASTType rt = body.typecheck(e);
 		if (!(e.getDelta().isEmpty()))
             throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());
-		if (t1Lin || t2Lin) e.closeDeltaScope();
-		else if (!t1Lin || !t2Lin) e.closeGammaScope();
+		if (t1Lin || t2Lin) e.closeEnvScope(ENV.DELTA);
+		else if (!t1Lin || !t2Lin) e.closeEnvScope(ENV.GAMMA);
 		return rt;
 	}
 

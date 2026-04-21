@@ -3,6 +3,7 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTLFunc implements ASTNode  {
@@ -30,8 +31,8 @@ public class ASTLFunc implements ASTNode  {
         ASTType tb = body.typecheck(e);
         if (!(e.getDelta().isEmpty()))
             throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());
-        if (targtype instanceof ASTLinType) e.closeDeltaScope();
-        else e.closeGammaScope();
+        ENV env = (targtype instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
+        e.closeEnvScope(env);
         return new ASTTLollipop(targtype, tb);
 	}
 
