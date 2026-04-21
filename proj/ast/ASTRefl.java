@@ -24,6 +24,10 @@ public class ASTRefl implements ASTNode  {
         return new ASTTEq(term, term, term.typecheck(e));
 	}
 
+    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        return typecheck(e);
+    }
+
     public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }

@@ -36,16 +36,21 @@ public class ASTPair implements ASTNode {
         return new ASTTPair(t1, t2, null);
     }
 
-    public boolean check(EnvSet e, ASTTPair t) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        if (!(t instanceof ASTTPair))
+            throw new TypeCheckError("pair: expected cartesian pair type");
+        Environment<ASTType> prevDelta = e.popDelta();
         ASTTPair tinfer = ((ASTTPair) this.typecheck(e));
-        if (!(tinfer.getFirst().defequals(t.getFirst(), e.getEnv(ENV.SIGMA)))) return false;
+        ASTTPair tt = ((ASTTPair) t);
+        if (!(tinfer.getFirst().defequals(tt.getFirst(), e.getEnv(ENV.SIGMA))))
+            throw new TypeCheckError("pair: invalid type for first element");
         e.openEnvScope(ENV.SIGMA);
-        e.getEnv(ENV.SIGMA).addEq(new ASTTEq(new ASTId(t.getId()), first, tinfer.getFirst()));
-        if (!(tinfer.getSecond().defequals(t.getSecond(), e.getEnv(ENV.SIGMA)))) {
-            e.closeEnvScope(ENV.SIGMA);
-            return false;
-        }
-        return true;
+        e.getEnv(ENV.SIGMA).addEq(new ASTTEq(new ASTId(tt.getId()), first, tinfer.getFirst()));
+        if (!(tinfer.getSecond().defequals(tt.getSecond(), e.getEnv(ENV.SIGMA))))
+            throw new TypeCheckError("pair: invalid type for second element");
+        e.closeEnvScope(ENV.SIGMA);
+        e.setEnv(ENV.DELTA, prevDelta);
+        return t;
     }
 
     public ASTNode normalize(Environment<ASTType> sigma) {

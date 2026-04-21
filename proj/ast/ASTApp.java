@@ -41,21 +41,17 @@ public class ASTApp implements ASTNode  {
         } else {
             throw new TypeCheckError("illegal type for func app: " + tf.toStr());
         }
-        if (dom instanceof ASTTPair && arg instanceof ASTPair) {
-            if (((ASTPair) arg).check(e, ((ASTTPair) dom))) {
-                return codom;
-            } else {
-                throw new TypeCheckError("func app: pair " + arg.toString() + " does not match expected type " + tf.toStr());
-            }
+        ASTType ta = arg.typecheck(e);
+        if (ta instanceof ASTTUnit || ta.isSubtypeOf(dom, e)) {
+            return codom;
         } else {
-            ASTType ta = arg.typecheck(e);
-            if (ta instanceof ASTTUnit || ta.isSubtypeOf(dom, e)) {
-                return codom;
-            } else {
-                throw new TypeCheckError("func app: argument type (" + ta.toStr() + ") is not subtype of the function parameter (" + dom.toStr() + ")");
-            }
+            throw new TypeCheckError("func app: argument type (" + ta.toStr() + ") is not subtype of the function parameter (" + dom.toStr() + ")");
         }
 	}
+
+    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        return typecheck(e);
+    }
 
     public ASTNode normalize(Environment<ASTType> sigma) {
         return this;

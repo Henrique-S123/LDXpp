@@ -24,6 +24,10 @@ public class ASTId implements ASTNode	{
 		return e.findVar(id);
 	}
 
+    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        return typecheck(e);
+    }
+
     public ASTNode normalize(Environment<ASTType> sigma) {
         ASTType e = sigma.findEq(this);
         if (e == null) return this;

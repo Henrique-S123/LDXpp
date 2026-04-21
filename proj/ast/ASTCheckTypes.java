@@ -23,6 +23,10 @@ public class ASTCheckTypes implements ASTNode {
         throw new TypeCheckError(String.format("types %s and %s are not definitionally equal", left.toStr(), right.toStr()));
     }
 
+    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        return typecheck(e);
+    }
+
     public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }

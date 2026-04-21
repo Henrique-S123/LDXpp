@@ -27,6 +27,10 @@ public class ASTSeq implements ASTNode {
         }
 	}
 
+    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        return typecheck(e);
+    }
+
 	public ASTNode normalize(Environment<ASTType> sigma) {
         return new ASTSeq(first.normalize(sigma), second.normalize(sigma));
     }

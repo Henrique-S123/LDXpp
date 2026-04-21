@@ -23,6 +23,10 @@ public class ASTBool implements ASTNode  {
 		return new ASTTBool();
 	}
 
+    public ASTType typecheck(EnvSet e, ASTType t) {
+        return typecheck(e);
+    }
+
     public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }

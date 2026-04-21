@@ -66,6 +66,10 @@ public class ASTLogicOp implements ASTNode {
 		}
 	}
 
+	public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        return typecheck(e);
+    }
+
 	public ASTNode normalize(Environment<ASTType> sigma) {
 		return new ASTLogicOp(lhs.normalize(sigma), rhs.normalize(sigma), op);
     }

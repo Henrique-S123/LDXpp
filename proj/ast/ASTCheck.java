@@ -27,6 +27,10 @@ public class ASTCheck implements ASTNode {
         throw new TypeCheckError(String.format("terms %s and %s are not definitionally equal", left, right));
     }
 
+    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        return typecheck(e);
+    }
+
     public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }

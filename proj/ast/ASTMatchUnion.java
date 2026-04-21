@@ -85,6 +85,10 @@ public class ASTMatchUnion implements ASTNode {
 		return rettype;
 	}
 
+	public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        return typecheck(e);
+    }
+
 	public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }

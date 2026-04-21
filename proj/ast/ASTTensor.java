@@ -33,6 +33,11 @@ public class ASTTensor implements ASTNode {
         return new ASTTTensor(t1, t2);
     }
 
+    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        // TODO
+        return typecheck(e);
+    }
+
     public ASTNode normalize(Environment<ASTType> sigma) {
         return new ASTTensor(first.normalize(sigma), second.normalize(sigma));
     }

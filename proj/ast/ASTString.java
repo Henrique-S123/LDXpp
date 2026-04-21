@@ -22,6 +22,10 @@ public class ASTString implements ASTNode  {
 		return new ASTTString();
 	}
 
+    public ASTType typecheck(EnvSet e, ASTType t) {
+        return typecheck(e);
+    }
+
     public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }

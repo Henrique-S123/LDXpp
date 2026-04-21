@@ -36,6 +36,11 @@ public class ASTFunc implements ASTNode  {
         return new ASTTArrow(targtype, tb);
 	}
 
+    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        // TODO
+        return typecheck(e);
+    }
+
     public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }

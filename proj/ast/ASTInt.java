@@ -23,6 +23,10 @@ public class ASTInt implements ASTNode  {
 		return new ASTTInt();
 	}
 
+    public ASTType typecheck(EnvSet e, ASTType t) {
+        return typecheck(e);
+    }
+
     public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }

@@ -16,6 +16,10 @@ public class ASTUnit implements ASTNode  {
 		return new ASTTUnit();
 	}
 
+    public ASTType typecheck(EnvSet e, ASTType t) {
+        return typecheck(e);
+    }
+
     public ASTNode normalize(Environment<ASTType> sigma) {
         return this;
     }

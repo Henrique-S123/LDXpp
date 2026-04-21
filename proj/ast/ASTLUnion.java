@@ -27,6 +27,10 @@ public class ASTLUnion implements ASTNode {
 		return new ASTTLUnion(new TypeBindList(ll));
 	}
 
+	public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        return typecheck(e);
+    }
+
 	public ASTNode normalize(Environment<ASTType> sigma) {
 		return new ASTLUnion(label, expr.normalize(sigma));
     }

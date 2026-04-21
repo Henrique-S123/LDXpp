@@ -58,6 +58,10 @@ public class ASTIf implements ASTNode {
 		}
 	}
 
+	public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        return typecheck(e);
+    }
+
 	public ASTNode normalize(Environment<ASTType> sigma) {
 		if (test.normalize(sigma).defequals(new ASTBool(true)) || test.normalize(sigma).defequals(new ASTLBool(true)))
 			return conseq.normalize(sigma);
