@@ -318,7 +318,7 @@ ASTNode Fact() :
     | <LPAR> t = TermList() <RPAR>
     | <QUESTION> <LPAR> t = Let() <COMMA> t2 = Let() <RPAR> { t = new ASTCheck(t, t2); }
     | <QUESTIONTYPES> <LPAR> type = Type() <COMMA> type2 = Type() <RPAR> { t = new ASTCheckTypes(type, type2); }
-    | <REFL> <LPAR> t = Let() <RPAR> { t = new ASTRefl(t); }
+    | <REFL> { t = new ASTRefl(); }
     )
    { return t; }
 }

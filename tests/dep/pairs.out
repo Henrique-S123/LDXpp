@@ -1,24 +1,3 @@
-type: bool, value: true
-
-
-class proj.errors.TypeCheckError: func app: pair (false, refl(true)) does not match expected type (x:bool, x ≡ true : bool)->bool
-
-
-type: bool, value: false
-
-
-type: bool, value: true
-
-
-type: bool, value: true
-
-
-class proj.errors.TypeCheckError: func app: pair (z, refl(true)) does not match expected type (x:bool, x ≡ true : bool)->bool
-
-
-type: bool, value: true
-
-
-type: bool, value: true
+type: (x:bool, x ≡ true : bool), value: (true, ())
 
 

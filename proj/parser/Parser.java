@@ -598,10 +598,7 @@ public class Parser implements ParserConstants {
       break;
     case REFL:
       jj_consume_token(REFL);
-      jj_consume_token(LPAR);
-      t = Let();
-      jj_consume_token(RPAR);
-                                       t = new ASTRefl(t);
+               t = new ASTRefl();
       break;
     default:
       jj_la1[15] = jj_gen;
@@ -1221,9 +1218,6 @@ public class Parser implements ParserConstants {
 
   private boolean jj_3R_86() {
     if (jj_scan_token(REFL)) return true;
-    if (jj_scan_token(LPAR)) return true;
-    if (jj_3R_32()) return true;
-    if (jj_scan_token(RPAR)) return true;
     return false;
   }
 

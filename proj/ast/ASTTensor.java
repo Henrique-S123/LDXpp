@@ -42,9 +42,9 @@ public class ASTTensor implements ASTNode {
         return new ASTTensor(first.normalize(sigma), second.normalize(sigma));
     }
 
-    public boolean defequals(ASTNode o) {
+    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
         return o instanceof ASTTensor &&
-            first.defequals(((ASTTensor) o).getFirst()) && second.defequals(((ASTTensor) o).getSecond());
+            first.defequals(((ASTTensor) o).getFirst(), sigma) && second.defequals(((ASTTensor) o).getSecond(), sigma);
     }
 
     @Override

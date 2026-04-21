@@ -69,9 +69,9 @@ public class ASTCmpOp implements ASTNode {
 		return new ASTCmpOp(lhs.normalize(sigma), rhs.normalize(sigma), op);
     }
 
-	public boolean defequals(ASTNode o) {
-		return o instanceof ASTCmpOp && ((ASTCmpOp) o).getLhs().defequals(lhs)
-			&& ((ASTCmpOp) o).getRhs().defequals(rhs) && ((ASTCmpOp) o).getOp().equals(op);
+	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+		return o instanceof ASTCmpOp && ((ASTCmpOp) o).getLhs().defequals(lhs, sigma)
+			&& ((ASTCmpOp) o).getRhs().defequals(rhs, sigma) && ((ASTCmpOp) o).getOp().equals(op);
 	}
 
 	public String toString() {

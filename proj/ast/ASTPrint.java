@@ -34,7 +34,7 @@ public class ASTPrint implements ASTNode {
 		return new ASTPrint(exp.normalize(sigma), newline);
     }
 
-	public boolean defequals(ASTNode o) {
+	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
         // TODO
         return false;
     }

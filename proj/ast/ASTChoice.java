@@ -50,10 +50,10 @@ public class ASTChoice implements ASTNode  {
             ((ASTPair) pair.normalize(sigma)).getSecond().normalize(sigma);
     }
 
-    public boolean defequals(ASTNode o) {
+    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
         // TODO
         return o instanceof ASTChoice && ((ASTChoice) o).getChoice() == choice &&
-            ((ASTChoice) o).getPair().defequals(pair);
+            ((ASTChoice) o).getPair().defequals(pair, sigma);
     }
 
     @Override

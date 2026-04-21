@@ -2,6 +2,7 @@ package proj.types;
 
 import proj.ast.*;
 import proj.env.*;
+import proj.env.EnvSet.ENV;
 
 public class ASTTEq implements ASTType {
     ASTNode term1, term2;
@@ -35,12 +36,12 @@ public class ASTTEq implements ASTType {
             return this.isSubtypeOf(to, e);
         }
         return o instanceof ASTTEq && type.isSubtypeOf(((ASTTEq) o).getType(), e)
-            && term1.defequals(((ASTTEq) o).getTerm1()) && term2.defequals(((ASTTEq) o).getTerm2());
+            && term1.defequals(((ASTTEq) o).getTerm1(), e.getEnv(ENV.SIGMA)) && term2.defequals(((ASTTEq) o).getTerm2(), e.getEnv(ENV.SIGMA));
     }
 
     public boolean defequals(ASTType o, Environment<ASTType> sigma) {
-        return o instanceof ASTTEq && ((ASTTEq) o).getTerm1().normalize(sigma).defequals(term1.normalize(sigma))
-            && ((ASTTEq) o).getTerm2().normalize(sigma).defequals(term2.normalize(sigma)) && ((ASTTEq) o).getType().defequals(type, sigma);
+        return o instanceof ASTTEq && ((ASTTEq) o).getTerm1().normalize(sigma).defequals(term1.normalize(sigma), sigma)
+            && ((ASTTEq) o).getTerm2().normalize(sigma).defequals(term2.normalize(sigma), sigma) && ((ASTTEq) o).getType().defequals(type, sigma);
     }
 }
 

@@ -14,6 +14,6 @@ public interface ASTNode {
 
     public ASTNode normalize(Environment<ASTType> sigma);
 
-    public boolean defequals(ASTNode o);
+    public boolean defequals(ASTNode o, Environment<ASTType> sigma);
 }
 

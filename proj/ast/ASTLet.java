@@ -30,23 +30,27 @@ public class ASTLet implements ASTNode {
     } 
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        ASTType tt = (bind.getType() != null) ? bind.getType() : bind.getExp().typecheck(e);
+        String id = bind.getId();
+        ASTType declType = bind.getType();
+        ASTNode expr = bind.getExp();
+
+        ASTType tt = (declType != null) ? declType : expr.typecheck(e);
         tt = e.unfold(tt);
 
         ENV env = (tt instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
         e.openEnvScope(env);
         e.openEnvScope(ENV.SIGMA);
 
-        e.bindToEnv(env, bind.getId(), tt);
-        if (bind.getType() != null) {
-            ASTType exprType = bind.getExp().typecheck(e);
+        e.bindToEnv(env, id, tt);
+        if (declType != null) {
+            ASTType exprType = expr.typecheck(e, tt);
             if (!(exprType.isSubtypeOf(tt, e))) {
                 throw new TypeCheckError("types to bind are not subtypes: " + exprType.toStr() + " and " + tt.toStr());
             }
         }
 
-        e.addEq(new ASTTEq(new ASTId(bind.getId()), bind.getExp(), tt));
-        e.bindToEnv(ENV.PHI, bind.getId(), tt);
+        e.addEq(new ASTTEq(new ASTId(id), expr, tt));
+        e.bindToEnv(ENV.PHI, id, tt);
 
         ASTType rt = body.typecheck(e);
         if (!(e.getEnv(ENV.DELTA).isEmpty()))
@@ -69,11 +73,11 @@ public class ASTLet implements ASTNode {
         return body.normalize(env);
     }
 
-    public boolean defequals(ASTNode o) {
+    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
         return o instanceof ASTLet && ((ASTLet) o).getBind().getId().equals(bind.getId())
-            && ((ASTLet) o).getBind().getExp().defequals(bind.getExp())
-            && ((ASTLet) o).getBind().getType().defequals(bind.getType(), null)
-            && ((ASTLet) o).getBody().defequals(body);
+            && ((ASTLet) o).getBind().getExp().defequals(bind.getExp(), sigma)
+            && ((ASTLet) o).getBind().getType().defequals(bind.getType(), sigma)
+            && ((ASTLet) o).getBody().defequals(body, sigma);
     }
 
     @Override

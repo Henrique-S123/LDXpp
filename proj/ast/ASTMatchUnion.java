@@ -93,7 +93,7 @@ public class ASTMatchUnion implements ASTNode {
         return this;
     }
 
-	public boolean defequals(ASTNode o) {
+	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
         // TODO
         return false;
     }

@@ -35,7 +35,7 @@ public class ASTLUnion implements ASTNode {
 		return new ASTLUnion(label, expr.normalize(sigma));
     }
 
-	public boolean defequals(ASTNode o) {
+	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
         // TODO
         return false;
     }
