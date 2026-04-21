@@ -43,10 +43,10 @@ public class ASTSplit implements ASTNode {
 		boolean t1Lin = (t1 instanceof ASTLinType), t2Lin = (t2 instanceof ASTLinType);
 		if (t2Lin) {
 			if (!t1Lin) e.openEnvScope(ENV.DELTA);
-			e.assocDelta(id2, t2);
+			e.bindToEnv(ENV.DELTA, id2, t2);
 		} else {
 			if (t1Lin) e.openEnvScope(ENV.GAMMA);
-			e.assocGamma(id2, t2);
+			e.bindToEnv(ENV.GAMMA, id2, t2);
 		}
 		ASTType rt = body.typecheck(e);
 		if (!(e.getEnv(ENV.DELTA).isEmpty()))

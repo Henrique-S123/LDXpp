@@ -46,7 +46,7 @@ public class ASTLet implements ASTNode {
         }
 
         e.addEq(new ASTTEq(new ASTId(bind.getId()), bind.getExp(), tt));
-        e.assocSigma(bind.getId(), tt);
+        e.bindToEnv(ENV.PHI, bind.getId(), tt);
 
         ASTType rt = body.typecheck(e);
         if (!(e.getEnv(ENV.DELTA).isEmpty()))

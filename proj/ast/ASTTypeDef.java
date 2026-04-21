@@ -24,7 +24,7 @@ public class ASTTypeDef implements ASTNode {
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         e.openEnvScope(ENV.PHI);
         for (String s : ltd.keySet()) {
-            e.assocPhi(s, ltd.get(s));
+            e.bindToEnv(ENV.PHI, s, ltd.get(s));
         }
         ASTType ret = this.body.typecheck(e);
         e.closeEnvScope(ENV.PHI);

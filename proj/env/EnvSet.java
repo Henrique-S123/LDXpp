@@ -88,27 +88,6 @@ public class EnvSet {
             throw new EnvironmentError("Identifier " + id + " already declared!");
     }
 
-    public void assocGamma(String id, ASTType t) throws EnvironmentError {
-        checkAlreadyDeclared(id);
-        this.gamma.assoc(id, t);
-    }
-
-    public void assocDelta(String id, ASTType t) throws EnvironmentError {
-        checkAlreadyDeclared(id);
-        if (usedLinears.contains(id)) usedLinears.remove(id);
-        this.delta.assoc(id, t);
-    }
-
-    public void assocPhi(String id, ASTType t) throws EnvironmentError {
-        checkAlreadyDeclared(id);
-        this.phi.assoc(id, t);
-    }
-
-    public void assocSigma(String id, ASTType t) throws EnvironmentError {
-        checkAlreadyDeclared(id);
-        this.sigma.assoc(id, t);
-    }
-
     public void bindToEnv(ENV env, String id, ASTType t) throws EnvironmentError {
         checkAlreadyDeclared(id);
         switch (env) {
@@ -138,15 +117,16 @@ public class EnvSet {
         }
     }
 
-    public String toStr() {
-        return "Gamma: " + gamma.toStr() + "; Delta: " + delta.toStr() + "; Phi: " + phi.toStr();
-    }
-
+    /* Unfold operation */
     public ASTType unfold(ASTType t) {
         if (t instanceof ASTTId) {
             return unfold((ASTType) phi.find(((ASTTId) t).getId(), false));
         } else {
             return t;
         }
+    }
+
+    public String toStr() {
+        return "Γ: " + gamma.toStr() + "; Δ: " + delta.toStr() + "; Φ: " + phi.toStr() + "; Σ: " + sigma.toStr();
     }
 }
