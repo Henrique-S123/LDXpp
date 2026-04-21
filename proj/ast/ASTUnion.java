@@ -3,6 +3,7 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class ASTUnion implements ASTNode {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
 		Environment<ASTType> prevDelta = e.popDelta();
 		ASTType t = expr.typecheck(e);
-		e.setDelta(prevDelta);
+		e.setEnv(ENV.DELTA, prevDelta);
 		ll.put(label, t);
 		return new ASTTUnion(new TypeBindList(ll));
 	}

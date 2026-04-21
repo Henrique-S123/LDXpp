@@ -49,8 +49,8 @@ public class ASTLet implements ASTNode {
         e.assocSigma(bind.getId(), tt);
 
         ASTType rt = body.typecheck(e);
-        if (!(e.getDelta().isEmpty()))
-            throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());
+        if (!(e.getEnv(ENV.DELTA).isEmpty()))
+            throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA).toStr());
 
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);

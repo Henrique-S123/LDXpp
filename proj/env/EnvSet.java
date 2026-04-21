@@ -29,20 +29,20 @@ public class EnvSet {
 
     public static enum ENV { GAMMA, DELTA, PHI, SIGMA }
 
-    public Environment<ASTType> getGamma() {
-        return gamma;
+    /* Getters and Setters */
+    public Environment<ASTType> getEnv(ENV env) {
+        return switch (env) {
+            case GAMMA -> gamma;
+            case DELTA -> delta;
+            case PHI -> phi;
+            case SIGMA -> sigma;
+        };
     }
 
-    public Environment<ASTType> getDelta() {
-        return delta;
-    }
-
-    public Environment<ASTType> getPhi() {
-        return phi;
-    }
-
-    public Environment<ASTType> getSigma() {
-        return sigma;
+    public Environment<ASTType> popDelta() {
+        Environment<ASTType> tmp = this.delta;
+        this.delta = new Environment<ASTType>();
+        return tmp;
     }
 
     public ArrayList<String> getDeclaredIds() {
@@ -53,14 +53,13 @@ public class EnvSet {
         return usedLinears;
     }
 
-    public Environment<ASTType> popDelta() {
-        Environment<ASTType> tmp = this.delta;
-        this.delta = new Environment<ASTType>();
-        return tmp;
-    }
-
-    public void setDelta(Environment<ASTType> d) {
-        this.delta = d;
+    public void setEnv(ENV env, Environment<ASTType> e) {
+        switch (env) {
+            case GAMMA -> this.gamma = e;
+            case DELTA -> this.delta = e;
+            case PHI -> this.phi = e;
+            case SIGMA -> this.sigma = e;
+        }
     }
 
     /* Open scopes */

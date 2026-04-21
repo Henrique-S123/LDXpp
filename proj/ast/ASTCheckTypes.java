@@ -3,6 +3,7 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTCheckTypes implements ASTNode {
@@ -18,7 +19,7 @@ public class ASTCheckTypes implements ASTNode {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        if (left.defequals(right, e.getSigma())) return new ASTTUnit();
+        if (left.defequals(right, e.getEnv(ENV.SIGMA))) return new ASTTUnit();
         throw new TypeCheckError(String.format("types %s and %s are not definitionally equal", left.toStr(), right.toStr()));
     }
 

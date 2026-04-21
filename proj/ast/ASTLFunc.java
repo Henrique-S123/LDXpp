@@ -29,8 +29,8 @@ public class ASTLFunc implements ASTNode  {
         ASTType targtype = e.unfold(argtype);
         e.assocVar(id, targtype);
         ASTType tb = body.typecheck(e);
-        if (!(e.getDelta().isEmpty()))
-            throw new TypeCheckError("there are unused linear values: " + e.getDelta().toStr());
+        if (!(e.getEnv(ENV.DELTA).isEmpty()))
+            throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA).toStr());
         ENV env = (targtype instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
         e.closeEnvScope(env);
         return new ASTTLollipop(targtype, tb);

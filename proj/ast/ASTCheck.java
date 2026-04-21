@@ -3,6 +3,7 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTCheck implements ASTNode {
@@ -22,7 +23,7 @@ public class ASTCheck implements ASTNode {
         ASTType t2 = right.typecheck(e);
         if (!t.isSubtypeOf(t2, e) || !t2.isSubtypeOf(t, e))
             throw new TypeCheckError(String.format("terms %s and %s do not have the same type", left, right));
-        if (left.normalize(e.getSigma()).defequals(right.normalize(e.getSigma()))) return new ASTTEq(left, right, t);
+        if (left.normalize(e.getEnv(ENV.SIGMA)).defequals(right.normalize(e.getEnv(ENV.SIGMA)))) return new ASTTEq(left, right, t);
         throw new TypeCheckError(String.format("terms %s and %s are not definitionally equal", left, right));
     }
 

@@ -31,7 +31,7 @@ public class ASTFunc implements ASTNode  {
         e.assocGamma(id, targtype);
         Environment<ASTType> prevDelta = e.popDelta();
         ASTType tb = body.typecheck(e);
-        e.setDelta(prevDelta);
+        e.setEnv(ENV.DELTA, prevDelta);
         e.closeEnvScope(ENV.GAMMA);
         return new ASTTArrow(targtype, tb);
 	}

@@ -32,16 +32,16 @@ public class ASTPair implements ASTNode {
         Environment<ASTType> prevDelta = e.popDelta();
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
-        e.setDelta(prevDelta);
+        e.setEnv(ENV.DELTA, prevDelta);
         return new ASTTPair(t1, t2, null);
     }
 
     public boolean check(EnvSet e, ASTTPair t) throws TypeCheckError, EnvironmentError {
         ASTTPair tinfer = ((ASTTPair) this.typecheck(e));
-        if (!(tinfer.getFirst().defequals(t.getFirst(), e.getSigma()))) return false;
+        if (!(tinfer.getFirst().defequals(t.getFirst(), e.getEnv(ENV.SIGMA)))) return false;
         e.openEnvScope(ENV.SIGMA);
-        e.getSigma().addEq(new ASTTEq(new ASTId(t.getId()), first, tinfer.getFirst()));
-        if (!(tinfer.getSecond().defequals(t.getSecond(), e.getSigma()))) {
+        e.getEnv(ENV.SIGMA).addEq(new ASTTEq(new ASTId(t.getId()), first, tinfer.getFirst()));
+        if (!(tinfer.getSecond().defequals(t.getSecond(), e.getEnv(ENV.SIGMA)))) {
             e.closeEnvScope(ENV.SIGMA);
             return false;
         }
