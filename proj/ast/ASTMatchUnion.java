@@ -18,6 +18,14 @@ public class ASTMatchUnion implements ASTNode {
 		cases = cs;
     }
 
+	public ASTNode getTest() {
+		return test;
+	}
+
+	public Map<String, MatchCase> getCases() {
+		return cases;
+	}
+
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue vt = test.eval(e);
 		if (vt instanceof VUnion) {
@@ -36,8 +44,7 @@ public class ASTMatchUnion implements ASTNode {
     }
 
 	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-		ASTType tt = test.typecheck(e);
-		ASTType rettype = null, tcase;
+		ASTType tt = test.typecheck(e), rettype = null, tcase;
 		HashSet<String> matchUsedLinears = null;
 		tt = e.unfold(tt);
 		if (tt instanceof ASTTUnion || tt instanceof ASTTLUnion) {
@@ -92,7 +99,17 @@ public class ASTMatchUnion implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        // TODO
-        return false;
+		if (o instanceof ASTMatchUnion && ((ASTMatchUnion) o).getTest().defequals(test, sigma)) {
+			Map<String, MatchCase> other = ((ASTMatchUnion) o).getCases();
+			if (cases.size() != other.size()) return false;
+			for (String label : cases.keySet()) {
+				MatchCase ownCase = cases.get(label);
+				MatchCase otherCase = other.get(label);
+				if (otherCase == null || !ownCase.getId().equals(otherCase.getId())
+					|| !ownCase.getExp().defequals(otherCase.getExp(), sigma)) return false;
+			}
+			return true;
+		}
+		return false;
     }
 }

@@ -34,7 +34,8 @@ public class ASTTUnion implements ASTType {
             Map<String, ASTType> other = ((ASTTUnion) o).getMap();
             if (ll.size() != other.size()) return false;
             for (String label : ll.keySet()) {
-                if (!(other.containsKey(label) && ll.get(label).defequals(other.get(label), sigma))) return false;
+                ASTType otherType = other.get(label);
+                if (otherType == null || !ll.get(label).defequals(otherType, sigma)) return false;
             }
             return true;
         }
