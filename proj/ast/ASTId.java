@@ -36,9 +36,7 @@ public class ASTId implements ASTNode	{
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        // TODO
-        if (o instanceof ASTId && ((ASTId) o).getId().equals(id)) return true;
-        return this.normalize(sigma).defequals(o, sigma);
+        return (o instanceof ASTId && ((ASTId) o).getId().equals(id));
     }
 
     public String toString() {
