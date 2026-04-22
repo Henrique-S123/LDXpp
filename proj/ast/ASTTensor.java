@@ -3,6 +3,7 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTTensor implements ASTNode {
@@ -30,12 +31,26 @@ public class ASTTensor implements ASTNode {
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
-        return new ASTTTensor(t1, t2);
+        return new ASTTTensor(t1, t2, null);
     }
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        // TODO
-        return typecheck(e);
+        if (!(t instanceof ASTTTensor))
+            throw new TypeCheckError("tensor: expected linear pair type");
+        ASTTTensor tt = ((ASTTTensor) t);
+        e.openEnvScope(ENV.SIGMA);
+
+        ASTType t1 = first.typecheck(e, tt.getFirst());
+        if (!(t1).defequals(tt.getFirst(), e.getEnv(ENV.SIGMA)))
+            throw new TypeCheckError(String.format("tensor: invalid type %s for first element %s", tt.getFirst().toStr(), first.toString()));
+        e.getEnv(ENV.SIGMA).addEq(new ASTTEq(new ASTId(tt.getId()), first, t1));
+
+        ASTType t2 = second.typecheck(e, tt.getSecond());
+        if (!(t2.defequals(tt.getSecond(), e.getEnv(ENV.SIGMA))))
+            throw new TypeCheckError(String.format("tensor: invalid type %s for second element %s", tt.getSecond().toStr(), second.toString()));
+        
+        e.closeEnvScope(ENV.SIGMA);
+        return t;
     }
 
     public ASTNode normalize(Environment<ASTType> sigma) {

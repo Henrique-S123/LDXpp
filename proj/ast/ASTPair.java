@@ -50,7 +50,7 @@ public class ASTPair implements ASTNode {
 
         ASTType t2 = second.typecheck(e, tt.getSecond());
         if (!(t2.defequals(tt.getSecond(), e.getEnv(ENV.SIGMA))))
-            throw new TypeCheckError("pair: invalid type for second element");
+            throw new TypeCheckError(String.format("pair: invalid type %s for second element %s", tt.getSecond().toStr(), second.toString()));
         
         e.closeEnvScope(ENV.SIGMA);
         e.setEnv(ENV.DELTA, prevDelta);

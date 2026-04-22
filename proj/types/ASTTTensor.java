@@ -4,10 +4,12 @@ import proj.env.*;
 
 public class ASTTTensor implements ASTLinType {
     ASTType first, second;
+    String id;
 
-    public ASTTTensor(ASTType f, ASTType s) {
+    public ASTTTensor(ASTType f, ASTType s, String i) {
         first = f;
         second = s;
+        id = i;
     }
 
     public ASTType getFirst() {
@@ -16,6 +18,10 @@ public class ASTTTensor implements ASTLinType {
     
     public ASTType getSecond() {
         return second;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String toStr() {
