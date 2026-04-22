@@ -17,6 +17,18 @@ public class ASTFunc implements ASTNode  {
         argtype = t;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public ASTNode getBody() {
+        return body;
+    }
+
+    public ASTType getArgtype() {
+        return argtype;
+    }
+
     public void setBody(ASTNode b) {
         body = b;
     }
@@ -42,11 +54,11 @@ public class ASTFunc implements ASTNode  {
     }
 
     public ASTNode normalize(Environment<ASTType> sigma) {
-        return this;
+        return new ASTFunc(id, body.normalize(sigma), argtype);
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        // TODO
-        return false;
+        return o instanceof ASTFunc && ((ASTFunc) o).getId().equals(id)
+            && ((ASTFunc) o).getBody().defequals(body, sigma) && ((ASTFunc) o).getArgtype().defequals(argtype, sigma);
     }
 }

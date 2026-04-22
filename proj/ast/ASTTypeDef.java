@@ -9,12 +9,20 @@ import proj.errors.*;
 import java.util.HashMap;
 
 public class ASTTypeDef implements ASTNode {
-    HashMap<String,ASTType> ltd;
+    HashMap<String, ASTType> ltd;
     ASTNode body;
 
-    public ASTTypeDef(HashMap<String,ASTType>  ltdp, ASTNode b) {
+    public ASTTypeDef(HashMap<String, ASTType> ltdp, ASTNode b) {
         ltd = ltdp;
         body = b;
+    }
+
+    public HashMap<String, ASTType> getLtd() {
+        return ltd;
+    }
+
+    public ASTNode getBody() {
+        return body;
     }
     
     public IValue eval(Environment<IValue> env) throws InterpreterError {
@@ -23,9 +31,8 @@ public class ASTTypeDef implements ASTNode {
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         e.openEnvScope(ENV.PHI);
-        for (String s : ltd.keySet()) {
+        for (String s : ltd.keySet())
             e.bindToEnv(ENV.PHI, s, ltd.get(s));
-        }
         ASTType ret = this.body.typecheck(e);
         e.closeEnvScope(ENV.PHI);
         return ret;
@@ -36,12 +43,11 @@ public class ASTTypeDef implements ASTNode {
     }
 
     public ASTNode normalize(Environment<ASTType> sigma) {
-        // TODO
-        return this;
+        return new ASTTypeDef(ltd, body.normalize(sigma));
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        // TODO
-        return false;
+        return o instanceof ASTTypeDef && ((ASTTypeDef) o).getBody().defequals(body, sigma)
+            && ((ASTTypeDef) o).getLtd().equals(ltd);
     }
 }
