@@ -43,9 +43,9 @@ public class ASTPair implements ASTNode {
         Environment<ASTType> prevDelta = e.popDelta();
         e.openEnvScope(ENV.SIGMA);
 
-        ASTType t1 = first.typecheck(e);
+        ASTType t1 = first.typecheck(e, tt.getFirst());
         if (!(t1).defequals(tt.getFirst(), e.getEnv(ENV.SIGMA)))
-            throw new TypeCheckError("pair: invalid type for first element");
+            throw new TypeCheckError(String.format("pair: invalid type %s for first element %s", tt.getFirst().toStr(), first.toString()));
         e.getEnv(ENV.SIGMA).addEq(new ASTTEq(new ASTId(tt.getId()), first, t1));
 
         ASTType t2 = second.typecheck(e, tt.getSecond());

@@ -9,3 +9,19 @@ let p = (true, refl); p;;
 let p = (true, refl); fst(p);;
 
 let p = (true, refl); snd(p);;
+
+let p:(int:x, eq(x=2:int)) = (2, refl); p;;
+
+let p:(int:x, eq(x=2:int)) = (3, refl); p;;
+
+let p:(int:x, int:y, eq(x=y:int)) = (2, 2, refl); p;;
+
+let p:(int:x, int:y, eq(x=y:int)) = (2, 3, refl); p;;
+
+let p:(int:x, int:y, int:z, eq(x=y:int), eq(y=z:int)) = (2, 2, 2, refl, refl); p;;
+
+let p:(int:x, int:y, int:z, eq(x=y:int), eq(y=z:int)) = (2, 2, 3, refl, refl); p;;
+
+let p:(int:x, int:y, int:z, eq(x=y:int), eq(y=z:int)) = (2, 3, 2, refl, refl); p;;
+
+let p:(int:x, int:y, int:z, eq(x=y:int), eq(y=z:int)) = (3, 2, 2, refl, refl); p;;
