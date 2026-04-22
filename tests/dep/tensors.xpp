@@ -1,0 +1,27 @@
+let p:(linbool:x | eq(x=truel:linbool)) = (truel | refl); p;;
+
+let p:(linbool:x | eq(x=truel:linbool)) = (truel | refl); split p {x|y -> x};;
+
+let p:(linbool:x | eq(x=truel:linbool)) = (truel | refl); split p {x|y -> y};;
+
+let p = (truel | refl); p;;
+
+let p = (truel | refl); split p {x|y -> x};;
+
+let p = (truel | refl); split p {x|y -> y};;
+
+let p:(linint:x | eq(x=2l:linint)) = (2l | refl); p;;
+
+let p:(linint:x | eq(x=2l:linint)) = (3l | refl); p;;
+
+let p:(linint:x | linint:y | eq(x=y:linint)) = (2l | 2l | refl); p;;
+
+let p:(linint:x | linint:y | eq(x=y:linint)) = (2l | 3l | refl); p;;
+
+let p:(linint:x | linint:y | linint:z | eq(x=y:linint) | eq(y=z:linint)) = (2l | 2l | 2l | refl | refl); p;;
+
+let p:(linint:x | linint:y | linint:z | eq(x=y:linint) | eq(y=z:linint)) = (2l | 2l | 3l | refl | refl); p;;
+
+let p:(linint:x | linint:y | linint:z | eq(x=y:linint) | eq(y=z:linint)) = (2l | 3l | 2l | refl | refl); p;;
+
+let p:(linint:x | linint:y | linint:z | eq(x=y:linint) | eq(y=z:linint)) = (3l | 2l | 2l | refl | refl); p;;

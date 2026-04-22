@@ -17,6 +17,22 @@ public class ASTSplit implements ASTNode {
 		body = b;
     }
 
+	public String getId1() {
+		return id1;
+	}
+
+	public String getId2() {
+		return id2;
+	}
+
+	public ASTNode getPair() {
+		return pair;
+	}
+
+	public ASTNode getBody() {
+		return body;
+	}
+
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue v = pair.eval(e);
 		if (v instanceof VPair) {
@@ -35,24 +51,28 @@ public class ASTSplit implements ASTNode {
 		tt = e.unfold(tt);
 		if (!(tt instanceof ASTTTensor))
 			throw new TypeCheckError("illegal type to split: " + tt.toStr());
+
 		ASTType t1 = e.unfold(((ASTTTensor) tt).getFirst());
-		ENV env = (t1 instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
-        e.openEnvScope(env);
-        e.bindToEnv(env, id1, t1);
 		ASTType t2 = e.unfold(((ASTTTensor) tt).getSecond());
-		boolean t1Lin = (t1 instanceof ASTLinType), t2Lin = (t2 instanceof ASTLinType);
-		if (t2Lin) {
-			if (!t1Lin) e.openEnvScope(ENV.DELTA);
-			e.bindToEnv(ENV.DELTA, id2, t2);
-		} else {
-			if (t1Lin) e.openEnvScope(ENV.GAMMA);
-			e.bindToEnv(ENV.GAMMA, id2, t2);
-		}
+		boolean lin1 = (t1 instanceof ASTLinType), lin2 = (t2 instanceof ASTLinType);
+
+		if (lin1 || lin2) e.openEnvScope(ENV.DELTA);
+		if (!lin1 || !lin2) e.openEnvScope(ENV.GAMMA);
+		e.openEnvScope(ENV.SIGMA);
+
+        e.bindToEnv(lin1 ? ENV.DELTA : ENV.GAMMA, id1, t1);
+        e.bindToEnv(lin2 ? ENV.DELTA : ENV.GAMMA, id2, t2);
+		e.bindToEnv(ENV.SIGMA, id1, t1);
+		e.bindToEnv(ENV.SIGMA, id2, t2);
+		e.addEq(new ASTTEq(new ASTTensor(new ASTId(id1), new ASTId(id2)), pair, tt));
+
 		ASTType rt = body.typecheck(e);
 		if (!(e.getEnv(ENV.DELTA).isEmpty()))
             throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA).toStr());
-		if (t1Lin || t2Lin) e.closeEnvScope(ENV.DELTA);
-		else if (!t1Lin || !t2Lin) e.closeEnvScope(ENV.GAMMA);
+
+		if (lin1 || lin2) e.closeEnvScope(ENV.DELTA);
+		if (!lin1 || !lin2) e.closeEnvScope(ENV.GAMMA);
+		e.closeEnvScope(ENV.SIGMA);
 		return rt;
 	}
 
@@ -61,12 +81,19 @@ public class ASTSplit implements ASTNode {
     }
 
 	public ASTNode normalize(Environment<ASTType> sigma) {
-		// TODO
-        return this;
+		ASTNode normPair = pair.normalize(sigma);
+		ASTNode normFirst = ((ASTTensor) normPair).getFirst().normalize(sigma);
+		ASTNode normSecond = ((ASTTensor) normPair).getSecond().normalize(sigma);
+
+		Environment<ASTType> env = sigma.beginScope();
+		env.addEq(new ASTTEq(new ASTId(id1), normFirst, sigma.find(id1, false)));
+		env.addEq(new ASTTEq(new ASTId(id2), normSecond, sigma.find(id2, false)));
+        return body.normalize(env);
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        // TODO
-        return false;
+		return o instanceof ASTSplit && ((ASTSplit) o).getId1().equals(id1)
+			&& ((ASTSplit) o).getId2().equals(id2) && ((ASTSplit) o).getPair().defequals(pair, sigma)
+			&& ((ASTSplit) o).getBody().defequals(body, sigma);
     }
 }
