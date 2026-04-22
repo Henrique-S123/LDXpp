@@ -13,6 +13,14 @@ public class ASTApp implements ASTNode  {
         arg = a;
     }
 
+    public ASTNode getFunc() {
+        return func;
+    }
+
+    public ASTNode getArg() {
+        return arg;
+    }
+
     public IValue eval(Environment<IValue> e) throws InterpreterError {
         IValue vfunc = func.eval(e);
         if (vfunc instanceof VClos) {
@@ -59,7 +67,7 @@ public class ASTApp implements ASTNode  {
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        // TODO
-        return false;
+        return o instanceof ASTApp && ((ASTApp) o).getFunc().defequals(func, sigma)
+            && ((ASTApp) o).getArg().defequals(arg, sigma);
     }
 }

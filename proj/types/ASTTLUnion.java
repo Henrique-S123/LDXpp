@@ -2,31 +2,17 @@ package proj.types;
 
 import proj.env.*;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class ASTTLUnion implements ASTLinType {
 
-    private TypeBindList ll;
+    Map<String, ASTType> ll;
 
-    public ASTTLUnion(TypeBindList llp) {
+    public ASTTLUnion(Map<String, ASTType> llp) {
         ll = llp;
     }
 
-    public String toStr() {
-        String res = "linear union {";
-
-        for (String k : ll.getMap().keySet()) {
-            res += k + " = " + ll.getMap().get(k).toStr() + "; ";
-        }
-
-        if (ll.getMap().size() > 0) {
-            res = res.substring(0, res.length()-2);
-        }
-
-        return res + "}";
-    }
-
-    public TypeBindList getList() {
+    public Map<String, ASTType> getMap() {
         return ll;
     }
 
@@ -35,12 +21,9 @@ public class ASTTLUnion implements ASTLinType {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);
         } else if (o instanceof ASTTLUnion) {
-            HashMap<String, ASTType> mb = ((ASTTLUnion) o).getList().getMap();
-            HashMap<String, ASTType> ma = ll.getMap();
-            for (String s : ma.keySet()) {
-                if (!(mb.containsKey(s) && ma.get(s).isSubtypeOf(mb.get(s), e)))
-                    return false;
-            }
+            Map<String, ASTType> mb = ((ASTTLUnion) o).getMap();
+            for (String s : ll.keySet())
+                if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), e))) return false;
             return true;
         }
         return false;
@@ -48,14 +31,27 @@ public class ASTTLUnion implements ASTLinType {
 
     public boolean defequals(ASTType o, Environment<ASTType> sigma) {
         if (o instanceof ASTTLUnion) {
-            HashMap<String, ASTType> own = ll.getMap();
-            HashMap<String, ASTType> other = ((ASTTLUnion) o).getList().getMap();
-            if (own.size() != other.size()) return false;
-            for (String label : own.keySet()) {
-                if (!(other.containsKey(label) && own.get(label).defequals(other.get(label), sigma))) return false;
+            Map<String, ASTType> other = ((ASTTLUnion) o).getMap();
+            if (ll.size() != other.size()) return false;
+            for (String label : ll.keySet()) {
+                if (!(other.containsKey(label) && ll.get(label).defequals(other.get(label), sigma))) return false;
             }
             return true;
         }
         return false;
+    }
+
+    public String toStr() {
+        String res = "linear union {";
+
+        for (String k : ll.keySet()) {
+            res += k + " = " + ll.get(k).toStr() + "; ";
+        }
+
+        if (ll.size() > 0) {
+            res = res.substring(0, res.length()-2);
+        }
+
+        return res + "}";
     }
 }

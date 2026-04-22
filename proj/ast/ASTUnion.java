@@ -36,7 +36,7 @@ public class ASTUnion implements ASTNode {
 		ASTType t = expr.typecheck(e);
 		e.setEnv(ENV.DELTA, prevDelta);
 		ll.put(label, t);
-		return new ASTTUnion(new TypeBindList(ll));
+		return new ASTTUnion(ll);
 	}
 
 	public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {

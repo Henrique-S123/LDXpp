@@ -38,7 +38,7 @@ public class Xppint {
 				System.err.println(e.getMessage());
 			}
 		} else {
-			System.out.println("LFX++ interpreter\n");
+			System.out.println("LDX++ interpreter\n");
 			parser = new Parser(System.in); 
 			while (true) {
 			try {

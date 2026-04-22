@@ -349,17 +349,14 @@ ASTNode Match(ASTNode p) :
 {
   Token l, n, n2;
   ASTNode t, e1, e2;
-  List<String> labels = new ArrayList<String>();
-  List<String> ids = new ArrayList<String>();
-  List<ASTNode> exprs = new ArrayList<ASTNode>();
+  Map<String, MatchCase> cases = new HashMap<String, MatchCase>();
 }
 {
   (
-    (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { labels.add(l.image); ids.add(n.image); exprs.add(e1); }
-          (<VERT> (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { if (labels.contains(l.image))
-                                              { throw new ParseException("duplicate label"); }
-                                              else { labels.add(l.image); ids.add(n.image); exprs.add(e1); } } )*
-          <RBRA> { t = new ASTMatchUnion(p, labels, ids, exprs); }
+    (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { cases.put(l.image, new MatchCase(n.image, e1)); }
+          (<VERT> (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let()
+            { if (cases.putIfAbsent(l.image, new MatchCase(n.image, e1)) != null) throw new ParseException("duplicate label");} )*
+    <RBRA> { t = new ASTMatchUnion(p, cases); }
   )
   { return t; }
 }
@@ -380,7 +377,7 @@ ASTType TypeF() :
   ASTType t, t2;
   ASTNode te, te2;
   Token n;
-  TypeBindList ll;
+  Map<String, ASTType> ll;
 }
 {
     (
@@ -424,7 +421,7 @@ ASTType TypeVertList() :
   { return t; }
 }
 
-TypeBindList LabelList() :
+Map<String, ASTType> LabelList() :
 {
   ASTType t;
   HashMap<String, ASTType> ll;
@@ -432,9 +429,8 @@ TypeBindList LabelList() :
 }
 {   { ll = new HashMap<String, ASTType>() ; }
     ( (n=<LABEL>|n=<LLABEL>)  <COLON> t = Type() { ll.put(n.image,t); }
-              (<COMMA> (n=<LABEL>|n=<LLABEL>)  <COLON> t = Type() { if (ll.containsKey(n.image))
-                            {throw new ParseException("duplicate label");}
-                            else {ll.put(n.image,t);} } )*
+            (<COMMA> (n=<LABEL>|n=<LLABEL>)  <COLON> t = Type()
+              { if (ll.putIfAbsent(n.image, t) != null) throw new ParseException("duplicate label"); } )*
     )?
-    { return new TypeBindList(ll); }
+    { return ll; }
 }

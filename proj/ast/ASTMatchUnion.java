@@ -11,27 +11,24 @@ import java.util.*;
 public class ASTMatchUnion implements ASTNode {
 
 	ASTNode test;
-	List<String> labels, ids;
-	List<ASTNode> exprs;
+	Map<String, MatchCase> cases;
 
-	public ASTMatchUnion(ASTNode t, List<String> l, List<String> i, List<ASTNode> e) {
+	public ASTMatchUnion(ASTNode t, Map<String, MatchCase> cs) {
 		test = t;
-		labels = l;
-		ids = i;
-		exprs = e;
+		cases = cs;
     }
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue vt = test.eval(e);
 		if (vt instanceof VUnion) {
 			String testlabel = ((VUnion) vt).getLabel();
-			int index = labels.indexOf(testlabel);
-			if (index == -1) {
+			MatchCase c = cases.get(testlabel);
+			if (c == null) {
 				throw new InterpreterError("match: missing case for label " + testlabel);
 			} else {
 				Environment<IValue> en = e.beginScope();
-				en.assoc(ids.get(index), ((VUnion) vt).getValue());
-				return exprs.get(index).eval(en);
+				en.assoc(c.getId(), ((VUnion) vt).getValue());
+				return c.getExp().eval(en);
 			}
 		} else {
 			throw new InterpreterError("match: union expected, found " + vt.toStr());
@@ -46,11 +43,11 @@ public class ASTMatchUnion implements ASTNode {
 		if (tt instanceof ASTTUnion || tt instanceof ASTTLUnion) {
 			EnvSet en = new EnvSet(e), env;
 			Set<Map.Entry<String, ASTType>> entries = tt instanceof ASTTUnion ?
-				((ASTTUnion) tt).getList().getMap().entrySet() :
-				((ASTTLUnion) tt).getList().getMap().entrySet();
+				((ASTTUnion) tt).getMap().entrySet() :
+				((ASTTLUnion) tt).getMap().entrySet();
 			for (Map.Entry<String, ASTType> entry : entries) {
-				int index = labels.indexOf(entry.getKey());
-				if (index == -1)
+				MatchCase c = cases.get(entry.getKey());
+				if (c == null)
 					throw new TypeCheckError("match missing label " + entry.getKey());
 
 				env = (matchUsedLinears == null ? e : new EnvSet(en));
@@ -58,19 +55,19 @@ public class ASTMatchUnion implements ASTNode {
 
 				ENV envChoice = (tlabel instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
         		env.openEnvScope(envChoice);
-        		env.bindToEnv(envChoice, ids.get(index), tlabel);
-				tcase = exprs.get(index).typecheck(env);
+        		env.bindToEnv(envChoice, c.getId(), tlabel);
+				tcase = c.getExp().typecheck(env);
 				env.closeEnvScope(envChoice);
 
 				if (matchUsedLinears == null) {
 					matchUsedLinears = new HashSet<String>(e.getUsedLinears());
-					matchUsedLinears.remove(ids.get(index));
+					matchUsedLinears.remove(c.getId());
 				}
 
 				HashSet<String> caseUsedLineares = new HashSet<String>(env.getUsedLinears());
-				if ((entry.getValue() instanceof ASTLinType) && !caseUsedLineares.contains(ids.get(index)))
-					throw new TypeCheckError("linear value " + ids.get(index) + " must be used");
-				caseUsedLineares.remove(ids.get(index));
+				if ((entry.getValue() instanceof ASTLinType) && !caseUsedLineares.contains(c.getId()))
+					throw new TypeCheckError("linear value " + c.getId() + " must be used");
+				caseUsedLineares.remove(c.getId());
 				if (!caseUsedLineares.equals(matchUsedLinears))
 					throw new TypeCheckError("all match cases must use the same linear values");
 				if ((tcase.isSubtypeOf(rettype, env) && rettype.isSubtypeOf(tcase, env)) || rettype == null) {

@@ -32,7 +32,7 @@ public class ASTLUnion implements ASTNode {
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
 		ll.put(label, expr.typecheck(e));
-		return new ASTTLUnion(new TypeBindList(ll));
+		return new ASTTLUnion(ll);
 	}
 
 	public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {

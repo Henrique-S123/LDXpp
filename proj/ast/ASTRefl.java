@@ -35,8 +35,7 @@ public class ASTRefl implements ASTNode  {
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        // TODO: think
-        return false;
+        return o instanceof ASTRefl;
     }
 
     @Override
