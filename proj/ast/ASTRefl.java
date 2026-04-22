@@ -15,8 +15,7 @@ public class ASTRefl implements ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        // TODO: refl should behave like nil in LP course lists
-        return new ASTTUnit();
+        return new ASTTEq(new ASTUnit(), new ASTUnit(), new ASTTUnit());
 	}
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {

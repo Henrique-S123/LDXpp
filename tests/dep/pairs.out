@@ -1,3 +1,18 @@
 type: (x:bool, x ≡ true : bool), value: (true, ())
 
 
+type: bool, value: true
+
+
+type: x ≡ true : bool, value: ()
+
+
+type: (bool, () ≡ () : ()), value: (true, ())
+
+
+type: bool, value: true
+
+
+type: () ≡ () : (), value: ()
+
+

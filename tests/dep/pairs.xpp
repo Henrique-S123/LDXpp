@@ -1,1 +1,11 @@
 let p:(bool:x, eq(x=true:bool)) = (true, refl); p;;
+
+let p:(bool:x, eq(x=true:bool)) = (true, refl); fst(p);;
+
+let p:(bool:x, eq(x=true:bool)) = (true, refl); snd(p);;
+
+let p = (true, refl); p;;
+
+let p = (true, refl); fst(p);;
+
+let p = (true, refl); snd(p);;
