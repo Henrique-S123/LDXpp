@@ -18,6 +18,14 @@ public class ASTUnion implements ASTNode {
 		expr = e;
     }
 
+	public String getLabel() {
+		return label;
+	}
+
+	public ASTNode getExpr() {
+		return expr;
+	}
+
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		return new VUnion(label, expr.eval(e), false);
     }
@@ -40,7 +48,7 @@ public class ASTUnion implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        // TODO
-        return false;
+		return o instanceof ASTUnion && ((ASTUnion) o).getLabel().equals(label)
+			&& ((ASTUnion) o).getExpr().defequals(expr, sigma);
     }
 }
