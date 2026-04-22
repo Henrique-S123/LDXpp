@@ -36,6 +36,7 @@ public class ASTTypeDef implements ASTNode {
     }
 
     public ASTNode normalize(Environment<ASTType> sigma) {
+        // TODO
         return this;
     }
 

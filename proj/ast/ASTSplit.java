@@ -61,6 +61,7 @@ public class ASTSplit implements ASTNode {
     }
 
 	public ASTNode normalize(Environment<ASTType> sigma) {
+		// TODO
         return this;
     }
 

@@ -14,6 +14,14 @@ public class ASTPrint implements ASTNode {
 		newline = nl;
     }
 
+	public ASTNode getExp() {
+		return exp;
+	}
+
+	public boolean getNewline() {
+		return newline;
+	}
+
     public IValue eval(Environment <IValue>e) throws InterpreterError {
 		IValue v0 = exp.eval(e);
 		String toprint = v0 instanceof VString ? v0.toStr().substring(1, v0.toStr().length()-1) : v0.toStr();
@@ -35,7 +43,7 @@ public class ASTPrint implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        // TODO
-        return false;
+		return o instanceof ASTPrint && ((ASTPrint) o).getExp().defequals(exp, sigma)
+			&& ((ASTPrint) o).getNewline() == newline;
     }
 }

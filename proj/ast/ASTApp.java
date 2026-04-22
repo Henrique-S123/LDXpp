@@ -54,6 +54,7 @@ public class ASTApp implements ASTNode  {
     }
 
     public ASTNode normalize(Environment<ASTType> sigma) {
+        // TODO
         return this;
     }
 

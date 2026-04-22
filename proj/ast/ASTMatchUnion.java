@@ -90,6 +90,7 @@ public class ASTMatchUnion implements ASTNode {
     }
 
 	public ASTNode normalize(Environment<ASTType> sigma) {
+		// TODO
         return this;
     }
 

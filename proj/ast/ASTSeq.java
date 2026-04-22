@@ -8,14 +8,22 @@ import proj.errors.*;
 public class ASTSeq implements ASTNode {
     ASTNode first, second;
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
-		first.eval(e);
-		return second.eval(e);
-    }
-
     public ASTSeq(ASTNode f, ASTNode s) {
 		first = f;
 		second = s;
+    }
+
+    public ASTNode getFirst() {
+        return first;
+    }
+
+    public ASTNode getSecond() {
+        return second;
+    }
+
+    public IValue eval(Environment<IValue> e) throws InterpreterError {
+		first.eval(e);
+		return second.eval(e);
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
@@ -36,7 +44,7 @@ public class ASTSeq implements ASTNode {
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        // TODO
-        return false;
+        return o instanceof ASTSeq && ((ASTSeq) o).getFirst().defequals(first, sigma)
+            && ((ASTSeq) o).getSecond().defequals(second, sigma);
     }
 }
