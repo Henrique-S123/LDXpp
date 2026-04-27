@@ -25,3 +25,34 @@ let p:(int:x, int:y, int:z, eq(x=y:int), eq(y=z:int)) = (2, 2, 3, refl, refl); p
 let p:(int:x, int:y, int:z, eq(x=y:int), eq(y=z:int)) = (2, 3, 2, refl, refl); p;;
 
 let p:(int:x, int:y, int:z, eq(x=y:int), eq(y=z:int)) = (3, 2, 2, refl, refl); p;;
+
+let f = fn p:(bool:x, eq(x=true:bool)) => {p};
+f((true, refl));;
+
+let f = fn p:(bool:x, eq(x=true:bool)) => {p};
+f((false, refl));;
+
+let f = fn p:(bool:x, eq(x=false:bool)) => {p};
+f((false, refl));;
+
+let y = true;
+let f = fn p:(bool:x, eq(x=true:bool)) => {p};
+f((y, refl));;
+
+let y = true;
+let z = y;
+let f = fn p:(bool:x, eq(x=true:bool)) => {p};
+f((z, refl));;
+
+let y = false;
+let z = y;
+let f = fn p:(bool:x, eq(x=true:bool)) => {p};
+f((z, refl));;
+
+let x = false;
+let f = fn p:(bool:x, eq(x=true:bool)) => {p};
+f((true, refl));;
+
+let f = fn p:(bool:x, eq(x=true:bool)) => {p};
+let x = false;
+f((true, refl));;
