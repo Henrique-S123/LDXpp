@@ -367,10 +367,10 @@ ASTType Type() :
   Token n = null;
 }
 {   (
-      LOOKAHEAD(2)
-      t1 = TypeF()
-    |
+      LOOKAHEAD(<LPAR> TypeF() <COLON> <Id> <RPAR>)
       <LPAR> t1 = TypeF() (<COLON> n=<Id>)? <RPAR>
+    |
+      t1 = TypeF()
     )
 
       (

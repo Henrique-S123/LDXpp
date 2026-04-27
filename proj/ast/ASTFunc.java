@@ -39,16 +39,15 @@ public class ASTFunc implements ASTNode  {
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType targtype = e.unfold(argtype);
-
         e.openEnvScope(ENV.GAMMA);
         e.openEnvScope(ENV.SIGMA);
         e.bindToEnv(ENV.GAMMA, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
-
         Environment<ASTType> prevDelta = e.popDelta();
-        ASTType tb = body.typecheck(e);
-        e.setEnv(ENV.DELTA, prevDelta);
 
+        ASTType tb = body.typecheck(e);
+
+        e.setEnv(ENV.DELTA, prevDelta);
         e.closeEnvScope(ENV.GAMMA);
         e.closeEnvScope(ENV.SIGMA);
         return new ASTTArrow(targtype, tb, id);
@@ -61,7 +60,7 @@ public class ASTFunc implements ASTNode  {
 
         if (tt instanceof ASTTArrow arrow) { tdom = arrow.getDom(); tcodom = arrow.getCodom(); tid = arrow.getId(); }
         else if (tt instanceof ASTTLollipop lolli) { tdom = lolli.getCodom(); tcodom = lolli.getCodom(); tid = lolli.getId(); }
-        else throw new TypeCheckError("func: expected func type");
+        else throw new TypeCheckError("func: expected arrow type");
 
         Environment<ASTType> prevDelta = e.popDelta();
         e.openEnvScope(ENV.SIGMA);
