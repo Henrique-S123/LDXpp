@@ -37,21 +37,24 @@ public class ASTPair implements ASTNode {
     }
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        if (!(t instanceof ASTTPair))
-            throw new TypeCheckError("pair: expected cartesian pair type");
-        ASTTPair tt = ((ASTTPair) t);
+        ASTType tt1, tt2;
+        String ttid;
+        if (t instanceof ASTTPair pair) { tt1 = pair.getFirst(); tt2 = pair.getSecond(); ttid = pair.getId(); }
+        else if (t instanceof ASTTTensor tensor) { tt1 = tensor.getFirst(); tt2 = tensor.getSecond(); ttid = tensor.getId(); }
+        else throw new TypeCheckError("pair: expected pair type");
+
         Environment<ASTType> prevDelta = e.popDelta();
         e.openEnvScope(ENV.SIGMA);
 
-        ASTType t1 = first.typecheck(e, tt.getFirst());
-        if (!(t1).defequals(tt.getFirst(), e.getEnv(ENV.SIGMA)))
-            throw new TypeCheckError(String.format("pair: invalid type %s for first element %s", tt.getFirst().toStr(), first.toString()));
-        e.getEnv(ENV.SIGMA).addEq(new ASTTEq(new ASTId(tt.getId()), first, t1));
+        ASTType t1 = first.typecheck(e, tt1);
+        if (!t1.isSubtypeOf(tt1, e))
+            throw new TypeCheckError(String.format("pair: invalid type %s for first element %s", tt1.toStr(), first.toString()));
+        e.getEnv(ENV.SIGMA).addEq(new ASTTEq(new ASTId(ttid), first, t1));
 
-        ASTType t2 = second.typecheck(e, tt.getSecond());
-        if (!(t2.defequals(tt.getSecond(), e.getEnv(ENV.SIGMA))))
-            throw new TypeCheckError(String.format("pair: invalid type %s for second element %s", tt.getSecond().toStr(), second.toString()));
-        
+        ASTType t2 = second.typecheck(e, tt2);
+        if (!t2.isSubtypeOf(tt2, e))
+            throw new TypeCheckError(String.format("pair: invalid type %s for second element %s", tt2.toStr(), second.toString()));
+
         e.closeEnvScope(ENV.SIGMA);
         e.setEnv(ENV.DELTA, prevDelta);
         return t;
