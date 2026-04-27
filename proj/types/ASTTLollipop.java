@@ -3,12 +3,13 @@ package proj.types;
 import proj.env.*;
 
 public class ASTTLollipop implements ASTLinType {
-    ASTType dom;
-    ASTType codom;
+    ASTType dom, codom;
+    String id;
 
-    public ASTTLollipop(ASTType d, ASTType co) {
+    public ASTTLollipop(ASTType d, ASTType co, String i) {
         dom = d;
         codom = co;
+        id = i;
     }
 
     public ASTType getDom() {
@@ -19,8 +20,13 @@ public class ASTTLollipop implements ASTLinType {
         return codom;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String toStr() {
-        return dom.toStr()+"-o>"+codom.toStr();
+        String domStr = (id == null) ? dom.toStr() : String.format("(%s:%s)", id, dom.toStr());
+        return domStr+"-o>"+codom.toStr();
     }
 
     public boolean isSubtypeOf(ASTType o, EnvSet e) {

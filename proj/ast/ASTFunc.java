@@ -39,18 +39,48 @@ public class ASTFunc implements ASTNode  {
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType targtype = e.unfold(argtype);
+
         e.openEnvScope(ENV.GAMMA);
+        e.openEnvScope(ENV.SIGMA);
         e.bindToEnv(ENV.GAMMA, id, targtype);
+        e.bindToEnv(ENV.SIGMA, id, targtype);
+
         Environment<ASTType> prevDelta = e.popDelta();
         ASTType tb = body.typecheck(e);
         e.setEnv(ENV.DELTA, prevDelta);
+
         e.closeEnvScope(ENV.GAMMA);
-        return new ASTTArrow(targtype, tb);
+        e.closeEnvScope(ENV.SIGMA);
+        return new ASTTArrow(targtype, tb, id);
 	}
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        // TODO
-        return typecheck(e);
+        ASTType tt = e.unfold(t);
+        ASTType tdom, tcodom;
+        String tid;
+
+        if (tt instanceof ASTTArrow arrow) { tdom = arrow.getDom(); tcodom = arrow.getCodom(); tid = arrow.getId(); }
+        else if (tt instanceof ASTTLollipop lolli) { tdom = lolli.getCodom(); tcodom = lolli.getCodom(); tid = lolli.getId(); }
+        else throw new TypeCheckError("func: expected func type");
+
+        Environment<ASTType> prevDelta = e.popDelta();
+        e.openEnvScope(ENV.SIGMA);
+        e.openEnvScope(ENV.GAMMA);
+
+        ASTType targtype = e.unfold(argtype);
+        if (!tdom.isSubtypeOf(targtype, e))
+            throw new TypeCheckError(String.format("func: dom type %s is not subtype of arg type %s", tdom.toStr(), targtype.toStr()));
+
+        e.bindToEnv(ENV.GAMMA, id, targtype);
+        e.bindToEnv(ENV.SIGMA, id, targtype);
+
+        ASTType tb = body.typecheck(e, tcodom);
+
+        e.setEnv(ENV.DELTA, prevDelta);
+        e.closeEnvScope(ENV.GAMMA);
+        e.closeEnvScope(ENV.SIGMA);
+
+        return new ASTTArrow(targtype, tb, id);
     }
 
     public ASTNode normalize(Environment<ASTType> sigma) {

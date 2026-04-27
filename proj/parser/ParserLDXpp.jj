@@ -364,11 +364,20 @@ ASTNode Match(ASTNode p) :
 ASTType Type() : 
 {
   ASTType t1, t2;
+  Token n = null;
 }
-{        
-    t1 = TypeF() (
-      <SLIMARROW> t2 = Type() { t1 = new ASTTArrow(t1,t2);} |
-      <LOLLIPOP> t2 = Type() { t1 = new ASTTLollipop(t1, t2); })?
+{   (
+      LOOKAHEAD(2)
+      t1 = TypeF()
+    |
+      <LPAR> t1 = TypeF() (<COLON> n=<Id>)? <RPAR>
+    )
+
+      (
+        <SLIMARROW> t2 = Type() { t1 = new ASTTArrow(t1, t2, n != null ? n.image : null); }
+      |
+        <LOLLIPOP> t2 = Type() { t1 = new ASTTLollipop(t1, t2, n != null ? n.image : null); }
+      )?
     { return t1; }
 }
 

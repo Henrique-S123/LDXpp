@@ -73,7 +73,7 @@ type: int, value: 7
 type: int, value: 5
 
 
-class proj.errors.TypeCheckError: func app: argument type (int->int) is not subtype of the function parameter (int->bool)
+class proj.errors.TypeCheckError: func app: argument type ((z:int)->int) is not subtype of the function parameter (int->bool)
 
 
 type: int, value: 14
