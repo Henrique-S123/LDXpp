@@ -8,7 +8,6 @@ import proj.errors.*;
 import java.util.HashMap;
 
 public class ASTLUnion implements ASTNode {
-
 	String label;
 	ASTNode expr;
 
@@ -47,4 +46,9 @@ public class ASTLUnion implements ASTNode {
 		return o instanceof ASTLUnion && ((ASTLUnion) o).getLabel().equals(label)
 			&& ((ASTLUnion) o).getExpr().defequals(expr, sigma);
     }
+
+	@Override
+	public String toString() {
+		return String.format("%s(%s)", label, expr.toString());
+	}
 }

@@ -35,12 +35,12 @@ public class ASTCheck implements ASTNode {
         return this;
     }
 
+    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+        return false;
+    }
+
     @Override
     public String toString() {
         return String.format("%s ? %s", left.toString(), right.toString());
-    }
-
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        return false;
     }
 }

@@ -50,4 +50,9 @@ public class ASTTypeDef implements ASTNode {
         return o instanceof ASTTypeDef && ((ASTTypeDef) o).getBody().defequals(body, sigma)
             && ((ASTTypeDef) o).getLtd().equals(ltd);
     }
+
+    @Override
+	public String toString() {
+		return String.format("typdef(%s, %s)", ltd.toString(), body.toString());
+	}
 }

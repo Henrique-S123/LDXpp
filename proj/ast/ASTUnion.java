@@ -9,7 +9,6 @@ import proj.errors.*;
 import java.util.HashMap;
 
 public class ASTUnion implements ASTNode {
-
 	String label;
 	ASTNode expr;
 
@@ -51,4 +50,9 @@ public class ASTUnion implements ASTNode {
 		return o instanceof ASTUnion && ((ASTUnion) o).getLabel().equals(label)
 			&& ((ASTUnion) o).getExpr().defequals(expr, sigma);
     }
+
+	@Override
+	public String toString() {
+		return String.format("%s(%s)", label, expr.toString());
+	}
 }

@@ -9,7 +9,6 @@ import proj.errors.*;
 import java.util.*;
 
 public class ASTMatchUnion implements ASTNode {
-
 	ASTNode test;
 	Map<String, MatchCase> cases;
 
@@ -112,4 +111,9 @@ public class ASTMatchUnion implements ASTNode {
 		}
 		return false;
     }
+
+	@Override
+	public String toString() {
+		return String.format("match(%s, %s)", test.toString(), cases.toString());
+	}
 }

@@ -46,4 +46,9 @@ public class ASTPrint implements ASTNode {
 		return o instanceof ASTPrint && ((ASTPrint) o).getExp().defequals(exp, sigma)
 			&& ((ASTPrint) o).getNewline() == newline;
     }
+
+	@Override
+	public String toString() {
+		return String.format("print%s(%s)", newline ? "ln" : "", exp.toString());
+	}
 }

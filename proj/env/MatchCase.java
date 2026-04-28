@@ -3,8 +3,8 @@ package proj.env;
 import proj.ast.*;
 
 public class MatchCase {
-    private final String id;
-    private final ASTNode exp;
+    String id;
+    ASTNode exp;
 
     public MatchCase(String _id, ASTNode _exp) {
         id = _id;
@@ -17,5 +17,10 @@ public class MatchCase {
 
     public ASTNode getExp() {
         return exp;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s -> %s", id, exp.toString());
     }
 }

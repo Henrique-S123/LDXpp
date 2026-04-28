@@ -91,6 +91,7 @@ public class ASTArithOp implements ASTNode {
 			&& ((ASTArithOp) o).getRhs().defequals(rhs, sigma) && ((ASTArithOp) o).getOp().equals(op);
 	}
 
+	@Override
 	public String toString() {
 		return String.format("%s %s %s", lhs.toString(), op, rhs.toString());
 	}

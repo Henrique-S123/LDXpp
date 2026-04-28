@@ -34,4 +34,9 @@ public class ASTCheckTypes implements ASTNode {
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s ?T %s", left.toString(), right.toString());
+    }
 }

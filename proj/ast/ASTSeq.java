@@ -47,4 +47,9 @@ public class ASTSeq implements ASTNode {
         return o instanceof ASTSeq && ((ASTSeq) o).getFirst().defequals(first, sigma)
             && ((ASTSeq) o).getSecond().defequals(second, sigma);
     }
+
+    @Override
+	public String toString() {
+		return String.format("%s; %s", first.toString(), second.toString());
+	}
 }

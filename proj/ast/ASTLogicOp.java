@@ -79,6 +79,7 @@ public class ASTLogicOp implements ASTNode {
 			&& ((ASTLogicOp) o).getRhs().defequals(rhs, sigma) && ((ASTLogicOp) o).getOp().equals(op);
 	}
 
+	@Override
 	public String toString() {
 		return String.format("%s %s %s", lhs.toString(), op, rhs.toString());
 	}
