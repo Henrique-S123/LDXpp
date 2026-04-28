@@ -55,12 +55,25 @@ public class ASTApp implements ASTNode  {
     }
 
     public ASTNode normalize(Environment<ASTType> sigma) {
-        // TODO
-        return this;
+        ASTNode body, fn = func.normalize(sigma);
+        ASTType targ;
+        String id;
+        if (fn instanceof ASTFunc f) { body = f.getBody(); targ = f.getArgtype(); id = f.getId(); }
+        else if (fn instanceof ASTLFunc lf) { body = lf.getBody(); targ = lf.getArgtype(); id = lf.getId(); }
+        else return this;
+
+        sigma.beginScope();
+        sigma.addEq(new ASTTEq(new ASTId(id), arg.normalize(sigma), targ));
+        return body.normalize(sigma);
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
         return o instanceof ASTApp && ((ASTApp) o).getFunc().defequals(func, sigma)
             && ((ASTApp) o).getArg().defequals(arg, sigma);
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s(%s)", func.toString(), arg.toString());
+	}
 }

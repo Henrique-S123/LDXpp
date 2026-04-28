@@ -90,4 +90,9 @@ public class ASTFunc implements ASTNode  {
         return o instanceof ASTFunc && ((ASTFunc) o).getId().equals(id)
             && ((ASTFunc) o).getBody().defequals(body, sigma) && ((ASTFunc) o).getArgtype().defequals(argtype, sigma);
     }
+
+    @Override
+    public String toString() {
+        return String.format("fn %s:%s => {%s}", id, argtype.toStr(), body.toString());
+	}
 }

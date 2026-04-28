@@ -85,4 +85,9 @@ public class ASTLFunc implements ASTNode  {
         return o instanceof ASTLFunc && ((ASTLFunc) o).getId().equals(id)
             && ((ASTLFunc) o).getBody().defequals(body, sigma) && ((ASTLFunc) o).getArgtype().defequals(argtype, sigma);
     }
+
+    @Override
+    public String toString() {
+        return String.format("lfn %s:%s => {%s}", id, argtype.toStr(), body.toString());
+	}
 }

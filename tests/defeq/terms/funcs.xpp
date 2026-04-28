@@ -1,0 +1,7 @@
+let f = fn x:int => {x}; f(1) ? 1;;
+
+(let f = fn x:int => {x}; f(1)) ? 1;;
+
+let f = lfn x:int =o> {x}; f(1) ? 1;;
+
+(let f = lfn x:int =o> {x}; f(1)) ? 1;;

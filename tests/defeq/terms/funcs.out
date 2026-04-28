@@ -1,0 +1,12 @@
+type: f(1) ≡ 1 : int, value: true
+
+
+type: let(f, fn x:int => {x}, f(1)) ≡ 1 : int, value: true
+
+
+type: f(1) ≡ 1 : int, value: true
+
+
+type: let(f, lfn x:int => {x}, f(1)) ≡ 1 : int, value: true
+
+
