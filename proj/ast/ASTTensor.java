@@ -66,6 +66,6 @@ public class ASTTensor implements ASTNode {
 
     @Override
     public String toString() {
-        return String.format("(%s ⊗ %s)", first.toString(), second.toString());
+        return String.format("(%s | %s)", first.toString(), second.toString());
     }
 }

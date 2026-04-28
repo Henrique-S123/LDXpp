@@ -96,4 +96,9 @@ public class ASTSplit implements ASTNode {
 			&& ((ASTSplit) o).getId2().equals(id2) && ((ASTSplit) o).getPair().defequals(pair, sigma)
 			&& ((ASTSplit) o).getBody().defequals(body, sigma);
     }
+
+	@Override
+	public String toString() {
+		return String.format("split %s {%s|%s -> %s}", pair.toString(), id1, id2, body.toString());
+	}
 }
