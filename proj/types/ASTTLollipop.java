@@ -1,6 +1,5 @@
 package proj.types;
 
-import proj.ast.ASTLBool;
 import proj.env.*;
 
 public class ASTTLollipop implements ASTLinType {
@@ -26,8 +25,8 @@ public class ASTTLollipop implements ASTLinType {
     }
 
     public String toString() {
-        String domStr = (id == null) ? dom.toString() : String.format("(%s:%s)", id, dom.toString());
-        return domStr+"-o>"+codom.toString();
+        String domStr = (id == null) ? dom.toString() : String.format("(%s:%s)", id, dom);
+        return String.format("%s-o>%s", domStr, codom);
     }
 
     public boolean isSubtypeOf(ASTType o, EnvSet e) {

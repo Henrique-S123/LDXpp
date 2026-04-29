@@ -1,4 +1,4 @@
-type: (linbool | x ≡ truel : linbool), value: (truel | ())
+type: (x:linbool | x ≡ truel : linbool), value: (truel | ())
 
 
 type: linbool, value: truel
@@ -16,19 +16,19 @@ type: linbool, value: truel
 class proj.errors.TypeCheckError: there are unused linear values: [x: linbool]
 
 
-type: (linint | x ≡ 2l : linint), value: (2l | ())
+type: (x:linint | x ≡ 2l : linint), value: (2l | ())
 
 
 class proj.errors.TypeCheckError: refl: terms x and 2l are not definitionally equal
 
 
-type: (linint | (linint | x ≡ y : linint)), value: (2l | (2l | ()))
+type: (x:linint | (y:linint | x ≡ y : linint)), value: (2l | (2l | ()))
 
 
 class proj.errors.TypeCheckError: refl: terms x and y are not definitionally equal
 
 
-type: (linint | (linint | (linint | (x ≡ y : linint | y ≡ z : linint)))), value: (2l | (2l | (2l | (() | ()))))
+type: (x:linint | (y:linint | (z:linint | (x ≡ y : linint | y ≡ z : linint)))), value: (2l | (2l | (2l | (() | ()))))
 
 
 class proj.errors.TypeCheckError: refl: terms y and z are not definitionally equal

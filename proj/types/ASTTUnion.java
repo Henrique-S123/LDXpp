@@ -45,16 +45,10 @@ public class ASTTUnion implements ASTType {
     }
 
     public String toString() {
-        String res = "union {";
+        String fill = "";
+        for (String k : ll.keySet()) fill += String.format("%s = %s; ", k, ll.get(k));
+        if (ll.size() > 0) fill = fill.substring(0, fill.length()-2);
 
-        for (String k : ll.keySet()) {
-            res += k + " = " + ll.get(k).toString() + "; ";
-        }
-
-        if (ll.size() > 0) {
-            res = res.substring(0, res.length()-2);
-        }
-
-        return res + "}";
+        return String.format("union {%s}", fill);
     }
 }
