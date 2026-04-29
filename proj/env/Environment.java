@@ -2,6 +2,7 @@ package proj.env;
 
 import proj.ast.ASTNode;
 import proj.types.*;
+import proj.values.VClos;
 
 import java.util.*;
 
@@ -76,17 +77,10 @@ public class Environment <E>{
     }
 
     public String toString() {
-        String res = "[";
-
-        for (String s : bindings.keySet()) {
-            E val = bindings.get(s);
-            res += s + ": " + val + "; ";
-        }
-
-        if (bindings.size() > 0) {
-            res = res.substring(0, res.length()-2);
-        }
-
-        return res += "]";
+        String fill = "";
+        for (String s : bindings.keySet())
+        fill += String.format("%s: %s; ", s, (bindings.get(s) instanceof VClos) ? s : bindings.get(s).toString());
+        if (bindings.size() > 0) fill = fill.substring(0, fill.length()-2);
+        return String.format("[%s]", fill);
     }
 }
