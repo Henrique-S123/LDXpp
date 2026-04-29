@@ -31,7 +31,6 @@ public class VPair implements IValue {
     }
 
     public String toString() {
-        return lin ? "(" + f.toString() + " | " + s.toString() + ")"
-            : "(" + f.toString() + ", " + s.toString() + ")";
+        return String.format("(%s%s%s)", f, lin ? " | " : ", ", s);
     }
 }

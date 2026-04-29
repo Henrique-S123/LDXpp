@@ -21,6 +21,6 @@ public class MatchCase {
 
     @Override
     public String toString() {
-        return String.format("%s -> %s", id, exp.toString());
+        return String.format("%s -> %s", id, exp);
     }
 }

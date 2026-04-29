@@ -18,6 +18,6 @@ public class VInt implements IValue {
     }
 
     public String toString() {
-        return Integer.toString(val) + (lin ? "l" : "");
+        return String.format("%s%s", val, lin ? "l" : "");
     }
 }
