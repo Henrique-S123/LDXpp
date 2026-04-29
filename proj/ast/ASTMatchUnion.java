@@ -93,8 +93,19 @@ public class ASTMatchUnion implements ASTNode {
     }
 
 	public ASTNode normalize(Environment<ASTType> sigma) {
-		// TODO
-        return this;
+		ASTNode exp, tn = test.normalize(sigma);
+		String label, id;
+		if (tn instanceof ASTUnion un) { exp = un.getExpr(); label = un.getLabel(); }
+		else if (tn instanceof ASTLUnion lun) { exp = lun.getExpr(); label = lun.getLabel(); }
+		else return this;
+
+		MatchCase c = cases.get(label);
+		id = c.getId();
+		ASTNode body = c.getExp();
+
+		Environment<ASTType> env = sigma.beginScope();
+		env.addEq(new ASTTEq(new ASTId(id), exp.normalize(sigma), sigma.find(id, false)));
+		return body.normalize(env);
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

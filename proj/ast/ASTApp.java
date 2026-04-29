@@ -61,9 +61,9 @@ public class ASTApp implements ASTNode  {
         else if (fn instanceof ASTLFunc lf) { body = lf.getBody(); targ = lf.getArgtype(); id = lf.getId(); }
         else return this;
 
-        sigma.beginScope();
-        sigma.addEq(new ASTTEq(new ASTId(id), arg.normalize(sigma), targ));
-        return body.normalize(sigma);
+        Environment<ASTType> env = sigma.beginScope();
+        env.addEq(new ASTTEq(new ASTId(id), arg.normalize(sigma), targ));
+        return body.normalize(env);
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

@@ -1,0 +1,8 @@
+match #a(5) {#a(x) -> x | #b(x) -> false} ? 5;;
+
+match #b(5) {#a(x) -> x | #b(x) -> false} ? false;;
+
+let x = #a(5);
+match x {#a(x) -> x | #b(x) -> false} ? 5;;
+
+match $a(5l) {$a(x) -> x | $b(x) -> falsel} ? 5l;;

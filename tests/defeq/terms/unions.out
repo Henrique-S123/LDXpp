@@ -1,0 +1,12 @@
+type: match(#a(5), {#a=x -> x, #b=x -> false}) ≡ 5 : int, value: true
+
+
+type: match(#b(5), {#a=x -> x, #b=x -> false}) ≡ false : bool, value: true
+
+
+type: match(x, {#a=x -> x, #b=x -> false}) ≡ 5 : int, value: true
+
+
+type: match($a(5l), {$a=x -> x, $b=x -> falsel}) ≡ 5l : linint, value: true
+
+
