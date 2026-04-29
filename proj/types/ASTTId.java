@@ -25,6 +25,6 @@ public	class ASTTId implements ASTType	{
     }
 
     public boolean defequals(ASTType o, Environment<ASTType> sigma) {
-        return o instanceof ASTTId && ((ASTTId) o).getId().equals(id);
+        return o instanceof ASTTId oid && oid.getId().equals(id);
     }
 }	

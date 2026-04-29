@@ -87,8 +87,8 @@ public class ASTFunc implements ASTNode  {
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        return o instanceof ASTFunc && ((ASTFunc) o).getId().equals(id)
-            && ((ASTFunc) o).getBody().defequals(body, sigma) && ((ASTFunc) o).getArgtype().defequals(argtype, sigma);
+        return o instanceof ASTFunc ofunc && ofunc.getId().equals(id)
+            && ofunc.getBody().defequals(body, sigma) && ofunc.getArgtype().defequals(argtype, sigma);
     }
 
     @Override

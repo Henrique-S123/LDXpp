@@ -47,8 +47,8 @@ public class ASTTypeDef implements ASTNode {
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        return o instanceof ASTTypeDef && ((ASTTypeDef) o).getBody().defequals(body, sigma)
-            && ((ASTTypeDef) o).getLtd().equals(ltd);
+        return o instanceof ASTTypeDef otype && otype.getBody().defequals(body, sigma)
+            && otype.getLtd().equals(ltd);
     }
 
     @Override

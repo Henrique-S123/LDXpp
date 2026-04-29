@@ -20,18 +20,20 @@ public class ASTTUnion implements ASTType {
         if (o instanceof ASTTId) {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);
-        } else if (o instanceof ASTTUnion || o instanceof ASTTLUnion) {
-            Map<String, ASTType> mb = o instanceof ASTTUnion ? ((ASTTUnion) o).getMap() : ((ASTTLUnion) o).getMap();
-            for (String s : ll.keySet())
-                if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), e))) return false;
-            return true;
         }
-        return false;
+        Map<String, ASTType> mb;
+        if (o instanceof ASTTUnion ounion) mb = ounion.getMap();
+        else if (o instanceof ASTTLUnion olunion) mb = olunion.getMap();
+        else return false;
+
+        for (String s : ll.keySet())
+            if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), e))) return false;
+        return true;
     }
 
     public boolean defequals(ASTType o, Environment<ASTType> sigma) {
-        if (o instanceof ASTTUnion) {
-            Map<String, ASTType> other = ((ASTTUnion) o).getMap();
+        if (o instanceof ASTTUnion ounion) {
+            Map<String, ASTType> other = ounion.getMap();
             if (ll.size() != other.size()) return false;
             for (String label : ll.keySet()) {
                 ASTType otherType = other.get(label);

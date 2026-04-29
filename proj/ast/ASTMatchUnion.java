@@ -27,8 +27,8 @@ public class ASTMatchUnion implements ASTNode {
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue vt = test.eval(e);
-		if (vt instanceof VUnion) {
-			String testlabel = ((VUnion) vt).getLabel();
+		if (vt instanceof VUnion vtu) {
+			String testlabel = vtu.getLabel();
 			MatchCase c = cases.get(testlabel);
 			if (c == null) {
 				throw new InterpreterError("match: missing case for label " + testlabel);
@@ -98,8 +98,8 @@ public class ASTMatchUnion implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-		if (o instanceof ASTMatchUnion && ((ASTMatchUnion) o).getTest().defequals(test, sigma)) {
-			Map<String, MatchCase> other = ((ASTMatchUnion) o).getCases();
+		if (o instanceof ASTMatchUnion omatch && omatch.getTest().defequals(test, sigma)) {
+			Map<String, MatchCase> other = omatch.getCases();
 			if (cases.size() != other.size()) return false;
 			for (String label : cases.keySet()) {
 				MatchCase ownCase = cases.get(label);

@@ -20,8 +20,8 @@ public class ASTTLUnion implements ASTLinType {
         if (o instanceof ASTTId) {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);
-        } else if (o instanceof ASTTLUnion) {
-            Map<String, ASTType> mb = ((ASTTLUnion) o).getMap();
+        } else if (o instanceof ASTTLUnion olunion) {
+            Map<String, ASTType> mb = olunion.getMap();
             for (String s : ll.keySet())
                 if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), e))) return false;
             return true;
@@ -30,8 +30,8 @@ public class ASTTLUnion implements ASTLinType {
     }
 
     public boolean defequals(ASTType o, Environment<ASTType> sigma) {
-        if (o instanceof ASTTLUnion) {
-            Map<String, ASTType> other = ((ASTTLUnion) o).getMap();
+        if (o instanceof ASTTLUnion olunion) {
+            Map<String, ASTType> other = olunion.getMap();
             if (ll.size() != other.size()) return false;
             for (String label : ll.keySet()) {
                 ASTType otherType = other.get(label);

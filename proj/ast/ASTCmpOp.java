@@ -30,9 +30,9 @@ public class ASTCmpOp implements ASTNode {
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue v1 = lhs.eval(e);
 		IValue v2 = rhs.eval(e);
-		if (v1 instanceof VInt && v2 instanceof VInt) {
-			int i1 = ((VInt) v1).getval();
-			int i2 = ((VInt) v2).getval();
+		if (v1 instanceof VInt vi1 && v2 instanceof VInt vi2) {
+			int i1 = vi1.getval();
+			int i2 = vi2.getval();
 			boolean res = switch (op) {
 				case "==" -> i1 == i2;
 				case "~=" -> i1 != i2;
@@ -70,8 +70,8 @@ public class ASTCmpOp implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-		return o instanceof ASTCmpOp && ((ASTCmpOp) o).getLhs().defequals(lhs, sigma)
-			&& ((ASTCmpOp) o).getRhs().defequals(rhs, sigma) && ((ASTCmpOp) o).getOp().equals(op);
+		return o instanceof ASTCmpOp oop && oop.getLhs().defequals(lhs, sigma)
+			&& oop.getRhs().defequals(rhs, sigma) && oop.getOp().equals(op);
 	}
 
 	@Override

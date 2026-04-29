@@ -43,8 +43,8 @@ public class ASTPrint implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-		return o instanceof ASTPrint && ((ASTPrint) o).getExp().defequals(exp, sigma)
-			&& ((ASTPrint) o).getNewline() == newline;
+		return o instanceof ASTPrint oprint && oprint.getExp().defequals(exp, sigma)
+			&& oprint.getNewline() == newline;
     }
 
 	@Override

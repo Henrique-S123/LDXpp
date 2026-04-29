@@ -30,10 +30,10 @@ public class ASTIf implements ASTNode {
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue vt = test.eval(e);
-		if (!(vt instanceof VBool)) {
+		if (!(vt instanceof VBool vtb)) {
 			throw new InterpreterError("if: bool condition expected, found " + vt);
 		} else {
-			boolean val = ((VBool) vt).getval();
+			boolean val = vtb.getval();
 			return val ? conseq.eval(e) : alt.eval(e);
 		}
     }
@@ -72,8 +72,8 @@ public class ASTIf implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-		return o instanceof ASTIf && ((ASTIf) o).getTest().defequals(test, sigma)
-			&& ((ASTIf) o).getConseq().defequals(conseq, sigma) && ((ASTIf) o).getAlt().defequals(alt, sigma);
+		return o instanceof ASTIf oif && oif.getTest().defequals(test, sigma)
+			&& oif.getConseq().defequals(conseq, sigma) && oif.getAlt().defequals(alt, sigma);
 	}
 
 	@Override

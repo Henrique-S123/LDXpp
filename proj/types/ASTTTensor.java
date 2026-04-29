@@ -32,15 +32,15 @@ public class ASTTTensor implements ASTLinType {
         if (o instanceof ASTTId) {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);
-        } else if (o instanceof ASTTTensor) {
-            return first.isSubtypeOf(((ASTTTensor) o).getFirst(), e)
-                && second.isSubtypeOf(((ASTTTensor) o).getSecond(), e);
+        } else if (o instanceof ASTTTensor otensor) {
+            return first.isSubtypeOf(otensor.getFirst(), e)
+                && second.isSubtypeOf(otensor.getSecond(), e);
         }
         return false;
     }
 
     public boolean defequals(ASTType o, Environment<ASTType> sigma) {
-        return o instanceof ASTTTensor && ((ASTTTensor) o).getFirst().defequals(first, sigma)
-            && ((ASTTTensor) o).getSecond().defequals(second, sigma);
+        return o instanceof ASTTTensor otensor && otensor.getFirst().defequals(first, sigma)
+            && otensor.getSecond().defequals(second, sigma);
     }
 }

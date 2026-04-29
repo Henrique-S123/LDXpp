@@ -44,8 +44,8 @@ public class ASTSeq implements ASTNode {
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        return o instanceof ASTSeq && ((ASTSeq) o).getFirst().defequals(first, sigma)
-            && ((ASTSeq) o).getSecond().defequals(second, sigma);
+        return o instanceof ASTSeq oseq && oseq.getFirst().defequals(first, sigma)
+            && oseq.getSecond().defequals(second, sigma);
     }
 
     @Override

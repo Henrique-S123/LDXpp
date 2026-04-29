@@ -35,10 +35,10 @@ public class ASTSplit implements ASTNode {
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue v = pair.eval(e);
-		if (v instanceof VPair) {
+		if (v instanceof VPair vp) {
 			Environment<IValue> en = e.beginScope();
-			en.assoc(id1, ((VPair) v).getFirst());
-			en.assoc(id2, ((VPair) v).getSecond());
+			en.assoc(id1, vp.getFirst());
+			en.assoc(id2, vp.getSecond());
 			return body.eval(en);
 		} else {
 			throw new InterpreterError("split: linear pair expected, found " + v);
@@ -49,11 +49,11 @@ public class ASTSplit implements ASTNode {
 		if (id1.equals(id2)) throw new TypeCheckError("ids for split must be different");
 		ASTType tt = pair.typecheck(e);
 		tt = e.unfold(tt);
-		if (!(tt instanceof ASTTTensor))
+		if (!(tt instanceof ASTTTensor ttensor))
 			throw new TypeCheckError("illegal type to split: " + tt.toStr());
 
-		ASTType t1 = e.unfold(((ASTTTensor) tt).getFirst());
-		ASTType t2 = e.unfold(((ASTTTensor) tt).getSecond());
+		ASTType t1 = e.unfold(ttensor.getFirst());
+		ASTType t2 = e.unfold(ttensor.getSecond());
 		boolean lin1 = (t1 instanceof ASTLinType), lin2 = (t2 instanceof ASTLinType);
 
 		if (lin1 || lin2) e.openEnvScope(ENV.DELTA);
@@ -92,9 +92,9 @@ public class ASTSplit implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-		return o instanceof ASTSplit && ((ASTSplit) o).getId1().equals(id1)
-			&& ((ASTSplit) o).getId2().equals(id2) && ((ASTSplit) o).getPair().defequals(pair, sigma)
-			&& ((ASTSplit) o).getBody().defequals(body, sigma);
+		return o instanceof ASTSplit osplit && osplit.getId1().equals(id1)
+			&& osplit.getId2().equals(id2) && osplit.getPair().defequals(pair, sigma)
+			&& osplit.getBody().defequals(body, sigma);
     }
 
 	@Override

@@ -65,8 +65,8 @@ public class ASTPair implements ASTNode {
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        return o instanceof ASTPair &&
-            first.defequals(((ASTPair) o).getFirst(), sigma) && second.defequals(((ASTPair) o).getSecond(), sigma);
+        return o instanceof ASTPair opair && first.defequals(opair.getFirst(), sigma)
+            && second.defequals(opair.getSecond(), sigma);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class ASTBool implements ASTNode  {
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        return o instanceof ASTBool && ((ASTBool) o).getVal() == b;
+        return o instanceof ASTBool ob && ob.getVal() == b;
     }
 
     @Override

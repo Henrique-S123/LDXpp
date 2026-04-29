@@ -35,13 +35,13 @@ public class ASTTEq implements ASTType {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);
         }
-        return o instanceof ASTTEq && type.isSubtypeOf(((ASTTEq) o).getType(), e)
-            && term1.defequals(((ASTTEq) o).getTerm1(), e.getEnv(ENV.SIGMA)) && term2.defequals(((ASTTEq) o).getTerm2(), e.getEnv(ENV.SIGMA));
+        return o instanceof ASTTEq eq && type.isSubtypeOf(eq.getType(), e)
+            && term1.defequals(eq.getTerm1(), e.getEnv(ENV.SIGMA)) && term2.defequals(eq.getTerm2(), e.getEnv(ENV.SIGMA));
     }
 
     public boolean defequals(ASTType o, Environment<ASTType> sigma) {
-        return o instanceof ASTTEq && ((ASTTEq) o).getTerm1().normalize(sigma).defequals(term1.normalize(sigma), sigma)
-            && ((ASTTEq) o).getTerm2().normalize(sigma).defequals(term2.normalize(sigma), sigma) && ((ASTTEq) o).getType().defequals(type, sigma);
+        return o instanceof ASTTEq eq && eq.getTerm1().normalize(sigma).defequals(term1.normalize(sigma), sigma)
+            && eq.getTerm2().normalize(sigma).defequals(term2.normalize(sigma), sigma) && eq.getType().defequals(type, sigma);
     }
 }
 

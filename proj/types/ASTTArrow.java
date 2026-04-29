@@ -33,21 +33,18 @@ public class ASTTArrow implements ASTType {
         if (o instanceof ASTTId) {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);
-        } else if (o instanceof ASTTArrow) {
-            ASTType odom = ((ASTTArrow) o).getDom();
-            ASTType ocodom = ((ASTTArrow) o).getCodom();
-            return odom.isSubtypeOf(dom, e) && codom.isSubtypeOf(ocodom, e);
-        } else if (o instanceof ASTTLollipop) {
-            ASTType odom = ((ASTTLollipop) o).getDom();
-            ASTType ocodom = ((ASTTLollipop) o).getCodom();
-            return odom.isSubtypeOf(dom, e) && codom.isSubtypeOf(ocodom, e);
         }
-        return false;
+        ASTType odom, ocodom;
+        if (o instanceof ASTTArrow arrow) { odom = arrow.getDom(); ocodom = arrow.getCodom(); }
+        else if (o instanceof ASTTLollipop lolli) { odom = lolli.getDom(); ocodom = lolli.getCodom(); }
+        else return false;
+
+        return odom.isSubtypeOf(dom, e) && codom.isSubtypeOf(ocodom, e);
     }
 
     public boolean defequals(ASTType o, Environment<ASTType> sigma) {
-        return o instanceof ASTTArrow && ((ASTTArrow) o).getDom().defequals(dom, sigma)
-            && ((ASTTArrow) o).getCodom().defequals(codom, sigma);
+        return o instanceof ASTTArrow oarr && oarr.getDom().defequals(dom, sigma)
+            && oarr.getCodom().defequals(codom, sigma);
     }
 }
 

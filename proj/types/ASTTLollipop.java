@@ -1,5 +1,6 @@
 package proj.types;
 
+import proj.ast.ASTLBool;
 import proj.env.*;
 
 public class ASTTLollipop implements ASTLinType {
@@ -33,17 +34,16 @@ public class ASTTLollipop implements ASTLinType {
         if (o instanceof ASTTId) {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);
-        } else if (o instanceof ASTTLollipop) {
-            ASTType odom = ((ASTTLollipop) o).getDom();
-            ASTType ocodom = ((ASTTLollipop) o).getCodom();
-            return odom.isSubtypeOf(dom, e) && codom.isSubtypeOf(ocodom, e);
         }
-        return false;
+        ASTType odom, ocodom;
+        if (o instanceof ASTTLollipop lolli) { odom = lolli.getDom(); ocodom = lolli.getCodom(); }
+        else return false;
+        return odom.isSubtypeOf(dom, e) && codom.isSubtypeOf(ocodom, e);
     }
 
     public boolean defequals(ASTType o, Environment<ASTType> sigma) {
-        return o instanceof ASTTLollipop && ((ASTTLollipop) o).getDom().defequals(dom, sigma)
-            && ((ASTTLollipop) o).getCodom().defequals(codom, sigma);
+        return o instanceof ASTTLollipop olloli && olloli.getDom().defequals(dom, sigma)
+            && olloli.getCodom().defequals(codom, sigma);
     }
 }
 

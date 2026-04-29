@@ -60,8 +60,8 @@ public class ASTTensor implements ASTNode {
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        return o instanceof ASTTensor &&
-            first.defequals(((ASTTensor) o).getFirst(), sigma) && second.defequals(((ASTTensor) o).getSecond(), sigma);
+        return o instanceof ASTTensor otensor && first.defequals(otensor.getFirst(), sigma) &&
+            second.defequals(otensor.getSecond(), sigma);
     }
 
     @Override

@@ -32,18 +32,16 @@ public class ASTTPair implements ASTType {
         if (o instanceof ASTTId) {
             ASTType to = e.unfold(o);
             return this.isSubtypeOf(to, e);
-        } else if (o instanceof ASTTPair) {
-            return first.isSubtypeOf(((ASTTPair) o).getFirst(), e)
-                && second.isSubtypeOf(((ASTTPair) o).getSecond(), e);
-        } else if (o instanceof ASTTTensor) {
-            return first.isSubtypeOf(((ASTTTensor) o).getFirst(), e)
-                && second.isSubtypeOf(((ASTTTensor) o).getSecond(), e);
         }
-        return false;
+        ASTType ofirst, osecond;
+        if (o instanceof ASTTPair opair) { ofirst = opair.getFirst(); osecond = opair.getSecond(); }
+        else if (o instanceof ASTTTensor otensor) { ofirst = otensor.getFirst(); osecond = otensor.getSecond(); }
+        else return false;
+        return first.isSubtypeOf(ofirst, e) && second.isSubtypeOf(osecond, e);
     }
 
     public boolean defequals(ASTType o, Environment<ASTType> sigma) {
-        return o instanceof ASTTPair && ((ASTTPair) o).getFirst().defequals(first, sigma)
-            && ((ASTTPair) o).getSecond().defequals(second, sigma);
+        return o instanceof ASTTPair opair && opair.getFirst().defequals(first, sigma)
+            && opair.getSecond().defequals(second, sigma);
     }
 }

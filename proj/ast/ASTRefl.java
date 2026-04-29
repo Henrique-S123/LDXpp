@@ -19,9 +19,8 @@ public class ASTRefl implements ASTNode  {
 	}
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        if (!(t instanceof ASTTEq))
+        if (!(t instanceof ASTTEq tt))
             throw new TypeCheckError("refl: expected equality type");
-        ASTTEq tt = ((ASTTEq) t);
 
         Environment<ASTType> sigma = e.getEnv(ENV.SIGMA);
         if (!(tt.getTerm1().normalize(sigma).defequals(tt.getTerm2().normalize(sigma), sigma)))

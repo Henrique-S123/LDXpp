@@ -30,9 +30,9 @@ public class ASTLogicOp implements ASTNode {
     public IValue eval(Environment<IValue> e) throws InterpreterError {
 		IValue v1 = lhs.eval(e);
 		IValue v2 = rhs.eval(e);
-		if (v1 instanceof VBool && v2 instanceof VBool) {
-			boolean i1 = ((VBool) v1).getval();
-			boolean i2 = ((VBool) v2).getval();
+		if (v1 instanceof VBool vb1 && v2 instanceof VBool vb2) {
+			boolean i1 = vb1.getval();
+			boolean i2 = vb2.getval();
 			boolean res = switch (op) {
 				case "&&" -> i1 && i2;
 				case "||" -> i1 || i2;
@@ -75,8 +75,8 @@ public class ASTLogicOp implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-		return o instanceof ASTLogicOp && ((ASTLogicOp) o).getLhs().defequals(lhs, sigma)
-			&& ((ASTLogicOp) o).getRhs().defequals(rhs, sigma) && ((ASTLogicOp) o).getOp().equals(op);
+		return o instanceof ASTLogicOp oop && oop.getLhs().defequals(lhs, sigma)
+			&& oop.getRhs().defequals(rhs, sigma) && oop.getOp().equals(op);
 	}
 
 	@Override

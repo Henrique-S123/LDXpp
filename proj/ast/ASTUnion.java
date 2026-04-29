@@ -47,8 +47,8 @@ public class ASTUnion implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-		return o instanceof ASTUnion && ((ASTUnion) o).getLabel().equals(label)
-			&& ((ASTUnion) o).getExpr().defequals(expr, sigma);
+		return o instanceof ASTUnion ounion && ounion.getLabel().equals(label)
+			&& ounion.getExpr().defequals(expr, sigma);
     }
 
 	@Override

@@ -32,7 +32,7 @@ public class ASTInt implements ASTNode  {
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        return o instanceof ASTInt && ((ASTInt) o).getVal() == v;
+        return o instanceof ASTInt oi && oi.getVal() == v;
     }
 
     @Override

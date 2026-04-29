@@ -119,8 +119,8 @@ public class EnvSet {
 
     /* Unfold operation */
     public ASTType unfold(ASTType t) {
-        if (t instanceof ASTTId) {
-            return unfold((ASTType) phi.find(((ASTTId) t).getId(), false));
+        if (t instanceof ASTTId tid) {
+            return unfold((ASTType) phi.find(tid.getId(), false));
         } else {
             return t;
         }

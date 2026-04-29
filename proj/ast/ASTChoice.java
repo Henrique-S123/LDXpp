@@ -24,8 +24,8 @@ public class ASTChoice implements ASTNode  {
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {
         IValue vp = pair.eval(e);
-        if (vp instanceof VPair) {
-            return choice > 0 ? ((VPair) vp).getSecond() : ((VPair) vp).getFirst();
+        if (vp instanceof VPair pair) {
+            return choice > 0 ? pair.getSecond() : pair.getFirst();
         } else {
             throw new InterpreterError((choice > 0 ? "snd" : "fst") + ": pair expected, found " + vp.toStr());
         }           
@@ -33,8 +33,8 @@ public class ASTChoice implements ASTNode  {
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		ASTType tp = pair.typecheck(e);
-        if (tp instanceof ASTTPair) {
-            return choice > 0 ? ((ASTTPair) tp).getSecond() : ((ASTTPair) tp).getFirst();
+        if (tp instanceof ASTTPair tpair) {
+            return choice > 0 ? tpair.getSecond() : tpair.getFirst();
         } else {
             throw new TypeCheckError("illegal type to " + (choice > 0 ? "snd" : "fst") + ": " + tp.toStr());
         }
@@ -51,8 +51,8 @@ public class ASTChoice implements ASTNode  {
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        return o instanceof ASTChoice && ((ASTChoice) o).getChoice() == choice &&
-            ((ASTChoice) o).getPair().defequals(pair, sigma);
+        return o instanceof ASTChoice ochoice && ochoice.getChoice() == choice &&
+            ochoice.getPair().defequals(pair, sigma);
     }
 
     @Override

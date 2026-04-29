@@ -57,3 +57,4 @@ type: 1 ≡ split (split (1 | 2) {f|s -> f} | (2, 1)) {f|s -> f} : int, value: t
 
 class proj.errors.TypeCheckError: terms 1 and split (split (1 | 2) {f|s -> s} | (2, 1)) {f|s -> f} are not definitionally equal
 
+
