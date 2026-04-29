@@ -46,7 +46,7 @@ public class ASTLFunc implements ASTNode  {
         ASTType tb = body.typecheck(e);
 
         if (!(e.getEnv(ENV.DELTA).isEmpty()))
-            throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA).toString());
+            throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA));
         e.closeEnvScope(env);
         return new ASTTLollipop(targtype, tb, id);
 	}
@@ -65,7 +65,7 @@ public class ASTLFunc implements ASTNode  {
         e.openEnvScope(env);
 
         if (!tdom.isSubtypeOf(targtype, e))
-            throw new TypeCheckError(String.format("func: dom type %s is not subtype of arg type %s", tdom.toString(), targtype.toString()));
+            throw new TypeCheckError(String.format("func: dom type %s is not subtype of arg type %s", tdom, targtype));
 
         e.bindToEnv(env, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
@@ -88,6 +88,6 @@ public class ASTLFunc implements ASTNode  {
 
     @Override
     public String toString() {
-        return String.format("lfn %s:%s => {%s}", id, argtype.toString(), body.toString());
+        return String.format("lfn %s:%s => {%s}", id, argtype, body);
 	}
 }

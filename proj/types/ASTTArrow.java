@@ -25,7 +25,7 @@ public class ASTTArrow implements ASTType {
     }
 
     public String toString() {
-        String domStr = (id == null) ? dom.toString() : String.format("(%s:%s)", id, dom);
+        String domStr = (id == null) ? ""+dom : String.format("(%s:%s)", id, dom);
         return String.format("%s->%s", domStr, codom);
     }
 

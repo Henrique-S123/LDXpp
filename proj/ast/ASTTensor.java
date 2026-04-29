@@ -44,12 +44,12 @@ public class ASTTensor implements ASTNode {
 
         ASTType t1 = first.typecheck(e, tt1);
         if (!t1.isSubtypeOf(tt1, e))
-            throw new TypeCheckError(String.format("tensor: invalid type %s for first element %s", tt1.toString(), first.toString()));
+            throw new TypeCheckError(String.format("tensor: invalid type %s for first element %s", tt1, first));
         e.getEnv(ENV.SIGMA).addEq(new ASTTEq(new ASTId(ttid), first, t1));
 
         ASTType t2 = second.typecheck(e, tt2);
         if (!t2.isSubtypeOf(tt2, e))
-            throw new TypeCheckError(String.format("tensor: invalid type %s for second element %s", tt1.toString(), second.toString()));
+            throw new TypeCheckError(String.format("tensor: invalid type %s for second element %s", tt1, second));
         
         e.closeEnvScope(ENV.SIGMA);
         return t;
@@ -66,6 +66,6 @@ public class ASTTensor implements ASTNode {
 
     @Override
     public String toString() {
-        return String.format("(%s | %s)", first.toString(), second.toString());
+        return String.format("(%s | %s)", first, second);
     }
 }

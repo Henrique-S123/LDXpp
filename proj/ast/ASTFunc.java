@@ -68,7 +68,7 @@ public class ASTFunc implements ASTNode  {
 
         ASTType targtype = e.unfold(argtype);
         if (!tdom.isSubtypeOf(targtype, e))
-            throw new TypeCheckError(String.format("func: dom type %s is not subtype of arg type %s", tdom.toString(), targtype.toString()));
+            throw new TypeCheckError(String.format("func: dom type %s is not subtype of arg type %s", tdom, targtype));
 
         e.bindToEnv(ENV.GAMMA, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
@@ -93,6 +93,6 @@ public class ASTFunc implements ASTNode  {
 
     @Override
     public String toString() {
-        return String.format("fn %s:%s => {%s}", id, argtype.toString(), body.toString());
+        return String.format("fn %s:%s => {%s}", id, argtype, body);
 	}
 }

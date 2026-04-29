@@ -49,6 +49,6 @@ public class ASTLUnion implements ASTNode {
 
 	@Override
 	public String toString() {
-		return String.format("%s(%s)", label, expr.toString());
+		return String.format("%s(%s)", label, expr);
 	}
 }

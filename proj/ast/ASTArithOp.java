@@ -48,7 +48,7 @@ public class ASTArithOp implements ASTNode {
 			String s2 = v2 instanceof VString ? ((VString) v2).getval() : v2.toString();
 			return new VString(s1 + s2);
 		} else {
-			String types = (op == "-u" ? "" : (v1 + " and ")) + v2.toString();
+			String types = (op == "-u" ? "" : (v1 + " and ")) + v2;
 			if (op == "-u")
 				throw new InterpreterError("- unary operator: integer expected, found " + types);
 			else {
@@ -70,7 +70,7 @@ public class ASTArithOp implements ASTNode {
 		} else if ((tl instanceof ASTTInt || tl instanceof ASTTString) && (tr instanceof ASTTInt || tr instanceof ASTTString) && op == "+") {
 			return new ASTTString();
 		} else {
-			String types = (op == "-u" ? "" : (tl.toString() + " and ")) + tr.toString();
+			String types = (op == "-u" ? "" : (tl + " and ")) + tr;
 			if (op == "-u")
 				throw new TypeCheckError("illegal type to - unary operator: " + types);
 			else
@@ -93,6 +93,6 @@ public class ASTArithOp implements ASTNode {
 
 	@Override
 	public String toString() {
-		return String.format("%s %s %s", lhs.toString(), op, rhs.toString());
+		return String.format("%s %s %s", lhs, op, rhs);
 	}
 }

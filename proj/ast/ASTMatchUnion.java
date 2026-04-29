@@ -38,7 +38,7 @@ public class ASTMatchUnion implements ASTNode {
 				return c.getExp().eval(en);
 			}
 		} else {
-			throw new InterpreterError("match: union expected, found " + vt.toString());
+			throw new InterpreterError("match: union expected, found " + vt);
 		}
     }
 
@@ -82,11 +82,11 @@ public class ASTMatchUnion implements ASTNode {
 				if ((tcase.isSubtypeOf(rettype, env) && rettype.isSubtypeOf(tcase, env)) || rettype == null) {
 					rettype = tcase;
 				} else {
-					throw new TypeCheckError("different types for match cases: " + tcase.toString() + " and " + rettype.toString());
+					throw new TypeCheckError("different types for match cases: " + tcase + " and " + rettype);
 				}
 			}
 		} else {
-			throw new TypeCheckError("illegal type to match test: " + tt.toString());
+			throw new TypeCheckError("illegal type to match test: " + tt);
 		}
 		return rettype;
 	}
@@ -128,6 +128,6 @@ public class ASTMatchUnion implements ASTNode {
 
 	@Override
 	public String toString() {
-		return String.format("match(%s, %s)", test.toString(), cases.toString());
+		return String.format("match(%s, %s)", test, cases);
 	}
 }

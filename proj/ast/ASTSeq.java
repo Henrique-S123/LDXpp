@@ -31,7 +31,7 @@ public class ASTSeq implements ASTNode {
         if (tf instanceof ASTTUnit) {
             return second.typecheck(e);
         } else {
-            throw new TypeCheckError("illegal type to sequential composition: " + tf.toString());
+            throw new TypeCheckError("illegal type to sequential composition: " + tf);
         }
 	}
 
@@ -50,6 +50,6 @@ public class ASTSeq implements ASTNode {
 
     @Override
 	public String toString() {
-		return String.format("%s; %s", first.toString(), second.toString());
+		return String.format("%s; %s", first, second);
 	}
 }

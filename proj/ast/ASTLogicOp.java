@@ -42,7 +42,7 @@ public class ASTLogicOp implements ASTNode {
 			boolean lin = (((VBool) v1).islin() || ((VBool) v2).islin());
 			return new VBool(res, lin);
 		} else {
-			String types = (op == "~" ? "" : (v1.toString() + " and ")) + v2.toString();
+			String types = (op == "~" ? "" : (v1 + " and ")) + v2;
 			if (op == "~")
 				throw new InterpreterError("~ unary operator: boolean expected, found " + types);
 			else
@@ -58,7 +58,7 @@ public class ASTLogicOp implements ASTNode {
 		} else if ((tl instanceof ASTTBool || tl instanceof ASTTLBool) && (tr instanceof ASTTBool || tr instanceof ASTTLBool)) {
 			return new ASTTLBool();
 		} else {
-			String types = (op == "~" ? "" : (tl.toString() + " and ")) + tr.toString();
+			String types = (op == "~" ? "" : (tl + " and ")) + tr;
 			if (op == "~")
 				throw new TypeCheckError("illegal type to ~ unary operator: " + types);
 			else
@@ -81,6 +81,6 @@ public class ASTLogicOp implements ASTNode {
 
 	@Override
 	public String toString() {
-		return String.format("%s %s %s", lhs.toString(), op, rhs.toString());
+		return String.format("%s %s %s", lhs, op, rhs);
 	}
 }

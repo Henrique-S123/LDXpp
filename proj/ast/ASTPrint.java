@@ -49,6 +49,6 @@ public class ASTPrint implements ASTNode {
 
 	@Override
 	public String toString() {
-		return String.format("print%s(%s)", newline ? "ln" : "", exp.toString());
+		return String.format("print%s(%s)", newline ? "ln" : "", exp);
 	}
 }

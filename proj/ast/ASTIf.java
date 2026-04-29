@@ -51,10 +51,10 @@ public class ASTIf implements ASTNode {
 			} else if (valt.isSubtypeOf(vconseq, e)) {
 				return valt;
 			} else {
-				throw new TypeCheckError("if conseq and alt branches do not have compatible types: " + vconseq.toString() + " and " + valt.toString());
+				throw new TypeCheckError("if conseq and alt branches do not have compatible types: " + vconseq + " and " + valt);
 			}
 		} else {
-			throw new TypeCheckError("illegal type to if test: " + tt.toString());
+			throw new TypeCheckError("illegal type to if test: " + tt);
 		}
 	}
 
@@ -78,6 +78,6 @@ public class ASTIf implements ASTNode {
 
 	@Override
 	public String toString() {
-		return String.format("if(%s, %s, %s)", test.toString(), conseq.toString(), alt.toString());
+		return String.format("if(%s, %s, %s)", test, conseq, alt);
 	}
 }

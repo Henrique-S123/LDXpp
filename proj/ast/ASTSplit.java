@@ -50,7 +50,7 @@ public class ASTSplit implements ASTNode {
 		ASTType tt = pair.typecheck(e);
 		tt = e.unfold(tt);
 		if (!(tt instanceof ASTTTensor ttensor))
-			throw new TypeCheckError("illegal type to split: " + tt.toString());
+			throw new TypeCheckError("illegal type to split: " + tt);
 
 		ASTType t1 = e.unfold(ttensor.getFirst());
 		ASTType t2 = e.unfold(ttensor.getSecond());
@@ -68,7 +68,7 @@ public class ASTSplit implements ASTNode {
 
 		ASTType rt = body.typecheck(e);
 		if (!(e.getEnv(ENV.DELTA).isEmpty()))
-            throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA).toString());
+            throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA));
 
 		if (lin1 || lin2) e.closeEnvScope(ENV.DELTA);
 		if (!lin1 || !lin2) e.closeEnvScope(ENV.GAMMA);
@@ -99,6 +99,6 @@ public class ASTSplit implements ASTNode {
 
 	@Override
 	public String toString() {
-		return String.format("split %s {%s|%s -> %s}", pair.toString(), id1, id2, body.toString());
+		return String.format("split %s {%s|%s -> %s}", pair, id1, id2, body);
 	}
 }
