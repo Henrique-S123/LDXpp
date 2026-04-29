@@ -1,5 +1,3 @@
 package proj.values;
 
-public interface IValue { /* represents values */
-    String toStr();
-}
+public interface IValue { /* represents values */ }

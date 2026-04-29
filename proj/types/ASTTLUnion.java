@@ -42,11 +42,11 @@ public class ASTTLUnion implements ASTLinType {
         return false;
     }
 
-    public String toStr() {
+    public String toString() {
         String res = "linear union {";
 
         for (String k : ll.keySet()) {
-            res += k + " = " + ll.get(k).toStr() + "; ";
+            res += k + " = " + ll.get(k).toString() + "; ";
         }
 
         if (ll.size() > 0) {

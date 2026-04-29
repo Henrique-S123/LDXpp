@@ -42,11 +42,11 @@ public class ASTApp implements ASTNode  {
         ASTType dom, codom;
         if (tf instanceof ASTTArrow fun) { dom = fun.getDom(); codom = fun.getCodom(); }
         else if (tf instanceof ASTTLollipop fun) { dom = fun.getDom(); codom = fun.getCodom(); }
-        else throw new TypeCheckError("illegal type for func app: " + tf.toStr());
+        else throw new TypeCheckError("illegal type for func app: " + tf.toString());
 
         ASTType ta = arg.typecheck(e, dom);
         if (ta instanceof ASTTUnit || ta.isSubtypeOf(dom, e)) return codom;
-        else throw new TypeCheckError("func app: argument type (" + ta.toStr() + ") is not subtype of the function parameter (" + dom.toStr() + ")");
+        else throw new TypeCheckError("func app: argument type (" + ta.toString() + ") is not subtype of the function parameter (" + dom.toString() + ")");
 	}
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {

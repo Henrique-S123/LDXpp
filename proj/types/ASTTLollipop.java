@@ -25,9 +25,9 @@ public class ASTTLollipop implements ASTLinType {
         return id;
     }
 
-    public String toStr() {
-        String domStr = (id == null) ? dom.toStr() : String.format("(%s:%s)", id, dom.toStr());
-        return domStr+"-o>"+codom.toStr();
+    public String toString() {
+        String domStr = (id == null) ? dom.toString() : String.format("(%s:%s)", id, dom.toString());
+        return domStr+"-o>"+codom.toString();
     }
 
     public boolean isSubtypeOf(ASTType o, EnvSet e) {

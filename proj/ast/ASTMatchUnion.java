@@ -38,7 +38,7 @@ public class ASTMatchUnion implements ASTNode {
 				return c.getExp().eval(en);
 			}
 		} else {
-			throw new InterpreterError("match: union expected, found " + vt.toStr());
+			throw new InterpreterError("match: union expected, found " + vt.toString());
 		}
     }
 
@@ -82,11 +82,11 @@ public class ASTMatchUnion implements ASTNode {
 				if ((tcase.isSubtypeOf(rettype, env) && rettype.isSubtypeOf(tcase, env)) || rettype == null) {
 					rettype = tcase;
 				} else {
-					throw new TypeCheckError("different types for match cases: " + tcase.toStr() + " and " + rettype.toStr());
+					throw new TypeCheckError("different types for match cases: " + tcase.toString() + " and " + rettype.toString());
 				}
 			}
 		} else {
-			throw new TypeCheckError("illegal type to match test: " + tt.toStr());
+			throw new TypeCheckError("illegal type to match test: " + tt.toString());
 		}
 		return rettype;
 	}

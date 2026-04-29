@@ -3,8 +3,6 @@ package proj.types;
 import proj.env.*;
 
 public interface ASTType  {
-    String toStr();
-
     boolean isSubtypeOf(ASTType o, EnvSet e);
 
     boolean defequals(ASTType o, Environment<ASTType> sigma);

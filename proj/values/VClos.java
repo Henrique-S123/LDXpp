@@ -36,10 +36,10 @@ public class VClos implements IValue {
         return lin;
     }
 
-    public String toStr() {
+    public String toString() {
         String res = lin ? "Linear closure with " : "Closure with ";
         res += (id != null) ? "arg " + id : "no arg";
-        res += " and environment " + env.toStr();
+        res += " and environment " + env.toString();
         return res;
     }
 }

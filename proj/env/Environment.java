@@ -75,13 +75,12 @@ public class Environment <E>{
         return null;
     }
 
-    public String toStr() {
+    public String toString() {
         String res = "[";
 
         for (String s : bindings.keySet()) {
             E val = bindings.get(s);
-            String valStr = (val instanceof ASTType ? ((ASTType) val).toStr() : val.toString());
-            res += s + ": " + valStr + "; ";
+            res += s + ": " + val + "; ";
         }
 
         if (bindings.size() > 0) {

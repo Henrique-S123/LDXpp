@@ -11,7 +11,7 @@ public class VString implements IValue {
         return s;
     }
 
-    public String toStr() {
+    public String toString() {
         return "\"" + s + "\"";
     }
 }

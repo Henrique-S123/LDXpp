@@ -4,7 +4,7 @@ import proj.env.*;
 
 public class ASTTUnit implements ASTType {
 
-    public String toStr() {
+    public String toString() {
         return "()";
     }
 

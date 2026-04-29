@@ -4,7 +4,7 @@ import proj.env.*;
 
 public class ASTTLInt implements ASTLinType {
     
-    public String toStr() {
+    public String toString() {
         return "linint";
     }
 

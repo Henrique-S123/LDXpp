@@ -13,7 +13,7 @@ public	class ASTTId implements ASTType	{
         return id;
     }
 
-    public String toStr() {
+    public String toString() {
         return id;
     }
 

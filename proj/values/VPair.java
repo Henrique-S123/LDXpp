@@ -30,8 +30,8 @@ public class VPair implements IValue {
         return lin;
     }
 
-    public String toStr() {
-        return lin ? "(" + f.toStr() + " | " + s.toStr() + ")"
-            : "(" + f.toStr() + ", " + s.toStr() + ")";
+    public String toString() {
+        return lin ? "(" + f.toString() + " | " + s.toString() + ")"
+            : "(" + f.toString() + ", " + s.toString() + ")";
     }
 }

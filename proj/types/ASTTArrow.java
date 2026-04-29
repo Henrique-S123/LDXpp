@@ -24,9 +24,9 @@ public class ASTTArrow implements ASTType {
         return id;
     }
 
-    public String toStr() {
-        String domStr = (id == null) ? dom.toStr() : String.format("(%s:%s)", id, dom.toStr());
-        return domStr+"->"+codom.toStr();
+    public String toString() {
+        String domStr = (id == null) ? dom.toString() : String.format("(%s:%s)", id, dom.toString());
+        return domStr+"->"+codom.toString();
     }
 
     public boolean isSubtypeOf(ASTType o, EnvSet e) {

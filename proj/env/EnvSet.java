@@ -126,7 +126,7 @@ public class EnvSet {
         }
     }
 
-    public String toStr() {
-        return "Γ: " + gamma.toStr() + "; Δ: " + delta.toStr() + "; Φ: " + phi.toStr() + "; Σ: " + sigma.toStr();
+    public String toString() {
+        return "Γ: " + gamma.toString() + "; Δ: " + delta.toString() + "; Φ: " + phi.toString() + "; Σ: " + sigma.toString();
     }
 }

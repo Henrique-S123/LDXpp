@@ -24,8 +24,8 @@ public class ASTTTensor implements ASTLinType {
         return id;
     }
 
-    public String toStr() {
-        return "(" + first.toStr() + " | " + second.toStr() + ")";
+    public String toString() {
+        return "(" + first.toString() + " | " + second.toString() + ")";
     }
 
     public boolean isSubtypeOf(ASTType o, EnvSet e) {

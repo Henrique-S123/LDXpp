@@ -17,7 +17,7 @@ public class VInt implements IValue {
         return lin;
     }
 
-    public String toStr() {
+    public String toString() {
         return Integer.toString(val) + (lin ? "l" : "");
     }
 }

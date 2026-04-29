@@ -20,7 +20,7 @@ public class VUnion implements IValue {
         return val;
     }
     
-    public String toStr() {
-        return (lin ? "linear union " : "union ") + label + "(" + val.toStr() + ")";
+    public String toString() {
+        return (lin ? "linear union " : "union ") + label + "(" + val.toString() + ")";
     }
 }

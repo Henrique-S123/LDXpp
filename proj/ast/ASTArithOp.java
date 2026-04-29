@@ -44,11 +44,11 @@ public class ASTArithOp implements ASTNode {
 			boolean lin = (((VInt) v1).islin() || ((VInt) v2).islin());
 			return new VInt(res, lin);
 		} else if ((v1 instanceof VString || v1 instanceof VInt) && (v2 instanceof VInt || v2 instanceof VString) && op == "+") {
-			String s1 = v1 instanceof VString ? ((VString) v1).getval() : v1.toStr();
-			String s2 = v2 instanceof VString ? ((VString) v2).getval() : v2.toStr();
+			String s1 = v1 instanceof VString ? ((VString) v1).getval() : v1.toString();
+			String s2 = v2 instanceof VString ? ((VString) v2).getval() : v2.toString();
 			return new VString(s1 + s2);
 		} else {
-			String types = (op == "-u" ? "" : (v1 + " and ")) + v2.toStr();
+			String types = (op == "-u" ? "" : (v1 + " and ")) + v2.toString();
 			if (op == "-u")
 				throw new InterpreterError("- unary operator: integer expected, found " + types);
 			else {
@@ -70,7 +70,7 @@ public class ASTArithOp implements ASTNode {
 		} else if ((tl instanceof ASTTInt || tl instanceof ASTTString) && (tr instanceof ASTTInt || tr instanceof ASTTString) && op == "+") {
 			return new ASTTString();
 		} else {
-			String types = (op == "-u" ? "" : (tl.toStr() + " and ")) + tr.toStr();
+			String types = (op == "-u" ? "" : (tl.toString() + " and ")) + tr.toString();
 			if (op == "-u")
 				throw new TypeCheckError("illegal type to - unary operator: " + types);
 			else

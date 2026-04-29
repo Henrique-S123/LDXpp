@@ -48,12 +48,12 @@ public class ASTPair implements ASTNode {
 
         ASTType t1 = first.typecheck(e, tt1);
         if (!t1.isSubtypeOf(tt1, e))
-            throw new TypeCheckError(String.format("pair: invalid type %s for first element %s", tt1.toStr(), first.toString()));
+            throw new TypeCheckError(String.format("pair: invalid type %s for first element %s", tt1.toString(), first.toString()));
         e.addEq(new ASTTEq(new ASTId(ttid), first, t1));
 
         ASTType t2 = second.typecheck(e, tt2);
         if (!t2.isSubtypeOf(tt2, e))
-            throw new TypeCheckError(String.format("pair: invalid type %s for second element %s", tt2.toStr(), second.toString()));
+            throw new TypeCheckError(String.format("pair: invalid type %s for second element %s", tt2.toString(), second.toString()));
 
         e.closeEnvScope(ENV.SIGMA);
         e.setEnv(ENV.DELTA, prevDelta);

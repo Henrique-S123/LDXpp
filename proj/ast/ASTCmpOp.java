@@ -57,7 +57,7 @@ public class ASTCmpOp implements ASTNode {
 		} else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt)) {
 			return new ASTTLBool();
 		} else {
-			throw new TypeCheckError("illegal types to " + op + " operator: " + tl.toStr() + " and " + tr.toStr());
+			throw new TypeCheckError("illegal types to " + op + " operator: " + tl.toString() + " and " + tr.toString());
 		}
 	}
 

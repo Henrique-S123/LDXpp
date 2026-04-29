@@ -24,8 +24,8 @@ public class ASTTPair implements ASTType {
         return id;
     }
 
-    public String toStr() {
-        return "(" + (id != null ? id + ":" : "") + first.toStr() + ", " + second.toStr() + ")";
+    public String toString() {
+        return "(" + (id != null ? id + ":" : "") + first.toString() + ", " + second.toString() + ")";
     }
 
     public boolean isSubtypeOf(ASTType o, EnvSet e) {

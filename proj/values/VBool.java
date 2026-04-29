@@ -16,7 +16,7 @@ public class VBool implements IValue {
         return lin;
     }
 
-    public String toStr() {
+    public String toString() {
         return Boolean.toString(val) + (lin ? "l" : "");
     }
 }

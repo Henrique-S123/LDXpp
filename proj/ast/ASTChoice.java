@@ -27,7 +27,7 @@ public class ASTChoice implements ASTNode  {
         if (vp instanceof VPair pair) {
             return choice > 0 ? pair.getSecond() : pair.getFirst();
         } else {
-            throw new InterpreterError((choice > 0 ? "snd" : "fst") + ": pair expected, found " + vp.toStr());
+            throw new InterpreterError((choice > 0 ? "snd" : "fst") + ": pair expected, found " + vp.toString());
         }           
     }
 
@@ -36,7 +36,7 @@ public class ASTChoice implements ASTNode  {
         if (tp instanceof ASTTPair tpair) {
             return choice > 0 ? tpair.getSecond() : tpair.getFirst();
         } else {
-            throw new TypeCheckError("illegal type to " + (choice > 0 ? "snd" : "fst") + ": " + tp.toStr());
+            throw new TypeCheckError("illegal type to " + (choice > 0 ? "snd" : "fst") + ": " + tp.toString());
         }
 	}
 

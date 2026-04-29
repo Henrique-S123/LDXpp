@@ -44,11 +44,11 @@ public class ASTTUnion implements ASTType {
         return false;
     }
 
-    public String toStr() {
+    public String toString() {
         String res = "union {";
 
         for (String k : ll.keySet()) {
-            res += k + " = " + ll.get(k).toStr() + "; ";
+            res += k + " = " + ll.get(k).toString() + "; ";
         }
 
         if (ll.size() > 0) {

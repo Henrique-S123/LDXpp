@@ -4,7 +4,7 @@ import proj.env.*;
 
 public class ASTTString implements ASTType {
 
-    public String toStr() {
+    public String toString() {
         return "string";
     }
 

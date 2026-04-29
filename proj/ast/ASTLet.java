@@ -45,7 +45,7 @@ public class ASTLet implements ASTNode {
         if (declType != null) {
             ASTType exprType = expr.typecheck(e, tt);
             if (!(exprType.isSubtypeOf(tt, e))) {
-                throw new TypeCheckError("types to bind are not subtypes: " + exprType.toStr() + " and " + tt.toStr());
+                throw new TypeCheckError("types to bind are not subtypes: " + exprType.toString() + " and " + tt.toString());
             }
         }
 
@@ -54,7 +54,7 @@ public class ASTLet implements ASTNode {
 
         ASTType rt = body.typecheck(e);
         if (!(e.getEnv(ENV.DELTA).isEmpty()))
-            throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA).toStr());
+            throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA).toString());
 
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
@@ -83,7 +83,7 @@ public class ASTLet implements ASTNode {
     @Override
     public String toString() {
         ASTType tt = bind.getType();
-        String typeString = (tt == null ? "" : String.format(" %s,", tt.toStr()));
+        String typeString = (tt == null ? "" : String.format(" %s,", tt.toString()));
 		return String.format("let(%s,%s %s, %s)", bind.getId(), typeString, bind.getExp().toString(), body.toString());
 	}
 }
