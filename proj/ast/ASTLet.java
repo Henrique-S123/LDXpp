@@ -50,7 +50,7 @@ public class ASTLet implements ASTNode {
         }
 
         e.addEq(new ASTTEq(new ASTId(id), expr, tt));
-        e.bindToEnv(ENV.PHI, id, tt);
+        e.bindToEnv(ENV.SIGMA, id, tt);
 
         ASTType rt = body.typecheck(e);
         if (!(e.getEnv(ENV.DELTA).isEmpty()))
