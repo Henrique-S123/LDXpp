@@ -39,8 +39,8 @@ public class ASTSeq implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma) {
-        return new ASTSeq(first.normalize(sigma), second.normalize(sigma));
+	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
+        return new ASTSeq(first.normalize(sigma, e), second.normalize(sigma, e));
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

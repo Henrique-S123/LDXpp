@@ -62,13 +62,15 @@ public class ASTIf implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma) {
-		if (test.normalize(sigma).defequals(new ASTBool(true), sigma) || test.normalize(sigma).defequals(new ASTLBool(true), sigma))
-			return conseq.normalize(sigma);
-		else if (test.normalize(sigma).defequals(new ASTBool(false), sigma) || test.normalize(sigma).defequals(new ASTLBool(false), sigma))
-			return alt.normalize(sigma);
-		else
-			return new ASTIf(test.normalize(sigma), conseq.normalize(sigma), alt.normalize(sigma));
+	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
+		ASTNode tn = test.normalize(sigma, e);
+		boolean val;
+		if (tn instanceof ASTBool b) val = b.getVal();
+		else if (tn instanceof ASTLBool lb) val = lb.getVal();
+		else return new ASTIf(tn, conseq.normalize(sigma, e), alt.normalize(sigma, e));
+
+		if (val) return conseq.normalize(sigma, e);
+		else return alt.normalize(sigma, e);
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

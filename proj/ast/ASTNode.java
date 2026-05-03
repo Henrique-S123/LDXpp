@@ -12,7 +12,7 @@ public interface ASTNode {
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError;
 
-    public ASTNode normalize(Environment<ASTType> sigma);
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e);
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma);
 }

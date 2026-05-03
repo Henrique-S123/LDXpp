@@ -53,17 +53,18 @@ public class ASTApp implements ASTNode  {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma) {
-        ASTNode body, fn = func.normalize(sigma);
-        ASTType targ;
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
+        ASTNode body, fn = func.normalize(sigma, e);
+        ASTNode argn = arg.normalize(sigma, e);
+        Environment<ASTNode> normEnv;
         String id;
-        if (fn instanceof ASTFunc f) { body = f.getBody(); targ = f.getArgtype(); id = f.getId(); }
-        else if (fn instanceof ASTLFunc lf) { body = lf.getBody(); targ = lf.getArgtype(); id = lf.getId(); }
-        else return this;
+        if (fn instanceof ASTFunc f) { body = f.getBody(); normEnv = f.getNormEnv(); id = f.getId(); }
+        else if (fn instanceof ASTLFunc lf) { body = lf.getBody(); normEnv = lf.getNormEnv(); id = lf.getId(); }
+        else return new ASTApp(fn, argn);
 
-        Environment<ASTType> env = sigma.beginScope();
-        env.addEq(new ASTTEq(new ASTId(id), arg.normalize(sigma), targ));
-        return body.normalize(env);
+        Environment<ASTNode> env = normEnv.beginScope();
+        env.assoc(id, argn);
+        return body.normalize(sigma, env);
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

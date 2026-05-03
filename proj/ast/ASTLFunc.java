@@ -10,11 +10,20 @@ public class ASTLFunc implements ASTNode  {
     String id;
     ASTNode body;
     ASTType argtype;
+    Environment<ASTNode> normEnv;
 
     public ASTLFunc(String i, ASTNode b, ASTType t) {
         id = i;
         body = b;
         argtype = t;
+        normEnv = null;
+    }
+
+    public ASTLFunc(String i, ASTNode b, ASTType t, Environment<ASTNode> e) {
+        id = i;
+        body = b;
+        argtype = t;
+        normEnv = e;
     }
 
     public String getId() {
@@ -27,6 +36,10 @@ public class ASTLFunc implements ASTNode  {
 
     public ASTType getArgtype() {
         return argtype;
+    }
+
+    public Environment<ASTNode> getNormEnv() {
+        return normEnv;
     }
 
     public void setBody(ASTNode b) {
@@ -77,8 +90,8 @@ public class ASTLFunc implements ASTNode  {
         return new ASTTLollipop(targtype, tb, id);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma) {
-        return new ASTLFunc(id, body.normalize(sigma), argtype);
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
+        return new ASTLFunc(id, body.normalize(sigma, e), argtype, e);
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

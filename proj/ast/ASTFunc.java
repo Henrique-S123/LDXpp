@@ -6,15 +6,26 @@ import proj.env.*;
 import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
+import java.util.UUID;
+
 public class ASTFunc implements ASTNode  {
     String id;
     ASTNode body;
     ASTType argtype;
+    Environment<ASTNode> normEnv;
 
     public ASTFunc(String i, ASTNode b, ASTType t) {
         id = i;
         body = b;
         argtype = t;
+        normEnv = null;
+    }
+
+    public ASTFunc(String i, ASTNode b, ASTType t, Environment<ASTNode> e) {
+        id = i;
+        body = b;
+        argtype = t;
+        normEnv = e;
     }
 
     public String getId() {
@@ -27,6 +38,10 @@ public class ASTFunc implements ASTNode  {
 
     public ASTType getArgtype() {
         return argtype;
+    }
+
+    public Environment<ASTNode> getNormEnv() {
+        return normEnv;
     }
 
     public void setBody(ASTNode b) {
@@ -82,13 +97,21 @@ public class ASTFunc implements ASTNode  {
         return new ASTTArrow(targtype, tb, id);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma) {
-        return new ASTFunc(id, body.normalize(sigma), argtype);
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
+        return new ASTFunc(id, body.normalize(sigma, e), argtype, e);
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        return o instanceof ASTFunc ofunc && ofunc.getId().equals(id)
-            && ofunc.getBody().defequals(body, sigma) && ofunc.getArgtype().defequals(argtype, sigma);
+        return o instanceof ASTFunc ofunc && ofunc.getArgtype().defequals(argtype, sigma)
+            && alphaequiv(body, ofunc.getBody(), ofunc.getId(), sigma, new Environment<ASTNode>());
+    }
+
+    public boolean alphaequiv(ASTNode t1, ASTNode t2, String id2, Environment<ASTType> sigma, Environment<ASTNode> e) {
+        String newid = UUID.randomUUID().toString();
+        Environment<ASTNode> env = e.beginScope();
+        env.assoc(id, new ASTId(newid));
+        env.assoc(id2, new ASTId(newid));
+        return t1.normalize(sigma, env).defequals(t2.normalize(sigma, env), sigma);
     }
 
     @Override

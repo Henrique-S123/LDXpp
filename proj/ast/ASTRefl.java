@@ -23,13 +23,15 @@ public class ASTRefl implements ASTNode  {
             throw new TypeCheckError("refl: expected equality type");
 
         Environment<ASTType> sigma = e.getEnv(ENV.SIGMA);
-        if (!(tt.getTerm1().normalize(sigma).defequals(tt.getTerm2().normalize(sigma), sigma)))
+        ASTNode ln = tt.getTerm1().normalize(sigma, new Environment<ASTNode>());
+        ASTNode rn = tt.getTerm2().normalize(sigma, new Environment<ASTNode>());
+        if (!(ln.defequals(rn, sigma)))
             throw new TypeCheckError(String.format("refl: terms %s and %s are not definitionally equal", tt.getTerm1(), tt.getTerm2()));
 
         return t;
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma) {
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
         return this;
     }
 

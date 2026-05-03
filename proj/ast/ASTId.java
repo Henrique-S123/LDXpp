@@ -28,11 +28,13 @@ public class ASTId implements ASTNode	{
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma) {
-        ASTType e = sigma.findEq(this);
-        if (e == null) return this;
-        ASTTEq eq = ((ASTTEq) e);
-        return eq.getTerm2().normalize(sigma);
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
+        // TODO: verify sigma and e dont have ids in common
+        ASTNode n = e.find(id, false);
+        if (n != null) return n;
+
+        ASTType eq = sigma.findEq(this);
+        return eq == null ? this : ((ASTTEq) eq).getTerm2().normalize(sigma, e);
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

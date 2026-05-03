@@ -40,8 +40,15 @@ public class ASTTEq implements ASTType {
     }
 
     public boolean defequals(ASTType o, Environment<ASTType> sigma) {
-        return o instanceof ASTTEq eq && eq.getTerm1().normalize(sigma).defequals(term1.normalize(sigma), sigma)
-            && eq.getTerm2().normalize(sigma).defequals(term2.normalize(sigma), sigma) && eq.getType().defequals(type, sigma);
+        if (o instanceof ASTTEq eq) {
+            ASTNode t1 = term1.normalize(sigma, new Environment<ASTNode>());
+            ASTNode t2 = term2.normalize(sigma, new Environment<ASTNode>());
+            ASTNode ot1 = eq.getTerm1().normalize(sigma, new Environment<ASTNode>());
+            ASTNode ot2 = eq.getTerm2().normalize(sigma, new Environment<ASTNode>());
+            ASTType t = eq.getType();
+            return ot1.defequals(t1, sigma) && ot2.defequals(t2, sigma) && t.defequals(type, sigma);
+        }
+        return false;
     }
 }
 

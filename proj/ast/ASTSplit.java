@@ -80,15 +80,17 @@ public class ASTSplit implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma) {
-		ASTNode normPair = pair.normalize(sigma);
-		ASTNode normFirst = ((ASTTensor) normPair).getFirst().normalize(sigma);
-		ASTNode normSecond = ((ASTTensor) normPair).getSecond().normalize(sigma);
+	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
+		ASTNode pn = pair.normalize(sigma, e);
+		ASTNode f, s;
+		if (pn instanceof ASTTensor t) { f = t.getFirst(); s = t.getSecond(); }
+		else return new ASTSplit(pn, id2, id1, body.normalize(sigma, e));
 
-		Environment<ASTType> env = sigma.beginScope();
-		env.addEq(new ASTTEq(new ASTId(id1), normFirst, sigma.find(id1, false)));
-		env.addEq(new ASTTEq(new ASTId(id2), normSecond, sigma.find(id2, false)));
-        return body.normalize(env);
+		ASTNode fn = f.normalize(sigma, e), sn = s.normalize(sigma, e);
+		Environment<ASTNode> env = e.beginScope();
+		env.assoc(id1, fn);
+		env.assoc(id2, sn);
+        return body.normalize(sigma, env);
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

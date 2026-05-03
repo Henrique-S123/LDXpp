@@ -66,11 +66,11 @@ public class ASTLet implements ASTNode {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma) {
-        ASTNode normExp = bind.getExp().normalize(sigma);
-        Environment<ASTType> env = sigma.beginScope();
-        env.addEq(new ASTTEq(new ASTId(bind.getId()), normExp, sigma.find(bind.getId(), false)));
-        return body.normalize(env);
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
+        ASTNode normExp = bind.getExp().normalize(sigma, e);
+        Environment<ASTNode> env = e.beginScope();
+        env.assoc(bind.getId(), normExp);
+        return body.normalize(sigma, env);
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

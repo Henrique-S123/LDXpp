@@ -60,8 +60,8 @@ public class ASTPair implements ASTNode {
         return t;
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma) {
-        return new ASTPair(first.normalize(sigma), second.normalize(sigma));
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
+        return new ASTPair(first.normalize(sigma, e), second.normalize(sigma, e));
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
