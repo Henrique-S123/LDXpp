@@ -98,20 +98,27 @@ public class ASTFunc implements ASTNode  {
     }
 
     public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
-        return new ASTFunc(id, body.normalize(sigma, e), argtype, e);
+        ASTNode n = e.find(id, false);
+        String newid = (n instanceof ASTId idn) ? idn.getId() : id;
+        return new ASTFunc(newid, body.normalize(sigma, e), argtype, e);
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
         return o instanceof ASTFunc ofunc && ofunc.getArgtype().defequals(argtype, sigma)
-            && alphaequiv(body, ofunc.getBody(), ofunc.getId(), sigma, new Environment<ASTNode>());
+            && alphaequiv(ofunc, sigma);
     }
 
-    public boolean alphaequiv(ASTNode t1, ASTNode t2, String id2, Environment<ASTType> sigma, Environment<ASTNode> e) {
+    public boolean alphaequiv(ASTFunc t2, Environment<ASTType> sigma) {
         String newid = UUID.randomUUID().toString();
-        Environment<ASTNode> env = e.beginScope();
-        env.assoc(id, new ASTId(newid));
-        env.assoc(id2, new ASTId(newid));
-        return t1.normalize(sigma, env).defequals(t2.normalize(sigma, env), sigma);
+        Environment<ASTNode> e = new Environment<ASTNode>();
+        Environment<ASTNode> lenv = e.beginScope();
+        Environment<ASTNode> renv = e.beginScope();
+        lenv.assoc(id, new ASTId(newid));
+        renv.assoc(t2.getId(), new ASTId(newid));
+
+        ASTNode bn = body.normalize(sigma, lenv);
+        ASTNode obn = t2.getBody().normalize(sigma, renv);
+        return bn.defequals(obn, sigma);
     }
 
     @Override

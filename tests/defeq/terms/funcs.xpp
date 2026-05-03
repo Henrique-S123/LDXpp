@@ -5,3 +5,23 @@ let f = fn x:int => {x}; f(1) ? 1;;
 let f = lfn x:int =o> {x}; f(1) ? 1;;
 
 (let f = lfn x:int =o> {x}; f(1)) ? 1;;
+
+fn x:int => {x} ? fn y:int => {y};;
+
+fn x:int => {fn y:int => {x}} ? fn a:int => {fn b:int => {a}};;
+
+fn x:int => {fn y:int => {x}} ? fn x:int => {fn y:int => {y}};;
+
+fn y:int => {fn x:int => {y}} ? fn x:int => {fn y:int => {x}};;
+
+fn x:int => {fn y:int => {x}} ? fn y:int => {fn y:int => {y}};;
+
+lfn x:int =o> {x} ? lfn y:int =o> {y};;
+
+lfn x:int =o> {lfn y:int =o> {x}} ? lfn a:int =o> {lfn b:int =o> {a}};;
+
+lfn x:int =o> {lfn y:int =o> {x}} ? lfn x:int =o> {lfn y:int =o> {y}};;
+
+lfn y:int =o> {lfn x:int =o> {y}} ? lfn x:int =o> {lfn y:int =o> {x}};;
+
+lfn x:int =o> {lfn y:int =o> {x}} ? lfn y:int =o> {lfn y:int =o> {y}};;
