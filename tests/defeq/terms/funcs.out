@@ -40,3 +40,21 @@ type: lfn y:int => {lfn x:int => {y}} ≡ lfn x:int => {lfn y:int => {x}} : (y:i
 class proj.errors.TypeCheckError: terms lfn x:int => {lfn y:int => {x}} and lfn y:int => {lfn y:int => {y}} are not definitionally equal
 
 
+type: let(x, 0, let(f, fn y:int => {x}, let(x, 1, f(5)))) ≡ 0 : int, value: true
+
+
+class proj.errors.TypeCheckError: terms let(x, 0, let(f, fn y:int => {x}, let(x, 1, f(5)))) and 1 are not definitionally equal
+
+
+type: f(5) ≡ 0 : int, value: true
+
+
+class proj.errors.TypeCheckError: terms f(5) and 1 are not definitionally equal
+
+
+type: fn y:int => {fn f:int->int => {f(0)}(fn x:int => {y})}(1) ≡ 1 : int, value: true
+
+
+type: f(a) ≡ 1 : int, value: true
+
+

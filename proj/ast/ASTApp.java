@@ -57,14 +57,15 @@ public class ASTApp implements ASTNode  {
         ASTNode body, fn = func.normalize(sigma, e);
         ASTNode argn = arg.normalize(sigma, e);
         Environment<ASTNode> normEnv;
+        Environment<ASTType> normSigma;
         String id;
-        if (fn instanceof ASTFunc f) { body = f.getBody(); normEnv = f.getNormEnv(); id = f.getId(); }
-        else if (fn instanceof ASTLFunc lf) { body = lf.getBody(); normEnv = lf.getNormEnv(); id = lf.getId(); }
+        if (fn instanceof ASTFunc f) { body = f.getBody(); normEnv = f.getNormEnv(); normSigma = f.getNormSigma(); id = f.getId(); }
+        else if (fn instanceof ASTLFunc lf) { body = lf.getBody(); normEnv = lf.getNormEnv(); normSigma = lf.getNormSigma(); id = lf.getId(); }
         else return new ASTApp(fn, argn);
 
         Environment<ASTNode> env = normEnv.beginScope();
         env.assoc(id, argn);
-        return body.normalize(sigma, env);
+        return body.normalize(normSigma, env);
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

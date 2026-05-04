@@ -2,31 +2,33 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
-
-import java.util.UUID;
-
 import proj.env.*;
 import proj.env.EnvSet.ENV;
 import proj.errors.*;
+
+import java.util.UUID;
 
 public class ASTLFunc implements ASTNode  {
     String id;
     ASTNode body;
     ASTType argtype;
     Environment<ASTNode> normEnv;
+    Environment<ASTType> normSigma;
 
     public ASTLFunc(String i, ASTNode b, ASTType t) {
         id = i;
         body = b;
         argtype = t;
         normEnv = null;
+        normSigma = null;
     }
 
-    public ASTLFunc(String i, ASTNode b, ASTType t, Environment<ASTNode> e) {
+    public ASTLFunc(String i, ASTNode b, ASTType t, Environment<ASTNode> e, Environment<ASTType> sigma) {
         id = i;
         body = b;
         argtype = t;
         normEnv = e;
+        normSigma = sigma;
     }
 
     public String getId() {
@@ -43,6 +45,10 @@ public class ASTLFunc implements ASTNode  {
 
     public Environment<ASTNode> getNormEnv() {
         return normEnv;
+    }
+
+    public Environment<ASTType> getNormSigma() {
+        return normSigma;
     }
 
     public void setBody(ASTNode b) {
@@ -96,7 +102,7 @@ public class ASTLFunc implements ASTNode  {
     public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
         ASTNode n = e.find(id, false);
         String newid = (n instanceof ASTId idn) ? idn.getId() : id;
-        return new ASTLFunc(newid, body.normalize(sigma, e), argtype, e);
+        return new ASTLFunc(newid, body.normalize(sigma, e), argtype, e, sigma);
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

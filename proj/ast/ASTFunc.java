@@ -13,19 +13,22 @@ public class ASTFunc implements ASTNode  {
     ASTNode body;
     ASTType argtype;
     Environment<ASTNode> normEnv;
+    Environment<ASTType> normSigma;
 
     public ASTFunc(String i, ASTNode b, ASTType t) {
         id = i;
         body = b;
         argtype = t;
         normEnv = null;
+        normSigma = null;
     }
 
-    public ASTFunc(String i, ASTNode b, ASTType t, Environment<ASTNode> e) {
+    public ASTFunc(String i, ASTNode b, ASTType t, Environment<ASTNode> e, Environment<ASTType> sigma) {
         id = i;
         body = b;
         argtype = t;
         normEnv = e;
+        normSigma = sigma;
     }
 
     public String getId() {
@@ -44,8 +47,16 @@ public class ASTFunc implements ASTNode  {
         return normEnv;
     }
 
+    public Environment<ASTType> getNormSigma() {
+        return normSigma;
+    }
+
     public void setBody(ASTNode b) {
         body = b;
+    }
+
+    public void setNormSigma(Environment<ASTType> s) {
+        normSigma = s;
     }
 
     public IValue eval(Environment<IValue> e) throws InterpreterError {
@@ -58,6 +69,7 @@ public class ASTFunc implements ASTNode  {
         e.openEnvScope(ENV.SIGMA);
         e.bindToEnv(ENV.GAMMA, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
+        setNormSigma(e.getEnv(ENV.SIGMA));
         Environment<ASTType> prevDelta = e.popDelta();
 
         ASTType tb = body.typecheck(e);
@@ -87,6 +99,7 @@ public class ASTFunc implements ASTNode  {
 
         e.bindToEnv(ENV.GAMMA, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
+        setNormSigma(e.getEnv(ENV.SIGMA));
 
         ASTType tb = body.typecheck(e, tcodom);
 
@@ -100,7 +113,7 @@ public class ASTFunc implements ASTNode  {
     public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
         ASTNode n = e.find(id, false);
         String newid = (n instanceof ASTId idn) ? idn.getId() : id;
-        return new ASTFunc(newid, body.normalize(sigma, e), argtype, e);
+        return new ASTFunc(newid, body.normalize(getNormSigma(), e), argtype, e, getNormSigma());
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

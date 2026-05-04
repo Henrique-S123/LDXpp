@@ -25,3 +25,17 @@ lfn x:int =o> {lfn y:int =o> {x}} ? lfn x:int =o> {lfn y:int =o> {y}};;
 lfn y:int =o> {lfn x:int =o> {y}} ? lfn x:int =o> {lfn y:int =o> {x}};;
 
 lfn x:int =o> {lfn y:int =o> {x}} ? lfn y:int =o> {lfn y:int =o> {y}};;
+
+(let x = 0; let f = fn y:int => {x}; let x = 1; f(5)) ? 0;;
+
+(let x = 0; let f = fn y:int => {x}; let x = 1; f(5)) ? 1;;
+
+let x = 0; let f = fn y:int => {x}; let x = 1; f(5) ? 0;;
+
+let x = 0; let f = fn y:int => {x}; let x = 1; f(5) ? 1;;
+
+(fn y:int => {(fn f:int->int => {f(0)})(fn x:int =>{y})})(1) ? 1;;
+
+let a = 1;
+let f = fn y:int => {(fn f2:int->int => {f2(0)})(fn x:int =>{y})};
+f(a) ? 1;;
