@@ -82,8 +82,8 @@ public class ASTArithOp implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
-		return new ASTArithOp(lhs.normalize(sigma, e), rhs.normalize(sigma, e), op);
+	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+		return new ASTArithOp(lhs.normalize(sigma, sub), rhs.normalize(sigma, sub), op);
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

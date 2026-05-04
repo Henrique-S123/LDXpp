@@ -53,9 +53,9 @@ public class ASTApp implements ASTNode  {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
-        ASTNode body, fn = func.normalize(sigma, e);
-        ASTNode argn = arg.normalize(sigma, e);
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+        ASTNode body, fn = func.normalize(sigma, sub);
+        ASTNode argn = arg.normalize(sigma, sub);
         Environment<ASTNode> normEnv;
         Environment<ASTType> normSigma;
         String id;

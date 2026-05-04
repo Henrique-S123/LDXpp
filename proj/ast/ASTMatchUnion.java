@@ -95,8 +95,8 @@ public class ASTMatchUnion implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
-		ASTNode exp, tn = test.normalize(sigma, e);
+	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+		ASTNode exp, tn = test.normalize(sigma, sub);
 		String label;
 		if (tn instanceof ASTUnion un) { exp = un.getExpr(); label = un.getLabel(); }
 		else if (tn instanceof ASTLUnion lun) { exp = lun.getExpr(); label = lun.getLabel(); }
@@ -104,9 +104,9 @@ public class ASTMatchUnion implements ASTNode {
 
 		MatchCase c = cases.get(label);
 		String id = c.getId();
-		ASTNode body = c.getExp(), expn = exp.normalize(sigma, e);
+		ASTNode body = c.getExp(), expn = exp.normalize(sigma, sub);
 
-		Environment<ASTNode> env = e.beginScope();
+		Environment<ASTNode> env = sub.beginScope();
 		env.assoc(id, expn);
 		return body.normalize(sigma, env);
     }

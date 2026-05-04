@@ -44,12 +44,12 @@ public class ASTChoice implements ASTNode  {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
-        ASTNode pn = pair.normalize(sigma, e);
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+        ASTNode pn = pair.normalize(sigma, sub);
         ASTNode first, second;
         if (pn instanceof ASTPair p) { first = p.getFirst(); second = p.getSecond(); }
         else return new ASTChoice(pn, choice);
-        return choice == 0 ? first.normalize(sigma, e) : second.normalize(sigma, e);
+        return choice == 0 ? first.normalize(sigma, sub) : second.normalize(sigma, sub);
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

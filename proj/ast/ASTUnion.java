@@ -42,8 +42,8 @@ public class ASTUnion implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
-		return new ASTUnion(label, expr.normalize(sigma, e));
+	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+		return new ASTUnion(label, expr.normalize(sigma, sub));
     }
 
 	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

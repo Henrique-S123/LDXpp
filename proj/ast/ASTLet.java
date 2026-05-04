@@ -66,9 +66,9 @@ public class ASTLet implements ASTNode {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
-        ASTNode normExp = bind.getExp().normalize(sigma, e);
-        Environment<ASTNode> env = e.beginScope();
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+        ASTNode normExp = bind.getExp().normalize(sigma, sub);
+        Environment<ASTNode> env = sub.beginScope();
         env.assoc(bind.getId(), normExp);
         return body.normalize(sigma, env);
     }

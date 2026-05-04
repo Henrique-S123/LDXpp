@@ -23,11 +23,11 @@ public class ASTLFunc implements ASTNode  {
         normSigma = null;
     }
 
-    public ASTLFunc(String i, ASTNode b, ASTType t, Environment<ASTNode> e, Environment<ASTType> sigma) {
+    public ASTLFunc(String i, ASTNode b, ASTType t, Environment<ASTNode> sub, Environment<ASTType> sigma) {
         id = i;
         body = b;
         argtype = t;
-        normEnv = e;
+        normEnv = sub;
         normSigma = sigma;
     }
 
@@ -99,10 +99,10 @@ public class ASTLFunc implements ASTNode  {
         return new ASTTLollipop(targtype, tb, id);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
-        ASTNode n = e.find(id, false);
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+        ASTNode n = sub.find(id, false);
         String newid = (n instanceof ASTId idn) ? idn.getId() : id;
-        return new ASTLFunc(newid, body.normalize(sigma, e), argtype, e, sigma);
+        return new ASTLFunc(newid, body.normalize(sigma, sub), argtype, sub, sigma);
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

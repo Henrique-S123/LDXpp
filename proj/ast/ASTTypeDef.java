@@ -42,8 +42,8 @@ public class ASTTypeDef implements ASTNode {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
-        return new ASTTypeDef(ltd, body.normalize(sigma, e));
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+        return new ASTTypeDef(ltd, body.normalize(sigma, sub));
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

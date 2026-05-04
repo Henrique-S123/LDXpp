@@ -27,7 +27,7 @@ public class ASTInt implements ASTNode  {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
         return this;
     }
 

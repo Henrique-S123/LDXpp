@@ -23,11 +23,11 @@ public class ASTFunc implements ASTNode  {
         normSigma = null;
     }
 
-    public ASTFunc(String i, ASTNode b, ASTType t, Environment<ASTNode> e, Environment<ASTType> sigma) {
+    public ASTFunc(String i, ASTNode b, ASTType t, Environment<ASTNode> sub, Environment<ASTType> sigma) {
         id = i;
         body = b;
         argtype = t;
-        normEnv = e;
+        normEnv = sub;
         normSigma = sigma;
     }
 
@@ -110,10 +110,10 @@ public class ASTFunc implements ASTNode  {
         return new ASTTArrow(targtype, tb, id);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
-        ASTNode n = e.find(id, false);
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+        ASTNode n = sub.find(id, false);
         String newid = (n instanceof ASTId idn) ? idn.getId() : id;
-        return new ASTFunc(newid, body.normalize(getNormSigma(), e), argtype, e, getNormSigma());
+        return new ASTFunc(newid, body.normalize(getNormSigma(), sub), argtype, sub, getNormSigma());
     }
 
     public boolean defequals(ASTNode o, Environment<ASTType> sigma) {

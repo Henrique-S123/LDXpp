@@ -31,7 +31,7 @@ public class ASTRefl implements ASTNode  {
         return t;
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> e) {
+    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
         return this;
     }
 
