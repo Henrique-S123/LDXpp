@@ -10,12 +10,6 @@ public class ASTLet implements ASTNode {
     Bind bind;
     ASTNode body;
 
-    public IValue eval(Env<IValue> e) throws InterpreterError {
-        Env<IValue> en = e.beginScope();
-        en.assoc(bind.getId(), bind.getExp().eval(en));
-        return body.eval(en);
-    }
-
     public ASTLet(Bind bi, ASTNode b) {
         bind = bi;
         body = b;
@@ -28,6 +22,12 @@ public class ASTLet implements ASTNode {
     public ASTNode getBody() {
         return body;
     } 
+
+    public IValue eval(Env<IValue> e) throws InterpreterError {
+        Env<IValue> en = e.beginScope();
+        en.assoc(bind.getId(), bind.getExp().eval(en));
+        return body.eval(en);
+    }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         String id = bind.getId();
@@ -74,9 +74,9 @@ public class ASTLet implements ASTNode {
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTLet olet && olet.getBind().getExp().defequals(bind.getExp(), sigma, alpha)
-            && olet.getBind().getType().defequals(bind.getType(), sigma, alpha)
-            && olet.getBody().defequals(body, sigma, alpha.extend(bind.getId(), olet.getBind().getId()));
+        return o instanceof ASTLet olet && bind.getExp().defequals(olet.getBind().getExp(), sigma, alpha)
+            && bind.getType().defequals(olet.getBind().getType(), sigma, alpha)
+            && body.defequals(olet.getBody(), sigma, alpha.extend(bind.getId(), olet.getBind().getId()));
     }
 
     @Override
