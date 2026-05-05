@@ -58,3 +58,21 @@ class proj.errors.TypeCheckError: types (x:int)->(y:int)->x ≡ y : int and (y:i
 class proj.errors.TypeCheckError: types (x:int)->(y:int)->x ≡ y : int and (y:int)->(x:int)->y ≡ y : int are not definitionally equal
 
 
+type: (), value: true
+
+
+type: (), value: true
+
+
+type: (), value: true
+
+
+class proj.errors.TypeCheckError: types (x:linint)-o>(y:linint)-o>x ≡ y : linint and (x:linint)-o>(y:linint)-o>x ≡ x : linint are not definitionally equal
+
+
+class proj.errors.TypeCheckError: types (x:linint)-o>(y:linint)-o>x ≡ y : linint and (y:linint)-o>(x:linint)-o>x ≡ x : linint are not definitionally equal
+
+
+class proj.errors.TypeCheckError: types (x:linint)-o>(y:linint)-o>x ≡ y : linint and (y:linint)-o>(x:linint)-o>y ≡ y : linint are not definitionally equal
+
+

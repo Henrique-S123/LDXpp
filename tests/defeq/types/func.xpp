@@ -37,3 +37,15 @@ string-o>int ?T string-o>linint;;
 (int:x)->(int:y)->eq(x=y:int) ?T (int:y)->(int:x)->eq(x=x:int);;
 
 (int:x)->(int:y)->eq(x=y:int) ?T (int:y)->(int:x)->eq(y=y:int);;
+
+(linint:x)-o>eq(x=x:linint) ?T (linint:x)-o>eq(x=x:linint);;
+
+(linint:x)-o>eq(x=x:linint) ?T (linint:y)-o>eq(y=y:linint);;
+
+(linint:x)-o>(linint:y)-o>eq(x=y:linint) ?T (linint:y)-o>(linint:x)-o>eq(y=x:linint);;
+
+(linint:x)-o>(linint:y)-o>eq(x=y:linint) ?T (linint:x)-o>(linint:y)-o>eq(x=x:linint);;
+
+(linint:x)-o>(linint:y)-o>eq(x=y:linint) ?T (linint:y)-o>(linint:x)-o>eq(x=x:linint);;
+
+(linint:x)-o>(linint:y)-o>eq(x=y:linint) ?T (linint:y)-o>(linint:x)-o>eq(y=y:linint);;
