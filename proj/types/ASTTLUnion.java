@@ -17,10 +17,8 @@ public class ASTTLUnion implements ASTLinType {
     }
 
     public boolean isSubtypeOf(ASTType o, EnvSet e) {
-        if (o instanceof ASTTId) {
-            ASTType to = e.unfold(o);
-            return this.isSubtypeOf(to, e);
-        } else if (o instanceof ASTTLUnion olunion) {
+        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e);
+        if (o instanceof ASTTLUnion olunion) {
             Map<String, ASTType> mb = olunion.getMap();
             for (String s : ll.keySet())
                 if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), e))) return false;

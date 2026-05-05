@@ -30,15 +30,11 @@ public class ASTTArrow implements ASTType {
     }
 
     public boolean isSubtypeOf(ASTType o, EnvSet e) {
-        if (o instanceof ASTTId) {
-            ASTType to = e.unfold(o);
-            return this.isSubtypeOf(to, e);
-        }
+        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e);
         ASTType odom, ocodom;
         if (o instanceof ASTTArrow arrow) { odom = arrow.getDom(); ocodom = arrow.getCodom(); }
         else if (o instanceof ASTTLollipop lolli) { odom = lolli.getDom(); ocodom = lolli.getCodom(); }
         else return false;
-
         return odom.isSubtypeOf(dom, e) && codom.isSubtypeOf(ocodom, e);
     }
 

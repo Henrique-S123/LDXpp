@@ -29,10 +29,7 @@ public class ASTTPair implements ASTType {
     }
 
     public boolean isSubtypeOf(ASTType o, EnvSet e) {
-        if (o instanceof ASTTId) {
-            ASTType to = e.unfold(o);
-            return this.isSubtypeOf(to, e);
-        }
+        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e);
         ASTType ofirst, osecond;
         if (o instanceof ASTTPair opair) { ofirst = opair.getFirst(); osecond = opair.getSecond(); }
         else if (o instanceof ASTTTensor otensor) { ofirst = otensor.getFirst(); osecond = otensor.getSecond(); }

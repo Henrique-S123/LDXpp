@@ -9,10 +9,7 @@ public class ASTTLBool implements ASTLinType {
     }
 
     public boolean isSubtypeOf(ASTType o, EnvSet e) {
-        if (o instanceof ASTTId) {
-            ASTType to = e.unfold(o);
-            return this.isSubtypeOf(to, e);
-        }
+        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e);
         return o instanceof ASTTLBool;
     }
 

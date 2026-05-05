@@ -29,10 +29,8 @@ public class ASTTTensor implements ASTLinType {
     }
 
     public boolean isSubtypeOf(ASTType o, EnvSet e) {
-        if (o instanceof ASTTId) {
-            ASTType to = e.unfold(o);
-            return this.isSubtypeOf(to, e);
-        } else if (o instanceof ASTTTensor otensor) {
+        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e);
+        if (o instanceof ASTTTensor otensor) {
             return first.isSubtypeOf(otensor.getFirst(), e)
                 && second.isSubtypeOf(otensor.getSecond(), e);
         }
