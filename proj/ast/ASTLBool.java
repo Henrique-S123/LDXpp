@@ -31,7 +31,7 @@ public class ASTLBool implements ASTNode  {
         return typecheck(e);
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTLBool olb && olb.getVal() == b;
     }
 

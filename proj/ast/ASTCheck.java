@@ -25,7 +25,7 @@ public class ASTCheck implements ASTNode {
             throw new TypeCheckError(String.format("terms %s and %s do not have the same type", left, right));
         ASTNode ln = left.normalize(e.getEnv(ENV.SIGMA), new Env<ASTNode>());
         ASTNode rn = right.normalize(e.getEnv(ENV.SIGMA), new Env<ASTNode>());
-        if (ln.defequals(rn, e.getEnv(ENV.SIGMA))) return new ASTTEq(left, right, t);
+        if (ln.defequals(rn, e.getEnv(ENV.SIGMA), new AlphaEnv())) return new ASTTEq(left, right, t);
         throw new TypeCheckError(String.format("terms %s and %s are not definitionally equal", left, right));
     }
 
@@ -37,7 +37,7 @@ public class ASTCheck implements ASTNode {
         return this;
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return false;
     }
 

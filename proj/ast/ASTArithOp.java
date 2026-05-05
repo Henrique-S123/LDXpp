@@ -86,9 +86,9 @@ public class ASTArithOp implements ASTNode {
 		return new ASTArithOp(lhs.normalize(sigma, sub), rhs.normalize(sigma, sub), op);
     }
 
-	public boolean defequals(ASTNode o, Env<ASTType> sigma) {
-		return o instanceof ASTArithOp oop && oop.getLhs().defequals(lhs, sigma)
-			&& oop.getRhs().defequals(rhs, sigma) && oop.getOp().equals(op);
+	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+		return o instanceof ASTArithOp oop && oop.getLhs().defequals(lhs, sigma, alpha)
+			&& oop.getRhs().defequals(rhs, sigma, alpha) && oop.getOp().equals(op);
 	}
 
 	@Override

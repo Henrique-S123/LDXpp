@@ -6,8 +6,6 @@ import proj.env.*;
 import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
-import java.util.UUID;
-
 public class ASTFunc implements ASTNode  {
     String id;
     ASTNode body;
@@ -111,27 +109,12 @@ public class ASTFunc implements ASTNode  {
     }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-        ASTNode n = sub.find(id, false);
-        String newid = (n instanceof ASTId idn) ? idn.getId() : id;
-        return new ASTFunc(newid, body.normalize(getNormSigma(), sub), argtype, sub, getNormSigma());
+        return new ASTFunc(id, body.normalize(getNormSigma(), sub), argtype, sub, getNormSigma());
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
-        return o instanceof ASTFunc ofunc && ofunc.getArgtype().defequals(argtype, sigma, new AlphaEnv())
-            && alphaequiv(ofunc, sigma);
-    }
-
-    public boolean alphaequiv(ASTFunc t2, Env<ASTType> sigma) {
-        String newid = UUID.randomUUID().toString();
-        Env<ASTNode> e = new Env<ASTNode>();
-        Env<ASTNode> lenv = e.beginScope();
-        Env<ASTNode> renv = e.beginScope();
-        lenv.assoc(id, new ASTId(newid));
-        renv.assoc(t2.getId(), new ASTId(newid));
-
-        ASTNode bn = body.normalize(sigma, lenv);
-        ASTNode obn = t2.getBody().normalize(sigma, renv);
-        return bn.defequals(obn, sigma);
+    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+        return o instanceof ASTFunc ofunc && argtype.defequals(ofunc.getArgtype(), sigma, alpha)
+            && body.defequals(ofunc.getBody(), sigma, alpha.extend(id, ofunc.getId()));
     }
 
     @Override

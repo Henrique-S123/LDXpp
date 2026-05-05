@@ -42,9 +42,9 @@ public class ASTLUnion implements ASTNode {
 		return new ASTLUnion(label, expr.normalize(sigma, sub));
     }
 
-	public boolean defequals(ASTNode o, Env<ASTType> sigma) {
+	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
 		return o instanceof ASTLUnion olunion && olunion.getLabel().equals(label)
-			&& olunion.getExpr().defequals(expr, sigma);
+			&& olunion.getExpr().defequals(expr, sigma, alpha);
     }
 
 	@Override

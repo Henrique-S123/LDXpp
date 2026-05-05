@@ -46,9 +46,9 @@ public class ASTUnion implements ASTNode {
 		return new ASTUnion(label, expr.normalize(sigma, sub));
     }
 
-	public boolean defequals(ASTNode o, Env<ASTType> sigma) {
+	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
 		return o instanceof ASTUnion ounion && ounion.getLabel().equals(label)
-			&& ounion.getExpr().defequals(expr, sigma);
+			&& ounion.getExpr().defequals(expr, sigma, alpha);
     }
 
 	@Override

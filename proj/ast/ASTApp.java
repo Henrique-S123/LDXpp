@@ -68,9 +68,9 @@ public class ASTApp implements ASTNode  {
         return body.normalize(normSigma, env);
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
-        return o instanceof ASTApp oapp && oapp.getFunc().defequals(func, sigma)
-            && oapp.getArg().defequals(arg, sigma);
+    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+        return o instanceof ASTApp oapp && oapp.getFunc().defequals(func, sigma, alpha)
+            && oapp.getArg().defequals(arg, sigma, alpha);
     }
 
     @Override

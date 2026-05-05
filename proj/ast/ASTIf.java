@@ -73,9 +73,9 @@ public class ASTIf implements ASTNode {
 		else return alt.normalize(sigma, sub);
     }
 
-	public boolean defequals(ASTNode o, Env<ASTType> sigma) {
-		return o instanceof ASTIf oif && oif.getTest().defequals(test, sigma)
-			&& oif.getConseq().defequals(conseq, sigma) && oif.getAlt().defequals(alt, sigma);
+	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+		return o instanceof ASTIf oif && oif.getTest().defequals(test, sigma, alpha)
+			&& oif.getConseq().defequals(conseq, sigma, alpha) && oif.getAlt().defequals(alt, sigma, alpha);
 	}
 
 	@Override

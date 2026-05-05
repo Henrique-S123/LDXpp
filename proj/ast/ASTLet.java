@@ -73,11 +73,12 @@ public class ASTLet implements ASTNode {
         return body.normalize(sigma, env);
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+        // TODO: alpha equivalence
         return o instanceof ASTLet olet && olet.getBind().getId().equals(bind.getId())
-            && olet.getBind().getExp().defequals(bind.getExp(), sigma)
-            && olet.getBind().getType().defequals(bind.getType(), sigma, new AlphaEnv())
-            && olet.getBody().defequals(body, sigma);
+            && olet.getBind().getExp().defequals(bind.getExp(), sigma, alpha)
+            && olet.getBind().getType().defequals(bind.getType(), sigma, alpha)
+            && olet.getBody().defequals(body, sigma, alpha);
     }
 
     @Override

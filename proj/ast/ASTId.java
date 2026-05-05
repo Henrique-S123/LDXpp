@@ -36,8 +36,14 @@ public class ASTId implements ASTNode	{
         return eq == null ? this : ((ASTTEq) eq).getTerm2().normalize(sigma, sub);
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
-        return (o instanceof ASTId oid && oid.getId().equals(id));
+    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+        if (o instanceof ASTId oid) {
+            ASTNode u1 = alpha.getLeft().find(id, false);
+            ASTNode u2 = alpha.getRight().find(oid.getId(), false);
+            if (u1 != null && u2 != null && u1 instanceof ASTId uu1 && u2 instanceof ASTId uu2) return uu1.getId().equals(uu2.getId());
+            return id.equals(oid.getId());
+        }
+        return false;
     }
 
     @Override

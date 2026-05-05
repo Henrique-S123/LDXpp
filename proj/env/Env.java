@@ -68,7 +68,7 @@ public class Env <E>{
         Env<E> curr = this;
         while (curr != null) {
             for (Map.Entry<String, E> bind : curr.bindings.entrySet()) {
-                if (bind.getValue() instanceof ASTTEq teq && teq.getTerm1().defequals(n, new Env<ASTType>()))
+                if (bind.getValue() instanceof ASTTEq teq && teq.getTerm1().defequals(n, new Env<ASTType>(), new AlphaEnv()))
                     return bind.getValue();
             }
             curr = curr.anc;

@@ -111,15 +111,16 @@ public class ASTMatchUnion implements ASTNode {
 		return body.normalize(sigma, env);
     }
 
-	public boolean defequals(ASTNode o, Env<ASTType> sigma) {
-		if (o instanceof ASTMatchUnion omatch && omatch.getTest().defequals(test, sigma)) {
+	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+		// TODO: alpha equivalence
+		if (o instanceof ASTMatchUnion omatch && omatch.getTest().defequals(test, sigma, alpha)) {
 			Map<String, MatchCase> other = omatch.getCases();
 			if (cases.size() != other.size()) return false;
 			for (String label : cases.keySet()) {
 				MatchCase ownCase = cases.get(label);
 				MatchCase otherCase = other.get(label);
 				if (otherCase == null || !ownCase.getId().equals(otherCase.getId())
-					|| !ownCase.getExp().defequals(otherCase.getExp(), sigma)) return false;
+					|| !ownCase.getExp().defequals(otherCase.getExp(), sigma, alpha)) return false;
 			}
 			return true;
 		}

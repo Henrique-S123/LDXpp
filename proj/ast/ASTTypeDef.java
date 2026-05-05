@@ -46,8 +46,9 @@ public class ASTTypeDef implements ASTNode {
         return new ASTTypeDef(ltd, body.normalize(sigma, sub));
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
-        return o instanceof ASTTypeDef otype && otype.getBody().defequals(body, sigma)
+    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+        // TODO: alpha equivalence
+        return o instanceof ASTTypeDef otype && otype.getBody().defequals(body, sigma, alpha)
             && otype.getLtd().equals(ltd);
     }
 

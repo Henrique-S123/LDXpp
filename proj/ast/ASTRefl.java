@@ -25,7 +25,7 @@ public class ASTRefl implements ASTNode  {
         Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
         ASTNode ln = tt.getTerm1().normalize(sigma, new Env<ASTNode>());
         ASTNode rn = tt.getTerm2().normalize(sigma, new Env<ASTNode>());
-        if (!(ln.defequals(rn, sigma)))
+        if (!(ln.defequals(rn, sigma, new AlphaEnv())))
             throw new TypeCheckError(String.format("refl: terms %s and %s are not definitionally equal", tt.getTerm1(), tt.getTerm2()));
 
         return t;
@@ -35,7 +35,7 @@ public class ASTRefl implements ASTNode  {
         return this;
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTRefl;
     }
 

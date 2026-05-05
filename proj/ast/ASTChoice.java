@@ -52,9 +52,9 @@ public class ASTChoice implements ASTNode  {
         return choice == 0 ? first.normalize(sigma, sub) : second.normalize(sigma, sub);
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTChoice ochoice && ochoice.getChoice() == choice &&
-            ochoice.getPair().defequals(pair, sigma);
+            ochoice.getPair().defequals(pair, sigma, alpha);
     }
 
     @Override

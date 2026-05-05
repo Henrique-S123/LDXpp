@@ -100,27 +100,12 @@ public class ASTLFunc implements ASTNode  {
     }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-        ASTNode n = sub.find(id, false);
-        String newid = (n instanceof ASTId idn) ? idn.getId() : id;
-        return new ASTLFunc(newid, body.normalize(sigma, sub), argtype, sub, sigma);
+        return new ASTLFunc(id, body.normalize(sigma, sub), argtype, sub, sigma);
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
-        return o instanceof ASTLFunc olfunc && olfunc.getArgtype().defequals(argtype, sigma, new AlphaEnv())
-            && alphaequiv(olfunc, sigma);
-    }
-
-    public boolean alphaequiv(ASTLFunc t2, Env<ASTType> sigma) {
-        String newid = UUID.randomUUID().toString();
-        Env<ASTNode> e = new Env<ASTNode>();
-        Env<ASTNode> lenv = e.beginScope();
-        Env<ASTNode> renv = e.beginScope();
-        lenv.assoc(id, new ASTId(newid));
-        renv.assoc(t2.getId(), new ASTId(newid));
-
-        ASTNode bn = body.normalize(sigma, lenv);
-        ASTNode obn = t2.getBody().normalize(sigma, renv);
-        return bn.defequals(obn, sigma);
+    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+        return o instanceof ASTLFunc olfunc && argtype.defequals(olfunc.getArgtype(), sigma, alpha)
+            && body.defequals(olfunc.getBody(), sigma, alpha.extend(id, olfunc.getId()));
     }
 
     @Override

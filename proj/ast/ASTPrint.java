@@ -42,8 +42,8 @@ public class ASTPrint implements ASTNode {
 		return new ASTPrint(exp.normalize(sigma, sub), newline);
     }
 
-	public boolean defequals(ASTNode o, Env<ASTType> sigma) {
-		return o instanceof ASTPrint oprint && oprint.getExp().defequals(exp, sigma)
+	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+		return o instanceof ASTPrint oprint && oprint.getExp().defequals(exp, sigma, alpha)
 			&& oprint.getNewline() == newline;
     }
 

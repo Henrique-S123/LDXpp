@@ -31,7 +31,7 @@ public class ASTCheckTypes implements ASTNode {
         return this;
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return false;
     }
 
