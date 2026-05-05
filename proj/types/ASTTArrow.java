@@ -1,9 +1,6 @@
 package proj.types;
 
-import proj.ast.*;
 import proj.env.*;
-
-import java.util.UUID;
 
 public class ASTTArrow implements ASTType {
     ASTType dom, codom;
@@ -45,16 +42,9 @@ public class ASTTArrow implements ASTType {
         return odom.isSubtypeOf(dom, e) && codom.isSubtypeOf(ocodom, e);
     }
 
-    public boolean defequals(ASTType o, Env<ASTType> sigma, Env<ASTNode> alphaL, Env<ASTNode> alphaR) {
-        if (o instanceof ASTTArrow oarr && oarr.getDom().defequals(dom, sigma, alphaL, alphaR)) {
-            Env<ASTNode> left = alphaL.beginScope();
-            Env<ASTNode> right = alphaR.beginScope();
-            ASTId newid = new ASTId(UUID.randomUUID().toString());
-            left.assoc(id, newid);
-            right.assoc(oarr.getId(), newid);
-            return codom.defequals(oarr.getCodom(), sigma, left, right);
-        }
-        return false;
+    public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {
+        return o instanceof ASTTArrow oarr && dom.defequals(oarr.getDom(), sigma, alpha)
+            && codom.defequals(oarr.getCodom(), sigma, alpha.extend(id, oarr.getId()));
     }
 }
 

@@ -19,7 +19,7 @@ public class ASTCheckTypes implements ASTNode {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        if (left.defequals(right, e.getEnv(ENV.SIGMA), new Env<ASTNode>(), new Env<ASTNode>())) return new ASTTUnit();
+        if (left.defequals(right, e.getEnv(ENV.SIGMA), new AlphaEnv())) return new ASTTUnit();
         throw new TypeCheckError(String.format("types %s and %s are not definitionally equal", left, right));
     }
 

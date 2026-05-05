@@ -117,7 +117,7 @@ public class ASTFunc implements ASTNode  {
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma) {
-        return o instanceof ASTFunc ofunc && ofunc.getArgtype().defequals(argtype, sigma, new Env<ASTNode>(), new Env<ASTNode>())
+        return o instanceof ASTFunc ofunc && ofunc.getArgtype().defequals(argtype, sigma, new AlphaEnv())
             && alphaequiv(ofunc, sigma);
     }
 

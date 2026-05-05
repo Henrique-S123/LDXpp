@@ -1,6 +1,5 @@
 package proj.types;
 
-import proj.ast.ASTNode;
 import proj.env.*;
 
 public class ASTTPair implements ASTType {
@@ -41,8 +40,8 @@ public class ASTTPair implements ASTType {
         return first.isSubtypeOf(ofirst, e) && second.isSubtypeOf(osecond, e);
     }
 
-    public boolean defequals(ASTType o, Env<ASTType> sigma, Env<ASTNode> alphaL, Env<ASTNode> alphaR) {
-        return o instanceof ASTTPair opair && first.defequals(opair.getFirst(), sigma, alphaL, alphaR)
-            && second.defequals(opair.getSecond(), sigma, alphaL, alphaR);
+    public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {
+        return o instanceof ASTTPair opair && first.defequals(opair.getFirst(), sigma, alpha)
+            && second.defequals(opair.getSecond(), sigma, alpha);
     }
 }

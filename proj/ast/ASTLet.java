@@ -76,7 +76,7 @@ public class ASTLet implements ASTNode {
     public boolean defequals(ASTNode o, Env<ASTType> sigma) {
         return o instanceof ASTLet olet && olet.getBind().getId().equals(bind.getId())
             && olet.getBind().getExp().defequals(bind.getExp(), sigma)
-            && olet.getBind().getType().defequals(bind.getType(), sigma, new Env<ASTNode>(), new Env<ASTNode>())
+            && olet.getBind().getType().defequals(bind.getType(), sigma, new AlphaEnv())
             && olet.getBody().defequals(body, sigma);
     }
 
