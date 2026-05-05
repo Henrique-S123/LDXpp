@@ -25,3 +25,27 @@
 (string | int) ?T (string | int);;
 
 (string | int) ?T (string | linint);;
+
+(int:x, eq(x=x:int)) ?T (int:x, eq(x=x:int));;
+
+(int:x, eq(x=x:int)) ?T (int:y, eq(y=y:int));;
+
+(int:x, int:y, eq(x=y:int)) ?T (int:y, int:x, eq(y=x:int));;
+
+(int:x, int:y, eq(x=y:int)) ?T (int:x, int:y, eq(x=x:int));;
+
+(int:x, int:y, eq(x=y:int)) ?T (int:y, int:x, eq(x=x:int));;
+
+(int:x, int:y, eq(x=y:int)) ?T (int:y, int:x, eq(y=y:int));;
+
+(linint:x | eq(x=x:linint)) ?T (linint:x | eq(x=x:linint));;
+
+(linint:x | eq(x=x:linint)) ?T (linint:y | eq(y=y:linint));;
+
+(linint:x | linint:y | eq(x=y:linint)) ?T (linint:y | linint:x | eq(y=x:linint));;
+
+(linint:x | linint:y | eq(x=y:linint)) ?T (linint:x | linint:y | eq(x=x:linint));;
+
+(linint:x | linint:y | eq(x=y:linint)) ?T (linint:y | linint:x | eq(x=x:linint));;
+
+(linint:x | linint:y | eq(x=y:linint)) ?T (linint:y | linint:x | eq(y=y:linint));;
