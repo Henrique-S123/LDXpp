@@ -1,5 +1,6 @@
 package proj.types;
 
+import proj.ast.ASTNode;
 import proj.env.*;
 
 public class ASTTLInt implements ASTLinType {
@@ -16,7 +17,7 @@ public class ASTTLInt implements ASTLinType {
         return o instanceof ASTTLInt;
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
         return o instanceof ASTTLInt;
     }
 }

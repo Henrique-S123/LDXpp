@@ -1,5 +1,6 @@
 package proj.types;
 
+import proj.ast.ASTNode;
 import proj.env.*;
 
 public class ASTTString implements ASTType {
@@ -16,7 +17,7 @@ public class ASTTString implements ASTType {
         return o instanceof ASTTString;
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
         return o instanceof ASTTString;
     }
 }

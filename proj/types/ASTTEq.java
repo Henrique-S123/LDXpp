@@ -39,14 +39,14 @@ public class ASTTEq implements ASTType {
             && term1.defequals(eq.getTerm1(), e.getEnv(ENV.SIGMA)) && term2.defequals(eq.getTerm2(), e.getEnv(ENV.SIGMA));
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
         if (o instanceof ASTTEq eq) {
-            ASTNode t1 = term1.normalize(sigma, new Environment<ASTNode>());
-            ASTNode t2 = term2.normalize(sigma, new Environment<ASTNode>());
-            ASTNode ot1 = eq.getTerm1().normalize(sigma, new Environment<ASTNode>());
-            ASTNode ot2 = eq.getTerm2().normalize(sigma, new Environment<ASTNode>());
+            ASTNode t1 = term1.normalize(sigma, alphaL);
+            ASTNode t2 = term2.normalize(sigma, alphaL);
+            ASTNode ot1 = eq.getTerm1().normalize(sigma, alphaR);
+            ASTNode ot2 = eq.getTerm2().normalize(sigma, alphaR);
             ASTType t = eq.getType();
-            return ot1.defequals(t1, sigma) && ot2.defequals(t2, sigma) && t.defequals(type, sigma);
+            return t1.defequals(ot1, sigma) && t2.defequals(ot2, sigma) && type.defequals(t, sigma, alphaL, alphaR);
         }
         return false;
     }

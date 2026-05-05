@@ -1,5 +1,6 @@
 package proj.types;
 
+import proj.ast.ASTNode;
 import proj.env.*;
 
 public class ASTTTensor implements ASTLinType {
@@ -39,8 +40,8 @@ public class ASTTTensor implements ASTLinType {
         return false;
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma) {
-        return o instanceof ASTTTensor otensor && otensor.getFirst().defequals(first, sigma)
-            && otensor.getSecond().defequals(second, sigma);
+    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
+        return o instanceof ASTTTensor otensor && first.defequals(otensor.getFirst(), sigma, alphaL, alphaR)
+            && second.defequals(otensor.getSecond(), sigma, alphaL, alphaR);
     }
 }

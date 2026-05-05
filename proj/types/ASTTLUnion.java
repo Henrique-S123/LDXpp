@@ -1,5 +1,6 @@
 package proj.types;
 
+import proj.ast.ASTNode;
 import proj.env.*;
 
 import java.util.Map;
@@ -29,13 +30,13 @@ public class ASTTLUnion implements ASTLinType {
         return false;
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
         if (o instanceof ASTTLUnion olunion) {
             Map<String, ASTType> other = olunion.getMap();
             if (ll.size() != other.size()) return false;
             for (String label : ll.keySet()) {
                 ASTType otherType = other.get(label);
-                if (otherType == null || !ll.get(label).defequals(otherType, sigma)) return false;
+                if (otherType == null || !ll.get(label).defequals(otherType, sigma, alphaL, alphaR)) return false;
             }
             return true;
         }

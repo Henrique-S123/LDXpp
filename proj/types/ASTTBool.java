@@ -1,5 +1,6 @@
 package proj.types;
 
+import proj.ast.*;
 import proj.env.*;
 
 public class ASTTBool implements ASTType {
@@ -16,7 +17,7 @@ public class ASTTBool implements ASTType {
         return o instanceof ASTTBool || o instanceof ASTTLBool;
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
         return o instanceof ASTTBool;
     }
 }

@@ -25,3 +25,15 @@ int-o>linint ?T int-o>linint;;
 string-o>int ?T string-o>int;;
 
 string-o>int ?T string-o>linint;;
+
+(int:x)->eq(x=x:int) ?T (int:x)->eq(x=x:int);;
+
+(int:x)->eq(x=x:int) ?T (int:y)->eq(y=y:int);;
+
+(int:x)->(int:y)->eq(x=y:int) ?T (int:y)->(int:x)->eq(y=x:int);;
+
+(int:x)->(int:y)->eq(x=y:int) ?T (int:x)->(int:y)->eq(x=x:int);;
+
+(int:x)->(int:y)->eq(x=y:int) ?T (int:y)->(int:x)->eq(x=x:int);;
+
+(int:x)->(int:y)->eq(x=y:int) ?T (int:y)->(int:x)->eq(y=y:int);;

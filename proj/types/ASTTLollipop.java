@@ -1,5 +1,6 @@
 package proj.types;
 
+import proj.ast.ASTNode;
 import proj.env.*;
 
 public class ASTTLollipop implements ASTLinType {
@@ -40,9 +41,9 @@ public class ASTTLollipop implements ASTLinType {
         return odom.isSubtypeOf(dom, e) && codom.isSubtypeOf(ocodom, e);
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma) {
-        return o instanceof ASTTLollipop olloli && olloli.getDom().defequals(dom, sigma)
-            && olloli.getCodom().defequals(codom, sigma);
+    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
+        return o instanceof ASTTLollipop olloli && dom.defequals(olloli.getDom(), sigma, alphaL, alphaR)
+            && codom.defequals(olloli.getCodom(), sigma, alphaL, alphaR);
     }
 }
 
