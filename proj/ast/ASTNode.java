@@ -6,14 +6,14 @@ import proj.env.*;
 import proj.errors.*;
 
 public interface ASTNode {
-    public IValue eval(Environment<IValue> e) throws InterpreterError;
+    public IValue eval(Env<IValue> e) throws InterpreterError;
 	
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError;
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError;
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub);
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub);
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma);
+    public boolean defequals(ASTNode o, Env<ASTType> sigma);
 }
 

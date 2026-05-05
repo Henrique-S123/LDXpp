@@ -12,8 +12,8 @@ public class ASTFunc implements ASTNode  {
     String id;
     ASTNode body;
     ASTType argtype;
-    Environment<ASTNode> normEnv;
-    Environment<ASTType> normSigma;
+    Env<ASTNode> normEnv;
+    Env<ASTType> normSigma;
 
     public ASTFunc(String i, ASTNode b, ASTType t) {
         id = i;
@@ -23,7 +23,7 @@ public class ASTFunc implements ASTNode  {
         normSigma = null;
     }
 
-    public ASTFunc(String i, ASTNode b, ASTType t, Environment<ASTNode> sub, Environment<ASTType> sigma) {
+    public ASTFunc(String i, ASTNode b, ASTType t, Env<ASTNode> sub, Env<ASTType> sigma) {
         id = i;
         body = b;
         argtype = t;
@@ -43,11 +43,11 @@ public class ASTFunc implements ASTNode  {
         return argtype;
     }
 
-    public Environment<ASTNode> getNormEnv() {
+    public Env<ASTNode> getNormEnv() {
         return normEnv;
     }
 
-    public Environment<ASTType> getNormSigma() {
+    public Env<ASTType> getNormSigma() {
         return normSigma;
     }
 
@@ -55,11 +55,11 @@ public class ASTFunc implements ASTNode  {
         body = b;
     }
 
-    public void setNormSigma(Environment<ASTType> s) {
+    public void setNormSigma(Env<ASTType> s) {
         normSigma = s;
     }
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
         return new VClos(e, id, body, false);
     }
 
@@ -70,7 +70,7 @@ public class ASTFunc implements ASTNode  {
         e.bindToEnv(ENV.GAMMA, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
         setNormSigma(e.getEnv(ENV.SIGMA));
-        Environment<ASTType> prevDelta = e.popDelta();
+        Env<ASTType> prevDelta = e.popDelta();
 
         ASTType tb = body.typecheck(e);
 
@@ -89,7 +89,7 @@ public class ASTFunc implements ASTNode  {
         else if (tt instanceof ASTTLollipop lolli) { tdom = lolli.getCodom(); tcodom = lolli.getCodom(); tid = lolli.getId(); }
         else throw new TypeCheckError("func: expected arrow type");
 
-        Environment<ASTType> prevDelta = e.popDelta();
+        Env<ASTType> prevDelta = e.popDelta();
         e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(ENV.GAMMA);
 
@@ -110,22 +110,22 @@ public class ASTFunc implements ASTNode  {
         return new ASTTArrow(targtype, tb, id);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         ASTNode n = sub.find(id, false);
         String newid = (n instanceof ASTId idn) ? idn.getId() : id;
         return new ASTFunc(newid, body.normalize(getNormSigma(), sub), argtype, sub, getNormSigma());
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        return o instanceof ASTFunc ofunc && ofunc.getArgtype().defequals(argtype, sigma, new Environment<ASTNode>(), new Environment<ASTNode>())
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
+        return o instanceof ASTFunc ofunc && ofunc.getArgtype().defequals(argtype, sigma, new Env<ASTNode>(), new Env<ASTNode>())
             && alphaequiv(ofunc, sigma);
     }
 
-    public boolean alphaequiv(ASTFunc t2, Environment<ASTType> sigma) {
+    public boolean alphaequiv(ASTFunc t2, Env<ASTType> sigma) {
         String newid = UUID.randomUUID().toString();
-        Environment<ASTNode> e = new Environment<ASTNode>();
-        Environment<ASTNode> lenv = e.beginScope();
-        Environment<ASTNode> renv = e.beginScope();
+        Env<ASTNode> e = new Env<ASTNode>();
+        Env<ASTNode> lenv = e.beginScope();
+        Env<ASTNode> renv = e.beginScope();
         lenv.assoc(id, new ASTId(newid));
         renv.assoc(t2.getId(), new ASTId(newid));
 

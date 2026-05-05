@@ -24,7 +24,7 @@ public class ASTLUnion implements ASTNode {
 		return expr;
 	}
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
 		return new VUnion(label, expr.eval(e), true);
     }
 
@@ -38,11 +38,11 @@ public class ASTLUnion implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		return new ASTLUnion(label, expr.normalize(sigma, sub));
     }
 
-	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+	public boolean defequals(ASTNode o, Env<ASTType> sigma) {
 		return o instanceof ASTLUnion olunion && olunion.getLabel().equals(label)
 			&& olunion.getExpr().defequals(expr, sigma);
     }

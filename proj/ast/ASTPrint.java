@@ -22,7 +22,7 @@ public class ASTPrint implements ASTNode {
 		return newline;
 	}
 
-    public IValue eval(Environment <IValue>e) throws InterpreterError {
+    public IValue eval(Env <IValue>e) throws InterpreterError {
 		IValue v0 = exp.eval(e);
 		String toprint = v0 instanceof VString ? v0.toString().substring(1, v0.toString().length()-1) : v0.toString();
 		System.out.print(toprint + (newline ? "\n" : ""));
@@ -38,11 +38,11 @@ public class ASTPrint implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		return new ASTPrint(exp.normalize(sigma, sub), newline);
     }
 
-	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+	public boolean defequals(ASTNode o, Env<ASTType> sigma) {
 		return o instanceof ASTPrint oprint && oprint.getExp().defequals(exp, sigma)
 			&& oprint.getNewline() == newline;
     }

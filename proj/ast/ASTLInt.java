@@ -15,7 +15,7 @@ public class ASTLInt implements ASTNode  {
         return v;
     }
 
-    public IValue eval(Environment<IValue> e) {
+    public IValue eval(Env<IValue> e) {
         return new VInt(v, true);
     }
 
@@ -27,11 +27,11 @@ public class ASTLInt implements ASTNode  {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         return this;
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
         return o instanceof ASTLInt oli && oli.getVal() == v;
     }
 

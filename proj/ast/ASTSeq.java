@@ -21,7 +21,7 @@ public class ASTSeq implements ASTNode {
         return second;
     }
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
 		first.eval(e);
 		return second.eval(e);
     }
@@ -39,11 +39,11 @@ public class ASTSeq implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         return new ASTSeq(first.normalize(sigma, sub), second.normalize(sigma, sub));
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
         return o instanceof ASTSeq oseq && oseq.getFirst().defequals(first, sigma)
             && oseq.getSecond().defequals(second, sigma);
     }

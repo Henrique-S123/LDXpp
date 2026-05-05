@@ -32,7 +32,7 @@ public class ASTTUnion implements ASTType {
         return true;
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
+    public boolean defequals(ASTType o, Env<ASTType> sigma, Env<ASTNode> alphaL, Env<ASTNode> alphaR) {
         if (o instanceof ASTTUnion ounion) {
             Map<String, ASTType> other = ounion.getMap();
             if (ll.size() != other.size()) return false;

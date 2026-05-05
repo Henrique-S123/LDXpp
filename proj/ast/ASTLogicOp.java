@@ -27,7 +27,7 @@ public class ASTLogicOp implements ASTNode {
 		return op;
 	}
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
 		IValue v1 = lhs.eval(e);
 		IValue v2 = rhs.eval(e);
 		if (v1 instanceof VBool vb1 && v2 instanceof VBool vb2) {
@@ -70,11 +70,11 @@ public class ASTLogicOp implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		return new ASTLogicOp(lhs.normalize(sigma, sub), rhs.normalize(sigma, sub), op);
     }
 
-	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+	public boolean defequals(ASTNode o, Env<ASTType> sigma) {
 		return o instanceof ASTLogicOp oop && oop.getLhs().defequals(lhs, sigma)
 			&& oop.getRhs().defequals(rhs, sigma) && oop.getOp().equals(op);
 	}

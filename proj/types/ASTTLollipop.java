@@ -41,7 +41,7 @@ public class ASTTLollipop implements ASTLinType {
         return odom.isSubtypeOf(dom, e) && codom.isSubtypeOf(ocodom, e);
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
+    public boolean defequals(ASTType o, Env<ASTType> sigma, Env<ASTNode> alphaL, Env<ASTNode> alphaR) {
         return o instanceof ASTTLollipop olloli && dom.defequals(olloli.getDom(), sigma, alphaL, alphaR)
             && codom.defequals(olloli.getCodom(), sigma, alphaL, alphaR);
     }

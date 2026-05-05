@@ -14,12 +14,12 @@ public class ASTCheckTypes implements ASTNode {
         right = r;
     }
     
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
         return new VBool(true, false);
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        if (left.defequals(right, e.getEnv(ENV.SIGMA), new Environment<ASTNode>(), new Environment<ASTNode>())) return new ASTTUnit();
+        if (left.defequals(right, e.getEnv(ENV.SIGMA), new Env<ASTNode>(), new Env<ASTNode>())) return new ASTTUnit();
         throw new TypeCheckError(String.format("types %s and %s are not definitionally equal", left, right));
     }
 
@@ -27,11 +27,11 @@ public class ASTCheckTypes implements ASTNode {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         return this;
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
         return false;
     }
 

@@ -33,10 +33,10 @@ public class ASTSplit implements ASTNode {
 		return body;
 	}
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
 		IValue v = pair.eval(e);
 		if (v instanceof VPair vp) {
-			Environment<IValue> en = e.beginScope();
+			Env<IValue> en = e.beginScope();
 			en.assoc(id1, vp.getFirst());
 			en.assoc(id2, vp.getSecond());
 			return body.eval(en);
@@ -80,20 +80,20 @@ public class ASTSplit implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		ASTNode pn = pair.normalize(sigma, sub);
 		ASTNode f, s;
 		if (pn instanceof ASTTensor t) { f = t.getFirst(); s = t.getSecond(); }
 		else return new ASTSplit(pn, id2, id1, body.normalize(sigma, sub));
 
 		ASTNode fn = f.normalize(sigma, sub), sn = s.normalize(sigma, sub);
-		Environment<ASTNode> env = sub.beginScope();
+		Env<ASTNode> env = sub.beginScope();
 		env.assoc(id1, fn);
 		env.assoc(id2, sn);
         return body.normalize(sigma, env);
     }
 
-	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+	public boolean defequals(ASTNode o, Env<ASTType> sigma) {
 		return o instanceof ASTSplit osplit && osplit.getId1().equals(id1)
 			&& osplit.getId2().equals(id2) && osplit.getPair().defequals(pair, sigma)
 			&& osplit.getBody().defequals(body, sigma);

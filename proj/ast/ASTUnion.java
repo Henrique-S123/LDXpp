@@ -25,13 +25,13 @@ public class ASTUnion implements ASTNode {
 		return expr;
 	}
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
 		return new VUnion(label, expr.eval(e), false);
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
-		Environment<ASTType> prevDelta = e.popDelta();
+		Env<ASTType> prevDelta = e.popDelta();
 		ASTType t = expr.typecheck(e);
 		e.setEnv(ENV.DELTA, prevDelta);
 		ll.put(label, t);
@@ -42,11 +42,11 @@ public class ASTUnion implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		return new ASTUnion(label, expr.normalize(sigma, sub));
     }
 
-	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+	public boolean defequals(ASTNode o, Env<ASTType> sigma) {
 		return o instanceof ASTUnion ounion && ounion.getLabel().equals(label)
 			&& ounion.getExpr().defequals(expr, sigma);
     }

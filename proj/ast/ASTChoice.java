@@ -22,7 +22,7 @@ public class ASTChoice implements ASTNode  {
         return choice;
     }
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
         IValue vp = pair.eval(e);
         if (vp instanceof VPair pair) {
             return choice > 0 ? pair.getSecond() : pair.getFirst();
@@ -44,7 +44,7 @@ public class ASTChoice implements ASTNode  {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         ASTNode pn = pair.normalize(sigma, sub);
         ASTNode first, second;
         if (pn instanceof ASTPair p) { first = p.getFirst(); second = p.getSecond(); }
@@ -52,7 +52,7 @@ public class ASTChoice implements ASTNode  {
         return choice == 0 ? first.normalize(sigma, sub) : second.normalize(sigma, sub);
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
         return o instanceof ASTChoice ochoice && ochoice.getChoice() == choice &&
             ochoice.getPair().defequals(pair, sigma);
     }

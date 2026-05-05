@@ -40,7 +40,7 @@ public class ASTTTensor implements ASTLinType {
         return false;
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
+    public boolean defequals(ASTType o, Env<ASTType> sigma, Env<ASTNode> alphaL, Env<ASTNode> alphaR) {
         return o instanceof ASTTTensor otensor && first.defequals(otensor.getFirst(), sigma, alphaL, alphaR)
             && second.defequals(otensor.getSecond(), sigma, alphaL, alphaR);
     }

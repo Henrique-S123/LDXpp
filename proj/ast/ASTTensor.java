@@ -22,7 +22,7 @@ public class ASTTensor implements ASTNode {
         return second;
     }
     
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
         IValue v1 = first.eval(e);
         IValue v2 = second.eval(e);
         return new VPair(v1, v2, true);
@@ -55,11 +55,11 @@ public class ASTTensor implements ASTNode {
         return t;
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         return new ASTTensor(first.normalize(sigma, sub), second.normalize(sigma, sub));
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
         return o instanceof ASTTensor otensor && first.defequals(otensor.getFirst(), sigma) &&
             second.defequals(otensor.getSecond(), sigma);
     }

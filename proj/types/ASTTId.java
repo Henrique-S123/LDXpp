@@ -23,7 +23,7 @@ public	class ASTTId implements ASTType	{
         return e.unfold(this).isSubtypeOf(o, e);
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
+    public boolean defequals(ASTType o, Env<ASTType> sigma, Env<ASTNode> alphaL, Env<ASTNode> alphaR) {
         if (!(o instanceof ASTTId oid)) return false;
         ASTNode f1 = alphaL.find(id, false);
         ASTNode f2 = alphaR.find(oid.getId(), false);

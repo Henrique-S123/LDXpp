@@ -27,7 +27,7 @@ public class ASTCmpOp implements ASTNode {
 		return op;
 	}
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
 		IValue v1 = lhs.eval(e);
 		IValue v2 = rhs.eval(e);
 		if (v1 instanceof VInt vi1 && v2 instanceof VInt vi2) {
@@ -65,11 +65,11 @@ public class ASTCmpOp implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		return new ASTCmpOp(lhs.normalize(sigma, sub), rhs.normalize(sigma, sub), op);
     }
 
-	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+	public boolean defequals(ASTNode o, Env<ASTType> sigma) {
 		return o instanceof ASTCmpOp oop && oop.getLhs().defequals(lhs, sigma)
 			&& oop.getRhs().defequals(rhs, sigma) && oop.getOp().equals(op);
 	}

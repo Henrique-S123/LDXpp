@@ -4,19 +4,19 @@ import proj.ast.*;
 import proj.env.*;
 
 public class VClos implements IValue {
-    Environment<IValue> env;
+    Env<IValue> env;
     String id;
     ASTNode body;
     boolean lin;
 
-    public VClos(Environment<IValue> e, String i, ASTNode b, boolean l) {
+    public VClos(Env<IValue> e, String i, ASTNode b, boolean l) {
         env = e;
         id = i;
         body = b;
         lin = l;
     }
 
-    public Environment<IValue> getEnv() {
+    public Env<IValue> getEnv() {
         return env;
     }
 

@@ -6,16 +6,16 @@ import proj.values.VClos;
 
 import java.util.*;
 
-public class Environment <E>{
-    Environment<E> anc;
+public class Env <E>{
+    Env<E> anc;
     Map<String, E> bindings;
 
-    public Environment(){
+    public Env(){
         anc = null;
         bindings = new HashMap<String,E>();
     }
     
-    public Environment(Environment<E> ancestor){
+    public Env(Env<E> ancestor){
         anc = ancestor;
         bindings = new HashMap<String,E>();
     }
@@ -24,11 +24,11 @@ public class Environment <E>{
         this.bindings = m;
     }
 
-    public Environment<E> beginScope(){
-        return new Environment<E>(this);
+    public Env<E> beginScope(){
+        return new Env<E>(this);
     }
     
-    public Environment<E> endScope(){
+    public Env<E> endScope(){
         return anc;
     }
 
@@ -36,8 +36,8 @@ public class Environment <E>{
         return bindings.isEmpty();
     }
 
-    public Environment<E> copy(boolean deep) {
-        Environment<E> e = new Environment<>(deep ? (this.anc == null ? null : this.anc.copy(deep)) : this.anc);
+    public Env<E> copy(boolean deep) {
+        Env<E> e = new Env<>(deep ? (this.anc == null ? null : this.anc.copy(deep)) : this.anc);
         e.setBindings(new HashMap<String,E>(this.bindings));
         return e;
     }
@@ -47,7 +47,7 @@ public class Environment <E>{
     }
 
     public E find(String id, boolean consume) {
-        Environment<E> curr = this;
+        Env<E> curr = this;
         while (curr != null) {
             E val = curr.bindings.get(id);
             if (val != null) {
@@ -65,10 +65,10 @@ public class Environment <E>{
     }
 
     public E findEq(ASTNode n) {
-        Environment<E> curr = this;
+        Env<E> curr = this;
         while (curr != null) {
             for (Map.Entry<String, E> bind : curr.bindings.entrySet()) {
-                if (bind.getValue() instanceof ASTTEq teq && teq.getTerm1().defequals(n, new Environment<ASTType>()))
+                if (bind.getValue() instanceof ASTTEq teq && teq.getTerm1().defequals(n, new Env<ASTType>()))
                     return bind.getValue();
             }
             curr = curr.anc;

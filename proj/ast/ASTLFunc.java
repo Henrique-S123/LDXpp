@@ -12,8 +12,8 @@ public class ASTLFunc implements ASTNode  {
     String id;
     ASTNode body;
     ASTType argtype;
-    Environment<ASTNode> normEnv;
-    Environment<ASTType> normSigma;
+    Env<ASTNode> normEnv;
+    Env<ASTType> normSigma;
 
     public ASTLFunc(String i, ASTNode b, ASTType t) {
         id = i;
@@ -23,7 +23,7 @@ public class ASTLFunc implements ASTNode  {
         normSigma = null;
     }
 
-    public ASTLFunc(String i, ASTNode b, ASTType t, Environment<ASTNode> sub, Environment<ASTType> sigma) {
+    public ASTLFunc(String i, ASTNode b, ASTType t, Env<ASTNode> sub, Env<ASTType> sigma) {
         id = i;
         body = b;
         argtype = t;
@@ -43,11 +43,11 @@ public class ASTLFunc implements ASTNode  {
         return argtype;
     }
 
-    public Environment<ASTNode> getNormEnv() {
+    public Env<ASTNode> getNormEnv() {
         return normEnv;
     }
 
-    public Environment<ASTType> getNormSigma() {
+    public Env<ASTType> getNormSigma() {
         return normSigma;
     }
 
@@ -55,7 +55,7 @@ public class ASTLFunc implements ASTNode  {
         body = b;
     }
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
         return new VClos(e, id, body, true);
     }
 
@@ -99,22 +99,22 @@ public class ASTLFunc implements ASTNode  {
         return new ASTTLollipop(targtype, tb, id);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         ASTNode n = sub.find(id, false);
         String newid = (n instanceof ASTId idn) ? idn.getId() : id;
         return new ASTLFunc(newid, body.normalize(sigma, sub), argtype, sub, sigma);
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
-        return o instanceof ASTLFunc olfunc && olfunc.getArgtype().defequals(argtype, sigma, new Environment<ASTNode>(), new Environment<ASTNode>())
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
+        return o instanceof ASTLFunc olfunc && olfunc.getArgtype().defequals(argtype, sigma, new Env<ASTNode>(), new Env<ASTNode>())
             && alphaequiv(olfunc, sigma);
     }
 
-    public boolean alphaequiv(ASTLFunc t2, Environment<ASTType> sigma) {
+    public boolean alphaequiv(ASTLFunc t2, Env<ASTType> sigma) {
         String newid = UUID.randomUUID().toString();
-        Environment<ASTNode> e = new Environment<ASTNode>();
-        Environment<ASTNode> lenv = e.beginScope();
-        Environment<ASTNode> renv = e.beginScope();
+        Env<ASTNode> e = new Env<ASTNode>();
+        Env<ASTNode> lenv = e.beginScope();
+        Env<ASTNode> renv = e.beginScope();
         lenv.assoc(id, new ASTId(newid));
         renv.assoc(t2.getId(), new ASTId(newid));
 

@@ -16,7 +16,7 @@ public class ASTId implements ASTNode	{
         return id;
     }
 
-    public IValue eval(Environment<IValue> env) {
+    public IValue eval(Env<IValue> env) {
         return env.find(id, false);
     }
 
@@ -28,7 +28,7 @@ public class ASTId implements ASTNode	{
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         // TODO: verify sigma and sub dont have ids in common
         ASTNode n = sub.find(id, false);
         if (n != null) return n;
@@ -36,7 +36,7 @@ public class ASTId implements ASTNode	{
         return eq == null ? this : ((ASTTEq) eq).getTerm2().normalize(sigma, sub);
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
         return (o instanceof ASTId oid && oid.getId().equals(id));
     }
 

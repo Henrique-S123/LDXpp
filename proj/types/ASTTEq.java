@@ -39,7 +39,7 @@ public class ASTTEq implements ASTType {
             && term1.defequals(eq.getTerm1(), e.getEnv(ENV.SIGMA)) && term2.defequals(eq.getTerm2(), e.getEnv(ENV.SIGMA));
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
+    public boolean defequals(ASTType o, Env<ASTType> sigma, Env<ASTNode> alphaL, Env<ASTNode> alphaR) {
         if (o instanceof ASTTEq eq) {
             ASTNode t1 = term1.normalize(sigma, alphaL);
             ASTNode t2 = term2.normalize(sigma, alphaL);

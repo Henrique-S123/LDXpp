@@ -14,7 +14,7 @@ public class ASTCheck implements ASTNode {
         right = r;
     }
     
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
         return new VBool(true, false);
     }
 
@@ -23,8 +23,8 @@ public class ASTCheck implements ASTNode {
         ASTType t2 = right.typecheck(e);
         if (!t.isSubtypeOf(t2, e) || !t2.isSubtypeOf(t, e))
             throw new TypeCheckError(String.format("terms %s and %s do not have the same type", left, right));
-        ASTNode ln = left.normalize(e.getEnv(ENV.SIGMA), new Environment<ASTNode>());
-        ASTNode rn = right.normalize(e.getEnv(ENV.SIGMA), new Environment<ASTNode>());
+        ASTNode ln = left.normalize(e.getEnv(ENV.SIGMA), new Env<ASTNode>());
+        ASTNode rn = right.normalize(e.getEnv(ENV.SIGMA), new Env<ASTNode>());
         if (ln.defequals(rn, e.getEnv(ENV.SIGMA))) return new ASTTEq(left, right, t);
         throw new TypeCheckError(String.format("terms %s and %s are not definitionally equal", left, right));
     }
@@ -33,11 +33,11 @@ public class ASTCheck implements ASTNode {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         return this;
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
         return false;
     }
 

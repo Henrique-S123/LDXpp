@@ -45,10 +45,10 @@ public class ASTTArrow implements ASTType {
         return odom.isSubtypeOf(dom, e) && codom.isSubtypeOf(ocodom, e);
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
+    public boolean defequals(ASTType o, Env<ASTType> sigma, Env<ASTNode> alphaL, Env<ASTNode> alphaR) {
         if (o instanceof ASTTArrow oarr && oarr.getDom().defequals(dom, sigma, alphaL, alphaR)) {
-            Environment<ASTNode> left = alphaL.beginScope();
-            Environment<ASTNode> right = alphaR.beginScope();
+            Env<ASTNode> left = alphaL.beginScope();
+            Env<ASTNode> right = alphaR.beginScope();
             ASTId newid = new ASTId(UUID.randomUUID().toString());
             left.assoc(id, newid);
             right.assoc(oarr.getId(), newid);

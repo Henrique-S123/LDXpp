@@ -10,7 +10,7 @@ public class ASTRefl implements ASTNode  {
 
     public ASTRefl() {}
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
         return new VUnit();                
     }
 
@@ -22,20 +22,20 @@ public class ASTRefl implements ASTNode  {
         if (!(t instanceof ASTTEq tt))
             throw new TypeCheckError("refl: expected equality type");
 
-        Environment<ASTType> sigma = e.getEnv(ENV.SIGMA);
-        ASTNode ln = tt.getTerm1().normalize(sigma, new Environment<ASTNode>());
-        ASTNode rn = tt.getTerm2().normalize(sigma, new Environment<ASTNode>());
+        Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
+        ASTNode ln = tt.getTerm1().normalize(sigma, new Env<ASTNode>());
+        ASTNode rn = tt.getTerm2().normalize(sigma, new Env<ASTNode>());
         if (!(ln.defequals(rn, sigma)))
             throw new TypeCheckError(String.format("refl: terms %s and %s are not definitionally equal", tt.getTerm1(), tt.getTerm2()));
 
         return t;
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         return this;
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
         return o instanceof ASTRefl;
     }
 

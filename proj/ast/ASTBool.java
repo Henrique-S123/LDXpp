@@ -15,7 +15,7 @@ public class ASTBool implements ASTNode  {
       return this.b;
     }
 
-    public IValue eval(Environment<IValue> e) {
+    public IValue eval(Env<IValue> e) {
         return new VBool(b, false);                
     }
 
@@ -27,11 +27,11 @@ public class ASTBool implements ASTNode  {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         return this;
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
         return o instanceof ASTBool ob && ob.getVal() == b;
     }
 

@@ -25,7 +25,7 @@ public class ASTTypeDef implements ASTNode {
         return body;
     }
     
-    public IValue eval(Environment<IValue> env) throws InterpreterError {
+    public IValue eval(Env<IValue> env) throws InterpreterError {
         return body.eval(env);
     }
 
@@ -42,11 +42,11 @@ public class ASTTypeDef implements ASTNode {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         return new ASTTypeDef(ltd, body.normalize(sigma, sub));
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
         return o instanceof ASTTypeDef otype && otype.getBody().defequals(body, sigma)
             && otype.getLtd().equals(ltd);
     }

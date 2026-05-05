@@ -6,5 +6,5 @@ import proj.env.*;
 public interface ASTType  {
     boolean isSubtypeOf(ASTType o, EnvSet e);
 
-    boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR);
+    boolean defequals(ASTType o, Env<ASTType> sigma, Env<ASTNode> alphaL, Env<ASTNode> alphaR);
 }

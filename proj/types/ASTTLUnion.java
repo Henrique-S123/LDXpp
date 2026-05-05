@@ -30,7 +30,7 @@ public class ASTTLUnion implements ASTLinType {
         return false;
     }
 
-    public boolean defequals(ASTType o, Environment<ASTType> sigma, Environment<ASTNode> alphaL, Environment<ASTNode> alphaR) {
+    public boolean defequals(ASTType o, Env<ASTType> sigma, Env<ASTNode> alphaL, Env<ASTNode> alphaR) {
         if (o instanceof ASTTLUnion olunion) {
             Map<String, ASTType> other = olunion.getMap();
             if (ll.size() != other.size()) return false;

@@ -22,14 +22,14 @@ public class ASTPair implements ASTNode {
         return second;
     }
     
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
         IValue v1 = first.eval(e);
         IValue v2 = second.eval(e);
         return new VPair(v1, v2, false);
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        Environment<ASTType> prevDelta = e.popDelta();
+        Env<ASTType> prevDelta = e.popDelta();
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
         e.setEnv(ENV.DELTA, prevDelta);
@@ -43,7 +43,7 @@ public class ASTPair implements ASTNode {
         else if (t instanceof ASTTTensor tensor) { tt1 = tensor.getFirst(); tt2 = tensor.getSecond(); ttid = tensor.getId(); }
         else throw new TypeCheckError("pair: expected pair type");
 
-        Environment<ASTType> prevDelta = e.popDelta();
+        Env<ASTType> prevDelta = e.popDelta();
         e.openEnvScope(ENV.SIGMA);
 
         ASTType t1 = first.typecheck(e, tt1);
@@ -60,11 +60,11 @@ public class ASTPair implements ASTNode {
         return t;
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         return new ASTPair(first.normalize(sigma, sub), second.normalize(sigma, sub));
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
         return o instanceof ASTPair opair && first.defequals(opair.getFirst(), sigma)
             && second.defequals(opair.getSecond(), sigma);
     }

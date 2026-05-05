@@ -21,13 +21,13 @@ public class ASTApp implements ASTNode  {
         return arg;
     }
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
         IValue vfunc = func.eval(e);
         if (vfunc instanceof VClos vf) {
             IValue varg = arg.eval(e);
             if (varg instanceof VUnit)
                 return vf.getBody().eval(vf.getEnv());
-            Environment<IValue> env = vf.getEnv().beginScope();
+            Env<IValue> env = vf.getEnv().beginScope();
             env.assoc(vf.getId(), varg);
             return vf.getBody().eval(env);
         } else {
@@ -53,22 +53,22 @@ public class ASTApp implements ASTNode  {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         ASTNode body, fn = func.normalize(sigma, sub);
         ASTNode argn = arg.normalize(sigma, sub);
-        Environment<ASTNode> normEnv;
-        Environment<ASTType> normSigma;
+        Env<ASTNode> normEnv;
+        Env<ASTType> normSigma;
         String id;
         if (fn instanceof ASTFunc f) { body = f.getBody(); normEnv = f.getNormEnv(); normSigma = f.getNormSigma(); id = f.getId(); }
         else if (fn instanceof ASTLFunc lf) { body = lf.getBody(); normEnv = lf.getNormEnv(); normSigma = lf.getNormSigma(); id = lf.getId(); }
         else return new ASTApp(fn, argn);
 
-        Environment<ASTNode> env = normEnv.beginScope();
+        Env<ASTNode> env = normEnv.beginScope();
         env.assoc(id, argn);
         return body.normalize(normSigma, env);
     }
 
-    public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+    public boolean defequals(ASTNode o, Env<ASTType> sigma) {
         return o instanceof ASTApp oapp && oapp.getFunc().defequals(func, sigma)
             && oapp.getArg().defequals(arg, sigma);
     }

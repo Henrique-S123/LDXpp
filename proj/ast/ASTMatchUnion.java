@@ -25,7 +25,7 @@ public class ASTMatchUnion implements ASTNode {
 		return cases;
 	}
 
-    public IValue eval(Environment<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) throws InterpreterError {
 		IValue vt = test.eval(e);
 		if (vt instanceof VUnion vtu) {
 			String testlabel = vtu.getLabel();
@@ -33,7 +33,7 @@ public class ASTMatchUnion implements ASTNode {
 			if (c == null) {
 				throw new InterpreterError("match: missing case for label " + testlabel);
 			} else {
-				Environment<IValue> en = e.beginScope();
+				Env<IValue> en = e.beginScope();
 				en.assoc(c.getId(), ((VUnion) vt).getValue());
 				return c.getExp().eval(en);
 			}
@@ -95,7 +95,7 @@ public class ASTMatchUnion implements ASTNode {
         return typecheck(e);
     }
 
-	public ASTNode normalize(Environment<ASTType> sigma, Environment<ASTNode> sub) {
+	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		ASTNode exp, tn = test.normalize(sigma, sub);
 		String label;
 		if (tn instanceof ASTUnion un) { exp = un.getExpr(); label = un.getLabel(); }
@@ -106,12 +106,12 @@ public class ASTMatchUnion implements ASTNode {
 		String id = c.getId();
 		ASTNode body = c.getExp(), expn = exp.normalize(sigma, sub);
 
-		Environment<ASTNode> env = sub.beginScope();
+		Env<ASTNode> env = sub.beginScope();
 		env.assoc(id, expn);
 		return body.normalize(sigma, env);
     }
 
-	public boolean defequals(ASTNode o, Environment<ASTType> sigma) {
+	public boolean defequals(ASTNode o, Env<ASTType> sigma) {
 		if (o instanceof ASTMatchUnion omatch && omatch.getTest().defequals(test, sigma)) {
 			Map<String, MatchCase> other = omatch.getCases();
 			if (cases.size() != other.size()) return false;

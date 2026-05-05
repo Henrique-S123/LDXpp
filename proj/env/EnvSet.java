@@ -6,14 +6,14 @@ import proj.types.*;
 import java.util.*;
 
 public class EnvSet {
-    Environment<ASTType> gamma, delta, phi, sigma;
+    Env<ASTType> gamma, delta, phi, sigma;
     ArrayList<String> declaredIds, usedLinears;
 
     public EnvSet() {
-        gamma = new Environment<ASTType>();
-        delta = new Environment<ASTType>();
-        phi = new Environment<ASTType>();
-        sigma = new Environment<ASTType>();
+        gamma = new Env<ASTType>();
+        delta = new Env<ASTType>();
+        phi = new Env<ASTType>();
+        sigma = new Env<ASTType>();
         declaredIds = new ArrayList<String>();
         usedLinears = new ArrayList<String>();
     }
@@ -30,7 +30,7 @@ public class EnvSet {
     public static enum ENV { GAMMA, DELTA, PHI, SIGMA }
 
     /* Getters and Setters */
-    public Environment<ASTType> getEnv(ENV env) {
+    public Env<ASTType> getEnv(ENV env) {
         return switch (env) {
             case GAMMA -> gamma;
             case DELTA -> delta;
@@ -39,9 +39,9 @@ public class EnvSet {
         };
     }
 
-    public Environment<ASTType> popDelta() {
-        Environment<ASTType> tmp = this.delta;
-        this.delta = new Environment<ASTType>();
+    public Env<ASTType> popDelta() {
+        Env<ASTType> tmp = this.delta;
+        this.delta = new Env<ASTType>();
         return tmp;
     }
 
@@ -53,7 +53,7 @@ public class EnvSet {
         return usedLinears;
     }
 
-    public void setEnv(ENV env, Environment<ASTType> e) {
+    public void setEnv(ENV env, Env<ASTType> e) {
         switch (env) {
             case GAMMA -> this.gamma = e;
             case DELTA -> this.delta = e;
