@@ -55,6 +55,8 @@ TOKEN :
   |
   < REFL: "refl" >
   |
+  < LETEQ: "leteq" >
+  |
   < DOT : "." >
   |
   < COLON : ":" >
@@ -165,6 +167,9 @@ ASTNode Let() :
     |
       ( <LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC> { b = new Bind(n.image, t1, e1); }
           e2 = Let() { t = new ASTLet(b, e2); } )
+    |
+      ( <LETEQ>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC> { b = new Bind(n.image, t1, e1); }
+          e2 = Let() { t = new ASTLeteq(b, e2); } )
     | 
       {  HashMap<String,ASTType> lbl = new HashMap<String,ASTType>(); }
       ( (LOOKAHEAD(2) <TYPE>  n=<Id>  <EQUAL> t1 = Type()  <SEMIC>
