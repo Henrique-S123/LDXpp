@@ -1,26 +1,24 @@
 package proj.env;
 
-import proj.ast.*;
-
 import java.util.*;
 
 public class AlphaEnv {
-    Env<ASTNode> left, right;
+    Env<String> left, right;
 
     public AlphaEnv() {
-        left = new Env<ASTNode>();
-        right = new Env<ASTNode>();
+        left = new Env<String>();
+        right = new Env<String>();
     }
 
     /* Getters */
-    public Env<ASTNode> getLeft() { return left; }
-    public Env<ASTNode> getRight() { return right; }
+    public Env<String> getLeft() { return left; }
+    public Env<String> getRight() { return right; }
 
     /* Adding new equivalences */
     public AlphaEnv extend(String id1, String id2) {
         left = left.beginScope();
         right = right.beginScope();
-        ASTId newid = new ASTId(UUID.randomUUID().toString());
+        String newid = UUID.randomUUID().toString();
         left.assoc(id1, newid);
         right.assoc(id2, newid);
         return this;

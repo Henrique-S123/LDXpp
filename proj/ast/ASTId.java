@@ -38,9 +38,9 @@ public class ASTId implements ASTNode	{
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         if (o instanceof ASTId oid) {
-            ASTNode u1 = alpha.getLeft().find(id, false);
-            ASTNode u2 = alpha.getRight().find(oid.getId(), false);
-            if (u1 != null && u2 != null && u1 instanceof ASTId uu1 && u2 instanceof ASTId uu2) return uu1.getId().equals(uu2.getId());
+            String s1 = alpha.getLeft().find(id, false);
+            String s2 = alpha.getRight().find(oid.getId(), false);
+            if (s1 != null && s2 != null) return s1.equals(s2);
             return id.equals(oid.getId());
         }
         return false;
