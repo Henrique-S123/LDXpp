@@ -6,8 +6,6 @@ import proj.env.*;
 import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
-import java.util.UUID;
-
 public class ASTLFunc implements ASTNode  {
     String id;
     ASTNode body;
@@ -55,6 +53,10 @@ public class ASTLFunc implements ASTNode  {
         body = b;
     }
 
+    public void setNormSigma(Env<ASTType> s) {
+        normSigma = s;
+    }
+
     public IValue eval(Env<IValue> e) throws InterpreterError {
         return new VClos(e, id, body, true);
     }
@@ -63,13 +65,17 @@ public class ASTLFunc implements ASTNode  {
         ASTType targtype = e.unfold(argtype);
         ENV env = (targtype instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
         e.openEnvScope(env);
+        e.openEnvScope(ENV.SIGMA);
         e.bindToEnv(env, id, targtype);
+        e.bindToEnv(ENV.SIGMA, id, targtype);
+        setNormSigma(e.getEnv(ENV.SIGMA));
 
         ASTType tb = body.typecheck(e);
 
         if (!(e.getEnv(ENV.DELTA).isEmpty()))
             throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA));
         e.closeEnvScope(env);
+        e.closeEnvScope(ENV.SIGMA);
         return new ASTTLollipop(targtype, tb, id);
 	}
 
@@ -91,6 +97,7 @@ public class ASTLFunc implements ASTNode  {
 
         e.bindToEnv(env, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
+        setNormSigma(e.getEnv(ENV.SIGMA));
 
         ASTType tb = body.typecheck(e, tcodom);
 
@@ -100,7 +107,7 @@ public class ASTLFunc implements ASTNode  {
     }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-        return new ASTLFunc(id, body.normalize(sigma, sub), argtype, sub, sigma);
+        return new ASTLFunc(id, body.normalize(getNormSigma(), sub), argtype, sub, getNormSigma());
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {

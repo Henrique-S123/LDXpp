@@ -94,10 +94,8 @@ public class ASTSplit implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-		// TODO: alpha equivalence
-		return o instanceof ASTSplit osplit && osplit.getId1().equals(id1)
-			&& osplit.getId2().equals(id2) && osplit.getPair().defequals(pair, sigma, alpha)
-			&& osplit.getBody().defequals(body, sigma, alpha);
+		return o instanceof ASTSplit osplit && osplit.getPair().defequals(pair, sigma, alpha)
+			&& osplit.getBody().defequals(body, sigma, alpha.extend(id1, osplit.getId1()).extend(id2, osplit.getId2()));
     }
 
 	@Override

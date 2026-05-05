@@ -112,7 +112,6 @@ public class ASTMatchUnion implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-		// TODO: alpha equivalence
 		if (o instanceof ASTMatchUnion omatch && omatch.getTest().defequals(test, sigma, alpha)) {
 			Map<String, MatchCase> other = omatch.getCases();
 			if (cases.size() != other.size()) return false;
