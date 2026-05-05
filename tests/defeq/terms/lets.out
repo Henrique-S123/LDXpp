@@ -31,3 +31,6 @@ class proj.errors.TypeCheckError: terms let(x, 2, x) and 1 are not definitionall
 class proj.errors.TypeCheckError: terms let(x, int, 2, x) and 1 are not definitionally equal
 
 
+type: let(x, int, 1, x) ≡ let(y, int, 1, y) : int, value: true
+
+
