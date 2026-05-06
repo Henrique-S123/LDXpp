@@ -3,3 +3,31 @@ let p:(bool:c, int:x, eq(x=(if c {2} else {3}):int)) = (true, 2, refl); p;;
 let p:(bool:c, int:x, eq(x=(if c {2} else {3}):int)) = (true, 3, refl); p;;
 
 let p:(bool:c, int:x, eq(x=(if c {2} else {3}):int)) = (false, 3, refl); p;;
+
+let fact:int->int = fn x:int => {
+    if (x==0) {1}
+    else {x * (fact(x-1))}
+};
+fact(3) ? 6;;
+
+let fact:int->int = fn x:int => {
+    if (x==0) {1}
+    else {x * (fact(x-1))}
+};
+fact(3) ? 7;;
+
+type NODE = (int,LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (());
+let l1:LIST = #cons ((2,l0));
+let l2:LIST = #cons ((3,l1));
+let size:LIST->int = fn
+    l:LIST => {
+        match l {
+            #nil(_) -> 0
+            |
+            #cons(n) -> 1 + size(snd(n))
+        }
+    }
+;
+let p:(LIST:l, eq(size(l)=2:int)) = (l2, refl); p;;

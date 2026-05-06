@@ -34,7 +34,7 @@ class proj.errors.TypeCheckError: terms abc and  are not definitionally equal
 class proj.errors.TypeCheckError: terms abc and ab are not definitionally equal
 
 
-class proj.errors.TypeCheckError: terms abc and abc are not definitionally equal
+type: abc ≡ abc : string, value: true
 
 
 class proj.errors.TypeCheckError: terms () and 0 do not have the same type

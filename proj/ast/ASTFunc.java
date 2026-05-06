@@ -109,7 +109,7 @@ public class ASTFunc implements ASTNode  {
     }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-        return new ASTFunc(id, body.normalize(getNormSigma(), sub), argtype, sub, getNormSigma());
+        return new ASTFunc(id, body, argtype, sub, getNormSigma());
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {

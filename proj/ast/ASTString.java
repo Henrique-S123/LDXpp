@@ -11,7 +11,7 @@ public class ASTString implements ASTNode  {
         s = s0;
     }
     public String getVal() {
-      return this.s;
+      return s;
     }
 
     public IValue eval(Env<IValue> e) {
@@ -31,7 +31,7 @@ public class ASTString implements ASTNode  {
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTString ostr && ostr.getVal() == s;
+        return o instanceof ASTString ostr && s.equals(ostr.getVal());
     }
 
     @Override

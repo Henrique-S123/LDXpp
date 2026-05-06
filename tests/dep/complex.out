@@ -7,3 +7,12 @@ class proj.errors.TypeCheckError: refl: terms x and if(c, 2, 3) are not definiti
 type: (c:bool, (x:int, x ≡ if(c, 2, 3) : int)), value: (false, (3, ()))
 
 
+type: fact(3) ≡ 6 : int, value: true
+
+
+class proj.errors.TypeCheckError: terms fact(3) and 7 are not definitionally equal
+
+
+type: (l:LIST, size(l) ≡ 2 : int), value: (union #cons((3, union #cons((2, union #nil(()))))), ())
+
+

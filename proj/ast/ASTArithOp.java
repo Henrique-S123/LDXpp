@@ -83,6 +83,35 @@ public class ASTArithOp implements ASTNode {
     }
 
 	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
+		ASTNode ln = lhs.normalize(sigma, sub);
+		ASTNode rn = rhs.normalize(sigma, sub);
+		if ((ln instanceof ASTInt || ln instanceof ASTLInt) && (rn instanceof ASTInt || rn instanceof ASTLInt)) {
+			int i1 = (ln instanceof ASTInt) ? ((ASTInt) ln).getVal() : ((ASTLInt) ln).getVal();
+			int i2 = (rn instanceof ASTInt) ? ((ASTInt) rn).getVal() : ((ASTLInt) rn).getVal();
+			int res = switch (op) {
+				case "+" -> i1 + i2;
+				case "-" -> i1 - i2;
+				case "*" -> i1 * i2;
+				case "/" -> i1 / i2;
+				case "-u" -> -i2;
+				default -> -1; // unreachable code
+			};
+			return (ln instanceof ASTInt && rn instanceof ASTInt) ? new ASTInt(res) : new ASTLInt(res);
+		}
+		else if (op == "+" && (ln instanceof ASTString || rn instanceof ASTString) &&
+				(ln instanceof ASTInt || ln instanceof ASTLInt || ln instanceof ASTString) &&
+				(rn instanceof ASTInt || rn instanceof ASTLInt || rn instanceof ASTString)) {
+			String s1 = "";
+			if (ln instanceof ASTInt n) s1 = "" + n.getVal();
+			if (ln instanceof ASTLInt n) s1 = "" + n.getVal();
+			if (ln instanceof ASTString n) s1 = n.getVal();
+			String s2 = "";
+			if (rn instanceof ASTInt n) s2 = "" + n.getVal();
+			if (rn instanceof ASTLInt n) s2 = "" + n.getVal();
+			if (rn instanceof ASTString n) s2 = n.getVal();
+			return new ASTString(s1 + s2);
+		}
+		// TODO: add string concat
 		return new ASTArithOp(lhs.normalize(sigma, sub), rhs.normalize(sigma, sub), op);
     }
 
@@ -93,6 +122,7 @@ public class ASTArithOp implements ASTNode {
 
 	@Override
 	public String toString() {
+		if (op == "-u") return String.format("-%s", rhs);
 		return String.format("%s %s %s", lhs, op, rhs);
 	}
 }
