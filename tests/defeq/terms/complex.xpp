@@ -1,0 +1,11 @@
+let fact:int->int = fn x:int => {
+    if (x==0) {1}
+    else {x * (fact(x-1))}
+};
+fact(3) ? 6;;
+
+let fact:int->int = fn x:int => {
+    if (x==0) {1}
+    else {x * (fact(x-1))}
+};
+fact(3) ? 7;;

@@ -4,18 +4,6 @@ let p:(bool:c, int:x, eq(x=(if c {2} else {3}):int)) = (true, 3, refl); p;;
 
 let p:(bool:c, int:x, eq(x=(if c {2} else {3}):int)) = (false, 3, refl); p;;
 
-let fact:int->int = fn x:int => {
-    if (x==0) {1}
-    else {x * (fact(x-1))}
-};
-fact(3) ? 6;;
-
-let fact:int->int = fn x:int => {
-    if (x==0) {1}
-    else {x * (fact(x-1))}
-};
-fact(3) ? 7;;
-
 type NODE = (int,LIST);
 type LIST = union { #nil: (), #cons: NODE };
 let l0:LIST = #nil (());
