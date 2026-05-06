@@ -1,0 +1,5 @@
+let p:(bool:c, int:x, eq(x=(if c {2} else {3}):int)) = (true, 2, refl); p;;
+
+let p:(bool:c, int:x, eq(x=(if c {2} else {3}):int)) = (true, 3, refl); p;;
+
+let p:(bool:c, int:x, eq(x=(if c {2} else {3}):int)) = (false, 3, refl); p;;

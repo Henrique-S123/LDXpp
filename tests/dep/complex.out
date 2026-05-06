@@ -1,0 +1,9 @@
+type: (c:bool, (x:int, x ≡ if(c, 2, 3) : int)), value: (true, (2, ()))
+
+
+class proj.errors.TypeCheckError: refl: terms x and if(c, 2, 3) are not definitionally equal
+
+
+type: (c:bool, (x:int, x ≡ if(c, 2, 3) : int)), value: (false, (3, ()))
+
+
