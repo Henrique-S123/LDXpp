@@ -747,7 +747,7 @@ public class Parser implements ParserConstants {
               if (cases.putIfAbsent(l.image, new MatchCase(n.image, e1)) != null) {if (true) throw new ParseException("duplicate label");}
     }
     jj_consume_token(RBRA);
-             t = new ASTMatchUnion(p, cases);
+             t = new ASTMatch(p, cases);
     {if (true) return t;}
     throw new Error("Missing return statement in function");
   }

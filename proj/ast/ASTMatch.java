@@ -8,11 +8,11 @@ import proj.errors.*;
 
 import java.util.*;
 
-public class ASTMatchUnion implements ASTNode {
+public class ASTMatch implements ASTNode {
 	ASTNode test;
 	Map<String, MatchCase> cases;
 
-	public ASTMatchUnion(ASTNode t, Map<String, MatchCase> cs) {
+	public ASTMatch(ASTNode t, Map<String, MatchCase> cs) {
 		test = t;
 		cases = cs;
     }
@@ -100,7 +100,7 @@ public class ASTMatchUnion implements ASTNode {
 		String label;
 		if (tn instanceof ASTUnion un) { exp = un.getExpr(); label = un.getLabel(); }
 		else if (tn instanceof ASTLUnion lun) { exp = lun.getExpr(); label = lun.getLabel(); }
-		else return new ASTMatchUnion(tn, cases);
+		else return new ASTMatch(tn, cases);
 
 		MatchCase c = cases.get(label);
 		String id = c.getId();
@@ -112,7 +112,7 @@ public class ASTMatchUnion implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-		if (o instanceof ASTMatchUnion omatch && test.defequals(omatch.getTest(), sigma, alpha)) {
+		if (o instanceof ASTMatch omatch && test.defequals(omatch.getTest(), sigma, alpha)) {
 			Map<String, MatchCase> other = omatch.getCases();
 			if (cases.size() != other.size()) return false;
 			for (String label : cases.keySet()) {

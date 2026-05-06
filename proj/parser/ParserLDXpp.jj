@@ -361,7 +361,7 @@ ASTNode Match(ASTNode p) :
     (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { cases.put(l.image, new MatchCase(n.image, e1)); }
           (<VERT> (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let()
             { if (cases.putIfAbsent(l.image, new MatchCase(n.image, e1)) != null) throw new ParseException("duplicate label");} )*
-    <RBRA> { t = new ASTMatchUnion(p, cases); }
+    <RBRA> { t = new ASTMatch(p, cases); }
   )
   { return t; }
 }
