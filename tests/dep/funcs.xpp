@@ -1,0 +1,5 @@
+let f:(int:x)->eq(x=x:int) = fn x:int => {refl}; f(1);;
+
+let f:(int:x)->eq(x=2:int) = fn x:int => {refl}; f(1);;
+
+let f:(int:y)->eq(y=y:int) = fn x:int => {refl}; f(1);;
