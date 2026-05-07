@@ -10,3 +10,12 @@ type: (c:bool, (x:int, x ≡ if(c, 2, 3) : int)), value: (false, (3, ()))
 type: (l:LIST, size(l) ≡ 2 : int), value: (union #cons((3, union #cons((2, union #nil(()))))), ())
 
 
+type: (l:LIST, size(l) ≡ 2 : int), value: (union #cons((3, union #cons((2, union #nil(()))))), ())
+
+
+class proj.errors.TypeCheckError: refl: terms size(l) and 2 are not definitionally equal
+
+
+type: (l:LIST, size(l) ≡ 2 : int), value: (union #cons((4, union #cons((2, union #nil(()))))), ())
+
+

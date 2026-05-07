@@ -16,6 +16,53 @@ let size:LIST->int = fn
             |
             #cons(n) -> 1 + size(snd(n))
         }
-    }
-;
+    };
 let p:(LIST:l, eq(size(l)=2:int)) = (l2, refl); p;;
+
+type NODE = (int,LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (());
+let l1:LIST = #cons ((2,l0));
+let l2:LIST = #cons ((3,l1));
+let size:LIST->int = fn
+    l:LIST => {
+        match l {
+            #nil(_) -> 0
+            |
+            #cons(n) -> 1 + size(snd(n))
+        }
+    };
+type LIST2 = (LIST:l, eq(size(l)=2:int));
+let p:LIST2 = (l2, refl); p;;
+
+type NODE = (int,LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (());
+let l1:LIST = #cons ((2,l0));
+let l2:LIST = #cons ((3,l1));
+let size:LIST->int = fn
+    l:LIST => {
+        match l {
+            #nil(_) -> 0
+            |
+            #cons(n) -> 1 + size(snd(n))
+        }
+    };
+type LIST2 = (LIST:l, eq(size(l)=2:int));
+let p:LIST2 = (l1, refl); p;;
+
+type NODE = (int,LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (());
+let l1:LIST = #cons ((2,l0));
+let l2:LIST = #cons ((3,l1));
+let size:LIST->int = fn
+    l:LIST => {
+        match l {
+            #nil(_) -> 0
+            |
+            #cons(n) -> 1 + size(snd(n))
+        }
+    };
+type LIST2 = (LIST:l, eq(size(l)=2:int));
+let p:LIST2 = (#cons((4, l1)), refl); p;;
