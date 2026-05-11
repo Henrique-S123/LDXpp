@@ -1,7 +1,6 @@
 package proj.values;
 
 public class VUnion implements IValue {
-
     String label;
     IValue val;
     boolean lin;

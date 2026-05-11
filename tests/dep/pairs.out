@@ -1,34 +1,34 @@
-type: (x:bool, x ≡ true : bool), value: (true, ())
+type: (x:bool, x ≡ true : bool), value: (true, refl)
 
 
 type: bool, value: true
 
 
-type: x ≡ true : bool, value: ()
+type: x ≡ true : bool, value: refl
 
 
-type: (bool, () ≡ () : ()), value: (true, ())
+type: (bool, () ≡ () : ()), value: (true, refl)
 
 
 type: bool, value: true
 
 
-type: () ≡ () : (), value: ()
+type: () ≡ () : (), value: refl
 
 
-type: (x:int, x ≡ 2 : int), value: (2, ())
+type: (x:int, x ≡ 2 : int), value: (2, refl)
 
 
 class proj.errors.TypeCheckError: refl: terms x and 2 are not definitionally equal
 
 
-type: (x:int, (y:int, x ≡ y : int)), value: (2, (2, ()))
+type: (x:int, (y:int, x ≡ y : int)), value: (2, (2, refl))
 
 
 class proj.errors.TypeCheckError: refl: terms x and y are not definitionally equal
 
 
-type: (x:int, (y:int, (z:int, (x ≡ y : int, y ≡ z : int)))), value: (2, (2, (2, ((), ()))))
+type: (x:int, (y:int, (z:int, (x ≡ y : int, y ≡ z : int)))), value: (2, (2, (2, (refl, refl))))
 
 
 class proj.errors.TypeCheckError: refl: terms y and z are not definitionally equal
@@ -40,27 +40,27 @@ class proj.errors.TypeCheckError: refl: terms x and y are not definitionally equ
 class proj.errors.TypeCheckError: refl: terms x and y are not definitionally equal
 
 
-type: (x:bool, x ≡ true : bool), value: (true, ())
+type: (x:bool, x ≡ true : bool), value: (true, refl)
 
 
 class proj.errors.TypeCheckError: refl: terms x and true are not definitionally equal
 
 
-type: (x:bool, x ≡ false : bool), value: (false, ())
+type: (x:bool, x ≡ false : bool), value: (false, refl)
 
 
-type: (x:bool, x ≡ true : bool), value: (true, ())
+type: (x:bool, x ≡ true : bool), value: (true, refl)
 
 
-type: (x:bool, x ≡ true : bool), value: (true, ())
+type: (x:bool, x ≡ true : bool), value: (true, refl)
 
 
 class proj.errors.TypeCheckError: refl: terms x and true are not definitionally equal
 
 
-type: (x:bool, x ≡ true : bool), value: (true, ())
+type: (x:bool, x ≡ true : bool), value: (true, refl)
 
 
-type: (x:bool, x ≡ true : bool), value: (true, ())
+type: (x:bool, x ≡ true : bool), value: (true, refl)
 
 

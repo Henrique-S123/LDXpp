@@ -11,7 +11,7 @@ public class ASTRefl implements ASTNode  {
     public ASTRefl() {}
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
-        return new VUnit();                
+        return new VRefl();                
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
