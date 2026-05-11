@@ -1,15 +1,25 @@
 package proj.types;
 
+import proj.ast.ASTNode;
 import proj.env.*;
 
 public class ASTTPair implements ASTType {
     ASTType first, second;
     String id;
+    Env<ASTType> sigmac;
 
     public ASTTPair(ASTType f, ASTType s, String i) {
         first = f;
         second = s;
         id = i;
+        sigmac = null;
+    }
+
+    public ASTTPair(ASTType f, ASTType s, String i, Env<ASTType> si) {
+        first = f;
+        second = s;
+        id = i;
+        sigmac = si;
     }
 
     public ASTType getFirst() {
@@ -40,5 +50,9 @@ public class ASTTPair implements ASTType {
     public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTTPair opair && first.defequals(opair.getFirst(), sigma, alpha)
             && second.defequals(opair.getSecond(), sigma, alpha.extend(id, opair.getId()));
+    }
+
+    public ASTType inst(String instId, ASTNode n) {
+        return new ASTTPair(first, second.inst(instId, n), id, sigmac);
     }
 }

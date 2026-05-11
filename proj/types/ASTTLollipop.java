@@ -1,15 +1,25 @@
 package proj.types;
 
+import proj.ast.ASTNode;
 import proj.env.*;
 
 public class ASTTLollipop implements ASTLinType {
     ASTType dom, codom;
     String id;
+    Env<ASTType> sigmac;
 
     public ASTTLollipop(ASTType d, ASTType co, String i) {
         dom = d;
         codom = co;
         id = i;
+        sigmac = null;
+    }
+
+    public ASTTLollipop(ASTType d, ASTType co, String i, Env<ASTType> s) {
+        dom = d;
+        codom = co;
+        id = i;
+        sigmac = s;
     }
 
     public ASTType getDom() {
@@ -40,6 +50,10 @@ public class ASTTLollipop implements ASTLinType {
     public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTTLollipop olloli && dom.defequals(olloli.getDom(), sigma, alpha)
             && codom.defequals(olloli.getCodom(), sigma, alpha.extend(id, olloli.getId()));
+    }
+
+    public ASTType inst(String instId, ASTNode n) {
+        return new ASTTLollipop(dom, codom.inst(instId, n), id, sigmac);
     }
 }
 

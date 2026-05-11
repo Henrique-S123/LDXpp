@@ -75,7 +75,7 @@ public class ASTFunc implements ASTNode  {
         e.setEnv(ENV.DELTA, prevDelta);
         e.closeEnvScope(ENV.GAMMA);
         e.closeEnvScope(ENV.SIGMA);
-        return new ASTTArrow(targtype, tb, id);
+        return new ASTTArrow(targtype, tb, id, e.getEnv(ENV.SIGMA));
 	}
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
@@ -105,7 +105,7 @@ public class ASTFunc implements ASTNode  {
         e.closeEnvScope(ENV.GAMMA);
         e.closeEnvScope(ENV.SIGMA);
 
-        return new ASTTArrow(targtype, tb, id);
+        return new ASTTArrow(targtype, tb, id, e.getEnv(ENV.SIGMA));
     }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {

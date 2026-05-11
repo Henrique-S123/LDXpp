@@ -33,7 +33,7 @@ public class ASTPair implements ASTNode {
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
         e.setEnv(ENV.DELTA, prevDelta);
-        return new ASTTPair(t1, t2, null);
+        return new ASTTPair(t1, t2, null, e.getEnv(ENV.SIGMA));
     }
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
@@ -52,12 +52,13 @@ public class ASTPair implements ASTNode {
         if (ttid != null) e.addEq(new ASTTEq(new ASTId(ttid), first, t1));
 
         ASTType t2 = second.typecheck(e, tt2);
+        // t2.inst(ttid, first);
         if (!t2.isSubtypeOf(tt2, e))
             throw new TypeCheckError(String.format("pair: invalid type %s for second element %s", tt2, second));
 
         e.closeEnvScope(ENV.SIGMA);
         e.setEnv(ENV.DELTA, prevDelta);
-        return t;
+        return new ASTTPair(t1, t2, ttid, e.getEnv(ENV.SIGMA));
     }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {

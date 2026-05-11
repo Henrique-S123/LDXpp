@@ -76,7 +76,7 @@ public class ASTLFunc implements ASTNode  {
             throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA));
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
-        return new ASTTLollipop(targtype, tb, id);
+        return new ASTTLollipop(targtype, tb, id, e.getEnv(ENV.SIGMA));
 	}
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
@@ -103,7 +103,7 @@ public class ASTLFunc implements ASTNode  {
 
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
-        return new ASTTLollipop(targtype, tb, id);
+        return new ASTTLollipop(targtype, tb, id, e.getEnv(ENV.SIGMA));
     }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {

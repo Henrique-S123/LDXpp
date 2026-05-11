@@ -31,7 +31,7 @@ public class ASTTensor implements ASTNode {
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
-        return new ASTTTensor(t1, t2, null);
+        return new ASTTTensor(t1, t2, null, e.getEnv(ENV.SIGMA));
     }
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
@@ -52,7 +52,7 @@ public class ASTTensor implements ASTNode {
             throw new TypeCheckError(String.format("tensor: invalid type %s for second element %s", tt1, second));
         
         e.closeEnvScope(ENV.SIGMA);
-        return t;
+        return new ASTTTensor(t1, t2, ttid, e.getEnv(ENV.SIGMA));
     }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {

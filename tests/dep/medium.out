@@ -19,3 +19,12 @@ class proj.errors.TypeCheckError: refl: terms size(l) and 2 are not definitional
 type: (l:LIST, size(l) ≡ 2 : int), value: (union #cons((4, union #cons((2, union #nil(()))))), ())
 
 
+type: (x:int, x > 3 ≡ true : bool), value: (5, ())
+
+
+type: (x:int, x > 3 ≡ true : bool), value: (4, ())
+
+
+class proj.errors.TypeCheckError: refl: terms x > 3 and true are not definitionally equal
+
+
