@@ -7,13 +7,13 @@ type: linbool, value: truel
 class proj.errors.TypeCheckError: there are unused linear values: [x: linbool]
 
 
-type: (linbool | () ≡ () : ()), value: (truel | refl)
+class proj.errors.TypeCheckError: refl: expected type to check against
 
 
-type: linbool, value: truel
+class proj.errors.TypeCheckError: refl: expected type to check against
 
 
-class proj.errors.TypeCheckError: there are unused linear values: [x: linbool]
+class proj.errors.TypeCheckError: refl: expected type to check against
 
 
 type: (x:linint | x ≡ 2l : linint), value: (2l | refl)

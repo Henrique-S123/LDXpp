@@ -15,7 +15,7 @@ public class ASTRefl implements ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        return new ASTTEq(new ASTUnit(), new ASTUnit(), new ASTTUnit());
+        throw new TypeCheckError("refl: expected type to check against");
 	}
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
