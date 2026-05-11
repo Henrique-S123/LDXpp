@@ -88,8 +88,8 @@ public class ASTLogicOp implements ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-		return o instanceof ASTLogicOp oop && oop.getLhs().defequals(lhs, sigma, alpha)
-			&& oop.getRhs().defequals(rhs, sigma, alpha) && oop.getOp().equals(op);
+		return o instanceof ASTLogicOp oop && oop.getOp().equals(op)
+			&& oop.getLhs().defequals(lhs, sigma, alpha) && oop.getRhs().defequals(rhs, sigma, alpha);
 	}
 
 	@Override

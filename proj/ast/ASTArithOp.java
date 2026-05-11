@@ -111,13 +111,12 @@ public class ASTArithOp implements ASTNode {
 			if (rn instanceof ASTString n) s2 = n.getVal();
 			return new ASTString(s1 + s2);
 		}
-		// TODO: add string concat
 		return new ASTArithOp(lhs.normalize(sigma, sub), rhs.normalize(sigma, sub), op);
     }
 
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-		return o instanceof ASTArithOp oop && oop.getLhs().defequals(lhs, sigma, alpha)
-			&& oop.getRhs().defequals(rhs, sigma, alpha) && oop.getOp().equals(op);
+		return o instanceof ASTArithOp oop && oop.getOp().equals(op) && 
+			oop.getLhs().defequals(lhs, sigma, alpha) && oop.getRhs().defequals(rhs, sigma, alpha);
 	}
 
 	@Override
