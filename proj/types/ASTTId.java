@@ -1,5 +1,6 @@
 package proj.types;
 
+import proj.ast.ASTNode;
 import proj.env.*;
 
 public	class ASTTId implements ASTType	{	
@@ -24,5 +25,9 @@ public	class ASTTId implements ASTType	{
 
     public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTTId oid && id.equals(oid.getId());
+    }
+
+    public ASTType inst(String instId, ASTNode n) {
+        return this;
     }
 }	

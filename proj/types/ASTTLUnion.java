@@ -1,5 +1,6 @@
 package proj.types;
 
+import proj.ast.ASTNode;
 import proj.env.*;
 
 import java.util.Map;
@@ -46,5 +47,10 @@ public class ASTTLUnion implements ASTLinType {
         if (ll.size() > 0) fill = fill.substring(0, fill.length()-2);
 
         return String.format("linear union {%s}", fill);
+    }
+
+    public ASTType inst(String instId, ASTNode n) {
+        ll.forEach((id, type) -> ll.put(id, type.inst(instId, n)));
+        return this;
     }
 }
