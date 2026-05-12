@@ -76,6 +76,10 @@ public class ASTApp implements ASTNode  {
         return null;
     }
 
+    public ASTNode subs(String subsId, ASTNode node) {
+        return new ASTApp(func.subs(subsId, node), arg.subs(subsId, node));
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTApp oapp && oapp.getFunc().defequals(func, sigma, alpha)
             && oapp.getArg().defequals(arg, sigma, alpha);

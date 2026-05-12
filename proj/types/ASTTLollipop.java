@@ -53,7 +53,7 @@ public class ASTTLollipop implements ASTLinType {
     }
 
     public ASTType inst(String instId, ASTNode n) {
-        return new ASTTLollipop(dom, codom.inst(instId, n), id, sigmac);
+        return new ASTTLollipop(dom.inst(instId, n), codom.inst(instId, n), id, sigmac);
     }
 }
 

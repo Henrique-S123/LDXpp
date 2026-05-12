@@ -31,6 +31,10 @@ public class ASTLBool implements ASTNode  {
         return null;
     }
 
+    public ASTNode subs(String subsId, ASTNode node) {
+        return this;
+    }
+
     public ASTType typecheck(EnvSet e, ASTType t) {
         return typecheck(e);
     }

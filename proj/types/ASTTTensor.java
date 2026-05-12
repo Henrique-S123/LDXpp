@@ -53,6 +53,6 @@ public class ASTTTensor implements ASTLinType {
     }
 
     public ASTType inst(String instId, ASTNode n) {
-        return new ASTTTensor(first, second.inst(instId, n), id, sigmac);
+        return new ASTTTensor(first.inst(instId, n), second.inst(instId, n), id, sigmac);
     }
 }

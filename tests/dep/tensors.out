@@ -19,24 +19,24 @@ class proj.errors.TypeCheckError: refl: expected type to check against
 type: (x:linint | x ≡ 2l : linint), value: (2l | refl)
 
 
-class proj.errors.TypeCheckError: refl: terms x and 2l are not definitionally equal
+class proj.errors.TypeCheckError: refl: terms 3l and 2l are not definitionally equal
 
 
 type: (x:linint | (y:linint | x ≡ y : linint)), value: (2l | (2l | refl))
 
 
-class proj.errors.TypeCheckError: refl: terms x and y are not definitionally equal
+class proj.errors.TypeCheckError: refl: terms 2l and 3l are not definitionally equal
 
 
 type: (x:linint | (y:linint | (z:linint | (x ≡ y : linint | y ≡ z : linint)))), value: (2l | (2l | (2l | (refl | refl))))
 
 
-class proj.errors.TypeCheckError: refl: terms y and z are not definitionally equal
+class proj.errors.TypeCheckError: refl: terms 2l and 3l are not definitionally equal
 
 
-class proj.errors.TypeCheckError: refl: terms x and y are not definitionally equal
+class proj.errors.TypeCheckError: refl: terms 2l and 3l are not definitionally equal
 
 
-class proj.errors.TypeCheckError: refl: terms x and y are not definitionally equal
+class proj.errors.TypeCheckError: refl: terms 3l and 2l are not definitionally equal
 
 

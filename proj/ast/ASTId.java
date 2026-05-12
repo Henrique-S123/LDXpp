@@ -39,6 +39,11 @@ public class ASTId implements ASTNode	{
         return (eq == null) ? null : ((ASTTEq) eq).getTerm2();
     }
 
+    public ASTNode subs(String subsId, ASTNode node) {
+        if (id.equals(subsId)) return node;
+        return this;
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         if (o instanceof ASTId oid) {
             String s1 = alpha.getLeft().find(id, false);

@@ -43,14 +43,9 @@ public class ASTTEq implements ASTType {
     }
 
     public ASTType inst(String instId, ASTNode n) {
-        Env<ASTNode> e = new Env<ASTNode>();
-        e.assoc(instId, n);
         ASTType instType = type.inst(instId, n);
-        ASTNode instTerm1 = (term1 instanceof ASTId nid && nid.getId().equals(instId)) ? n : term1;
-        ASTNode instTerm2 = (term2 instanceof ASTId nid && nid.getId().equals(instId)) ? n : term2;
-        // FIXME: add inst method to terms
-        // ASTNode instTerm1 = term1.inst(instId, n);
-        // ASTNode instTerm2 = term2.inst(instId, n);
+        ASTNode instTerm1 = term1.subs(instId, n);
+        ASTNode instTerm2 = term2.subs(instId, n);
         return new ASTTEq(instTerm1, instTerm2, instType);
     }
 }

@@ -54,7 +54,7 @@ public class ASTTArrow implements ASTType {
     }
 
     public ASTType inst(String instId, ASTNode n) {
-        return new ASTTArrow(dom, codom.inst(instId, n), id, sigmac);
+        return new ASTTArrow(dom.inst(instId, n), codom.inst(instId, n), id, sigmac);
     }
 }
 

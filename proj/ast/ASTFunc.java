@@ -122,6 +122,10 @@ public class ASTFunc implements ASTNode  {
         return (nbody == null) ? null : new ASTFunc(id, nbody, argtype, normEnv, normSigma);
     }
 
+    public ASTNode subs(String subsId, ASTNode node) {
+        return new ASTFunc(id, body.subs(subsId, node), argtype, normEnv, normSigma);
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTFunc ofunc && argtype.defequals(ofunc.getArgtype(), sigma, alpha)
             && body.defequals(ofunc.getBody(), sigma, alpha.extend(id, ofunc.getId()));

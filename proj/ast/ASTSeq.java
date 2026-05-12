@@ -51,6 +51,10 @@ public class ASTSeq implements ASTNode {
         return null;
     }
 
+    public ASTNode subs(String subsId, ASTNode node) {
+        return new ASTSeq(first.subs(subsId, node), second.subs(subsId, node));
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTSeq oseq && oseq.getFirst().defequals(first, sigma, alpha)
             && oseq.getSecond().defequals(second, sigma, alpha);

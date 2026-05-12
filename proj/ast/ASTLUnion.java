@@ -47,6 +47,10 @@ public class ASTLUnion implements ASTNode {
 		return (nexpr == null) ? null : new ASTLUnion(label, nexpr);
     }
 
+	public ASTNode subs(String subsId, ASTNode node) {
+		return new ASTLUnion(subsId, expr.subs(subsId, node));
+	}
+
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
 		return o instanceof ASTLUnion olunion && olunion.getLabel().equals(label)
 			&& olunion.getExpr().defequals(expr, sigma, alpha);

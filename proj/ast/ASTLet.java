@@ -74,9 +74,16 @@ public class ASTLet implements ASTNode {
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode nexp = bind.getExp().solve(sigma);
+        if (nexp != null) return new ASTLet(new Bind(bind.getId(), bind.getType(), nexp), body);
         ASTNode nbody = body.solve(sigma);
-        return (nbody == null) ? null : new ASTLet(bind, nbody);
+        if (nbody != null) return new ASTLet(bind, nbody);
+        return null;
     }
+
+    public ASTNode subs(String subsId, ASTNode node) {
+		return new ASTLet(new Bind(bind.getId(), bind.getType(), bind.getExp().subs(subsId, node)), body.subs(subsId, node));
+	}
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTLet olet && bind.getExp().defequals(olet.getBind().getExp(), sigma, alpha)

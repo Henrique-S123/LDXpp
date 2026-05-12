@@ -122,6 +122,15 @@ public class ASTMatch implements ASTNode {
         return null;
     }
 
+	public ASTNode subs(String subsId, ASTNode node) {
+		for (String label : cases.keySet()) {
+			MatchCase c = cases.get(label);
+			ASTNode exps = c.getExp().subs(subsId, node);
+			cases.put(label, new MatchCase(c.getId(), exps));
+		}
+		return new ASTMatch(test.subs(subsId, node), cases);
+	}
+
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
 		if (o instanceof ASTMatch omatch && test.defequals(omatch.getTest(), sigma, alpha)) {
 			Map<String, MatchCase> other = omatch.getCases();

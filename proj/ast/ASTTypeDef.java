@@ -51,6 +51,10 @@ public class ASTTypeDef implements ASTNode {
         return (nbody == null) ? null : new ASTTypeDef(ltd, nbody);
     }
 
+    public ASTNode subs(String subsId, ASTNode node) {
+		return new ASTTypeDef(ltd, body.subs(subsId, node));
+	}
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTTypeDef otype && otype.getBody().defequals(body, sigma, alpha)
             && otype.getLtd().equals(ltd);

@@ -34,6 +34,10 @@ public class ASTString implements ASTNode  {
         return null;
     }
 
+    public ASTNode subs(String subsId, ASTNode node) {
+        return this;
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTString ostr && s.equals(ostr.getVal());
     }

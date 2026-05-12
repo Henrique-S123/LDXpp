@@ -83,6 +83,10 @@ public class ASTIf implements ASTNode {
         return null;
     }
 
+	public ASTNode subs(String subsId, ASTNode node) {
+        return new ASTIf(test.subs(subsId, node), conseq.subs(subsId, node), alt.subs(subsId, node));
+    }
+
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
 		return o instanceof ASTIf oif && oif.getTest().defequals(test, sigma, alpha)
 			&& oif.getConseq().defequals(conseq, sigma, alpha) && oif.getAlt().defequals(alt, sigma, alpha);

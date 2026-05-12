@@ -52,6 +52,8 @@ public class ASTLeteq implements ASTNode {
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         ASTNode normExp = bind.getExp().normalize(sigma, sub);
+        if (!(normExp instanceof ASTRefl))
+            return new ASTLeteq(new Bind(bind.getId(), bind.getType(), normExp), body.normalize(sigma, sub));
         Env<ASTNode> esub = sub.beginScope();
         esub.assoc(bind.getId(), normExp);
         return body.normalize(sigma, esub);
@@ -61,6 +63,10 @@ public class ASTLeteq implements ASTNode {
         ASTNode nbody = body.solve(sigma);
         return (nbody == null) ? null : new ASTLeteq(bind, nbody);
     }
+
+    public ASTNode subs(String subsId, ASTNode node) {
+		return new ASTLeteq(new Bind(bind.getId(), bind.getType(), bind.getExp().subs(subsId, node)), body.subs(subsId, node));
+	}
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTLeteq oleteq && bind.getExp().defequals(oleteq.getBind().getExp(), sigma, alpha)

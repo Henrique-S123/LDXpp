@@ -28,6 +28,10 @@ public class ASTUnit implements ASTNode  {
         return null;
     }
 
+    public ASTNode subs(String subsId, ASTNode node) {
+        return this;
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTUnit;
     }

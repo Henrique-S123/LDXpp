@@ -93,6 +93,10 @@ public class ASTCmpOp implements ASTNode {
         return null;
     }
 
+	public ASTNode subs(String subsId, ASTNode node) {
+        return new ASTCmpOp(lhs.subs(subsId, node), rhs.subs(subsId, node), op);
+    }
+
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
 		return o instanceof ASTCmpOp oop && oop.getOp().equals(op) &&
 			oop.getLhs().defequals(lhs, sigma, alpha) && oop.getRhs().defequals(rhs, sigma, alpha);

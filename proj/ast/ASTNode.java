@@ -16,6 +16,8 @@ public interface ASTNode {
 
     public ASTNode solve(Env<ASTType> sigma);
 
+    public ASTNode subs(String subsId, ASTNode node);
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha);
 }
 

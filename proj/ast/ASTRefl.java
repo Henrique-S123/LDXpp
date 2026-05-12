@@ -25,13 +25,24 @@ public class ASTRefl implements ASTNode  {
         Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
         ASTNode ln = tt.getTerm1(), rn = tt.getTerm2();
         while (true) {
+            Env<ASTType> lnSigma = sigma;
+            if (ln instanceof ASTApp a) {
+                if (a.getFunc() instanceof ASTFunc f) lnSigma = f.getNormSigma();
+                else if (a.getFunc() instanceof ASTLFunc lf) lnSigma = lf.getNormSigma();
+            }
+            Env<ASTType> rnSigma = sigma;
+            if (rn instanceof ASTApp a) {
+                if (a.getFunc() instanceof ASTFunc f) rnSigma = f.getNormSigma();
+                else if (a.getFunc() instanceof ASTLFunc lf) rnSigma = lf.getNormSigma();
+            }
+
             ln = ln.normalize(sigma, new Env<ASTNode>());
             rn = rn.normalize(sigma, new Env<ASTNode>());
             if (ln.defequals(rn, sigma, new AlphaEnv())) return t;
 
-            ASTNode newln = ln.solve(sigma);
+            ASTNode newln = ln.solve(lnSigma);
             if (newln != null) { ln = newln; continue; }
-            ASTNode newrn = rn.solve(sigma);
+            ASTNode newrn = rn.solve(rnSigma);
             if (newrn != null) { rn = newrn; continue; }
             break;
         }
@@ -44,6 +55,10 @@ public class ASTRefl implements ASTNode  {
 
     public ASTNode solve(Env<ASTType> sigma) {
         return null;
+    }
+
+    public ASTNode subs(String subsId, ASTNode node) {
+        return this;
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {

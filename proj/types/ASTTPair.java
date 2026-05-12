@@ -53,6 +53,6 @@ public class ASTTPair implements ASTType {
     }
 
     public ASTType inst(String instId, ASTNode n) {
-        return new ASTTPair(first, second.inst(instId, n), id, sigmac);
+        return new ASTTPair(first.inst(instId, n), second.inst(instId, n), id, sigmac);
     }
 }

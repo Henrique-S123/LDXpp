@@ -101,6 +101,10 @@ public class ASTSplit implements ASTNode {
         return null;
     }
 
+	public ASTNode subs(String subsId, ASTNode node) {
+		return new ASTSplit(pair.subs(subsId, node), id1, id2, body.subs(subsId, node));
+	}
+
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
 		return o instanceof ASTSplit osplit && osplit.getPair().defequals(pair, sigma, alpha)
 			&& osplit.getBody().defequals(body, sigma, alpha.extend(id1, osplit.getId1()).extend(id2, osplit.getId2()));

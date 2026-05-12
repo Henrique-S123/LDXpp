@@ -120,6 +120,10 @@ public class ASTLFunc implements ASTNode  {
         return (nbody == null) ? null : new ASTLFunc(id, nbody, argtype);
     }
 
+    public ASTNode subs(String subsId, ASTNode node) {
+        return new ASTLFunc(id, body.subs(subsId, node), argtype, normEnv, normSigma);
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTLFunc olfunc && argtype.defequals(olfunc.getArgtype(), sigma, alpha)
             && body.defequals(olfunc.getBody(), sigma, alpha.extend(id, olfunc.getId()));

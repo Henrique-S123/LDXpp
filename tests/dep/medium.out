@@ -1,7 +1,7 @@
 type: (c:bool, (x:int, x ≡ if(c, 2, 3) : int)), value: (true, (2, refl))
 
 
-class proj.errors.TypeCheckError: refl: terms x and if(c, 2, 3) are not definitionally equal
+class proj.errors.TypeCheckError: refl: terms 3 and if(true, 2, 3) are not definitionally equal
 
 
 type: (c:bool, (x:int, x ≡ if(c, 2, 3) : int)), value: (false, (3, refl))
@@ -13,7 +13,7 @@ type: (l:LIST, size(l) ≡ 2 : int), value: (union #cons((3, union #cons((2, uni
 type: (l:LIST, size(l) ≡ 2 : int), value: (union #cons((3, union #cons((2, union #nil(()))))), refl)
 
 
-class proj.errors.TypeCheckError: refl: terms size(l) and 2 are not definitionally equal
+class proj.errors.TypeCheckError: refl: terms size(l1) and 2 are not definitionally equal
 
 
 type: (l:LIST, size(l) ≡ 2 : int), value: (union #cons((4, union #cons((2, union #nil(()))))), refl)
@@ -25,6 +25,6 @@ type: (x:int, x > 3 ≡ true : bool), value: (5, refl)
 type: (x:int, x > 3 ≡ true : bool), value: (4, refl)
 
 
-class proj.errors.TypeCheckError: refl: terms x > 3 and true are not definitionally equal
+class proj.errors.TypeCheckError: refl: terms 2 > 3 and true are not definitionally equal
 
 

@@ -51,6 +51,10 @@ public class ASTUnion implements ASTNode {
 		return (nexpr == null) ? null : new ASTUnion(label, nexpr);
     }
 
+	public ASTNode subs(String subsId, ASTNode node) {
+		return new ASTUnion(subsId, expr.subs(subsId, node));
+	}
+
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
 		return o instanceof ASTUnion ounion && ounion.getLabel().equals(label)
 			&& ounion.getExpr().defequals(expr, sigma, alpha);

@@ -47,6 +47,10 @@ public class ASTPrint implements ASTNode {
 		return (nexp == null) ? null : new ASTPrint(nexp, newline);
     }
 
+	public ASTNode subs(String subsId, ASTNode node) {
+		return new ASTPrint(exp.subs(subsId, node), newline);
+	}
+
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
 		return o instanceof ASTPrint oprint && oprint.getExp().defequals(exp, sigma, alpha)
 			&& oprint.getNewline() == newline;

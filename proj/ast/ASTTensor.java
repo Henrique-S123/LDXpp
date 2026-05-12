@@ -35,24 +35,24 @@ public class ASTTensor implements ASTNode {
     }
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        ASTType tt1, tt2;
-        String ttid;
-        if (t instanceof ASTTTensor tensor) { tt1 = tensor.getFirst(); tt2 = tensor.getSecond(); ttid = tensor.getId(); }
+        ASTType tgt1, tgt2;
+        String tgtid;
+        if (t instanceof ASTTTensor tensor) { tgt1 = tensor.getFirst(); tgt2 = tensor.getSecond(); tgtid = tensor.getId(); }
         else throw new TypeCheckError("tensor: expected linear pair type");
 
         e.openEnvScope(ENV.SIGMA);
 
-        ASTType t1 = first.typecheck(e, tt1);
-        if (!t1.isSubtypeOf(tt1, e))
-            throw new TypeCheckError(String.format("tensor: invalid type %s for first element %s", tt1, first));
-        if (ttid != null) e.getEnv(ENV.SIGMA).addEq(new ASTTEq(new ASTId(ttid), first, t1));
+        ASTType t1 = first.typecheck(e, tgt1);
+        if (!t1.isSubtypeOf(tgt1, e))
+            throw new TypeCheckError(String.format("tensor: invalid type %s for first element %s", tgt1, first));
 
-        ASTType t2 = second.typecheck(e, tt2);
-        if (!t2.isSubtypeOf(tt2, e))
-            throw new TypeCheckError(String.format("tensor: invalid type %s for second element %s", tt1, second));
+        ASTType insttgt2 = (tgtid != null) ? tgt2.inst(tgtid, first) : tgt2;
+        ASTType t2 = second.typecheck(e, insttgt2);
+        if (!t2.isSubtypeOf(insttgt2, e))
+            throw new TypeCheckError(String.format("tensor: invalid type %s for second element %s", tgt2, second));
         
         e.closeEnvScope(ENV.SIGMA);
-        return new ASTTTensor(t1, t2, ttid, e.getEnv(ENV.SIGMA));
+        return new ASTTTensor(tgt1, tgt2, tgtid, e.getEnv(ENV.SIGMA));
     }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
@@ -65,6 +65,10 @@ public class ASTTensor implements ASTNode {
         ASTNode nsecond = second.solve(sigma);
         if (nsecond != null) return new ASTTensor(first, nsecond);
         return null;
+    }
+
+    public ASTNode subs(String subsId, ASTNode node) {
+        return new ASTTensor(first.subs(subsId, node), second.subs(subsId, node));
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
