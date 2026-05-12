@@ -65,6 +65,14 @@ public class ASTPair implements ASTNode {
         return new ASTPair(first.normalize(sigma, sub), second.normalize(sigma, sub));
     }
 
+    public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode nfirst = first.solve(sigma);
+        if (nfirst != null) return new ASTPair(nfirst, second);
+        ASTNode nsecond = second.solve(sigma);
+        if (nsecond != null) return new ASTPair(first, nsecond);
+        return null;
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTPair opair && first.defequals(opair.getFirst(), sigma, alpha)
             && second.defequals(opair.getSecond(), sigma, alpha);

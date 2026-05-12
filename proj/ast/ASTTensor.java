@@ -59,6 +59,14 @@ public class ASTTensor implements ASTNode {
         return new ASTTensor(first.normalize(sigma, sub), second.normalize(sigma, sub));
     }
 
+    public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode nfirst = first.solve(sigma);
+        if (nfirst != null) return new ASTTensor(nfirst, second);
+        ASTNode nsecond = second.solve(sigma);
+        if (nsecond != null) return new ASTTensor(first, nsecond);
+        return null;
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTTensor otensor && first.defequals(otensor.getFirst(), sigma, alpha) &&
             second.defequals(otensor.getSecond(), sigma, alpha);

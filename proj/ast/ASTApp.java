@@ -68,6 +68,14 @@ public class ASTApp implements ASTNode  {
         return body.normalize(normSigma, env);
     }
 
+    public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode nfunc = func.solve(sigma);
+        if (nfunc != null) return new ASTApp(nfunc, arg);
+        ASTNode narg = arg.solve(sigma);
+        if (narg != null) return new ASTApp(func, narg);
+        return null;
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTApp oapp && oapp.getFunc().defequals(func, sigma, alpha)
             && oapp.getArg().defequals(arg, sigma, alpha);

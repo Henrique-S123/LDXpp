@@ -23,16 +23,27 @@ public class ASTRefl implements ASTNode  {
             throw new TypeCheckError("refl: expected equality type");
 
         Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
-        ASTNode ln = tt.getTerm1().normalize(sigma, new Env<ASTNode>());
-        ASTNode rn = tt.getTerm2().normalize(sigma, new Env<ASTNode>());
-        if (!(ln.defequals(rn, sigma, new AlphaEnv())))
-            throw new TypeCheckError(String.format("refl: terms %s and %s are not definitionally equal", tt.getTerm1(), tt.getTerm2()));
+        ASTNode ln = tt.getTerm1(), rn = tt.getTerm2();
+        while (true) {
+            ln = ln.normalize(sigma, new Env<ASTNode>());
+            rn = rn.normalize(sigma, new Env<ASTNode>());
+            if (ln.defequals(rn, sigma, new AlphaEnv())) return t;
 
-        return t;
+            ASTNode newln = ln.solve(sigma);
+            if (newln != null) { ln = newln; continue; }
+            ASTNode newrn = rn.solve(sigma);
+            if (newrn != null) { rn = newrn; continue; }
+            break;
+        }
+        throw new TypeCheckError(String.format("refl: terms %s and %s are not definitionally equal", tt.getTerm1(), tt.getTerm2()));
     }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         return this;
+    }
+
+    public ASTNode solve(Env<ASTType> sigma) {
+        return null;
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {

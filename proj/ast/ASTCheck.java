@@ -23,9 +23,31 @@ public class ASTCheck implements ASTNode {
         ASTType t2 = right.typecheck(e);
         if (!t.isSubtypeOf(t2, e) || !t2.isSubtypeOf(t, e))
             throw new TypeCheckError(String.format("terms %s and %s do not have the same type", left, right));
-        ASTNode ln = left.normalize(e.getEnv(ENV.SIGMA), new Env<ASTNode>());
-        ASTNode rn = right.normalize(e.getEnv(ENV.SIGMA), new Env<ASTNode>());
-        if (ln.defequals(rn, e.getEnv(ENV.SIGMA), new AlphaEnv())) return new ASTTEq(left, right, t);
+
+        Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
+        ASTNode ln = left, rn = right;
+        while (true) {
+            Env<ASTType> lnClosSigma = sigma;
+            if (ln instanceof ASTApp a) {
+                if (a.getFunc() instanceof ASTFunc f) lnClosSigma = f.getNormSigma();
+                else if (a.getFunc() instanceof ASTLFunc lf) lnClosSigma = lf.getNormSigma();
+            }
+            Env<ASTType> rnClosSigma = sigma;
+            if (rn instanceof ASTApp a) {
+                if (a.getFunc() instanceof ASTFunc f) rnClosSigma = f.getNormSigma();
+                else if (a.getFunc() instanceof ASTLFunc lf) rnClosSigma = lf.getNormSigma();
+            }
+
+            ln = ln.normalize(sigma, new Env<ASTNode>());
+            rn = rn.normalize(sigma, new Env<ASTNode>());
+            if (ln.defequals(rn, sigma, new AlphaEnv())) return new ASTTEq(left, right, t);
+
+            ASTNode newln = ln.solve(lnClosSigma);
+            if (newln != null) { ln = newln; continue; }
+            ASTNode newrn = rn.solve(rnClosSigma);
+            if (newrn != null) { rn = newrn; continue; }
+            break;
+        }
         throw new TypeCheckError(String.format("terms %s and %s are not definitionally equal", left, right));
     }
 
@@ -35,6 +57,10 @@ public class ASTCheck implements ASTNode {
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         return this;
+    }
+
+    public ASTNode solve(Env<ASTType> sigma) {
+        return null;
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {

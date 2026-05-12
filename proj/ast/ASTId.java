@@ -31,9 +31,12 @@ public class ASTId implements ASTNode	{
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         // TODO: verify sigma and sub dont have ids in common
         ASTNode n = sub.find(id, false);
-        if (n != null) return n;
+        return (n != null) ? n : this;
+    }
+
+    public ASTNode solve(Env<ASTType> sigma) {
         ASTType eq = sigma.findEq(this);
-        return eq == null ? this : ((ASTTEq) eq).getTerm2().normalize(sigma, sub);
+        return (eq == null) ? null : ((ASTTEq) eq).getTerm2();
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {

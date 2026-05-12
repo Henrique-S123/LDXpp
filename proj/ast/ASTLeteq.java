@@ -57,6 +57,11 @@ public class ASTLeteq implements ASTNode {
         return body.normalize(sigma, esub);
     }
 
+    public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode nbody = body.solve(sigma);
+        return (nbody == null) ? null : new ASTLeteq(bind, nbody);
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTLeteq oleteq && bind.getExp().defequals(oleteq.getBind().getExp(), sigma, alpha)
             && bind.getType().defequals(oleteq.getBind().getType(), sigma, alpha)

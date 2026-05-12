@@ -73,6 +73,11 @@ public class ASTLet implements ASTNode {
         return body.normalize(sigma, env);
     }
 
+    public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode nbody = body.solve(sigma);
+        return (nbody == null) ? null : new ASTLet(bind, nbody);
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTLet olet && bind.getExp().defequals(olet.getBind().getExp(), sigma, alpha)
             && bind.getType().defequals(olet.getBind().getType(), sigma, alpha)

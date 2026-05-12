@@ -68,7 +68,7 @@ public class ASTCmpOp implements ASTNode {
 	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		ASTNode ln = lhs.normalize(sigma, sub);
 		ASTNode rn = rhs.normalize(sigma, sub);
-		if ((ln instanceof ASTInt || ln instanceof ASTLInt) || (rn instanceof ASTInt || rn instanceof ASTLInt)) {
+		if ((ln instanceof ASTInt || ln instanceof ASTLInt) && (rn instanceof ASTInt || rn instanceof ASTLInt)) {
 			int i1 = (ln instanceof ASTInt) ? ((ASTInt) ln).getVal() : ((ASTLInt) ln).getVal();
 			int i2 = (rn instanceof ASTInt) ? ((ASTInt) rn).getVal() : ((ASTLInt) rn).getVal();
 			boolean res = switch (op) {
@@ -83,6 +83,14 @@ public class ASTCmpOp implements ASTNode {
 			return (ln instanceof ASTInt && rn instanceof ASTInt) ? new ASTBool(res) : new ASTLBool(res);
 		}
 		return new ASTCmpOp(lhs.normalize(sigma, sub), rhs.normalize(sigma, sub), op);
+    }
+
+	public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode nlhs = lhs.solve(sigma);
+        if (nlhs != null) return new ASTCmpOp(nlhs, rhs, op);
+        ASTNode nrhs = rhs.solve(sigma);
+        if (nrhs != null) return new ASTCmpOp(lhs, nrhs, op);
+        return null;
     }
 
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {

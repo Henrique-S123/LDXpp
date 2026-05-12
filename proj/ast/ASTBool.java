@@ -31,6 +31,10 @@ public class ASTBool implements ASTNode  {
         return this;
     }
 
+    public ASTNode solve(Env<ASTType> sigma) {
+        return null;
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTBool ob && ob.getVal() == b;
     }

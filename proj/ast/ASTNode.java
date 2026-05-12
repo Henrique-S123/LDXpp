@@ -14,6 +14,8 @@ public interface ASTNode {
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub);
 
+    public ASTNode solve(Env<ASTType> sigma);
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha);
 }
 

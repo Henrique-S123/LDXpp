@@ -53,6 +53,10 @@ public class ASTLFunc implements ASTNode  {
         body = b;
     }
 
+    public void setNormEnv(Env<ASTNode> e) {
+        normEnv = e;
+    }
+
     public void setNormSigma(Env<ASTType> s) {
         normSigma = s;
     }
@@ -107,7 +111,13 @@ public class ASTLFunc implements ASTNode  {
     }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-        return new ASTLFunc(id, body.normalize(getNormSigma(), sub), argtype, sub, getNormSigma());
+        if (normEnv == null) setNormEnv(sub);
+        return new ASTLFunc(id, body, argtype, getNormEnv(), getNormSigma());
+    }
+
+    public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode nbody = body.solve(sigma);
+        return (nbody == null) ? null : new ASTLFunc(id, nbody, argtype);
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {

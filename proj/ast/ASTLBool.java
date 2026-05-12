@@ -27,6 +27,10 @@ public class ASTLBool implements ASTNode  {
         return this;
     }
 
+    public ASTNode solve(Env<ASTType> sigma) {
+        return null;
+    }
+
     public ASTType typecheck(EnvSet e, ASTType t) {
         return typecheck(e);
     }

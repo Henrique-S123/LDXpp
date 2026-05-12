@@ -52,6 +52,11 @@ public class ASTChoice implements ASTNode  {
         return choice == 0 ? first.normalize(sigma, sub) : second.normalize(sigma, sub);
     }
 
+    public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode npair = pair.solve(sigma);
+        return (npair == null) ? null : new ASTChoice(npair, choice);
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTChoice ochoice && ochoice.getChoice() == choice &&
             ochoice.getPair().defequals(pair, sigma, alpha);

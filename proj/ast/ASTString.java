@@ -30,6 +30,10 @@ public class ASTString implements ASTNode  {
         return this;
     }
 
+    public ASTNode solve(Env<ASTType> sigma) {
+        return null;
+    }
+
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTString ostr && s.equals(ostr.getVal());
     }

@@ -46,6 +46,11 @@ public class ASTUnion implements ASTNode {
 		return new ASTUnion(label, expr.normalize(sigma, sub));
     }
 
+	public ASTNode solve(Env<ASTType> sigma) {
+		ASTNode nexpr = expr.solve(sigma);
+		return (nexpr == null) ? null : new ASTUnion(label, nexpr);
+    }
+
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
 		return o instanceof ASTUnion ounion && ounion.getLabel().equals(label)
 			&& ounion.getExpr().defequals(expr, sigma, alpha);

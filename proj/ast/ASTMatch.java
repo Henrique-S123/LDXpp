@@ -111,6 +111,17 @@ public class ASTMatch implements ASTNode {
 		return body.normalize(sigma, env);
     }
 
+	public ASTNode solve(Env<ASTType> sigma) {
+		ASTNode ntest = test.solve(sigma);
+		if (ntest != null) return new ASTMatch(ntest, cases);
+		for (String label : cases.keySet()) {
+			MatchCase c = cases.get(label);
+			ASTNode nexp = c.getExp().solve(sigma);
+			if (nexp != null) { cases.put(label, new MatchCase(c.getId(), nexp)); return new ASTMatch(test, cases); }
+		}
+        return null;
+    }
+
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
 		if (o instanceof ASTMatch omatch && test.defequals(omatch.getTest(), sigma, alpha)) {
 			Map<String, MatchCase> other = omatch.getCases();
