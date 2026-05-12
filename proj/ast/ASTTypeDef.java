@@ -8,7 +8,7 @@ import proj.errors.*;
 
 import java.util.HashMap;
 
-public class ASTTypeDef implements ASTNode {
+public class ASTTypeDef extends ASTNode {
     HashMap<String, ASTType> ltd;
     ASTNode body;
 
@@ -36,10 +36,6 @@ public class ASTTypeDef implements ASTNode {
         ASTType ret = this.body.typecheck(e);
         e.closeEnvScope(ENV.PHI);
         return ret;
-    }
-
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
     }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {

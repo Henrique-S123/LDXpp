@@ -6,7 +6,7 @@ import proj.env.*;
 import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
-public class ASTLet implements ASTNode {
+public class ASTLet extends ASTNode {
     Bind bind;
     ASTNode body;
 
@@ -61,10 +61,6 @@ public class ASTLet implements ASTNode {
 
         return rt;
 	}
-
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
-    }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         ASTNode normExp = bind.getExp().normalize(sigma, sub);

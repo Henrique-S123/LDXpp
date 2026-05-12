@@ -3,10 +3,9 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
-import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
-public class ASTChoice implements ASTNode  {
+public class ASTChoice extends ASTNode  {
     ASTNode pair;
     int choice;
 
@@ -41,11 +40,7 @@ public class ASTChoice implements ASTNode  {
             throw new TypeCheckError("illegal type to " + (choice > 0 ? "snd" : "fst") + ": " + tp);
         }
 	}
-
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
-    }
-
+    
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         ASTNode pn = pair.normalize(sigma, sub);
         ASTNode first, second;

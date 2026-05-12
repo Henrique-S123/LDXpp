@@ -6,7 +6,7 @@ import proj.env.*;
 import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
-public class ASTCheckTypes implements ASTNode {
+public class ASTCheckTypes extends ASTNode {
     ASTType left, right;
 
     public ASTCheckTypes(ASTType l, ASTType r) {
@@ -21,26 +21,6 @@ public class ASTCheckTypes implements ASTNode {
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         if (left.defequals(right, e.getEnv(ENV.SIGMA), new AlphaEnv())) return new ASTTUnit();
         throw new TypeCheckError(String.format("types %s and %s are not definitionally equal", left, right));
-    }
-
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
-    }
-
-    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-        return this;
-    }
-
-    public ASTNode solve(Env<ASTType> sigma) {
-        return null;
-    }
-
-    public ASTNode subs(String subsId, ASTNode node) {
-        return this;
-    }
-
-    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return false;
     }
 
     @Override

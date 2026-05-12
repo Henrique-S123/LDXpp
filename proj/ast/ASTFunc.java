@@ -6,7 +6,7 @@ import proj.env.*;
 import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
-public class ASTFunc implements ASTNode  {
+public class ASTFunc extends ASTNode  {
     String id;
     ASTNode body;
     ASTType argtype;

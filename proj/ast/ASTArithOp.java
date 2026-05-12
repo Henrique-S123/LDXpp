@@ -5,7 +5,7 @@ import proj.types.*;
 import proj.env.*;
 import proj.errors.*;
 
-public class ASTArithOp implements ASTNode {
+public class ASTArithOp extends ASTNode {
     ASTNode lhs, rhs;
 	String op;
 
@@ -77,10 +77,6 @@ public class ASTArithOp implements ASTNode {
 				throw new TypeCheckError("illegal types to " + op + " operator: " + types);
 		}
 	}
-
-	public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
-    }
 
 	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		ASTNode ln = lhs.normalize(sigma, sub);

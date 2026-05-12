@@ -5,7 +5,7 @@ import proj.types.*;
 import proj.env.*;
 import proj.errors.*;
 
-public class ASTApp implements ASTNode  {
+public class ASTApp extends ASTNode  {
     ASTNode func, arg;
 
     public ASTApp(ASTNode f, ASTNode a) {
@@ -40,18 +40,15 @@ public class ASTApp implements ASTNode  {
         tf = e.unfold(tf);
 
         ASTType dom, codom;
-        if (tf instanceof ASTTArrow fun) { dom = fun.getDom(); codom = fun.getCodom(); }
-        else if (tf instanceof ASTTLollipop fun) { dom = fun.getDom(); codom = fun.getCodom(); }
+        String id;
+        if (tf instanceof ASTTArrow fun) { dom = fun.getDom(); codom = fun.getCodom(); id = fun.getId(); }
+        else if (tf instanceof ASTTLollipop fun) { dom = fun.getDom(); codom = fun.getCodom(); id = fun.getId(); }
         else throw new TypeCheckError("illegal type for func app: " + tf);
 
         ASTType ta = arg.typecheck(e, dom);
-        if (ta instanceof ASTTUnit || ta.isSubtypeOf(dom, e)) return codom;
+        if (ta instanceof ASTTUnit || ta.isSubtypeOf(dom, e)) return codom.inst(id, arg);
         else throw new TypeCheckError("func app: argument type (" + ta + ") is not subtype of the function parameter (" + dom + ")");
 	}
-
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
-    }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         ASTNode body, fn = func.normalize(sigma, sub);

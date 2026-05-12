@@ -5,7 +5,7 @@ import proj.types.*;
 import proj.env.*;
 import proj.errors.*;
 
-public class ASTSeq implements ASTNode {
+public class ASTSeq extends ASTNode {
     ASTNode first, second;
 
     public ASTSeq(ASTNode f, ASTNode s) {
@@ -34,10 +34,6 @@ public class ASTSeq implements ASTNode {
             throw new TypeCheckError("illegal type to sequential composition: " + tf);
         }
 	}
-
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
-    }
 
 	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         return new ASTSeq(first.normalize(sigma, sub), second.normalize(sigma, sub));

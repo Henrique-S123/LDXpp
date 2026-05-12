@@ -5,7 +5,7 @@ import proj.types.*;
 import proj.env.*;
 import proj.errors.*;
 
-public class ASTId implements ASTNode	{	
+public class ASTId extends ASTNode	{	
     String id;	
     
     public ASTId(String id)	{
@@ -23,10 +23,6 @@ public class ASTId implements ASTNode	{
     public ASTType typecheck(EnvSet e) throws EnvironmentError {
 		return e.findVar(id);
 	}
-
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
-    }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
         // TODO: verify sigma and sub dont have ids in common

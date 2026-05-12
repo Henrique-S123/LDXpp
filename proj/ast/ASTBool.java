@@ -4,7 +4,7 @@ import proj.values.*;
 import proj.types.*;
 import proj.env.*;
 
-public class ASTBool implements ASTNode  {
+public class ASTBool extends ASTNode  {
     boolean b;
 
     public ASTBool(boolean b0) {
@@ -22,22 +22,6 @@ public class ASTBool implements ASTNode  {
     public ASTType typecheck(EnvSet e) {
 		return new ASTTBool();
 	}
-
-    public ASTType typecheck(EnvSet e, ASTType t) {
-        return typecheck(e);
-    }
-
-    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-        return this;
-    }
-
-    public ASTNode solve(Env<ASTType> sigma) {
-        return null;
-    }
-
-    public ASTNode subs(String subsId, ASTNode node) {
-        return this;
-    }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTBool ob && ob.getVal() == b;

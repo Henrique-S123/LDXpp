@@ -5,7 +5,7 @@ import proj.types.*;
 import proj.env.*;
 import proj.errors.*;
 
-public class ASTCmpOp implements ASTNode {
+public class ASTCmpOp extends ASTNode {
     ASTNode lhs, rhs;
 	String op;
 
@@ -60,10 +60,6 @@ public class ASTCmpOp implements ASTNode {
 			throw new TypeCheckError("illegal types to " + op + " operator: " + tl + " and " + tr);
 		}
 	}
-
-	public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
-    }
 
 	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		ASTNode ln = lhs.normalize(sigma, sub);

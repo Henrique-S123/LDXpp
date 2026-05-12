@@ -6,7 +6,7 @@ import proj.env.*;
 import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
-public class ASTLeteq implements ASTNode {
+public class ASTLeteq extends ASTNode {
     Bind bind;
     ASTNode body;
 
@@ -44,10 +44,6 @@ public class ASTLeteq implements ASTNode {
             throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA));
         e.closeEnvScope(ENV.SIGMA);
         return rt;
-    }
-
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
     }
 
     public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {

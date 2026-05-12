@@ -8,7 +8,7 @@ import proj.errors.*;
 
 import java.util.HashMap;
 
-public class ASTUnion implements ASTNode {
+public class ASTUnion extends ASTNode {
 	String label;
 	ASTNode expr;
 
@@ -37,10 +37,6 @@ public class ASTUnion implements ASTNode {
 		ll.put(label, t);
 		return new ASTTUnion(ll);
 	}
-
-	public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
-    }
 
 	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		return new ASTUnion(label, expr.normalize(sigma, sub));

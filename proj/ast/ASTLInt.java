@@ -4,7 +4,7 @@ import proj.values.*;
 import proj.types.*;
 import proj.env.*;
 
-public class ASTLInt implements ASTNode  {
+public class ASTLInt extends ASTNode  {
     int v;
 
     public ASTLInt(int v0) {
@@ -22,22 +22,6 @@ public class ASTLInt implements ASTNode  {
     public ASTType typecheck(EnvSet e) {;
 		return new ASTTLInt();
 	}
-
-    public ASTType typecheck(EnvSet e, ASTType t) {
-        return typecheck(e);
-    }
-
-    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-        return this;
-    }
-
-    public ASTNode solve(Env<ASTType> sigma) {
-        return null;
-    }
-
-    public ASTNode subs(String subsId, ASTNode node) {
-        return this;
-    }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return o instanceof ASTLInt oli && oli.getVal() == v;

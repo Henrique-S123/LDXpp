@@ -5,7 +5,7 @@ import proj.types.*;
 import proj.env.*;
 import proj.errors.*;
 
-public class ASTPrint implements ASTNode {
+public class ASTPrint extends ASTNode {
     ASTNode exp;
 	boolean newline;
 
@@ -33,10 +33,6 @@ public class ASTPrint implements ASTNode {
 		exp.typecheck(e);
 		return new ASTTUnit();
 	}
-
-	public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
-    }
 
 	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		return new ASTPrint(exp.normalize(sigma, sub), newline);

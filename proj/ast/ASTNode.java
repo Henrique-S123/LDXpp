@@ -1,23 +1,38 @@
 package proj.ast;
 
 import proj.values.*;
-import proj.types.ASTType;
+import proj.types.*;
 import proj.env.*;
 import proj.errors.*;
 
-public interface ASTNode {
-    public IValue eval(Env<IValue> e) throws InterpreterError;
+public abstract class ASTNode {
+
+    public IValue eval(Env<IValue> e) throws InterpreterError {
+        return new VUnit();
+    }
 	
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError;
+    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+        return new ASTTUnit();
+    }
 
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError;
+    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+        return typecheck(e);
+    }
 
-    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub);
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
+        return this;
+    }
 
-    public ASTNode solve(Env<ASTType> sigma);
+    public ASTNode solve(Env<ASTType> sigma) {
+        return null;
+    }
 
-    public ASTNode subs(String subsId, ASTNode node);
+    public ASTNode subs(String subsId, ASTNode node) {
+        return this;
+    }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha);
+    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+        return false;
+    }
 }
 

@@ -8,7 +8,7 @@ import proj.errors.*;
 
 import java.util.*;
 
-public class ASTMatch implements ASTNode {
+public class ASTMatch extends ASTNode {
 	ASTNode test;
 	Map<String, MatchCase> cases;
 
@@ -90,10 +90,6 @@ public class ASTMatch implements ASTNode {
 		}
 		return rettype;
 	}
-
-	public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
-    }
 
 	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		ASTNode exp, tn = test.normalize(sigma, sub);

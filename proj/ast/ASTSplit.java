@@ -6,7 +6,7 @@ import proj.env.*;
 import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
-public class ASTSplit implements ASTNode {
+public class ASTSplit extends ASTNode {
     ASTNode pair, body;
 	String id1, id2;
 
@@ -75,10 +75,6 @@ public class ASTSplit implements ASTNode {
 		e.closeEnvScope(ENV.SIGMA);
 		return rt;
 	}
-
-	public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
-    }
 
 	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		ASTNode pn = pair.normalize(sigma, sub);

@@ -7,7 +7,7 @@ import proj.errors.*;
 
 import java.util.HashSet;
 
-public class ASTIf implements ASTNode {
+public class ASTIf extends ASTNode {
     ASTNode test, conseq, alt;
 
 	public ASTIf(ASTNode t, ASTNode c, ASTNode a) {
@@ -57,10 +57,6 @@ public class ASTIf implements ASTNode {
 			throw new TypeCheckError("illegal type to if test: " + tt);
 		}
 	}
-
-	public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        return typecheck(e);
-    }
 
 	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
 		ASTNode tn = test.normalize(sigma, sub);
