@@ -41,12 +41,12 @@ public class ASTChoice extends ASTNode  {
         }
 	}
     
-    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-        ASTNode pn = pair.normalize(sigma, sub);
+    public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
+        ASTNode pn = pair.weaknorm(sigma, sub);
         ASTNode first, second;
         if (pn instanceof ASTPair p) { first = p.getFirst(); second = p.getSecond(); }
         else return new ASTChoice(pn, choice);
-        return choice == 0 ? first.normalize(sigma, sub) : second.normalize(sigma, sub);
+        return choice == 0 ? first.weaknorm(sigma, sub) : second.weaknorm(sigma, sub);
     }
 
     public ASTNode solve(Env<ASTType> sigma) {

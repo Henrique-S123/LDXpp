@@ -66,9 +66,9 @@ public class ASTLogicOp extends ASTNode {
 		}
 	}
 
-	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-		ASTNode ln = lhs.normalize(sigma, sub);
-		ASTNode rn = rhs.normalize(sigma, sub);
+	public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
+		ASTNode ln = lhs.weaknorm(sigma, sub);
+		ASTNode rn = rhs.weaknorm(sigma, sub);
 		if ((ln instanceof ASTBool || ln instanceof ASTLBool) && (rn instanceof ASTBool || rn instanceof ASTLBool)) {
 			boolean i1 = (ln instanceof ASTBool) ? ((ASTBool) ln).getVal() : ((ASTLBool) ln).getVal();
 			boolean i2 = (rn instanceof ASTBool) ? ((ASTBool) rn).getVal() : ((ASTLBool) rn).getVal();
@@ -80,7 +80,7 @@ public class ASTLogicOp extends ASTNode {
 			};
 			return (ln instanceof ASTBool && rn instanceof ASTBool) ? new ASTBool(res) : new ASTLBool(res);
 		}
-		return new ASTLogicOp(lhs.normalize(sigma, sub), rhs.normalize(sigma, sub), op);
+		return new ASTLogicOp(lhs.weaknorm(sigma, sub), rhs.weaknorm(sigma, sub), op);
     }
 
 	public ASTNode solve(Env<ASTType> sigma) {

@@ -55,8 +55,8 @@ public class ASTTensor extends ASTNode {
         return new ASTTTensor(tgt1, tgt2, tgtid, e.getEnv(ENV.SIGMA));
     }
 
-    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-        return new ASTTensor(first.normalize(sigma, sub), second.normalize(sigma, sub));
+    public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
+        return new ASTTensor(first.weaknorm(sigma, sub), second.weaknorm(sigma, sub));
     }
 
     public ASTNode solve(Env<ASTType> sigma) {

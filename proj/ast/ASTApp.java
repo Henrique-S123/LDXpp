@@ -50,9 +50,9 @@ public class ASTApp extends ASTNode  {
         else throw new TypeCheckError("func app: argument type (" + ta + ") is not subtype of the function parameter (" + dom + ")");
 	}
 
-    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-        ASTNode body, fn = func.normalize(sigma, sub);
-        ASTNode argn = arg.normalize(sigma, sub);
+    public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
+        ASTNode body, fn = func.weaknorm(sigma, sub);
+        ASTNode argn = arg.weaknorm(sigma, sub);
         Env<ASTNode> normEnv;
         Env<ASTType> normSigma;
         String id;
@@ -62,7 +62,7 @@ public class ASTApp extends ASTNode  {
 
         Env<ASTNode> env = normEnv.beginScope();
         env.assoc(id, argn);
-        return body.normalize(normSigma, env);
+        return body.weaknorm(normSigma, env);
     }
 
     public ASTNode solve(Env<ASTType> sigma) {

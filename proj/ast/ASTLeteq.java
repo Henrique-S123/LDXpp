@@ -46,13 +46,13 @@ public class ASTLeteq extends ASTNode {
         return rt;
     }
 
-    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-        ASTNode normExp = bind.getExp().normalize(sigma, sub);
+    public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
+        ASTNode normExp = bind.getExp().weaknorm(sigma, sub);
         if (!(normExp instanceof ASTRefl))
-            return new ASTLeteq(new Bind(bind.getId(), bind.getType(), normExp), body.normalize(sigma, sub));
+            return new ASTLeteq(new Bind(bind.getId(), bind.getType(), normExp), body.weaknorm(sigma, sub));
         Env<ASTNode> esub = sub.beginScope();
         esub.assoc(bind.getId(), normExp);
-        return body.normalize(sigma, esub);
+        return body.weaknorm(sigma, esub);
     }
 
     public ASTNode solve(Env<ASTType> sigma) {

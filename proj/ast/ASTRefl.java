@@ -36,8 +36,8 @@ public class ASTRefl extends ASTNode  {
                 else if (a.getFunc() instanceof ASTLFunc lf) rnSigma = lf.getNormSigma();
             }
 
-            ln = ln.normalize(sigma, new Env<ASTNode>());
-            rn = rn.normalize(sigma, new Env<ASTNode>());
+            ln = ln.weaknorm(sigma, new Env<ASTNode>());
+            rn = rn.weaknorm(sigma, new Env<ASTNode>());
             if (ln.defequals(rn, sigma, new AlphaEnv())) return t;
 
             ASTNode newln = ln.solve(lnSigma);

@@ -19,7 +19,7 @@ public abstract class ASTNode {
         return typecheck(e);
     }
 
-    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
+    public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
         return this;
     }
 

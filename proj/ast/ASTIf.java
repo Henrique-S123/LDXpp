@@ -58,15 +58,15 @@ public class ASTIf extends ASTNode {
 		}
 	}
 
-	public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-		ASTNode tn = test.normalize(sigma, sub);
+	public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
+		ASTNode tn = test.weaknorm(sigma, sub);
 		boolean val;
 		if (tn instanceof ASTBool b) val = b.getVal();
 		else if (tn instanceof ASTLBool lb) val = lb.getVal();
-		else return new ASTIf(tn, conseq.normalize(sigma, sub), alt.normalize(sigma, sub));
+		else return new ASTIf(tn, conseq.weaknorm(sigma, sub), alt.weaknorm(sigma, sub));
 
-		if (val) return conseq.normalize(sigma, sub);
-		else return alt.normalize(sigma, sub);
+		if (val) return conseq.weaknorm(sigma, sub);
+		else return alt.weaknorm(sigma, sub);
     }
 
 	public ASTNode solve(Env<ASTType> sigma) {

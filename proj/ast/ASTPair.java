@@ -60,8 +60,8 @@ public class ASTPair extends ASTNode {
         return new ASTTPair(tgt1, tgt2, tgtid, e.getEnv(ENV.SIGMA));
     }
 
-    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
-        return new ASTPair(first.normalize(sigma, sub), second.normalize(sigma, sub));
+    public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
+        return new ASTPair(first.weaknorm(sigma, sub), second.weaknorm(sigma, sub));
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
