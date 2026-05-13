@@ -82,7 +82,7 @@ type: int, value: 14
 type: int, value: 2
 
 
-class proj.errors.TypeCheckError: types to bind are not subtypes: int and bool
+class proj.errors.TypeCheckError: Type int is not a subtype of bool
 
 
 type: int, value: 14

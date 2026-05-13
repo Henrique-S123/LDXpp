@@ -20,14 +20,14 @@ public class ASTRefl extends ASTNode  {
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
         if (!(t instanceof ASTTEq tt))
-            throw new TypeCheckError("refl: expected equality type");
+            throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", t));
 
         Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
         ASTNode ln = left.normalize(sigma);
         ASTNode rn = right.normalize(sigma);
         if (ln.defequals(rn, sigma, new AlphaEnv())) return t;
-        throw new TypeCheckError(String.format("refl: terms %s and %s are not definitionally equal", left, right));
+        throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {

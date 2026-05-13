@@ -52,9 +52,7 @@ public class ASTLet extends ASTNode {
         e.bindToEnv(env, id, tt);
         if (declType != null) {
             ASTType exprType = expr.typecheck(e, tt);
-            if (!(exprType.isSubtypeOf(tt, e))) {
-                throw new TypeCheckError("types to bind are not subtypes: " + exprType + " and " + tt);
-            }
+            if (!(exprType.isSubtypeOf(tt, e))) throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
         }
 
         e.addEq(new ASTTEq(new ASTId(id), expr, tt));
@@ -62,7 +60,7 @@ public class ASTLet extends ASTNode {
 
         ASTType rt = body.typecheck(e);
         if (!(e.getEnv(ENV.DELTA).isEmpty()))
-            throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA));
+            throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getEnv(ENV.DELTA)));
 
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);

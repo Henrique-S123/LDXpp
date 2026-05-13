@@ -4,7 +4,7 @@ type: (x:linbool | x ≡ truel : linbool), value: (truel | refl)
 type: linbool, value: truel
 
 
-class proj.errors.TypeCheckError: there are unused linear values: [x: linbool]
+class proj.errors.TypeCheckError: There are unused linear values: [x: linbool]
 
 
 class proj.errors.TypeCheckError: refl expects a type to be typed against
@@ -19,24 +19,24 @@ class proj.errors.TypeCheckError: refl expects a type to be typed against
 type: (x:linint | x ≡ 2l : linint), value: (2l | refl)
 
 
-class proj.errors.TypeCheckError: refl: terms 3l and 2l are not definitionally equal
+class proj.errors.TypeCheckError: Terms 3l and 2l are not definitionally equal
 
 
 type: (x:linint | (y:linint | x ≡ y : linint)), value: (2l | (2l | refl))
 
 
-class proj.errors.TypeCheckError: refl: terms 2l and 3l are not definitionally equal
+class proj.errors.TypeCheckError: Terms 2l and 3l are not definitionally equal
 
 
 type: (x:linint | (y:linint | (z:linint | (x ≡ y : linint | y ≡ z : linint)))), value: (2l | (2l | (2l | (refl | refl))))
 
 
-class proj.errors.TypeCheckError: refl: terms 2l and 3l are not definitionally equal
+class proj.errors.TypeCheckError: Terms 2l and 3l are not definitionally equal
 
 
-class proj.errors.TypeCheckError: refl: terms 2l and 3l are not definitionally equal
+class proj.errors.TypeCheckError: Terms 2l and 3l are not definitionally equal
 
 
-class proj.errors.TypeCheckError: refl: terms 3l and 2l are not definitionally equal
+class proj.errors.TypeCheckError: Terms 3l and 2l are not definitionally equal
 
 

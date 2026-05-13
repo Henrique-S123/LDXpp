@@ -26,10 +26,6 @@ public final class ErrorMessages {
         return String.format("Unexpected operation %s", op);
     }
 
-    public static String missingMatchCase(String label) {
-        return String.format("Missing match case for label %s", label);
-    }
-
     // Typechecking errors
     public static String illegalTypeToUnary(String op, ASTType t) {
         return String.format("Illegal type to %s: %s", op, t);
@@ -47,14 +43,16 @@ public final class ErrorMessages {
         return String.format("Terms %s and %s have different types: %s and %s", n1, n2, t1, t2);
     }
 
-    public static String termsNotDefeq(ASTNode n1, ASTNode n2) {
-        return String.format("Terms %s and %s are not definitionally equal", n1, n2);
+    public static String missingExpectedType(ASTNode n) {
+        return String.format("%s expects a type to be typed against", n);
     }
 
-    public static String typesNotDefeq(ASTType t1, ASTType t2) {
-        return String.format("Types %s and %s are not definitionally equal", t1, t2);
+    // Linearity errors
+    public static String unusedLinearValues(Env<ASTType> env) {
+        return String.format("There are unused linear values: %s", env);
     }
 
+    // Subtyping errors
     public static String notSubtypeApp(ASTType arg, ASTType param) {
         return String.format("Argument type %s is not a subtype of parameter type %s", arg, param);
     }
@@ -67,11 +65,24 @@ public final class ErrorMessages {
         return String.format("Type %s is not a subtype of %s", t1, t2);
     }
 
-    public static String unusedLinearValues(Env<ASTType> env) {
-        return String.format("There are unused linear values: %s", env);
+    // Defeq errors
+    public static String termsNotDefeq(ASTNode n1, ASTNode n2) {
+        return String.format("Terms %s and %s are not definitionally equal", n1, n2);
     }
 
-    public static String missingExpectedType(ASTNode n) {
-        return String.format("%s expects a type to be typed against", n);
+    public static String typesNotDefeq(ASTType t1, ASTType t2) {
+        return String.format("Types %s and %s are not definitionally equal", t1, t2);
     }
+
+    // Split errors
+    public static String splitIdsMustBeDifferent() {
+        return String.format("The two ids for a split must be different");
+    }
+
+    // Match errors
+    public static String missingMatchCase(String label) {
+        return String.format("Missing match case for label %s", label);
+    }
+
+    // If errors
 }

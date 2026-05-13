@@ -44,11 +44,11 @@ public class ASTSplit extends ASTNode {
     }
 
 	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-		if (id1.equals(id2)) throw new TypeCheckError("ids for split must be different");
+		if (id1.equals(id2)) throw new TypeCheckError(ErrorMessages.splitIdsMustBeDifferent());
 		ASTType tt = pair.typecheck(e);
 		tt = e.unfold(tt);
 		if (!(tt instanceof ASTTTensor ttensor))
-			throw new TypeCheckError("illegal type to split: " + tt);
+			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
 
 		ASTType t1 = e.unfold(ttensor.getFirst());
 		ASTType t2 = e.unfold(ttensor.getSecond());
@@ -66,7 +66,7 @@ public class ASTSplit extends ASTNode {
 
 		ASTType rt = body.typecheck(e);
 		if (!(e.getEnv(ENV.DELTA).isEmpty()))
-            throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA));
+            throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getEnv(ENV.DELTA)));
 
 		if (lin1 || lin2) e.closeEnvScope(ENV.DELTA);
 		if (!lin1 || !lin2) e.closeEnvScope(ENV.GAMMA);

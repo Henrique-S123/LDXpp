@@ -40,13 +40,13 @@ public class ASTLeteq extends ASTNode {
         ASTType t = expr.typecheck(e);
         t = e.unfold(t);
 
-        if (!(t instanceof ASTTEq)) throw new TypeCheckError("leteq: expected equality type");
+        if (!(t instanceof ASTTEq)) throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("leteq", t));
         e.openEnvScope(ENV.SIGMA);
         e.bindToEnv(ENV.SIGMA, id, t);
 
         ASTType rt = body.typecheck(e);
         if (!(e.getEnv(ENV.DELTA).isEmpty()))
-            throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA));
+            throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getEnv(ENV.DELTA)));
         e.closeEnvScope(ENV.SIGMA);
         return rt;
     }
