@@ -46,18 +46,19 @@ public class Env <E>{
         bindings.put(id, bind);
     }
 
-    public E find(String id, boolean consume) {
+    private E search(String id, boolean consume) {
         Env<E> curr = this;
         while (curr != null) {
-            E val = curr.bindings.get(id);
-            if (val != null) {
-                if (consume) curr.bindings.remove(id);
-                return val;
-            }
+            E val = consume ? curr.bindings.remove(id) : curr.bindings.get(id);
+            if (val != null) return val;
             curr = curr.anc;
         }
         return null;
     }
+
+    public E find(String id) { return search(id, false); }
+
+    public E remove(String id) { return search(id, true); }
 
     public void addEq(E bind) {
         String e = UUID.randomUUID().toString();

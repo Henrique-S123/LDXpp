@@ -17,7 +17,7 @@ public class ASTId extends ASTNode	{
     }
 
     public IValue eval(Env<IValue> env) {
-        return env.find(id, false);
+        return env.find(id);
     }
 
     public ASTType typecheck(EnvSet e) throws EnvironmentError {
@@ -25,7 +25,7 @@ public class ASTId extends ASTNode	{
 	}
 
     public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-        ASTNode n = sub.find(id, false);
+        ASTNode n = sub.find(id);
         return (n != null) ? n : this;
     }
 
@@ -41,8 +41,8 @@ public class ASTId extends ASTNode	{
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         if (o instanceof ASTId oid) {
-            String s1 = alpha.getLeft().find(id, false);
-            String s2 = alpha.getRight().find(oid.getId(), false);
+            String s1 = alpha.getLeft().find(id);
+            String s2 = alpha.getRight().find(oid.getId());
             if (s1 != null && s2 != null) return s1.equals(s2);
             return id.equals(oid.getId());
         }

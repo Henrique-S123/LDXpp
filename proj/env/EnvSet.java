@@ -105,9 +105,9 @@ public class EnvSet {
 
     /* Find binds */
     public ASTType findVar(String id) throws EnvironmentError {
-        ASTType ret = gamma.find(id, false);
+        ASTType ret = gamma.find(id);
         if (ret != null) return ret;
-        ret = delta.find(id, true);
+        ret = delta.remove(id);
         if (ret != null) {
             usedLinears.add(id);
             return ret;
@@ -121,7 +121,7 @@ public class EnvSet {
     /* Unfold operation */
     public ASTType unfold(ASTType t) {
         if (t instanceof ASTTId tid) {
-            return unfold((ASTType) phi.find(tid.getId(), false));
+            return unfold((ASTType) phi.find(tid.getId()));
         } else {
             return t;
         }
