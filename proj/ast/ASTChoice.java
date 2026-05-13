@@ -35,7 +35,7 @@ public class ASTChoice extends ASTNode  {
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		ASTType tp = pair.typecheck(e);
         if (tp instanceof ASTTPair tpair) {
-            return choice > 0 ? tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, 0).normalize(e.getEnv(ENV.SIGMA), new Env<ASTNode>())) : tpair.getFirst();
+            return choice > 0 ? tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, 0).normalize(e.getEnv(ENV.SIGMA))) : tpair.getFirst();
         } else {
             throw new TypeCheckError("illegal type to " + (choice > 0 ? "snd" : "fst") + ": " + tp);
         }

@@ -35,7 +35,7 @@ public abstract class ASTNode {
         return false;
     }
 
-    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
+    public ASTNode normalize(Env<ASTType> sigma) {
         ASTNode ln = this;
         while (true) {
             Env<ASTType> sig = sigma;
@@ -43,8 +43,7 @@ public abstract class ASTNode {
                 if (a.getFunc() instanceof ASTFunc f) sig = f.getNormSigma();
                 else if (a.getFunc() instanceof ASTLFunc lf) sig = lf.getNormSigma();
             }
-
-            ln = ln.weaknorm(sigma, sub);
+            ln = ln.weaknorm(sigma, new Env<ASTNode>());
             ASTNode sln = ln.solve(sig);
             if (sln == null) return ln;
             ln = sln;

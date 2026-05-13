@@ -24,8 +24,8 @@ public class ASTRefl extends ASTNode  {
 
         Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
-        ASTNode ln = left.normalize(sigma, new Env<ASTNode>());
-        ASTNode rn = right.normalize(sigma, new Env<ASTNode>());
+        ASTNode ln = left.normalize(sigma);
+        ASTNode rn = right.normalize(sigma);
         if (ln.defequals(rn, sigma, new AlphaEnv())) return t;
         throw new TypeCheckError(String.format("refl: terms %s and %s are not definitionally equal", left, right));
     }
