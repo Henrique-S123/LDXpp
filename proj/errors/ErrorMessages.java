@@ -4,13 +4,18 @@ import proj.values.*;
 import proj.types.*;
 import proj.env.*;
 import proj.ast.*;
+import java.util.Set;
 
 public final class ErrorMessages {
     private ErrorMessages() {}
 
     // Environment errors
-    public static String undefinedVariable(String name) {
-        return "Undefined variable: " + name;
+    public static String alreadyDeclaredVariable(String id) {
+        return String.format("Identifier '%s' already declared", id);
+    }
+
+    public static String undeclaredVariable(String id) {
+        return String.format("Undeclared identifier '%s'", id);
     }
 
     // Evaluation errors
@@ -39,7 +44,7 @@ public final class ErrorMessages {
         return String.format("Type mismatch: expected %s type but got %s", t1, t2);
     }
 
-    public static String differentTypes(ASTNode n1, ASTNode n2, ASTType t1, ASTType t2) {
+    public static String termsWithDifferentTypes(ASTNode n1, ASTNode n2, ASTType t1, ASTType t2) {
         return String.format("Terms %s and %s have different types: %s and %s", n1, n2, t1, t2);
     }
 
@@ -50,6 +55,14 @@ public final class ErrorMessages {
     // Linearity errors
     public static String unusedLinearValues(Env<ASTType> env) {
         return String.format("There are unused linear values: %s", env);
+    }
+
+    public static String unusedLinearValues(String id) {
+        return String.format("Linear value %s must be used", id);
+    }
+
+    public static String alreadyUsedLinear(String id) {
+        return String.format("Linear value of '%s' has already been consumed and cannot be used again", id);
     }
 
     // Subtyping errors
@@ -84,5 +97,12 @@ public final class ErrorMessages {
         return String.format("Missing match case for label %s", label);
     }
 
-    // If errors
+    // Branches errors
+    public static String branchesDifferentLinears(Set<String> s1, Set<String> s2) {
+        return String.format("Branches are using different linear values: %s and %s", s1, s2);
+    }
+
+    public static String branchesDifferentTypes(ASTType t1, ASTType t2) {
+        return String.format("Branches have different types: %s and %s", t1, t2);
+    }
 }

@@ -46,7 +46,7 @@ type: bool, value: true
 type: int, value: 2
 
 
-class proj.errors.TypeCheckError: if conseq and alt branches do not have compatible types: int and bool
+class proj.errors.TypeCheckError: Branches have different types: int and bool
 
 
 type: bool, value: false

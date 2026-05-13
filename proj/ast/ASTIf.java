@@ -40,22 +40,18 @@ public class ASTIf extends ASTNode {
 
 	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		ASTType tt = test.typecheck(e);
-		if (tt instanceof ASTTBool || tt instanceof ASTTLBool) {
-			EnvSet e2 = new EnvSet(e);
-			ASTType vconseq = conseq.typecheck(e);
-			ASTType valt = alt.typecheck(e2);
-			if (!new HashSet<String>(e.getUsedLinears()).equals(new HashSet<String>(e2.getUsedLinears())))
-				throw new TypeCheckError("if conseq and alt branches must use the same linear values");
-			if (vconseq.isSubtypeOf(valt, e)) {
-				return vconseq;
-			} else if (valt.isSubtypeOf(vconseq, e)) {
-				return valt;
-			} else {
-				throw new TypeCheckError("if conseq and alt branches do not have compatible types: " + vconseq + " and " + valt);
-			}
-		} else {
-			throw new TypeCheckError("illegal type to if test: " + tt);
-		}
+		if (!(tt instanceof ASTTBool || tt instanceof ASTTLBool))
+			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("if", tt));
+		EnvSet e2 = new EnvSet(e);
+		ASTType tconseq = conseq.typecheck(e);
+		ASTType talt = alt.typecheck(e2);
+		HashSet<String> conseqLs = new HashSet<String>(e.getUsedLinears());
+		HashSet<String> altLs = new HashSet<String>(e2.getUsedLinears());
+		if (!conseqLs.equals(altLs))
+			throw new TypeCheckError(ErrorMessages.branchesDifferentLinears(conseqLs, altLs));
+		if (tconseq.isSubtypeOf(talt, e)) return tconseq;
+		else if (talt.isSubtypeOf(tconseq, e)) return talt;
+		else throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tconseq, talt));
 	}
 
 	public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {

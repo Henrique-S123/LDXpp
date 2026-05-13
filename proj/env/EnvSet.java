@@ -1,6 +1,7 @@
 package proj.env;
 
 import proj.errors.EnvironmentError;
+import proj.errors.ErrorMessages;
 import proj.types.*;
 
 import java.util.*;
@@ -85,7 +86,7 @@ public class EnvSet {
     /* Populate environments */
     private void checkAlreadyDeclared(String id) throws EnvironmentError {
         if (declaredIds.contains(id))
-            throw new EnvironmentError("Identifier " + id + " already declared!");
+            throw new EnvironmentError(ErrorMessages.alreadyDeclaredVariable(id));
     }
 
     public void bindToEnv(ENV env, String id, ASTType t) throws EnvironmentError {
@@ -112,8 +113,8 @@ public class EnvSet {
             return ret;
         } else {
             if (usedLinears.contains(id))
-                throw new EnvironmentError("Linear value of '" + id + "' has already been consumed and cannot be used again.");
-            else throw new EnvironmentError("Undeclared identifier " + id + ".");
+                throw new EnvironmentError(ErrorMessages.alreadyUsedLinear(id));
+            else throw new EnvironmentError(ErrorMessages.undeclaredVariable(id));
         }
     }
 

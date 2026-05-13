@@ -1,4 +1,4 @@
-class proj.errors.EnvironmentError: Linear value of 'x' has already been consumed and cannot be used again.
+class proj.errors.EnvironmentError: Linear value of 'x' has already been consumed and cannot be used again
 
 
 type: linbool, value: truel
@@ -7,12 +7,12 @@ type: linbool, value: truel
 type: linbool, value: falsel
 
 
-class proj.errors.TypeCheckError: case uses linear values [u, x, y] but other cases have used linear values [u, y]
+class proj.errors.TypeCheckError: Branches are using different linear values: [u, x, y] and [u, y]
 
 
 type: linbool, value: truel
 
 
-class proj.errors.TypeCheckError: linear value n must be used
+class proj.errors.TypeCheckError: Linear value n must be used
 
 

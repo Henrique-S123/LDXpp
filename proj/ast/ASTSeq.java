@@ -31,7 +31,7 @@ public class ASTSeq extends ASTNode {
         if (tf instanceof ASTTUnit) {
             return second.typecheck(e);
         } else {
-            throw new TypeCheckError("illegal type to sequential composition: " + tf);
+            throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
         }
 	}
 

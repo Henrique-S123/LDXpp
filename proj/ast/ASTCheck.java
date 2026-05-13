@@ -22,7 +22,7 @@ public class ASTCheck extends ASTNode {
         ASTType t = left.typecheck(e);
         ASTType t2 = right.typecheck(e);
         if (!t.isSubtypeOf(t2, e) || !t2.isSubtypeOf(t, e))
-            throw new TypeCheckError(ErrorMessages.differentTypes(left, right, t, t2));
+            throw new TypeCheckError(ErrorMessages.termsWithDifferentTypes(left, right, t, t2));
 
         Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
         ASTNode ln = left.normalize(sigma);

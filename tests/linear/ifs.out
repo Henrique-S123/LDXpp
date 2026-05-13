@@ -4,19 +4,19 @@ type: linint, value: 2l
 type: linint, value: 3l
 
 
-class proj.errors.TypeCheckError: if conseq and alt branches must use the same linear values
+class proj.errors.TypeCheckError: Branches are using different linear values: [x] and []
 
 
-class proj.errors.TypeCheckError: if conseq and alt branches must use the same linear values
+class proj.errors.TypeCheckError: Branches are using different linear values: [] and [x]
 
 
 class proj.errors.TypeCheckError: There are unused linear values: [x: linint]
 
 
-class proj.errors.TypeCheckError: if conseq and alt branches must use the same linear values
+class proj.errors.TypeCheckError: Branches are using different linear values: [y] and []
 
 
-class proj.errors.TypeCheckError: if conseq and alt branches must use the same linear values
+class proj.errors.TypeCheckError: Branches are using different linear values: [x] and [y]
 
 
 type: linint, value: 2l

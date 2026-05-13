@@ -1,13 +1,13 @@
 type: int, value: 3
 
 
-class proj.errors.TypeCheckError: match missing label #a
+class proj.errors.TypeCheckError: Missing match case for label #a
 
 
-class proj.errors.TypeCheckError: different types for match cases: string and int
+class proj.errors.TypeCheckError: Branches have different types: string and int
 
 
-class proj.errors.TypeCheckError: different types for match cases: bool and int
+class proj.errors.TypeCheckError: Branches have different types: bool and int
 
 
 type: int, value: 7
@@ -19,7 +19,7 @@ type: int, value: 2
 type: int, value: 3
 
 
-class proj.errors.TypeCheckError: match missing label #val
+class proj.errors.TypeCheckError: Missing match case for label #val
 
 
 type: int, value: 3
@@ -43,13 +43,13 @@ type: int, value: 42
 class proj.errors.TypeCheckError: Illegal types to &&: int and bool
 
 
-class proj.errors.TypeCheckError: different types for match cases: int and bool
+class proj.errors.TypeCheckError: Branches have different types: int and bool
 
 
-class proj.errors.TypeCheckError: match missing label #some
+class proj.errors.TypeCheckError: Missing match case for label #some
 
 
-class proj.errors.TypeCheckError: match missing label #none
+class proj.errors.TypeCheckError: Missing match case for label #none
 
 
 type: int, value: 200
