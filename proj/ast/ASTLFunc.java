@@ -76,8 +76,7 @@ public class ASTLFunc extends ASTNode  {
 
         ASTType tb = body.typecheck(e);
 
-        if (!(e.getEnv(ENV.DELTA).isEmpty()))
-            throw new TypeCheckError("there are unused linear values: " + e.getEnv(ENV.DELTA));
+        if (!(e.getEnv(ENV.DELTA).isEmpty())) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getEnv(ENV.DELTA)));
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
         return new ASTTLollipop(targtype, tb, id, e.getEnv(ENV.SIGMA));
@@ -89,15 +88,14 @@ public class ASTLFunc extends ASTNode  {
         String tid;
 
         if (tt instanceof ASTTLollipop lolli) { tdom = lolli.getDom(); tcodom = lolli.getCodom(); tid = lolli.getId(); }
-        else throw new TypeCheckError("linear func: expected lollipop type");
+        else throw new TypeCheckError(ErrorMessages.typeMismatch("lollipop", t));
 
         ASTType targtype = e.unfold(argtype);
         ENV env = (targtype instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
         e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(env);
 
-        if (!tdom.isSubtypeOf(targtype, e))
-            throw new TypeCheckError(String.format("lfunc: dom type %s is not subtype of arg type %s", tdom, targtype));
+        if (!tdom.isSubtypeOf(targtype, e)) throw new TypeCheckError(ErrorMessages.notSubtypeFunc(tdom, targtype));
 
         e.bindToEnv(env, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);

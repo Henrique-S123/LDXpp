@@ -43,11 +43,11 @@ public class ASTApp extends ASTNode  {
         String id;
         if (tf instanceof ASTTArrow fun) { dom = fun.getDom(); codom = fun.getCodom(); id = fun.getId(); }
         else if (tf instanceof ASTTLollipop fun) { dom = fun.getDom(); codom = fun.getCodom(); id = fun.getId(); }
-        else throw new TypeCheckError("illegal type for func app: " + tf);
+        else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("app", tf));
 
         ASTType ta = arg.typecheck(e, dom);
         if (ta instanceof ASTTUnit || ta.isSubtypeOf(dom, e)) return codom.inst(id, arg);
-        else throw new TypeCheckError("func app: argument type (" + ta + ") is not subtype of the function parameter (" + dom + ")");
+        else throw new TypeCheckError(ErrorMessages.notSubtypeApp(ta, dom));
 	}
 
     public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {

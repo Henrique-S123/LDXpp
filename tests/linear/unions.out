@@ -19,7 +19,7 @@ class proj.errors.TypeCheckError: there are unused linear values: [x: linint]
 class proj.errors.TypeCheckError: case uses linear values [y] but other cases have used linear values [x]
 
 
-class proj.errors.TypeCheckError: there are unused linear values: [y: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [y: linint]
 
 
 class proj.errors.TypeCheckError: there are unused linear values: [x: linint]

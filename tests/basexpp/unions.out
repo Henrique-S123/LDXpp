@@ -64,10 +64,10 @@ type: int, value: 200
 type: int, value: 200
 
 
-class proj.errors.TypeCheckError: func app: argument type (union {#circle = Circle; #rect = Rectangle}) is not subtype of the function parameter (union {#circle = Circle})
+class proj.errors.TypeCheckError: Argument type union {#circle = Circle; #rect = Rectangle} is not a subtype of parameter type union {#circle = Circle}
 
 
-class proj.errors.TypeCheckError: func app: argument type (union {#circle = Circle; #rect = Rectangle}) is not subtype of the function parameter (union {#rect = Rectangle})
+class proj.errors.TypeCheckError: Argument type union {#circle = Circle; #rect = Rectangle} is not a subtype of parameter type union {#rect = Rectangle}
 
 
 type: int, value: 200
