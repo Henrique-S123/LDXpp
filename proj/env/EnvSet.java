@@ -8,14 +8,13 @@ import java.util.*;
 
 public class EnvSet {
     Env<ASTType> gamma, delta, phi, sigma;
-    ArrayList<String> declaredIds, usedLinears;
+    ArrayList<String> usedLinears;
 
     public EnvSet() {
         gamma = new Env<ASTType>();
         delta = new Env<ASTType>();
         phi = new Env<ASTType>();
         sigma = new Env<ASTType>();
-        declaredIds = new ArrayList<String>();
         usedLinears = new ArrayList<String>();
     }
 
@@ -24,7 +23,6 @@ public class EnvSet {
         delta = o.delta.copy(true);
         phi = o.phi.copy(true);
         sigma = o.sigma.copy(true);
-        declaredIds = new ArrayList<String>(o.getDeclaredIds());
         usedLinears = new ArrayList<String>(o.getUsedLinears());
     }
 
@@ -44,10 +42,6 @@ public class EnvSet {
         Env<ASTType> tmp = this.delta;
         this.delta = new Env<ASTType>();
         return tmp;
-    }
-
-    public ArrayList<String> getDeclaredIds() {
-        return declaredIds;
     }
 
     public ArrayList<String> getUsedLinears() {
