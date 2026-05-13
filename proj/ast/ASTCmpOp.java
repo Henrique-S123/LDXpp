@@ -44,21 +44,16 @@ public class ASTCmpOp extends ASTNode {
 			};
 			boolean lin = (((VInt) v1).islin() || ((VInt) v2).islin());
 			return new VBool(res, lin);
-		} else {
-			throw new InterpreterError(ErrorMessages.wrongValueToBinary(op, v1, v2));
-		}
+		} else throw new InterpreterError(ErrorMessages.wrongValueToBinary(op, v1, v2));
     }
 
 	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		ASTType tl = lhs.typecheck(e);
 		ASTType tr = rhs.typecheck(e);
-		if (tl instanceof ASTTInt && tr instanceof ASTTInt) {
-			return new ASTTBool();
-		} else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt)) {
+		if (tl instanceof ASTTInt && tr instanceof ASTTInt) return new ASTTBool();
+		else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt))
 			return new ASTTLBool();
-		} else {
-			throw new TypeCheckError("illegal types to " + op + " operator: " + tl + " and " + tr);
-		}
+		else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
 	}
 
 	public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {

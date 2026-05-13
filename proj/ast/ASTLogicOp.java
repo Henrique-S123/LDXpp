@@ -50,16 +50,12 @@ public class ASTLogicOp extends ASTNode {
 	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		ASTType tl = lhs.typecheck(e);
 		ASTType tr = rhs.typecheck(e);
-		if (tl instanceof ASTTBool && tr instanceof ASTTBool) {
-			return new ASTTBool();
-		} else if ((tl instanceof ASTTBool || tl instanceof ASTTLBool) && (tr instanceof ASTTBool || tr instanceof ASTTLBool)) {
+		if (tl instanceof ASTTBool && tr instanceof ASTTBool) return new ASTTBool();
+		else if ((tl instanceof ASTTBool || tl instanceof ASTTLBool) && (tr instanceof ASTTBool || tr instanceof ASTTLBool))
 			return new ASTTLBool();
-		} else {
-			String types = (op == "~" ? "" : (tl + " and ")) + tr;
-			if (op == "~")
-				throw new TypeCheckError("illegal type to ~ unary operator: " + types);
-			else
-				throw new TypeCheckError("illegal types to " + op + " operator: " + types);
+		else {
+			if (op == "~") throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("unary ~", tr));
+			else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
 		}
 	}
 

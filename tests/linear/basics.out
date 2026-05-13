@@ -100,15 +100,15 @@ type: linbool, value: truel
 type: linbool, value: falsel
 
 
-class proj.errors.TypeCheckError: illegal type to ~ unary operator: linint
+class proj.errors.TypeCheckError: Illegal type to unary ~: linint
 
 
-class proj.errors.TypeCheckError: illegal types to || operator: linint and string
+class proj.errors.TypeCheckError: Illegal types to ||: linint and string
 
 
-class proj.errors.TypeCheckError: illegal types to && operator: linint and linint
+class proj.errors.TypeCheckError: Illegal types to &&: linint and linint
 
 
-class proj.errors.TypeCheckError: illegal types to && operator: linbool and linint
+class proj.errors.TypeCheckError: Illegal types to &&: linbool and linint
 
 

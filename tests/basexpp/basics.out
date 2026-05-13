@@ -16,7 +16,7 @@ type: string, value: "2b"
 type: string, value: "ab"
 
 
-class proj.errors.TypeCheckError: illegal types to + operator: int and bool
+class proj.errors.TypeCheckError: Illegal types to +: int and bool
 
 
 type: int, value: 3
@@ -25,7 +25,7 @@ type: int, value: 3
 type: bool, value: true
 
 
-class proj.errors.TypeCheckError: illegal types to > operator: int and bool
+class proj.errors.TypeCheckError: Illegal types to >: int and bool
 
 
 type: bool, value: false
@@ -37,7 +37,7 @@ type: bool, value: false
 type: bool, value: false
 
 
-class proj.errors.TypeCheckError: illegal type to - unary operator: bool
+class proj.errors.TypeCheckError: Illegal type to unary -: bool
 
 
 type: bool, value: true

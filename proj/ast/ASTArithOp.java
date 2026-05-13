@@ -63,11 +63,8 @@ public class ASTArithOp extends ASTNode {
 		} else if ((tl instanceof ASTTInt || tl instanceof ASTTString) && (tr instanceof ASTTInt || tr instanceof ASTTString) && op == "+") {
 			return new ASTTString();
 		} else {
-			String types = (op == "-u" ? "" : (tl + " and ")) + tr;
-			if (op == "-u")
-				throw new TypeCheckError("illegal type to - unary operator: " + types);
-			else
-				throw new TypeCheckError("illegal types to " + op + " operator: " + types);
+			if (op == "-u") throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("unary -", tr));
+			else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
 		}
 	}
 

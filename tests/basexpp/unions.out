@@ -40,7 +40,7 @@ type: int, value: 42
 type: int, value: 42
 
 
-class proj.errors.TypeCheckError: illegal types to && operator: int and bool
+class proj.errors.TypeCheckError: Illegal types to &&: int and bool
 
 
 class proj.errors.TypeCheckError: different types for match cases: int and bool
