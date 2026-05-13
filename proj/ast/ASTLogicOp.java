@@ -37,16 +37,13 @@ public class ASTLogicOp extends ASTNode {
 				case "&&" -> i1 && i2;
 				case "||" -> i1 || i2;
 				case "~" -> !i2;
-				default -> throw new InterpreterError("unknown operation");
+				default -> throw new InterpreterError(ErrorMessages.unexpectedOperation(op));
 			};
 			boolean lin = (((VBool) v1).islin() || ((VBool) v2).islin());
 			return new VBool(res, lin);
 		} else {
-			String types = (op == "~" ? "" : (v1 + " and ")) + v2;
-			if (op == "~")
-				throw new InterpreterError("~ unary operator: boolean expected, found " + types);
-			else
-				throw new InterpreterError(op + "operator: booleans expected, found " + types);
+			if (op == "~") throw new InterpreterError(ErrorMessages.wrongValueToUnary("~", v2));
+			else throw new InterpreterError(ErrorMessages.wrongValueToBinary(op, v1, v2));
 		}
     }
 

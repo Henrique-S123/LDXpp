@@ -14,7 +14,7 @@ public class ASTCheck extends ASTNode {
         right = r;
     }
     
-    public IValue eval(Env<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) {
         return new VBool(true, false);
     }
 

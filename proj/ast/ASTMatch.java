@@ -31,15 +31,13 @@ public class ASTMatch extends ASTNode {
 			String testlabel = vtu.getLabel();
 			MatchCase c = cases.get(testlabel);
 			if (c == null) {
-				throw new InterpreterError("match: missing case for label " + testlabel);
+				throw new InterpreterError(ErrorMessages.missingMatchCase(testlabel));
 			} else {
 				Env<IValue> en = e.beginScope();
 				en.assoc(c.getId(), ((VUnion) vt).getValue());
 				return c.getExp().eval(en);
 			}
-		} else {
-			throw new InterpreterError("match: union expected, found " + vt);
-		}
+		} else throw new InterpreterError(ErrorMessages.wrongValueToUnary("match", vt));
     }
 
 	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {

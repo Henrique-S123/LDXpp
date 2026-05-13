@@ -31,7 +31,7 @@ public class ASTApp extends ASTNode  {
             env.assoc(vf.getId(), varg);
             return vf.getBody().eval(env);
         } else {
-            throw new InterpreterError("func app: closure expected, found " + vfunc);
+            throw new InterpreterError(ErrorMessages.wrongValueToUnary("app", vfunc));
         }          
     }
 

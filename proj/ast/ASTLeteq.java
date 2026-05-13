@@ -30,7 +30,9 @@ public class ASTLeteq extends ASTNode {
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
         Env<IValue> en = e.beginScope();
-        en.assoc(id, expr.eval(en));
+        IValue ve = expr.eval(e);
+        if (!(ve instanceof ASTRefl)) throw new InterpreterError(ErrorMessages.wrongValueToUnary("let", ve));
+        en.assoc(id, ve);
         return body.eval(en);
     }
 	

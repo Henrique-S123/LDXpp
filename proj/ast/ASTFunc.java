@@ -61,7 +61,7 @@ public class ASTFunc extends ASTNode  {
         normSigma = s;
     }
 
-    public IValue eval(Env<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) {
         return new VClos(e, id, body, false);
     }
 

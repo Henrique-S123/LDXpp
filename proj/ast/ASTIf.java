@@ -31,7 +31,7 @@ public class ASTIf extends ASTNode {
     public IValue eval(Env<IValue> e) throws InterpreterError {
 		IValue vt = test.eval(e);
 		if (!(vt instanceof VBool vtb)) {
-			throw new InterpreterError("if: bool condition expected, found " + vt);
+			throw new InterpreterError(ErrorMessages.wrongValueToUnary("if", vt));
 		} else {
 			boolean val = vtb.getval();
 			return val ? conseq.eval(e) : alt.eval(e);

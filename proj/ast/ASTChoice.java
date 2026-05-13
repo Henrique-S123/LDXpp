@@ -28,7 +28,7 @@ public class ASTChoice extends ASTNode  {
         if (vp instanceof VPair pair) {
             return choice > 0 ? pair.getSecond() : pair.getFirst();
         } else {
-            throw new InterpreterError((choice > 0 ? "snd" : "fst") + ": pair expected, found " + vp);
+            throw new InterpreterError(ErrorMessages.wrongValueToUnary((choice > 0 ? "snd" : "fst"), vp));
         }           
     }
 

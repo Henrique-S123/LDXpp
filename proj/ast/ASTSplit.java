@@ -40,9 +40,7 @@ public class ASTSplit extends ASTNode {
 			en.assoc(id1, vp.getFirst());
 			en.assoc(id2, vp.getSecond());
 			return body.eval(en);
-		} else {
-			throw new InterpreterError("split: linear pair expected, found " + v);
-		}
+		} else throw new InterpreterError(ErrorMessages.wrongValueToUnary("split", v));
     }
 
 	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {

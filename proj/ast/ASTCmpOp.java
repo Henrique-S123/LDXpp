@@ -40,12 +40,12 @@ public class ASTCmpOp extends ASTNode {
 				case ">=" -> i1 >= i2;
 				case "<" -> i1 < i2;
 				case "<=" -> i1 <= i2;
-				default -> throw new InterpreterError("unknown operation");
+				default -> throw new InterpreterError(ErrorMessages.unexpectedOperation(op));
 			};
 			boolean lin = (((VInt) v1).islin() || ((VInt) v2).islin());
 			return new VBool(res, lin);
 		} else {
-			throw new InterpreterError(op + " operator: integers expected, found " + v1 + " and " + v2);
+			throw new InterpreterError(ErrorMessages.wrongValueToBinary(op, v1, v2));
 		}
     }
 

@@ -10,7 +10,7 @@ public class ASTRefl extends ASTNode  {
 
     public ASTRefl() {}
 
-    public IValue eval(Env<IValue> e) throws InterpreterError {
+    public IValue eval(Env<IValue> e) {
         return new VRefl();                
     }
 

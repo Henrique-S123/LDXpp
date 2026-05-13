@@ -39,7 +39,7 @@ public class ASTArithOp extends ASTNode {
 				case "*" -> i1 * i2;
 				case "/" -> i1 / i2;
 				case "-u" -> -i2;
-				default -> throw new InterpreterError("unknown operation");
+				default -> throw new InterpreterError(ErrorMessages.unexpectedOperation(op));
 			};
 			boolean lin = (((VInt) v1).islin() || ((VInt) v2).islin());
 			return new VInt(res, lin);
@@ -48,15 +48,8 @@ public class ASTArithOp extends ASTNode {
 			String s2 = v2 instanceof VString ? ((VString) v2).getval() : v2.toString();
 			return new VString(s1 + s2);
 		} else {
-			String types = (op == "-u" ? "" : (v1 + " and ")) + v2;
-			if (op == "-u")
-				throw new InterpreterError("- unary operator: integer expected, found " + types);
-			else {
-				if (op == "+")
-					throw new InterpreterError(op + "operator: integers or strings expected, found " + types);
-				else
-					throw new InterpreterError(op + "operator: integers expected, found " + types);
-			}
+			if (op == "-u") throw new InterpreterError(ErrorMessages.wrongValueToUnary("unary -", v2));
+			else throw new InterpreterError(ErrorMessages.wrongValueToBinary(op, v1, v2));
 		}
     }
 
