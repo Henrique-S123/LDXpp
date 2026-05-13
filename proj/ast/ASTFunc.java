@@ -88,14 +88,14 @@ public class ASTFunc extends ASTNode  {
         String tid;
 
         if (tt instanceof ASTTArrow arrow) { tdom = arrow.getDom(); tcodom = arrow.getCodom(); tid = arrow.getId(); }
-        else if (tt instanceof ASTTLollipop lolli) { tdom = lolli.getCodom(); tcodom = lolli.getCodom(); tid = lolli.getId(); }
+        else if (tt instanceof ASTTLollipop lolli) { tdom = lolli.getDom(); tcodom = lolli.getCodom(); tid = lolli.getId(); }
         else throw new TypeCheckError("func: expected arrow type");
 
+        ASTType targtype = e.unfold(argtype);
         Env<ASTType> prevDelta = e.popDelta();
         e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(ENV.GAMMA);
 
-        ASTType targtype = e.unfold(argtype);
         if (!tdom.isSubtypeOf(targtype, e))
             throw new TypeCheckError(String.format("func: dom type %s is not subtype of arg type %s", tdom, targtype));
 

@@ -159,17 +159,14 @@ ASTNode Let() :
 { Token n; 
   ASTNode t, e1, e2;
   ASTType t1 = null;
-  Bind b;
 }
 {  
     (
       t = Check()
     |
-      ( <LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC> { b = new Bind(n.image, t1, e1); }
-          e2 = Let() { t = new ASTLet(b, e2); } )
+      ( <LET>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC> e2 = Let() { t = new ASTLet(n.image, e1, t1, e2); } )
     |
-      ( <LETEQ>  n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC> { b = new Bind(n.image, t1, e1); }
-          e2 = Let() { t = new ASTLeteq(b, e2); } )
+      ( <LETEQ>  n=<Id> <EQUAL> e1 = BA() <SEMIC> e2 = Let() { t = new ASTLeteq(n.image, e1, e2); } )
     | 
       {  HashMap<String,ASTType> lbl = new HashMap<String,ASTType>(); }
       ( (LOOKAHEAD(2) <TYPE>  n=<Id>  <EQUAL> t1 = Type()  <SEMIC>
@@ -288,7 +285,6 @@ ASTNode Term() :
 ASTNode Fact() :
 { Token n, n2; 
   ASTNode t, e1, e2, t2;
-  List<Bind> decls;
   ASTNode body, alt;
   ASTFunc tf, tc, tn;
   ASTLFunc ltf, ltc, ltn;

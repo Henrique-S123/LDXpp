@@ -25,7 +25,6 @@ public class ASTId extends ASTNode	{
 	}
 
     public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-        // TODO: verify sigma and sub dont have ids in common
         ASTNode n = sub.find(id, false);
         return (n != null) ? n : this;
     }

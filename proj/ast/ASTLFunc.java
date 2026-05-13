@@ -88,7 +88,7 @@ public class ASTLFunc extends ASTNode  {
         ASTType tdom, tcodom;
         String tid;
 
-        if (tt instanceof ASTTLollipop lolli) { tdom = lolli.getCodom(); tcodom = lolli.getCodom(); tid = lolli.getId(); }
+        if (tt instanceof ASTTLollipop lolli) { tdom = lolli.getDom(); tcodom = lolli.getCodom(); tid = lolli.getId(); }
         else throw new TypeCheckError("linear func: expected lollipop type");
 
         ASTType targtype = e.unfold(argtype);
@@ -97,7 +97,7 @@ public class ASTLFunc extends ASTNode  {
         e.openEnvScope(env);
 
         if (!tdom.isSubtypeOf(targtype, e))
-            throw new TypeCheckError(String.format("func: dom type %s is not subtype of arg type %s", tdom, targtype));
+            throw new TypeCheckError(String.format("lfunc: dom type %s is not subtype of arg type %s", tdom, targtype));
 
         e.bindToEnv(env, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);

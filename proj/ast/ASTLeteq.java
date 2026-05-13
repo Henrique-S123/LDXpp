@@ -7,16 +7,21 @@ import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTLeteq extends ASTNode {
-    Bind bind;
-    ASTNode body;
+    String id;
+    ASTNode expr, body;
 
-    public ASTLeteq(Bind bi, ASTNode b) {
-        bind = bi;
+    public ASTLeteq(String i, ASTNode e, ASTNode b) {
+        id = i;
+        expr = e;
         body = b;
     }
 
-    public Bind getBind() {
-        return bind;
+    public String getId() {
+        return id;
+    }
+
+    public ASTNode getExpr() {
+        return expr;
     }
 
     public ASTNode getBody() {
@@ -25,13 +30,11 @@ public class ASTLeteq extends ASTNode {
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
         Env<IValue> en = e.beginScope();
-        en.assoc(bind.getId(), bind.getExp().eval(en));
+        en.assoc(id, expr.eval(en));
         return body.eval(en);
     }
 	
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        String id = bind.getId();
-        ASTNode expr = bind.getExp();
         ASTType t = expr.typecheck(e);
         t = e.unfold(t);
 
@@ -47,26 +50,28 @@ public class ASTLeteq extends ASTNode {
     }
 
     public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-        ASTNode normExp = bind.getExp().weaknorm(sigma, sub);
-        if (!(normExp instanceof ASTRefl))
-            return new ASTLeteq(new Bind(bind.getId(), bind.getType(), normExp), body.weaknorm(sigma, sub));
+        ASTNode normExpr = expr.weaknorm(sigma, sub);
+        if (!(normExpr instanceof ASTRefl))
+            return new ASTLeteq(id, normExpr, body.weaknorm(sigma, sub));
         Env<ASTNode> esub = sub.beginScope();
-        esub.assoc(bind.getId(), normExp);
+        esub.assoc(id, normExpr);
         return body.weaknorm(sigma, esub);
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode nexpr = expr.solve(sigma);
+        if (nexpr != null) return new ASTLeteq(id, nexpr, body);
         ASTNode nbody = body.solve(sigma);
-        return (nbody == null) ? null : new ASTLeteq(bind, nbody);
+        if (nbody != null) return new ASTLeteq(id, expr, nbody);
+        return null;
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-		return new ASTLeteq(new Bind(bind.getId(), bind.getType(), bind.getExp().subs(subsId, node)), body.subs(subsId, node));
+		return new ASTLeteq(id, expr.subs(subsId, node), body.subs(subsId, node));
 	}
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTLeteq oleteq && bind.getExp().defequals(oleteq.getBind().getExp(), sigma, alpha)
-            && bind.getType().defequals(oleteq.getBind().getType(), sigma, alpha)
-            && body.defequals(oleteq.getBody(), sigma, alpha.extend(bind.getId(), oleteq.getBind().getId()));
+        return o instanceof ASTLeteq oleteq && expr.defequals(oleteq.getExpr(), sigma, alpha)
+            && body.defequals(oleteq.getBody(), sigma, alpha.extend(id, oleteq.getId()));
     }
 }

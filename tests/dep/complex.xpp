@@ -1,13 +1,13 @@
-type NatL = union {#zero:(), #succ:NatL};
-let nl0 = #zero(());
-let nl1 = #succ(nl0);
-let nl2 = #succ(nl1);
+type NatL = linunion {$zero:(), $succ:NatL};
+let nl0 = $zero(());
+let nl1 = $succ(nl0);
+let nl2 = $succ(nl1);
 let ladd:NatL-o>NatL-o>NatL = lfn
     a:NatL, b:NatL =o> {
         match a {
-            #zero(_) -> b
+            $zero(m) -> m; b
             |
-            #succ(m) -> #succ(ladd(m)(b))
+            $succ(m) -> $succ(ladd(m)(b))
         }
     };
 ladd(nl2)(nl1);;

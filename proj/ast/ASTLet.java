@@ -7,33 +7,41 @@ import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTLet extends ASTNode {
-    Bind bind;
+    String id;
+    ASTNode expr;
+    ASTType declType;
     ASTNode body;
 
-    public ASTLet(Bind bi, ASTNode b) {
-        bind = bi;
+    public ASTLet(String i, ASTNode e, ASTType t, ASTNode b) {
+        id = i;
+        expr = e;
+        declType = t;
         body = b;
     }
 
-    public Bind getBind() {
-        return bind;
+    public String getId() {
+        return id;
+    }
+
+    public ASTNode getExpr() {
+        return expr;
+    }
+
+    public ASTType getDeclType() {
+        return declType;
     }
 
     public ASTNode getBody() {
         return body;
-    } 
+    }
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
         Env<IValue> en = e.beginScope();
-        en.assoc(bind.getId(), bind.getExp().eval(en));
+        en.assoc(id, expr.eval(en));
         return body.eval(en);
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        String id = bind.getId();
-        ASTType declType = bind.getType();
-        ASTNode expr = bind.getExp();
-
         ASTType tt = (declType != null) ? declType : expr.typecheck(e);
         tt = e.unfold(tt);
 
@@ -63,34 +71,33 @@ public class ASTLet extends ASTNode {
 	}
 
     public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-        ASTNode normExp = bind.getExp().weaknorm(sigma, sub);
+        ASTNode normExpr = expr.weaknorm(sigma, sub);
         Env<ASTNode> env = sub.beginScope();
-        env.assoc(bind.getId(), normExp);
+        env.assoc(id, normExpr);
         return body.weaknorm(sigma, env);
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode nexp = bind.getExp().solve(sigma);
-        if (nexp != null) return new ASTLet(new Bind(bind.getId(), bind.getType(), nexp), body);
+        ASTNode nexpr = expr.solve(sigma);
+        if (nexpr != null) return new ASTLet(id, nexpr, declType, body);
         ASTNode nbody = body.solve(sigma);
-        if (nbody != null) return new ASTLet(bind, nbody);
+        if (nbody != null) return new ASTLet(id, expr, declType, nbody);
         return null;
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-		return new ASTLet(new Bind(bind.getId(), bind.getType(), bind.getExp().subs(subsId, node)), body.subs(subsId, node));
+		return new ASTLet(id, expr.subs(subsId, node), declType, body.subs(subsId, node));
 	}
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTLet olet && bind.getExp().defequals(olet.getBind().getExp(), sigma, alpha)
-            && bind.getType().defequals(olet.getBind().getType(), sigma, alpha)
-            && body.defequals(olet.getBody(), sigma, alpha.extend(bind.getId(), olet.getBind().getId()));
+        return o instanceof ASTLet olet && expr.defequals(olet.getExpr(), sigma, alpha)
+            && declType.defequals(olet.getDeclType(), sigma, alpha)
+            && body.defequals(olet.getBody(), sigma, alpha.extend(id, olet.getId()));
     }
 
     @Override
     public String toString() {
-        ASTType tt = bind.getType();
-        String typeString = (tt == null ? "" : String.format(" %s,", tt));
-		return String.format("let(%s,%s %s, %s)", bind.getId(), typeString, bind.getExp(), body);
+        String typeString = (declType == null ? "" : String.format(" %s,", declType));
+		return String.format("let(%s,%s %s, %s)", id, typeString, expr, body);
 	}
 }

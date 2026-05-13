@@ -46,47 +46,45 @@ public class ASTMatch extends ASTNode {
 		ASTType tt = test.typecheck(e), rettype = null, tcase;
 		HashSet<String> matchUsedLinears = null;
 		tt = e.unfold(tt);
-		if (tt instanceof ASTTUnion || tt instanceof ASTTLUnion) {
-			EnvSet en = new EnvSet(e), env;
-			Set<Map.Entry<String, ASTType>> entries = tt instanceof ASTTUnion ?
-				((ASTTUnion) tt).getMap().entrySet() :
-				((ASTTLUnion) tt).getMap().entrySet();
-			for (Map.Entry<String, ASTType> entry : entries) {
-				MatchCase c = cases.get(entry.getKey());
-				if (c == null)
-					throw new TypeCheckError("match missing label " + entry.getKey());
-
-				env = (matchUsedLinears == null ? e : new EnvSet(en));
-				ASTType tlabel = e.unfold(entry.getValue());
-
-				ENV envChoice = (tlabel instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
-        		env.openEnvScope(envChoice);
-				env.openEnvScope(ENV.SIGMA);
-        		env.bindToEnv(envChoice, c.getId(), tlabel);
-				env.bindToEnv(ENV.SIGMA, c.getId(), tlabel);
-				tcase = c.getExp().typecheck(env);
-				env.closeEnvScope(envChoice);
-				env.closeEnvScope(ENV.SIGMA);
-
-				if (matchUsedLinears == null) {
-					matchUsedLinears = new HashSet<String>(e.getUsedLinears());
-					matchUsedLinears.remove(c.getId());
-				}
-
-				HashSet<String> caseUsedLineares = new HashSet<String>(env.getUsedLinears());
-				if ((entry.getValue() instanceof ASTLinType) && !caseUsedLineares.contains(c.getId()))
-					throw new TypeCheckError("linear value " + c.getId() + " must be used");
-				caseUsedLineares.remove(c.getId());
-				if (!caseUsedLineares.equals(matchUsedLinears))
-					throw new TypeCheckError("all match cases must use the same linear values");
-				if ((tcase.isSubtypeOf(rettype, env) && rettype.isSubtypeOf(tcase, env)) || rettype == null) {
-					rettype = tcase;
-				} else {
-					throw new TypeCheckError("different types for match cases: " + tcase + " and " + rettype);
-				}
-			}
-		} else {
+		if (!(tt instanceof ASTTUnion || tt instanceof ASTTLUnion))
 			throw new TypeCheckError("illegal type to match test: " + tt);
+		EnvSet en = new EnvSet(e), env;
+		Set<Map.Entry<String, ASTType>> entries = tt instanceof ASTTUnion ?
+			((ASTTUnion) tt).getMap().entrySet() :
+			((ASTTLUnion) tt).getMap().entrySet();
+		for (Map.Entry<String, ASTType> entry : entries) {
+			MatchCase c = cases.get(entry.getKey());
+			if (c == null)
+				throw new TypeCheckError("match missing label " + entry.getKey());
+
+			env = (matchUsedLinears == null ? e : new EnvSet(en));
+			ASTType tlabel = e.unfold(entry.getValue());
+
+			ENV envChoice = (tlabel instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
+			env.openEnvScope(envChoice);
+			env.openEnvScope(ENV.SIGMA);
+			env.bindToEnv(envChoice, c.getId(), tlabel);
+			env.bindToEnv(ENV.SIGMA, c.getId(), tlabel);
+			tcase = c.getExp().typecheck(env);
+			env.closeEnvScope(envChoice);
+			env.closeEnvScope(ENV.SIGMA);
+
+			if (matchUsedLinears == null) {
+				matchUsedLinears = new HashSet<String>(e.getUsedLinears());
+				matchUsedLinears.remove(c.getId());
+			}
+
+			HashSet<String> caseUsedLineares = new HashSet<String>(env.getUsedLinears());
+			if ((entry.getValue() instanceof ASTLinType) && !caseUsedLineares.contains(c.getId()))
+				throw new TypeCheckError("linear value " + c.getId() + " must be used");
+			caseUsedLineares.remove(c.getId());
+			if (!caseUsedLineares.equals(matchUsedLinears))
+				throw new TypeCheckError("case uses linear values " + caseUsedLineares + " but other cases have used linear values " + matchUsedLinears);
+			if ((tcase.isSubtypeOf(rettype, env) && rettype.isSubtypeOf(tcase, env)) || rettype == null) {
+				rettype = tcase;
+			} else {
+				throw new TypeCheckError("different types for match cases: " + tcase + " and " + rettype);
+			}
 		}
 		return rettype;
 	}

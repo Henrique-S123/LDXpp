@@ -7,7 +7,7 @@ type: linbool, value: truel
 type: linbool, value: falsel
 
 
-class proj.errors.TypeCheckError: all match cases must use the same linear values
+class proj.errors.TypeCheckError: case uses linear values [u, x, y] but other cases have used linear values [u, y]
 
 
 type: linbool, value: truel
