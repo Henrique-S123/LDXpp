@@ -15,7 +15,7 @@ public class ASTRefl extends ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        throw new TypeCheckError(ErrorMessages.noExpectedType(this));
+        throw new TypeCheckError(ErrorMessages.missingExpectedType(this));
 	}
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {

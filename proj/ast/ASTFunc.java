@@ -89,7 +89,7 @@ public class ASTFunc extends ASTNode  {
 
         if (tt instanceof ASTTArrow arrow) { tdom = arrow.getDom(); tcodom = arrow.getCodom(); tid = arrow.getId(); }
         else if (tt instanceof ASTTLollipop lolli) { tdom = lolli.getDom(); tcodom = lolli.getCodom(); tid = lolli.getId(); }
-        else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow", t));
+        else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", t));
 
         ASTType targtype = e.unfold(argtype);
         Env<ASTType> prevDelta = e.popDelta();

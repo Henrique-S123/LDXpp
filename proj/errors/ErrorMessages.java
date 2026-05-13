@@ -63,11 +63,15 @@ public final class ErrorMessages {
         return String.format("Domain type %s is not a subtype of parameter type %s", dom, param);
     }
 
+    public static String notSubtype(ASTType t1, ASTType t2) {
+        return String.format("Type %s is not a subtype of %s", t1, t2);
+    }
+
     public static String unusedLinearValues(Env<ASTType> env) {
         return String.format("There are unused linear values: %s", env);
     }
 
-    public static String noExpectedType(ASTNode n) {
+    public static String missingExpectedType(ASTNode n) {
         return String.format("%s expects a type to be typed against", n);
     }
 }

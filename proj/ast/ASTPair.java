@@ -41,19 +41,17 @@ public class ASTPair extends ASTNode {
         String tgtid;
         if (t instanceof ASTTPair pair) { tgt1 = pair.getFirst(); tgt2 = pair.getSecond(); tgtid = pair.getId(); }
         else if (t instanceof ASTTTensor tensor) { tgt1 = tensor.getFirst(); tgt2 = tensor.getSecond(); tgtid = tensor.getId(); }
-        else throw new TypeCheckError("pair: expected pair type");
+        else throw new TypeCheckError(ErrorMessages.typeMismatch("pair or tensor", t));
 
         Env<ASTType> prevDelta = e.popDelta();
         e.openEnvScope(ENV.SIGMA);
 
         ASTType t1 = first.typecheck(e, tgt1);
-        if (!t1.isSubtypeOf(tgt1, e))
-            throw new TypeCheckError(String.format("pair: invalid type %s for first element %s", tgt1, first));
+        if (!t1.isSubtypeOf(tgt1, e)) throw new TypeCheckError(ErrorMessages.notSubtype(t1, tgt1));
 
         ASTType insttgt2 = (tgtid != null) ? tgt2.inst(tgtid, first) : tgt2;
         ASTType t2 = second.typecheck(e, insttgt2);
-        if (!t2.isSubtypeOf(insttgt2, e))
-            throw new TypeCheckError(String.format("pair: invalid type %s for second element %s", tgt2, second));
+        if (!t2.isSubtypeOf(insttgt2, e)) throw new TypeCheckError(ErrorMessages.notSubtype(t2, tgt2));
 
         e.closeEnvScope(ENV.SIGMA);
         e.setEnv(ENV.DELTA, prevDelta);

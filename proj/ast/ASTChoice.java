@@ -28,7 +28,7 @@ public class ASTChoice extends ASTNode  {
         if (vp instanceof VPair pair) {
             return choice > 0 ? pair.getSecond() : pair.getFirst();
         } else {
-            throw new InterpreterError(ErrorMessages.wrongValueToUnary((choice > 0 ? "snd" : "fst"), vp));
+            throw new InterpreterError(ErrorMessages.wrongValueToUnary(choice > 0 ? "snd" : "fst", vp));
         }           
     }
 
@@ -37,7 +37,7 @@ public class ASTChoice extends ASTNode  {
         if (tp instanceof ASTTPair tpair) {
             return choice > 0 ? tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, 0).normalize(e.getEnv(ENV.SIGMA))) : tpair.getFirst();
         } else {
-            throw new TypeCheckError("illegal type to " + (choice > 0 ? "snd" : "fst") + ": " + tp);
+            throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice > 0 ? "snd" : "fst", tp));
         }
 	}
     
