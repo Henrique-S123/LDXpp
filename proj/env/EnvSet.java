@@ -84,17 +84,16 @@ public class EnvSet {
     }
 
     /* Populate environments */
-    private void checkAlreadyDeclared(String id) throws EnvironmentError {
-        if (declaredIds.contains(id))
+    private void checkAlreadyDeclared(String id, Env<ASTType> env) throws EnvironmentError {
+        if (env.getScopeIds().contains(id))
             throw new EnvironmentError(ErrorMessages.alreadyDeclaredVariable(id));
     }
 
     public void bindToEnv(ENV env, String id, ASTType t) throws EnvironmentError {
-        checkAlreadyDeclared(id);
         switch (env) {
-            case GAMMA -> gamma.assoc(id, t);
-            case DELTA -> { if (usedLinears.contains(id)) usedLinears.remove(id); delta.assoc(id, t); }
-            case PHI -> phi.assoc(id, t);
+            case GAMMA -> { checkAlreadyDeclared(id, gamma); gamma.assoc(id, t); }
+            case DELTA -> { checkAlreadyDeclared(id, delta); if (usedLinears.contains(id)) usedLinears.remove(id); delta.assoc(id, t); }
+            case PHI -> { checkAlreadyDeclared(id, phi); phi.assoc(id, t); }
             case SIGMA -> sigma.assoc(id, t);
         }
     }

@@ -24,6 +24,10 @@ public class Env <E>{
         this.bindings = m;
     }
 
+    public Set<String> getScopeIds() {
+        return bindings.keySet();
+    }
+
     public Env<E> beginScope(){
         return new Env<E>(this);
     }
