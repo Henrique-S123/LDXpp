@@ -23,30 +23,11 @@ public class ASTRefl extends ASTNode  {
             throw new TypeCheckError("refl: expected equality type");
 
         Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
-        ASTNode ln = tt.getTerm1(), rn = tt.getTerm2();
-        while (true) {
-            Env<ASTType> lnSigma = sigma;
-            if (ln instanceof ASTApp a) {
-                if (a.getFunc() instanceof ASTFunc f) lnSigma = f.getNormSigma();
-                else if (a.getFunc() instanceof ASTLFunc lf) lnSigma = lf.getNormSigma();
-            }
-            Env<ASTType> rnSigma = sigma;
-            if (rn instanceof ASTApp a) {
-                if (a.getFunc() instanceof ASTFunc f) rnSigma = f.getNormSigma();
-                else if (a.getFunc() instanceof ASTLFunc lf) rnSigma = lf.getNormSigma();
-            }
-
-            ln = ln.weaknorm(sigma, new Env<ASTNode>());
-            rn = rn.weaknorm(sigma, new Env<ASTNode>());
-            if (ln.defequals(rn, sigma, new AlphaEnv())) return t;
-
-            ASTNode newln = ln.solve(lnSigma);
-            if (newln != null) { ln = newln; continue; }
-            ASTNode newrn = rn.solve(rnSigma);
-            if (newrn != null) { rn = newrn; continue; }
-            break;
-        }
-        throw new TypeCheckError(String.format("refl: terms %s and %s are not definitionally equal", tt.getTerm1(), tt.getTerm2()));
+        ASTNode left = tt.getTerm1(), right = tt.getTerm2();
+        ASTNode ln = left.normalize(sigma, new Env<ASTNode>());
+        ASTNode rn = right.normalize(sigma, new Env<ASTNode>());
+        if (ln.defequals(rn, sigma, new AlphaEnv())) return t;
+        throw new TypeCheckError(String.format("refl: terms %s and %s are not definitionally equal", left, right));
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {

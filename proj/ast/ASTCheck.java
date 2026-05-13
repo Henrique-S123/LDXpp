@@ -25,29 +25,9 @@ public class ASTCheck extends ASTNode {
             throw new TypeCheckError(String.format("terms %s and %s do not have the same type", left, right));
 
         Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
-        ASTNode ln = left, rn = right;
-        while (true) {
-            Env<ASTType> lnSigma = sigma;
-            if (ln instanceof ASTApp a) {
-                if (a.getFunc() instanceof ASTFunc f) lnSigma = f.getNormSigma();
-                else if (a.getFunc() instanceof ASTLFunc lf) lnSigma = lf.getNormSigma();
-            }
-            Env<ASTType> rnSigma = sigma;
-            if (rn instanceof ASTApp a) {
-                if (a.getFunc() instanceof ASTFunc f) rnSigma = f.getNormSigma();
-                else if (a.getFunc() instanceof ASTLFunc lf) rnSigma = lf.getNormSigma();
-            }
-
-            ln = ln.weaknorm(sigma, new Env<ASTNode>());
-            rn = rn.weaknorm(sigma, new Env<ASTNode>());
-            if (ln.defequals(rn, sigma, new AlphaEnv())) return new ASTTEq(left, right, t);
-
-            ASTNode newln = ln.solve(lnSigma);
-            if (newln != null) { ln = newln; continue; }
-            ASTNode newrn = rn.solve(rnSigma);
-            if (newrn != null) { rn = newrn; continue; }
-            break;
-        }
+        ASTNode ln = left.normalize(sigma, new Env<ASTNode>());
+        ASTNode rn = right.normalize(sigma, new Env<ASTNode>());
+        if (ln.defequals(rn, sigma, new AlphaEnv())) return new ASTTEq(left, right, t);
         throw new TypeCheckError(String.format("terms %s and %s are not definitionally equal", left, right));
     }
 

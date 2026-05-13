@@ -22,6 +22,9 @@ type: (l:LIST, size(l) ≡ 2 : int), value: (union #cons((4, union #cons((2, uni
 type: (x:int, x > 3 ≡ true : bool), value: (5, refl)
 
 
+type: 5 > 3 ≡ true : bool, value: refl
+
+
 type: (x:int, x > 3 ≡ true : bool), value: (4, refl)
 
 

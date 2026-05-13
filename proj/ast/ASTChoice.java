@@ -3,6 +3,7 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTChoice extends ASTNode  {
@@ -34,8 +35,7 @@ public class ASTChoice extends ASTNode  {
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		ASTType tp = pair.typecheck(e);
         if (tp instanceof ASTTPair tpair) {
-            // TODO: instantiate second type with first component
-            return choice > 0 ? tpair.getSecond() : tpair.getFirst();
+            return choice > 0 ? tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, 0).normalize(e.getEnv(ENV.SIGMA), new Env<ASTNode>())) : tpair.getFirst();
         } else {
             throw new TypeCheckError("illegal type to " + (choice > 0 ? "snd" : "fst") + ": " + tp);
         }

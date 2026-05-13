@@ -71,6 +71,9 @@ type igt3 = (int:x, eq((x>3)=true:bool));
 let p:igt3 = (5, refl); p;;
 
 type igt3 = (int:x, eq((x>3)=true:bool));
+let p:igt3 = (5, refl); snd(p);;
+
+type igt3 = (int:x, eq((x>3)=true:bool));
 let p:igt3 = (4, refl); p;;
 
 type igt3 = (int:x, eq((x>3)=true:bool));

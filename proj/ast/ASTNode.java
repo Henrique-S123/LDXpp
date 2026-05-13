@@ -34,5 +34,21 @@ public abstract class ASTNode {
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
         return false;
     }
+
+    public ASTNode normalize(Env<ASTType> sigma, Env<ASTNode> sub) {
+        ASTNode ln = this;
+        while (true) {
+            Env<ASTType> sig = sigma;
+            if (ln instanceof ASTApp a) {
+                if (a.getFunc() instanceof ASTFunc f) sig = f.getNormSigma();
+                else if (a.getFunc() instanceof ASTLFunc lf) sig = lf.getNormSigma();
+            }
+
+            ln = ln.weaknorm(sigma, sub);
+            ASTNode sln = ln.solve(sig);
+            if (sln == null) return ln;
+            ln = sln;
+        }
+    }
 }
 
