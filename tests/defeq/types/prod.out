@@ -1,34 +1,13 @@
-class proj.errors.TypeCheckError: types (int, bool) and (int, int) are not definitionally equal
+class proj.errors.TypeCheckError: Types (int, bool) and (int, int) are not definitionally equal
 
 
-class proj.errors.TypeCheckError: types (int, bool) and (int, linbool) are not definitionally equal
-
-
-type: (), value: true
-
-
-class proj.errors.TypeCheckError: types (int, linint) and (int, int) are not definitionally equal
+class proj.errors.TypeCheckError: Types (int, bool) and (int, linbool) are not definitionally equal
 
 
 type: (), value: true
 
 
-type: (), value: true
-
-
-class proj.errors.TypeCheckError: types (string, int) and (string, linint) are not definitionally equal
-
-
-class proj.errors.TypeCheckError: types (int | bool) and (int | int) are not definitionally equal
-
-
-class proj.errors.TypeCheckError: types (int | bool) and (int | linbool) are not definitionally equal
-
-
-type: (), value: true
-
-
-class proj.errors.TypeCheckError: types (int | linint) and (int | int) are not definitionally equal
+class proj.errors.TypeCheckError: Types (int, linint) and (int, int) are not definitionally equal
 
 
 type: (), value: true
@@ -37,7 +16,19 @@ type: (), value: true
 type: (), value: true
 
 
-class proj.errors.TypeCheckError: types (string | int) and (string | linint) are not definitionally equal
+class proj.errors.TypeCheckError: Types (string, int) and (string, linint) are not definitionally equal
+
+
+class proj.errors.TypeCheckError: Types (int | bool) and (int | int) are not definitionally equal
+
+
+class proj.errors.TypeCheckError: Types (int | bool) and (int | linbool) are not definitionally equal
+
+
+type: (), value: true
+
+
+class proj.errors.TypeCheckError: Types (int | linint) and (int | int) are not definitionally equal
 
 
 type: (), value: true
@@ -46,16 +37,7 @@ type: (), value: true
 type: (), value: true
 
 
-type: (), value: true
-
-
-class proj.errors.TypeCheckError: types (x:int, (y:int, x ≡ y : int)) and (x:int, (y:int, x ≡ x : int)) are not definitionally equal
-
-
-class proj.errors.TypeCheckError: types (x:int, (y:int, x ≡ y : int)) and (y:int, (x:int, x ≡ x : int)) are not definitionally equal
-
-
-class proj.errors.TypeCheckError: types (x:int, (y:int, x ≡ y : int)) and (y:int, (x:int, y ≡ y : int)) are not definitionally equal
+class proj.errors.TypeCheckError: Types (string | int) and (string | linint) are not definitionally equal
 
 
 type: (), value: true
@@ -67,12 +49,30 @@ type: (), value: true
 type: (), value: true
 
 
-class proj.errors.TypeCheckError: types (x:linint | (y:linint | x ≡ y : linint)) and (x:linint | (y:linint | x ≡ x : linint)) are not definitionally equal
+class proj.errors.TypeCheckError: Types (x:int, (y:int, x ≡ y : int)) and (x:int, (y:int, x ≡ x : int)) are not definitionally equal
 
 
-class proj.errors.TypeCheckError: types (x:linint | (y:linint | x ≡ y : linint)) and (y:linint | (x:linint | x ≡ x : linint)) are not definitionally equal
+class proj.errors.TypeCheckError: Types (x:int, (y:int, x ≡ y : int)) and (y:int, (x:int, x ≡ x : int)) are not definitionally equal
 
 
-class proj.errors.TypeCheckError: types (x:linint | (y:linint | x ≡ y : linint)) and (y:linint | (x:linint | y ≡ y : linint)) are not definitionally equal
+class proj.errors.TypeCheckError: Types (x:int, (y:int, x ≡ y : int)) and (y:int, (x:int, y ≡ y : int)) are not definitionally equal
+
+
+type: (), value: true
+
+
+type: (), value: true
+
+
+type: (), value: true
+
+
+class proj.errors.TypeCheckError: Types (x:linint | (y:linint | x ≡ y : linint)) and (x:linint | (y:linint | x ≡ x : linint)) are not definitionally equal
+
+
+class proj.errors.TypeCheckError: Types (x:linint | (y:linint | x ≡ y : linint)) and (y:linint | (x:linint | x ≡ x : linint)) are not definitionally equal
+
+
+class proj.errors.TypeCheckError: Types (x:linint | (y:linint | x ≡ y : linint)) and (y:linint | (x:linint | y ≡ y : linint)) are not definitionally equal
 
 

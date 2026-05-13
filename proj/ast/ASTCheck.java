@@ -22,13 +22,13 @@ public class ASTCheck extends ASTNode {
         ASTType t = left.typecheck(e);
         ASTType t2 = right.typecheck(e);
         if (!t.isSubtypeOf(t2, e) || !t2.isSubtypeOf(t, e))
-            throw new TypeCheckError(String.format("terms %s and %s do not have the same type", left, right));
+            throw new TypeCheckError(ErrorMessages.differentTypes(left, right, t, t2));
 
         Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
         ASTNode ln = left.normalize(sigma);
         ASTNode rn = right.normalize(sigma);
         if (ln.defequals(rn, sigma, new AlphaEnv())) return new ASTTEq(left, right, t);
-        throw new TypeCheckError(String.format("terms %s and %s are not definitionally equal", left, right));
+        throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
     @Override

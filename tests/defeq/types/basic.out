@@ -1,34 +1,34 @@
 type: (), value: true
 
 
-class proj.errors.TypeCheckError: types int and bool are not definitionally equal
+class proj.errors.TypeCheckError: Types int and bool are not definitionally equal
 
 
-class proj.errors.TypeCheckError: types int and linint are not definitionally equal
+class proj.errors.TypeCheckError: Types int and linint are not definitionally equal
 
 
-class proj.errors.TypeCheckError: types linint and int are not definitionally equal
-
-
-type: (), value: true
-
-
-class proj.errors.TypeCheckError: types bool and linbool are not definitionally equal
+class proj.errors.TypeCheckError: Types linint and int are not definitionally equal
 
 
 type: (), value: true
 
 
-class proj.errors.TypeCheckError: types string and int are not definitionally equal
-
-
-class proj.errors.TypeCheckError: types string and bool are not definitionally equal
+class proj.errors.TypeCheckError: Types bool and linbool are not definitionally equal
 
 
 type: (), value: true
 
 
-class proj.errors.TypeCheckError: types unit and int are not definitionally equal
+class proj.errors.TypeCheckError: Types string and int are not definitionally equal
+
+
+class proj.errors.TypeCheckError: Types string and bool are not definitionally equal
+
+
+type: (), value: true
+
+
+class proj.errors.TypeCheckError: Types unit and int are not definitionally equal
 
 
 type: (), value: true

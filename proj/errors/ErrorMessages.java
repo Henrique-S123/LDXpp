@@ -3,6 +3,7 @@ package proj.errors;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.ast.*;
 
 public final class ErrorMessages {
     private ErrorMessages() {}
@@ -42,6 +43,18 @@ public final class ErrorMessages {
         return String.format("Type mismatch: expected %s type but got %s", t1, t2);
     }
 
+    public static String differentTypes(ASTNode n1, ASTNode n2, ASTType t1, ASTType t2) {
+        return String.format("Terms %s and %s have different types: %s and %s", n1, n2, t1, t2);
+    }
+
+    public static String termsNotDefeq(ASTNode n1, ASTNode n2) {
+        return String.format("Terms %s and %s are not definitionally equal", n1, n2);
+    }
+
+    public static String typesNotDefeq(ASTType t1, ASTType t2) {
+        return String.format("Types %s and %s are not definitionally equal", t1, t2);
+    }
+
     public static String notSubtypeApp(ASTType arg, ASTType param) {
         return String.format("Argument type %s is not a subtype of parameter type %s", arg, param);
     }
@@ -52,5 +65,9 @@ public final class ErrorMessages {
 
     public static String unusedLinearValues(Env<ASTType> env) {
         return String.format("There are unused linear values: %s", env);
+    }
+
+    public static String noExpectedType(ASTNode n) {
+        return String.format("%s expects a type to be typed against", n);
     }
 }

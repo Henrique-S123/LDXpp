@@ -7,13 +7,13 @@ type: bool, value: true
 type: true ≡ true : bool, value: refl
 
 
-class proj.errors.TypeCheckError: refl: expected type to check against
+class proj.errors.TypeCheckError: refl expects a type to be typed against
 
 
-class proj.errors.TypeCheckError: refl: expected type to check against
+class proj.errors.TypeCheckError: refl expects a type to be typed against
 
 
-class proj.errors.TypeCheckError: refl: expected type to check against
+class proj.errors.TypeCheckError: refl expects a type to be typed against
 
 
 type: (x:int, x ≡ 2 : int), value: (2, refl)

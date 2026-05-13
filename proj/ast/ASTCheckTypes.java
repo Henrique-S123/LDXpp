@@ -20,7 +20,7 @@ public class ASTCheckTypes extends ASTNode {
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         if (left.defequals(right, e.getEnv(ENV.SIGMA), new AlphaEnv())) return new ASTTUnit();
-        throw new TypeCheckError(String.format("types %s and %s are not definitionally equal", left, right));
+        throw new TypeCheckError(ErrorMessages.typesNotDefeq(left, right));
     }
 
     @Override
