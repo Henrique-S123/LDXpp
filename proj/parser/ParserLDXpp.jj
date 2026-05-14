@@ -368,7 +368,7 @@ ASTType Type() :
   Token n = null;
 }
 {   (
-      LOOKAHEAD(<LPAR> <Id> <COLON> TypeF() <RPAR>)
+      LOOKAHEAD(<LPAR> IdAnnotation() TypeF() <RPAR>)
       <LPAR> n = IdAnnotation() t1 = TypeF() <RPAR>
     |
       t1 = TypeF()
@@ -400,38 +400,44 @@ ASTType TypeF() :
         | <TSTRING> { t = new ASTTString(); }
         | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll); }
         | <TLUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTLUnion(ll); }
-        | <TEQ> <LPAR> te = Let() <EQUAL> te2 = Let() <COLON> t = Type() <RPAR> { t = new ASTTEq(te, te2, t); }
-        | <LPAR> t = TypeList() <RPAR>
+        | <LPAR> t = TypeInsidePar() <RPAR>
     )
     { return t; }
 }
 
-ASTType TypeList() :
+ASTType TypeInsidePar() :
 { ASTType t, t2;
+  ASTNode te, te2;
   Token n; }
 {
-  n = IdAnnotation() t = Type()
-  (
-    <COMMA> t2 = TypeCommaList() { t = new ASTTPair(t, t2, n == null ? null : n.image); }
+  n = IdAnnotation()
+    (
+      LOOKAHEAD(Let() <EQUAL>)
+      te = Let() <EQUAL> te2 = Let() <COLON> t = Type() { t = new ASTTEq(te, te2, t); }
     |
-    <VERT> t2 = TypeVertList() { t = new ASTTTensor(t, t2, n == null ? null : n.image); }
+      t = Type()
+    )
+  (
+    <COMMA> t2 = PairType() { t = new ASTTPair(t, t2, n == null ? null : n.image); }
+    |
+    <VERT> t2 = TensorType() { t = new ASTTTensor(t, t2, n == null ? null : n.image); }
   )?
   { return t; }
 }
 
-ASTType TypeCommaList() :
+ASTType PairType() :
 { ASTType t, t2;
   Token n; }
 {
-  n = IdAnnotation() t = Type() (<COMMA> t2 = TypeCommaList() { t = new ASTTPair(t, t2, n == null ? null : n.image); })?
+  n = IdAnnotation() t = Type() (<COMMA> t2 = PairType() { t = new ASTTPair(t, t2, n == null ? null : n.image); })?
   { return t; }
 }
 
-ASTType TypeVertList() :
+ASTType TensorType() :
 { ASTType t, t2;
   Token n; }
 {
-  n = IdAnnotation() t = Type() (<VERT> t2 = TypeVertList() { t = new ASTTTensor(t, t2, n == null ? null : n.image); })?
+  n = IdAnnotation() t = Type() (<VERT> t2 = TensorType() { t = new ASTTTensor(t, t2, n == null ? null : n.image); })?
   { return t; }
 }
 

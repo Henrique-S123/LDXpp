@@ -26,26 +26,26 @@
 
 (string | int) ?T (string | linint);;
 
-(x:int, eq(x=x:int)) ?T (x:int, eq(x=x:int));;
+(x:int, (x=x:int)) ?T (x:int, (x=x:int));;
 
-(x:int, eq(x=x:int)) ?T (y:int, eq(y=y:int));;
+(x:int, (x=x:int)) ?T (y:int, (y=y:int));;
 
-(x:int, y:int, eq(x=y:int)) ?T (y:int, x:int, eq(y=x:int));;
+(x:int, y:int, (x=y:int)) ?T (y:int, x:int, (y=x:int));;
 
-(x:int, y:int, eq(x=y:int)) ?T (x:int, y:int, eq(x=x:int));;
+(x:int, y:int, (x=y:int)) ?T (x:int, y:int, (x=x:int));;
 
-(x:int, y:int, eq(x=y:int)) ?T (y:int, x:int, eq(x=x:int));;
+(x:int, y:int, (x=y:int)) ?T (y:int, x:int, (x=x:int));;
 
-(x:int, y:int, eq(x=y:int)) ?T (y:int, x:int, eq(y=y:int));;
+(x:int, y:int, (x=y:int)) ?T (y:int, x:int, (y=y:int));;
 
-(x:linint | eq(x=x:linint)) ?T (x:linint | eq(x=x:linint));;
+(x:linint | (x=x:linint)) ?T (x:linint | (x=x:linint));;
 
-(x:linint | eq(x=x:linint)) ?T (y:linint | eq(y=y:linint));;
+(x:linint | (x=x:linint)) ?T (y:linint | (y=y:linint));;
 
-(x:linint | y:linint | eq(x=y:linint)) ?T (y:linint | x:linint | eq(y=x:linint));;
+(x:linint | y:linint | (x=y:linint)) ?T (y:linint | x:linint | (y=x:linint));;
 
-(x:linint | y:linint | eq(x=y:linint)) ?T (x:linint | y:linint | eq(x=x:linint));;
+(x:linint | y:linint | (x=y:linint)) ?T (x:linint | y:linint | (x=x:linint));;
 
-(x:linint | y:linint | eq(x=y:linint)) ?T (y:linint | x:linint | eq(x=x:linint));;
+(x:linint | y:linint | (x=y:linint)) ?T (y:linint | x:linint | (x=x:linint));;
 
-(x:linint | y:linint | eq(x=y:linint)) ?T (y:linint | x:linint | eq(y=y:linint));;
+(x:linint | y:linint | (x=y:linint)) ?T (y:linint | x:linint | (y=y:linint));;

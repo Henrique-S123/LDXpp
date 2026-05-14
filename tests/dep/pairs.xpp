@@ -1,8 +1,8 @@
-let p:(x:bool, eq(x=true:bool)) = (true, refl); p;;
+let p:(x:bool, (x=true:bool)) = (true, refl); p;;
 
-let p:(x:bool, eq(x=true:bool)) = (true, refl); fst(p);;
+let p:(x:bool, (x=true:bool)) = (true, refl); fst(p);;
 
-let p:(x:bool, eq(x=true:bool)) = (true, refl); snd(p);;
+let p:(x:bool, (x=true:bool)) = (true, refl); snd(p);;
 
 let p = (true, refl); p;;
 
@@ -10,49 +10,49 @@ let p = (true, refl); fst(p);;
 
 let p = (true, refl); snd(p);;
 
-let p:(x:int, eq(x=2:int)) = (2, refl); p;;
+let p:(x:int, (x=2:int)) = (2, refl); p;;
 
-let p:(x:int, eq(x=2:int)) = (3, refl); p;;
+let p:(x:int, (x=2:int)) = (3, refl); p;;
 
-let p:(x:int, y:int, eq(x=y:int)) = (2, 2, refl); p;;
+let p:(x:int, y:int, (x=y:int)) = (2, 2, refl); p;;
 
-let p:(x:int, y:int, eq(x=y:int)) = (2, 3, refl); p;;
+let p:(x:int, y:int, (x=y:int)) = (2, 3, refl); p;;
 
-let p:(x:int, y:int, z:int, eq(x=y:int), eq(y=z:int)) = (2, 2, 2, refl, refl); p;;
+let p:(x:int, y:int, z:int, (x=y:int), (y=z:int)) = (2, 2, 2, refl, refl); p;;
 
-let p:(x:int, y:int, z:int, eq(x=y:int), eq(y=z:int)) = (2, 2, 3, refl, refl); p;;
+let p:(x:int, y:int, z:int, (x=y:int), (y=z:int)) = (2, 2, 3, refl, refl); p;;
 
-let p:(x:int, y:int, z:int, eq(x=y:int), eq(y=z:int)) = (2, 3, 2, refl, refl); p;;
+let p:(x:int, y:int, z:int, (x=y:int), (y=z:int)) = (2, 3, 2, refl, refl); p;;
 
-let p:(x:int, y:int, z:int, eq(x=y:int), eq(y=z:int)) = (3, 2, 2, refl, refl); p;;
+let p:(x:int, y:int, z:int, (x=y:int), (y=z:int)) = (3, 2, 2, refl, refl); p;;
 
-let f = fn p:(x:bool, eq(x=true:bool)) => {p};
+let f = fn p:(x:bool, (x=true:bool)) => {p};
 f((true, refl));;
 
-let f = fn p:(x:bool, eq(x=true:bool)) => {p};
+let f = fn p:(x:bool, (x=true:bool)) => {p};
 f((false, refl));;
 
-let f = fn p:(x:bool, eq(x=false:bool)) => {p};
+let f = fn p:(x:bool, (x=false:bool)) => {p};
 f((false, refl));;
 
 let y = true;
-let f = fn p:(x:bool, eq(x=true:bool)) => {p};
+let f = fn p:(x:bool, (x=true:bool)) => {p};
 f((y, refl));;
 
 let y = true;
 let z = y;
-let f = fn p:(x:bool, eq(x=true:bool)) => {p};
+let f = fn p:(x:bool, (x=true:bool)) => {p};
 f((z, refl));;
 
 let y = false;
 let z = y;
-let f = fn p:(x:bool, eq(x=true:bool)) => {p};
+let f = fn p:(x:bool, (x=true:bool)) => {p};
 f((z, refl));;
 
 let x = false;
-let f = fn p:(x:bool, eq(x=true:bool)) => {p};
+let f = fn p:(x:bool, (x=true:bool)) => {p};
 f((true, refl));;
 
-let f = fn p:(x:bool, eq(x=true:bool)) => {p};
+let f = fn p:(x:bool, (x=true:bool)) => {p};
 let x = false;
 f((true, refl));;

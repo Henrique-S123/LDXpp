@@ -1,4 +1,4 @@
-TEST_DIR := tests
+TEST_DIR ?= tests
 TESTS := $(shell find $(TEST_DIR) -type f -name '*.xpp')
 
 all:

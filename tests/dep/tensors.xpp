@@ -1,8 +1,8 @@
-let p:(x:linbool | eq(x=truel:linbool)) = (truel | refl); p;;
+let p:(x:linbool | (x=truel:linbool)) = (truel | refl); p;;
 
-let p:(x:linbool | eq(x=truel:linbool)) = (truel | refl); split p {x|y -> x};;
+let p:(x:linbool | (x=truel:linbool)) = (truel | refl); split p {x|y -> x};;
 
-let p:(x:linbool | eq(x=truel:linbool)) = (truel | refl); split p {x|y -> y};;
+let p:(x:linbool | (x=truel:linbool)) = (truel | refl); split p {x|y -> y};;
 
 let p = (truel | refl); p;;
 
@@ -10,18 +10,18 @@ let p = (truel | refl); split p {x|y -> x};;
 
 let p = (truel | refl); split p {x|y -> y};;
 
-let p:(x:linint | eq(x=2l:linint)) = (2l | refl); p;;
+let p:(x:linint | (x=2l:linint)) = (2l | refl); p;;
 
-let p:(x:linint | eq(x=2l:linint)) = (3l | refl); p;;
+let p:(x:linint | (x=2l:linint)) = (3l | refl); p;;
 
-let p:(x:linint | y:linint | eq(x=y:linint)) = (2l | 2l | refl); p;;
+let p:(x:linint | y:linint | (x=y:linint)) = (2l | 2l | refl); p;;
 
-let p:(x:linint | y:linint | eq(x=y:linint)) = (2l | 3l | refl); p;;
+let p:(x:linint | y:linint | (x=y:linint)) = (2l | 3l | refl); p;;
 
-let p:(x:linint | y:linint | z:linint | eq(x=y:linint) | eq(y=z:linint)) = (2l | 2l | 2l | refl | refl); p;;
+let p:(x:linint | y:linint | z:linint | (x=y:linint) | (y=z:linint)) = (2l | 2l | 2l | refl | refl); p;;
 
-let p:(x:linint | y:linint | z:linint | eq(x=y:linint) | eq(y=z:linint)) = (2l | 2l | 3l | refl | refl); p;;
+let p:(x:linint | y:linint | z:linint | (x=y:linint) | (y=z:linint)) = (2l | 2l | 3l | refl | refl); p;;
 
-let p:(x:linint | y:linint | z:linint | eq(x=y:linint) | eq(y=z:linint)) = (2l | 3l | 2l | refl | refl); p;;
+let p:(x:linint | y:linint | z:linint | (x=y:linint) | (y=z:linint)) = (2l | 3l | 2l | refl | refl); p;;
 
-let p:(x:linint | y:linint | z:linint | eq(x=y:linint) | eq(y=z:linint)) = (3l | 2l | 2l | refl | refl); p;;
+let p:(x:linint | y:linint | z:linint | (x=y:linint) | (y=z:linint)) = (3l | 2l | 2l | refl | refl); p;;

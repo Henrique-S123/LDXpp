@@ -2,4 +2,4 @@
 
 make clean
 make
-make run-tests
+make run-tests $1
