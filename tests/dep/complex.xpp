@@ -25,7 +25,7 @@ let size:LIST->int = fn
             #cons(n) -> 1 + size(snd(n))
         }
     };
-let concat:(LIST:l1)->(LIST:l2)->(LIST:ln, eq(size(ln) = (size(l1) + size(l2)) : int)) = fn
+let concat:(l1:LIST)->(l2:LIST)->(ln:LIST, eq(size(ln) = (size(l1) + size(l2)) : int)) = fn
     l1:LIST, l2:LIST => {
         match l1 {
             #nil(_) -> (l2, refl)

@@ -1,0 +1,20 @@
+type NODE = (int, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+NODE ?T NODE;;
+
+type NODE = (int, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+type EL = (int, LIST);
+EL ?T NODE;;
+
+type NODE = (int, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+type EL = (int, SEQ);
+type SEQ = union { #nil: (), #cons: EL };
+NODE ?T EL;;
+
+type NODE = (int, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+type EL = (int, SEQ);
+type SEQ = union { #nil: (), #cons: EL };
+LIST ?T SEQ;;

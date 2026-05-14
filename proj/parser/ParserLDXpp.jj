@@ -368,8 +368,8 @@ ASTType Type() :
   Token n = null;
 }
 {   (
-      LOOKAHEAD(<LPAR> TypeF() <COLON> <Id> <RPAR>)
-      <LPAR> t1 = TypeF() (<COLON> n=<Id>)? <RPAR>
+      LOOKAHEAD(<LPAR> <Id> <COLON> TypeF() <RPAR>)
+      <LPAR> n = IdAnnotation() t1 = TypeF() <RPAR>
     |
       t1 = TypeF()
     )
@@ -408,28 +408,36 @@ ASTType TypeF() :
 
 ASTType TypeList() :
 { ASTType t, t2;
-  Token n = null; }
+  Token n; }
 {
-  t = Type() (<COLON> n=<Id>)? (<COMMA> t2 = TypeCommaList() { t = new ASTTPair(t, t2, n != null ? n.image : null); }
-               | <VERT> t2 = TypeVertList() { t = new ASTTTensor(t, t2, n != null ? n.image : null); })?
+  n = IdAnnotation() t = Type()
+  (
+    <COMMA> t2 = TypeCommaList() { t = new ASTTPair(t, t2, n == null ? null : n.image); }
+    |
+    <VERT> t2 = TypeVertList() { t = new ASTTTensor(t, t2, n == null ? null : n.image); }
+  )?
   { return t; }
 }
 
 ASTType TypeCommaList() :
 { ASTType t, t2;
-  Token n = null; }
+  Token n; }
 {
-  t = Type() (<COLON> n=<Id>)? (<COMMA> t2 = TypeCommaList() { t = new ASTTPair(t, t2, n != null ? n.image : null); })?
+  n = IdAnnotation() t = Type() (<COMMA> t2 = TypeCommaList() { t = new ASTTPair(t, t2, n == null ? null : n.image); })?
   { return t; }
 }
 
 ASTType TypeVertList() :
 { ASTType t, t2;
-  Token n = null; }
+  Token n; }
 {
-  t = Type() (<COLON> n=<Id>)? (<VERT> t2 = TypeVertList() { t = new ASTTTensor(t, t2, n != null ? n.image : null); })?
+  n = IdAnnotation() t = Type() (<VERT> t2 = TypeVertList() { t = new ASTTTensor(t, t2, n == null ? null : n.image); })?
   { return t; }
 }
+
+Token IdAnnotation() :
+{ Token n = null; }
+{ (LOOKAHEAD(<Id> <COLON>) n=<Id> <COLON>)? { return n; } }
 
 Map<String, ASTType> LabelList() :
 {

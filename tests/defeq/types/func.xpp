@@ -26,26 +26,26 @@ string-o>int ?T string-o>int;;
 
 string-o>int ?T string-o>linint;;
 
-(int:x)->eq(x=x:int) ?T (int:x)->eq(x=x:int);;
+(x:int)->eq(x=x:int) ?T (x:int)->eq(x=x:int);;
 
-(int:x)->eq(x=x:int) ?T (int:y)->eq(y=y:int);;
+(x:int)->eq(x=x:int) ?T (y:int)->eq(y=y:int);;
 
-(int:x)->(int:y)->eq(x=y:int) ?T (int:y)->(int:x)->eq(y=x:int);;
+(x:int)->(y:int)->eq(x=y:int) ?T (y:int)->(x:int)->eq(y=x:int);;
 
-(int:x)->(int:y)->eq(x=y:int) ?T (int:x)->(int:y)->eq(x=x:int);;
+(x:int)->(y:int)->eq(x=y:int) ?T (x:int)->(y:int)->eq(x=x:int);;
 
-(int:x)->(int:y)->eq(x=y:int) ?T (int:y)->(int:x)->eq(x=x:int);;
+(x:int)->(y:int)->eq(x=y:int) ?T (y:int)->(x:int)->eq(x=x:int);;
 
-(int:x)->(int:y)->eq(x=y:int) ?T (int:y)->(int:x)->eq(y=y:int);;
+(x:int)->(y:int)->eq(x=y:int) ?T (y:int)->(x:int)->eq(y=y:int);;
 
-(linint:x)-o>eq(x=x:linint) ?T (linint:x)-o>eq(x=x:linint);;
+(x:linint)-o>eq(x=x:linint) ?T (x:linint)-o>eq(x=x:linint);;
 
-(linint:x)-o>eq(x=x:linint) ?T (linint:y)-o>eq(y=y:linint);;
+(x:linint)-o>eq(x=x:linint) ?T (y:linint)-o>eq(y=y:linint);;
 
-(linint:x)-o>(linint:y)-o>eq(x=y:linint) ?T (linint:y)-o>(linint:x)-o>eq(y=x:linint);;
+(x:linint)-o>(y:linint)-o>eq(x=y:linint) ?T (y:linint)-o>(x:linint)-o>eq(y=x:linint);;
 
-(linint:x)-o>(linint:y)-o>eq(x=y:linint) ?T (linint:x)-o>(linint:y)-o>eq(x=x:linint);;
+(x:linint)-o>(y:linint)-o>eq(x=y:linint) ?T (x:linint)-o>(y:linint)-o>eq(x=x:linint);;
 
-(linint:x)-o>(linint:y)-o>eq(x=y:linint) ?T (linint:y)-o>(linint:x)-o>eq(x=x:linint);;
+(x:linint)-o>(y:linint)-o>eq(x=y:linint) ?T (y:linint)-o>(x:linint)-o>eq(x=x:linint);;
 
-(linint:x)-o>(linint:y)-o>eq(x=y:linint) ?T (linint:y)-o>(linint:x)-o>eq(y=y:linint);;
+(x:linint)-o>(y:linint)-o>eq(x=y:linint) ?T (y:linint)-o>(x:linint)-o>eq(y=y:linint);;
