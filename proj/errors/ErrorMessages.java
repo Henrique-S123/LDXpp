@@ -14,8 +14,8 @@ public final class ErrorMessages {
         return String.format("Identifier '%s' already declared", id);
     }
 
-    public static String undeclaredVariable(String id) {
-        return String.format("Undeclared identifier '%s'", id);
+    public static String idNotFound(String id) {
+        return String.format("Identifier '%s' not found", id);
     }
 
     // Evaluation errors

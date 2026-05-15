@@ -8,10 +8,10 @@ type: int, value: 1
 type: linint, value: 3l
 
 
-class proj.errors.EnvironmentError: Undeclared identifier 'x'
+class proj.errors.EnvironmentError: Identifier 'x' not found
 
 
-class proj.errors.EnvironmentError: Undeclared identifier 'x'
+class proj.errors.EnvironmentError: Identifier 'x' not found
 
 
 type: linint, value: 10l

@@ -107,7 +107,7 @@ public class EnvSet {
         } else {
             if (usedLinears.contains(id))
                 throw new EnvironmentError(ErrorMessages.alreadyUsedLinear(id));
-            else throw new EnvironmentError(ErrorMessages.undeclaredVariable(id));
+            else throw new EnvironmentError(ErrorMessages.idNotFound(id));
         }
     }
 
