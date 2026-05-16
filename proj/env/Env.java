@@ -1,6 +1,6 @@
 package proj.env;
 
-import proj.ast.ASTNode;
+import proj.ast.*;
 import proj.types.*;
 import proj.values.VClos;
 
@@ -64,18 +64,12 @@ public class Env <E>{
 
     public E remove(String id) { return search(id, true); }
 
-    public void addEq(E bind) {
-        String e = UUID.randomUUID().toString();
-        assoc(e, bind);
-    }
-
-    public E findEq(ASTNode n) {
+    public E findEq(String id) {
         Env<E> curr = this;
         while (curr != null) {
-            for (Map.Entry<String, E> bind : curr.bindings.entrySet()) {
-                if (bind.getValue() instanceof ASTTEq teq && teq.getTerm1().defequals(n, new Env<ASTType>(), new AlphaEnv()))
-                    return bind.getValue();
-            }
+            for (E val : curr.bindings.values())
+                if (val instanceof ASTTEq teq && teq.getTerm1() instanceof ASTId nid && id.equals(nid.getId()))
+                    return val;
             curr = curr.anc;
         }
         return null;

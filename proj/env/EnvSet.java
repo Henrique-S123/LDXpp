@@ -93,7 +93,8 @@ public class EnvSet {
     }
 
     public void addEq(ASTTEq t) {
-        this.sigma.addEq(t);
+        String e = UUID.randomUUID().toString();
+        this.sigma.assoc(e, t);
     }
 
     /* Find binds */

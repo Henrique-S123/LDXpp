@@ -30,7 +30,7 @@ public class ASTId extends ASTNode	{
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
-        ASTType eq = sigma.findEq(this);
+        ASTType eq = sigma.findEq(id);
         return (eq == null) ? null : ((ASTTEq) eq).getTerm2();
     }
 
