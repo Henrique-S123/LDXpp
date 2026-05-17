@@ -24,7 +24,7 @@ public class ASTId extends ASTNode	{
 		return e.findVar(id);
 	}
 
-    public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
+    public ASTNode weaknorm(Env<ASTNode> sub) {
         ASTNode n = sub.find(id);
         return (n != null) ? n : this;
     }

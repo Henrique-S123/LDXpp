@@ -108,7 +108,7 @@ public class ASTLFunc extends ASTNode  {
         return new ASTTLollipop(targtype, tb, id, e.getEnv(ENV.SIGMA));
     }
 
-    public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
+    public ASTNode weaknorm(Env<ASTNode> sub) {
         if (normEnv == null) setNormEnv(sub);
         return new ASTLFunc(id, body, argtype, getNormEnv(), getNormSigma());
     }

@@ -85,8 +85,8 @@ public class ASTMatch extends ASTNode {
 		return rettype;
 	}
 
-	public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-		ASTNode exp, tn = test.weaknorm(sigma, sub);
+	public ASTNode weaknorm(Env<ASTNode> sub) {
+		ASTNode exp, tn = test.weaknorm(sub);
 		String label;
 		if (tn instanceof ASTUnion un) { exp = un.getExpr(); label = un.getLabel(); }
 		else if (tn instanceof ASTLUnion lun) { exp = lun.getExpr(); label = lun.getLabel(); }
@@ -94,11 +94,11 @@ public class ASTMatch extends ASTNode {
 
 		MatchCase c = cases.get(label);
 		String id = c.getId();
-		ASTNode body = c.getExp(), expn = exp.weaknorm(sigma, sub);
+		ASTNode body = c.getExp(), expn = exp.weaknorm(sub);
 
 		Env<ASTNode> env = sub.beginScope();
 		env.assoc(id, expn);
-		return body.weaknorm(sigma, env);
+		return body.weaknorm(env);
     }
 
 	public ASTNode solve(Env<ASTType> sigma) {

@@ -38,8 +38,8 @@ public class ASTUnion extends ASTNode {
 		return new ASTTUnion(ll);
 	}
 
-	public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-		return new ASTUnion(label, expr.weaknorm(sigma, sub));
+	public ASTNode weaknorm(Env<ASTNode> sub) {
+		return new ASTUnion(label, expr.weaknorm(sub));
     }
 
 	public ASTNode solve(Env<ASTType> sigma) {

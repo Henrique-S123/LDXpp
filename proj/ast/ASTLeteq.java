@@ -51,13 +51,13 @@ public class ASTLeteq extends ASTNode {
         return rt;
     }
 
-    public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-        ASTNode normExpr = expr.weaknorm(sigma, sub);
+    public ASTNode weaknorm(Env<ASTNode> sub) {
+        ASTNode normExpr = expr.weaknorm(sub);
         if (!(normExpr instanceof ASTRefl))
-            return new ASTLeteq(id, normExpr, body.weaknorm(sigma, sub));
+            return new ASTLeteq(id, normExpr, body.weaknorm(sub));
         Env<ASTNode> esub = sub.beginScope();
         esub.assoc(id, normExpr);
-        return body.weaknorm(sigma, esub);
+        return body.weaknorm(esub);
     }
 
     public ASTNode solve(Env<ASTType> sigma) {

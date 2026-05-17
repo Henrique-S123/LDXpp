@@ -68,11 +68,11 @@ public class ASTLet extends ASTNode {
         return rt;
 	}
 
-    public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-        ASTNode normExpr = expr.weaknorm(sigma, sub);
+    public ASTNode weaknorm(Env<ASTNode> sub) {
+        ASTNode normExpr = expr.weaknorm(sub);
         Env<ASTNode> env = sub.beginScope();
         env.assoc(id, normExpr);
-        return body.weaknorm(sigma, env);
+        return body.weaknorm(env);
     }
 
     public ASTNode solve(Env<ASTType> sigma) {

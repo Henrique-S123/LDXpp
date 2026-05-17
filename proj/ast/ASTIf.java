@@ -54,15 +54,15 @@ public class ASTIf extends ASTNode {
 		else throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tconseq, talt));
 	}
 
-	public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-		ASTNode tn = test.weaknorm(sigma, sub);
+	public ASTNode weaknorm(Env<ASTNode> sub) {
+		ASTNode tn = test.weaknorm(sub);
 		boolean val;
 		if (tn instanceof ASTBool b) val = b.getVal();
 		else if (tn instanceof ASTLBool lb) val = lb.getVal();
-		else return new ASTIf(tn, conseq.weaknorm(sigma, sub), alt.weaknorm(sigma, sub));
+		else return new ASTIf(tn, conseq.weaknorm(sub), alt.weaknorm(sub));
 
-		if (val) return conseq.weaknorm(sigma, sub);
-		else return alt.weaknorm(sigma, sub);
+		if (val) return conseq.weaknorm(sub);
+		else return alt.weaknorm(sub);
     }
 
 	public ASTNode solve(Env<ASTType> sigma) {

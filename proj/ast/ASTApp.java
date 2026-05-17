@@ -50,19 +50,18 @@ public class ASTApp extends ASTNode  {
         else throw new TypeCheckError(ErrorMessages.notSubtypeApp(ta, dom));
 	}
 
-    public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-        ASTNode body, fn = func.weaknorm(sigma, sub);
-        ASTNode argn = arg.weaknorm(sigma, sub);
+    public ASTNode weaknorm(Env<ASTNode> sub) {
+        ASTNode body, fn = func.weaknorm(sub);
+        ASTNode argn = arg.weaknorm(sub);
         Env<ASTNode> normEnv;
-        Env<ASTType> normSigma;
         String id;
-        if (fn instanceof ASTFunc f) { body = f.getBody(); normEnv = f.getNormEnv(); normSigma = f.getNormSigma(); id = f.getId(); }
-        else if (fn instanceof ASTLFunc lf) { body = lf.getBody(); normEnv = lf.getNormEnv(); normSigma = lf.getNormSigma(); id = lf.getId(); }
+        if (fn instanceof ASTFunc f) { body = f.getBody(); normEnv = f.getNormEnv(); id = f.getId(); }
+        else if (fn instanceof ASTLFunc lf) { body = lf.getBody(); normEnv = lf.getNormEnv(); id = lf.getId(); }
         else return new ASTApp(fn, argn);
 
         Env<ASTNode> env = normEnv.beginScope();
         env.assoc(id, argn);
-        return body.weaknorm(normSigma, env);
+        return body.weaknorm(env);
     }
 
     public ASTNode solve(Env<ASTType> sigma) {

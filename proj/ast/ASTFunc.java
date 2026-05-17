@@ -111,7 +111,7 @@ public class ASTFunc extends ASTNode  {
         return new ASTTArrow(targtype, tb, id, e.getEnv(ENV.SIGMA));
     }
 
-    public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
+    public ASTNode weaknorm(Env<ASTNode> sub) {
         if (normEnv == null) setNormEnv(sub);
         return new ASTFunc(id, body, argtype, getNormEnv(), getNormSigma());
     }

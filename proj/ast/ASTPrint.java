@@ -34,8 +34,8 @@ public class ASTPrint extends ASTNode {
 		return new ASTTUnit();
 	}
 
-	public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-		return new ASTPrint(exp.weaknorm(sigma, sub), newline);
+	public ASTNode weaknorm(Env<ASTNode> sub) {
+		return new ASTPrint(exp.weaknorm(sub), newline);
     }
 
 	public ASTNode solve(Env<ASTType> sigma) {

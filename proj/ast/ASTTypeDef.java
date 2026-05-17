@@ -38,8 +38,8 @@ public class ASTTypeDef extends ASTNode {
         return ret;
     }
 
-    public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-        return new ASTTypeDef(ltd, body.weaknorm(sigma, sub));
+    public ASTNode weaknorm(Env<ASTNode> sub) {
+        return new ASTTypeDef(ltd, body.weaknorm(sub));
     }
     
     public ASTNode solve(Env<ASTType> sigma) {

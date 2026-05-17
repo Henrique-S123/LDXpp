@@ -74,17 +74,17 @@ public class ASTSplit extends ASTNode {
 		return rt;
 	}
 
-	public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-		ASTNode pn = pair.weaknorm(sigma, sub);
+	public ASTNode weaknorm(Env<ASTNode> sub) {
+		ASTNode pn = pair.weaknorm(sub);
 		ASTNode f, s;
 		if (pn instanceof ASTTensor t) { f = t.getFirst(); s = t.getSecond(); }
-		else return new ASTSplit(pn, id2, id1, body.weaknorm(sigma, sub));
+		else return new ASTSplit(pn, id2, id1, body.weaknorm(sub));
 
-		ASTNode fn = f.weaknorm(sigma, sub), sn = s.weaknorm(sigma, sub);
+		ASTNode fn = f.weaknorm(sub), sn = s.weaknorm(sub);
 		Env<ASTNode> env = sub.beginScope();
 		env.assoc(id1, fn);
 		env.assoc(id2, sn);
-        return body.weaknorm(sigma, env);
+        return body.weaknorm(env);
     }
 
 	public ASTNode solve(Env<ASTType> sigma) {

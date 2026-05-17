@@ -35,8 +35,8 @@ public class ASTSeq extends ASTNode {
         }
 	}
 
-	public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-        return new ASTSeq(first.weaknorm(sigma, sub), second.weaknorm(sigma, sub));
+	public ASTNode weaknorm(Env<ASTNode> sub) {
+        return new ASTSeq(first.weaknorm(sub), second.weaknorm(sub));
     }
 
     public ASTNode solve(Env<ASTType> sigma) {

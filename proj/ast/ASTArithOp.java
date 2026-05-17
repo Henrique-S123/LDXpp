@@ -68,9 +68,9 @@ public class ASTArithOp extends ASTNode {
 		}
 	}
 
-	public ASTNode weaknorm(Env<ASTType> sigma, Env<ASTNode> sub) {
-		ASTNode ln = lhs.weaknorm(sigma, sub);
-		ASTNode rn = rhs.weaknorm(sigma, sub);
+	public ASTNode weaknorm(Env<ASTNode> sub) {
+		ASTNode ln = lhs.weaknorm(sub);
+		ASTNode rn = rhs.weaknorm(sub);
 		if ((ln instanceof ASTInt || ln instanceof ASTLInt) && (rn instanceof ASTInt || rn instanceof ASTLInt)) {
 			int i1 = (ln instanceof ASTInt) ? ((ASTInt) ln).getVal() : ((ASTLInt) ln).getVal();
 			int i2 = (rn instanceof ASTInt) ? ((ASTInt) rn).getVal() : ((ASTLInt) rn).getVal();
@@ -97,7 +97,7 @@ public class ASTArithOp extends ASTNode {
 			if (rn instanceof ASTString n) s2 = n.getVal();
 			return new ASTString(s1 + s2);
 		}
-		return new ASTArithOp(lhs.weaknorm(sigma, sub), rhs.weaknorm(sigma, sub), op);
+		return new ASTArithOp(lhs.weaknorm(sub), rhs.weaknorm(sub), op);
     }
 
 	public ASTNode solve(Env<ASTType> sigma) {
