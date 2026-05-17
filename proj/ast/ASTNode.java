@@ -23,6 +23,10 @@ public abstract class ASTNode {
         return this;
     }
 
+    public ASTNode weaknorm() {
+        return this.weaknorm(new Env<ASTNode>());
+    }
+
     public ASTNode solve(Env<ASTType> sigma) {
         return null;
     }
@@ -43,7 +47,7 @@ public abstract class ASTNode {
                 if (a.getFunc() instanceof ASTFunc f) sig = f.getNormSigma();
                 else if (a.getFunc() instanceof ASTLFunc lf) sig = lf.getNormSigma();
             }
-            ln = ln.weaknorm(new Env<ASTNode>());
+            ln = ln.weaknorm();
             ASTNode sln = ln.solve(sig);
             if (sln == null) return ln;
             ln = sln;
