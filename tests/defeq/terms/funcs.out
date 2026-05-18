@@ -64,3 +64,9 @@ type: fn y:int => {fn f:int->int => {f(0)}(fn x:int => {y})}(1) ≡ 1 : int, val
 type: f(a) ≡ 1 : int, value: true
 
 
+type: fn y:int => {x} ≡ fn y:int => {if(true, 0, 1)} : (y:int)->int, value: true
+
+
+type: fn y:int => {fn z:int => {x}} ≡ fn y:int => {fn z:int => {if(true, 0, 1)}} : (y:int)->(z:int)->int, value: true
+
+

@@ -43,3 +43,7 @@ let x = 0; let f = fn y:int => {x}; let x = 1; 1 ? f(5);;
 let a = 1;
 let f = fn y:int => {(fn f2:int->int => {f2(0)})(fn x:int =>{y})};
 f(a) ? 1;;
+
+let x = 0; fn y:int => {x} ? fn y:int => {if (true) {0} else {1}};;
+
+let x = 0; fn y:int => {fn z:int => {x}} ? fn y:int => {fn z:int => {if (true) {0} else {1}}};;
