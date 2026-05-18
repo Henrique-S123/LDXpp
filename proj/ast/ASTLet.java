@@ -68,6 +68,33 @@ public class ASTLet extends ASTNode {
         return rt;
 	}
 
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+        ASTType tt = (declType != null) ? declType : expr.typecheck(e);
+        tt = e.unfold(tt);
+
+        ENV env = (tt instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
+        e.openEnvScope(env);
+        e.openEnvScope(ENV.SIGMA);
+
+        e.bindToEnv(env, id, tt);
+        if (declType != null) {
+            ASTType exprType = expr.typecheck(e, tt);
+            if (!(exprType.isSubtypeOf(tt, e))) throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
+        }
+
+        e.addEq(new ASTTEq(new ASTId(id), expr, tt));
+        e.bindToEnv(ENV.SIGMA, id, tt);
+
+        ASTType rt = body.typecheck(e, target);
+        if (!(e.getEnv(ENV.DELTA).isEmpty()))
+            throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getEnv(ENV.DELTA)));
+
+        e.closeEnvScope(env);
+        e.closeEnvScope(ENV.SIGMA);
+
+        return rt;
+	}
+
     public ASTNode weaknorm(Env<ASTNode> sub) {
         ASTNode normExpr = expr.weaknorm(sub);
         Env<ASTNode> env = sub.beginScope();
