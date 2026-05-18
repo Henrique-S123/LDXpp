@@ -1,0 +1,17 @@
+let x = 5;
+let y:(z:int, (z=x:int)) = (x, refl);
+let p:(a:int, b:int, (a=b:int)) = (fst(y), x, refl);
+p;;
+
+let x = 5;
+let y:(z:int, (z=x:int)) = (x, refl);
+let x = 0;
+let p:(a:int, b:int, (a=b:int)) = (fst(y), x, refl);
+p;;
+
+let f:(x:int)->(y:int, (y=x:int))->(a:int, b:int, (a=b:int)) =
+    fn x:int, z:(y:int, (y=x:int)) => {leteq e = snd(z); (x, fst(z), refl)}; f;;
+
+let f:(x:int)->(y:int, (y=x:int))->(a:int, b:int, (a=b:int)) = fn x:int, y:int => {(x, y, refl)};
+let q:(w:int, (y=2:int))->(a:int, b:int, (a=b:int)) = fn z:(w:int, (w=2:int)) => {f(2)};
+q(2);;

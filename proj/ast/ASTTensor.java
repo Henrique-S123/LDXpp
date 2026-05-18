@@ -8,10 +8,17 @@ import proj.errors.*;
 
 public class ASTTensor extends ASTNode {
     ASTNode first, second;
+    Env<ASTType> sig;
 
     public ASTTensor(ASTNode f, ASTNode s) {
         first = f;
         second = s;
+    }
+
+    public ASTTensor(ASTNode f, ASTNode s, Env<ASTType> si) {
+        first = f;
+        second = s;
+        sig = si;
     }
 
     public ASTNode getFirst() {
@@ -20,6 +27,14 @@ public class ASTTensor extends ASTNode {
 
     public ASTNode getSecond() {
         return second;
+    }
+
+    public Env<ASTType> getSig() {
+        return sig;
+    }
+
+    public void setSig(Env<ASTType> s) {
+        sig = s;
     }
     
     public IValue eval(Env<IValue> e) throws InterpreterError {
@@ -31,7 +46,8 @@ public class ASTTensor extends ASTNode {
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
-        return new ASTTTensor(t1, t2, null, e.getEnv(ENV.SIGMA));
+        setSig(e.getEnv(ENV.SIGMA));
+        return new ASTTTensor(t1, t2, null);
     }
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
@@ -50,7 +66,8 @@ public class ASTTensor extends ASTNode {
         if (!t2.isSubtypeOf(insttgt2, e)) throw new TypeCheckError(ErrorMessages.notSubtype(t2, tgt2));
         
         e.closeEnvScope(ENV.SIGMA);
-        return new ASTTTensor(tgt1, tgt2, tgtid, e.getEnv(ENV.SIGMA));
+        setSig(e.getEnv(ENV.SIGMA));
+        return new ASTTTensor(tgt1, tgt2, tgtid);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
@@ -58,9 +75,9 @@ public class ASTTensor extends ASTNode {
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode nfirst = first.solve(sigma);
+        ASTNode nfirst = first.solve(getSig());
         if (nfirst != null) return new ASTTensor(nfirst, second);
-        ASTNode nsecond = second.solve(sigma);
+        ASTNode nsecond = second.solve(getSig());
         if (nsecond != null) return new ASTTensor(first, nsecond);
         return null;
     }

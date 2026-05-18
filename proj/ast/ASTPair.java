@@ -8,10 +8,17 @@ import proj.errors.*;
 
 public class ASTPair extends ASTNode {
     ASTNode first, second;
+    Env<ASTType> sig;
 
     public ASTPair(ASTNode f, ASTNode s) {
         first = f;
         second = s;
+    }
+    
+    public ASTPair(ASTNode f, ASTNode s, Env<ASTType> si) {
+        first = f;
+        second = s;
+        sig = si;
     }
 
     public ASTNode getFirst() {
@@ -20,6 +27,14 @@ public class ASTPair extends ASTNode {
 
     public ASTNode getSecond() {
         return second;
+    }
+
+    public Env<ASTType> getSig() {
+        return sig;
+    }
+
+    public void setSig(Env<ASTType> s) {
+        sig = s;
     }
     
     public IValue eval(Env<IValue> e) throws InterpreterError {
@@ -33,7 +48,8 @@ public class ASTPair extends ASTNode {
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
         e.setEnv(ENV.DELTA, prevDelta);
-        return new ASTTPair(t1, t2, null, e.getEnv(ENV.SIGMA));
+        setSig(e.getEnv(ENV.SIGMA));
+        return new ASTTPair(t1, t2, null);
     }
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
@@ -55,7 +71,8 @@ public class ASTPair extends ASTNode {
 
         e.closeEnvScope(ENV.SIGMA);
         e.setEnv(ENV.DELTA, prevDelta);
-        return new ASTTPair(tgt1, tgt2, tgtid, e.getEnv(ENV.SIGMA));
+        setSig(e.getEnv(ENV.SIGMA));
+        return new ASTTPair(tgt1, tgt2, tgtid);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
@@ -63,9 +80,9 @@ public class ASTPair extends ASTNode {
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode nfirst = first.solve(sigma);
+        ASTNode nfirst = first.solve(getSig());
         if (nfirst != null) return new ASTPair(nfirst, second);
-        ASTNode nsecond = second.solve(sigma);
+        ASTNode nsecond = second.solve(getSig());
         if (nsecond != null) return new ASTPair(first, nsecond);
         return null;
     }

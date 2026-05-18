@@ -44,9 +44,11 @@ public abstract class ASTNode {
         while (true) {
             Env<ASTType> sig = sigma;
             if (ln instanceof ASTApp a) {
-                if (a.getFunc() instanceof ASTFunc f) sig = f.getNormSigma();
-                else if (a.getFunc() instanceof ASTLFunc lf) sig = lf.getNormSigma();
+                if (a.getFunc() instanceof ASTFunc f) sig = f.getSig();
+                else if (a.getFunc() instanceof ASTLFunc lf) sig = lf.getSig();
             }
+            if (ln instanceof ASTChoice c && c.getPair() instanceof ASTPair p) sig = p.getSig();
+            if (ln instanceof ASTSplit s && s.getPair() instanceof ASTTensor t) sig = t.getSig();
             ln = ln.weaknorm();
             ASTNode sln = ln.solve(sig);
             if (sln == null) return ln;

@@ -6,20 +6,11 @@ import proj.env.*;
 public class ASTTLollipop implements ASTLinType {
     ASTType dom, codom;
     String id;
-    Env<ASTType> sigmac;
 
     public ASTTLollipop(ASTType d, ASTType co, String i) {
         dom = d;
         codom = co;
         id = i;
-        sigmac = null;
-    }
-
-    public ASTTLollipop(ASTType d, ASTType co, String i, Env<ASTType> s) {
-        dom = d;
-        codom = co;
-        id = i;
-        sigmac = s;
     }
 
     public ASTType getDom() {
@@ -53,7 +44,7 @@ public class ASTTLollipop implements ASTLinType {
     }
 
     public ASTType inst(String instId, ASTNode n) {
-        return new ASTTLollipop(dom.inst(instId, n), codom.inst(instId, n), id, sigmac);
+        return new ASTTLollipop(dom.inst(instId, n), codom.inst(instId, n), id);
     }
 }
 

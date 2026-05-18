@@ -11,14 +11,14 @@ public class ASTLFunc extends ASTNode  {
     ASTNode body;
     ASTType argtype;
     Env<ASTNode> normEnv;
-    Env<ASTType> normSigma;
+    Env<ASTType> sig;
 
     public ASTLFunc(String i, ASTNode b, ASTType t) {
         id = i;
         body = b;
         argtype = t;
         normEnv = null;
-        normSigma = null;
+        sig = null;
     }
 
     public ASTLFunc(String i, ASTNode b, ASTType t, Env<ASTNode> sub, Env<ASTType> sigma) {
@@ -26,7 +26,7 @@ public class ASTLFunc extends ASTNode  {
         body = b;
         argtype = t;
         normEnv = sub;
-        normSigma = sigma;
+        sig = sigma;
     }
 
     public String getId() {
@@ -45,8 +45,8 @@ public class ASTLFunc extends ASTNode  {
         return normEnv;
     }
 
-    public Env<ASTType> getNormSigma() {
-        return normSigma;
+    public Env<ASTType> getSig() {
+        return sig;
     }
 
     public void setBody(ASTNode b) {
@@ -57,8 +57,8 @@ public class ASTLFunc extends ASTNode  {
         normEnv = e;
     }
 
-    public void setNormSigma(Env<ASTType> s) {
-        normSigma = s;
+    public void setSig(Env<ASTType> s) {
+        sig = s;
     }
 
     public IValue eval(Env<IValue> e) {
@@ -72,14 +72,14 @@ public class ASTLFunc extends ASTNode  {
         e.openEnvScope(ENV.SIGMA);
         e.bindToEnv(env, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
-        setNormSigma(e.getEnv(ENV.SIGMA));
+        setSig(e.getEnv(ENV.SIGMA));
 
         ASTType tb = body.typecheck(e);
 
         if (!(e.getEnv(ENV.DELTA).isEmpty())) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getEnv(ENV.DELTA)));
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
-        return new ASTTLollipop(targtype, tb, id, e.getEnv(ENV.SIGMA));
+        return new ASTTLollipop(targtype, tb, id);
 	}
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
@@ -99,27 +99,27 @@ public class ASTLFunc extends ASTNode  {
 
         e.bindToEnv(env, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
-        setNormSigma(e.getEnv(ENV.SIGMA));
+        setSig(e.getEnv(ENV.SIGMA));
 
         ASTType tb = body.typecheck(e, tcodom);
 
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
-        return new ASTTLollipop(targtype, tb, id, e.getEnv(ENV.SIGMA));
+        return new ASTTLollipop(targtype, tb, id);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
         if (normEnv == null) setNormEnv(sub);
-        return new ASTLFunc(id, body, argtype, getNormEnv(), getNormSigma());
+        return new ASTLFunc(id, body, argtype, getNormEnv(), getSig());
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
         ASTNode nbody = body.solve(sigma);
-        return (nbody == null) ? null : new ASTLFunc(id, nbody, argtype);
+        return (nbody == null) ? null : new ASTLFunc(id, nbody, argtype, normEnv, sig);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-        return new ASTLFunc(id, body.subs(subsId, node), argtype, normEnv, normSigma);
+        return new ASTLFunc(id, body.subs(subsId, node), argtype, normEnv, sig);
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {

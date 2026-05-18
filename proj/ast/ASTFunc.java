@@ -11,14 +11,14 @@ public class ASTFunc extends ASTNode  {
     ASTNode body;
     ASTType argtype;
     Env<ASTNode> normEnv;
-    Env<ASTType> normSigma;
+    Env<ASTType> sig;
 
     public ASTFunc(String i, ASTNode b, ASTType t) {
         id = i;
         body = b;
         argtype = t;
         normEnv = null;
-        normSigma = null;
+        sig = null;
     }
 
     public ASTFunc(String i, ASTNode b, ASTType t, Env<ASTNode> sub, Env<ASTType> sigma) {
@@ -26,7 +26,7 @@ public class ASTFunc extends ASTNode  {
         body = b;
         argtype = t;
         normEnv = sub;
-        normSigma = sigma;
+        sig = sigma;
     }
 
     public String getId() {
@@ -45,8 +45,8 @@ public class ASTFunc extends ASTNode  {
         return normEnv;
     }
 
-    public Env<ASTType> getNormSigma() {
-        return normSigma;
+    public Env<ASTType> getSig() {
+        return sig;
     }
 
     public void setBody(ASTNode b) {
@@ -57,8 +57,8 @@ public class ASTFunc extends ASTNode  {
         normEnv = e;
     }
 
-    public void setNormSigma(Env<ASTType> s) {
-        normSigma = s;
+    public void setSig(Env<ASTType> s) {
+        sig = s;
     }
 
     public IValue eval(Env<IValue> e) {
@@ -71,7 +71,7 @@ public class ASTFunc extends ASTNode  {
         e.openEnvScope(ENV.SIGMA);
         e.bindToEnv(ENV.GAMMA, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
-        setNormSigma(e.getEnv(ENV.SIGMA));
+        setSig(e.getEnv(ENV.SIGMA));
         Env<ASTType> prevDelta = e.popDelta();
 
         ASTType tb = body.typecheck(e);
@@ -79,7 +79,7 @@ public class ASTFunc extends ASTNode  {
         e.setEnv(ENV.DELTA, prevDelta);
         e.closeEnvScope(ENV.GAMMA);
         e.closeEnvScope(ENV.SIGMA);
-        return new ASTTArrow(targtype, tb, id, e.getEnv(ENV.SIGMA));
+        return new ASTTArrow(targtype, tb, id);
 	}
 
     public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
@@ -100,7 +100,7 @@ public class ASTFunc extends ASTNode  {
 
         e.bindToEnv(ENV.GAMMA, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
-        setNormSigma(e.getEnv(ENV.SIGMA));
+        setSig(e.getEnv(ENV.SIGMA));
 
         ASTType tb = body.typecheck(e, tcodom);
 
@@ -108,21 +108,21 @@ public class ASTFunc extends ASTNode  {
         e.closeEnvScope(ENV.GAMMA);
         e.closeEnvScope(ENV.SIGMA);
 
-        return new ASTTArrow(targtype, tb, id, e.getEnv(ENV.SIGMA));
+        return new ASTTArrow(targtype, tb, id);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
         if (normEnv == null) setNormEnv(sub);
-        return new ASTFunc(id, body, argtype, getNormEnv(), getNormSigma());
+        return new ASTFunc(id, body, argtype, getNormEnv(), getSig());
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode nbody = body.solve(getNormSigma());
-        return (nbody == null) ? null : new ASTFunc(id, nbody, argtype, normEnv, normSigma);
+        ASTNode nbody = body.solve(getSig());
+        return (nbody == null) ? null : new ASTFunc(id, nbody, argtype, normEnv, sig);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-        return new ASTFunc(id, body.subs(subsId, node), argtype, normEnv, normSigma);
+        return new ASTFunc(id, body.subs(subsId, node), argtype, normEnv, sig);
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {

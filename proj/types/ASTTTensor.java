@@ -6,20 +6,11 @@ import proj.env.*;
 public class ASTTTensor implements ASTLinType {
     ASTType first, second;
     String id;
-    Env<ASTType> sigmac;
 
     public ASTTTensor(ASTType f, ASTType s, String i) {
         first = f;
         second = s;
         id = i;
-        sigmac = null;
-    }
-
-    public ASTTTensor(ASTType f, ASTType s, String i, Env<ASTType> si) {
-        first = f;
-        second = s;
-        id = i;
-        sigmac = si;
     }
 
     public ASTType getFirst() {
@@ -53,6 +44,6 @@ public class ASTTTensor implements ASTLinType {
     }
 
     public ASTType inst(String instId, ASTNode n) {
-        return new ASTTTensor(first.inst(instId, n), second.inst(instId, n), id, sigmac);
+        return new ASTTTensor(first.inst(instId, n), second.inst(instId, n), id);
     }
 }
