@@ -70,3 +70,6 @@ type: fn y:int => {x} ≡ fn y:int => {if(true, 0, 1)} : (y:int)->int, value: tr
 type: fn y:int => {fn z:int => {x}} ≡ fn y:int => {fn z:int => {if(true, 0, 1)}} : (y:int)->(z:int)->int, value: true
 
 
+type: (f, 1) ≡ (f2, 1) : ((y:int)->int, int), value: true
+
+

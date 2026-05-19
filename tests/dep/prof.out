@@ -7,3 +7,6 @@ class proj.errors.TypeCheckError: Terms fst y and x are not definitionally equal
 type: (a:int, (b:int, a ≡ b : int)), value: (2, (2, refl))
 
 
+type: (a:int, (b:int, a ≡ b : int)), value: (2, (2, refl))
+
+

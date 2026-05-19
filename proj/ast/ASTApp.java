@@ -45,9 +45,9 @@ public class ASTApp extends ASTNode  {
         else if (tf instanceof ASTTLollipop fun) { dom = fun.getDom(); codom = fun.getCodom(); id = fun.getId(); }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("app", tf));
 
-        ASTType ta = arg.typecheck(e, dom);
-        if (ta instanceof ASTTUnit || ta.isSubtypeOf(dom, e)) return codom.inst(id, arg);
-        else throw new TypeCheckError(ErrorMessages.notSubtypeApp(ta, dom));
+        ASTType targ = arg.typecheck(e, dom);
+        if (targ instanceof ASTTUnit || targ.isSubtypeOf(dom, e)) return codom.inst(id, arg);
+        else throw new TypeCheckError(ErrorMessages.notSubtypeApp(targ, dom));
 	}
 
     public ASTNode weaknorm(Env<ASTNode> sub) {

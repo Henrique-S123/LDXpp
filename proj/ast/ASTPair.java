@@ -76,19 +76,19 @@ public class ASTPair extends ASTNode {
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
-        return new ASTPair(first.weaknorm(sub), second.weaknorm(sub));
+        return new ASTPair(first.weaknorm(sub), second.weaknorm(sub), sig);
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
         ASTNode nfirst = first.solve(getSig());
-        if (nfirst != null) return new ASTPair(nfirst, second);
+        if (nfirst != null) return new ASTPair(nfirst, second, sig);
         ASTNode nsecond = second.solve(getSig());
-        if (nsecond != null) return new ASTPair(first, nsecond);
+        if (nsecond != null) return new ASTPair(first, nsecond, sig);
         return null;
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-        return new ASTPair(first.subs(subsId, node), second.subs(subsId, node));
+        return new ASTPair(first.subs(subsId, node), second.subs(subsId, node), sig);
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {

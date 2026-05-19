@@ -71,19 +71,19 @@ public class ASTTensor extends ASTNode {
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
-        return new ASTTensor(first.weaknorm(sub), second.weaknorm(sub));
+        return new ASTTensor(first.weaknorm(sub), second.weaknorm(sub), sig);
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
         ASTNode nfirst = first.solve(getSig());
-        if (nfirst != null) return new ASTTensor(nfirst, second);
+        if (nfirst != null) return new ASTTensor(nfirst, second, sig);
         ASTNode nsecond = second.solve(getSig());
-        if (nsecond != null) return new ASTTensor(first, nsecond);
+        if (nsecond != null) return new ASTTensor(first, nsecond, sig);
         return null;
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-        return new ASTTensor(first.subs(subsId, node), second.subs(subsId, node));
+        return new ASTTensor(first.subs(subsId, node), second.subs(subsId, node), sig);
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
