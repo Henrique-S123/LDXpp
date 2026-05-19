@@ -29,13 +29,14 @@ public class ASTTPair implements ASTType {
         return String.format("(%s%s, %s)", id != null ? id+":" : "", first, second);
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e) {
-        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e);
+    public boolean isSubtypeOf(ASTType o, EnvSet e, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e, alpha);
         ASTType ofirst, osecond;
-        if (o instanceof ASTTPair opair) { ofirst = opair.getFirst(); osecond = opair.getSecond(); }
-        else if (o instanceof ASTTTensor otensor) { ofirst = otensor.getFirst(); osecond = otensor.getSecond(); }
+        String oid;
+        if (o instanceof ASTTPair opair) { ofirst = opair.getFirst(); osecond = opair.getSecond(); oid = opair.getId(); }
+        else if (o instanceof ASTTTensor otensor) { ofirst = otensor.getFirst(); osecond = otensor.getSecond(); oid = otensor.getId(); }
         else return false;
-        return first.isSubtypeOf(ofirst, e) && second.isSubtypeOf(osecond, e);
+        return first.isSubtypeOf(ofirst, e, alpha) && second.isSubtypeOf(osecond, e, alpha.extend(id, oid));
     }
 
     public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {

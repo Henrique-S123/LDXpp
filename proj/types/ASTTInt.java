@@ -9,8 +9,8 @@ public class ASTTInt implements ASTType {
         return "int";
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e) {
-        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e);
+    public boolean isSubtypeOf(ASTType o, EnvSet e, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e, alpha);
         return o instanceof ASTTInt || o instanceof ASTTLInt;
     }
 

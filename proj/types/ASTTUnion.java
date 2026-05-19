@@ -17,15 +17,15 @@ public class ASTTUnion implements ASTType {
         return ll;
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e) {
-        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e);
+    public boolean isSubtypeOf(ASTType o, EnvSet e, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e, alpha);
         Map<String, ASTType> mb;
         if (o instanceof ASTTUnion ounion) mb = ounion.getMap();
         else if (o instanceof ASTTLUnion olunion) mb = olunion.getMap();
         else return false;
 
         for (String s : ll.keySet())
-            if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), e))) return false;
+            if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), e, alpha))) return false;
         return true;
     }
 

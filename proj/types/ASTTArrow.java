@@ -30,13 +30,14 @@ public class ASTTArrow implements ASTType {
         return String.format("%s->%s", domStr, codom);
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e) {
-        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e);
+    public boolean isSubtypeOf(ASTType o, EnvSet e, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e, alpha);
         ASTType odom, ocodom;
-        if (o instanceof ASTTArrow arrow) { odom = arrow.getDom(); ocodom = arrow.getCodom(); }
-        else if (o instanceof ASTTLollipop lolli) { odom = lolli.getDom(); ocodom = lolli.getCodom(); }
+        String oid;
+        if (o instanceof ASTTArrow arrow) { odom = arrow.getDom(); ocodom = arrow.getCodom(); oid = arrow.getId(); }
+        else if (o instanceof ASTTLollipop lolli) { odom = lolli.getDom(); ocodom = lolli.getCodom(); oid = lolli.getId(); }
         else return false;
-        return odom.isSubtypeOf(dom, e) && codom.isSubtypeOf(ocodom, e);
+        return odom.isSubtypeOf(dom, e, alpha) && codom.isSubtypeOf(ocodom, e, alpha.extend(id, oid));
     }
 
     public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {

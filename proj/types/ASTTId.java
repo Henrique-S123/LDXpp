@@ -18,9 +18,9 @@ public	class ASTTId implements ASTType	{
         return id;
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e) {
+    public boolean isSubtypeOf(ASTType o, EnvSet e, AlphaEnv alpha) {
         if (o instanceof ASTTId) return id.equals(((ASTTId) o).getId());
-        return e.unfold(this).isSubtypeOf(o, e);
+        return e.unfold(this).isSubtypeOf(o, e, alpha);
     }
 
     public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {

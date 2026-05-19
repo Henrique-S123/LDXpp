@@ -9,8 +9,8 @@ public class ASTTBool implements ASTType {
         return "bool";
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e) {
-        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e);
+    public boolean isSubtypeOf(ASTType o, EnvSet e, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e, alpha);
         return o instanceof ASTTBool || o instanceof ASTTLBool;
     }
 

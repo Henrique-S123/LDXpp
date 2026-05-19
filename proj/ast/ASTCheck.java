@@ -21,7 +21,7 @@ public class ASTCheck extends ASTNode {
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType t = left.typecheck(e);
         ASTType t2 = right.typecheck(e);
-        if (!t.isSubtypeOf(t2, e) || !t2.isSubtypeOf(t, e))
+        if (!t.isSubtypeOf(t2, e, new AlphaEnv()) || !t2.isSubtypeOf(t, e, new AlphaEnv()))
             throw new TypeCheckError(ErrorMessages.termsWithDifferentTypes(left, right, t, t2));
 
         Env<ASTType> sigma = e.getEnv(ENV.SIGMA);

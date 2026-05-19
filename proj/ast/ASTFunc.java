@@ -96,7 +96,7 @@ public class ASTFunc extends ASTNode  {
         e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(ENV.GAMMA);
 
-        if (!tdom.isSubtypeOf(targtype, e)) throw new TypeCheckError(ErrorMessages.notSubtypeFunc(tdom, targtype));
+        if (!tdom.isSubtypeOf(targtype, e, new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtypeFunc(tdom, targtype));
 
         e.bindToEnv(ENV.GAMMA, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);

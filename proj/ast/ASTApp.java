@@ -46,7 +46,7 @@ public class ASTApp extends ASTNode  {
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("app", tf));
 
         ASTType targ = arg.typecheck(e, dom);
-        if (targ instanceof ASTTUnit || targ.isSubtypeOf(dom, e)) return codom.inst(id, arg);
+        if (targ instanceof ASTTUnit || targ.isSubtypeOf(dom, e, new AlphaEnv())) return codom.inst(id, arg);
         else throw new TypeCheckError(ErrorMessages.notSubtypeApp(targ, dom));
 	}
 

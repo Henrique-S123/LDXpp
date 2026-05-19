@@ -29,11 +29,11 @@ public class ASTTTensor implements ASTLinType {
         return String.format("(%s%s | %s)", id != null ? id+":" : "", first, second);
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e) {
-        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e);
+    public boolean isSubtypeOf(ASTType o, EnvSet e, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e, alpha);
         if (o instanceof ASTTTensor otensor) {
-            return first.isSubtypeOf(otensor.getFirst(), e)
-                && second.isSubtypeOf(otensor.getSecond(), e);
+            return first.isSubtypeOf(otensor.getFirst(), e, alpha)
+                && second.isSubtypeOf(otensor.getSecond(), e, alpha.extend(id, otensor.getId()));
         }
         return false;
     }
