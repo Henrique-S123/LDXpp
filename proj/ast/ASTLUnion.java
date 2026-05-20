@@ -48,8 +48,8 @@ public class ASTLUnion extends ASTNode {
 	}
 
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-		return o instanceof ASTLUnion olunion && olunion.getLabel().equals(label)
-			&& olunion.getExpr().defequals(expr, sigma, alpha);
+		return o instanceof ASTLUnion olunion && label.equals(olunion.getLabel())
+			&& expr.defequals(olunion.getExpr(), sigma, alpha);
     }
 
 	@Override

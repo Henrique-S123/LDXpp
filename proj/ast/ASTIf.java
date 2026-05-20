@@ -80,8 +80,8 @@ public class ASTIf extends ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-		return o instanceof ASTIf oif && oif.getTest().defequals(test, sigma, alpha)
-			&& oif.getConseq().defequals(conseq, sigma, alpha) && oif.getAlt().defequals(alt, sigma, alpha);
+		return o instanceof ASTIf oif && test.defequals(oif.getTest(), sigma, alpha)
+			&& conseq.defequals(oif.getConseq(), sigma, alpha) && alt.defequals(oif.getAlt(), sigma, alpha);
 	}
 
 	@Override

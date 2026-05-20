@@ -100,8 +100,8 @@ public class ASTSplit extends ASTNode {
 	}
 
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-		return o instanceof ASTSplit osplit && osplit.getPair().defequals(pair, sigma, alpha)
-			&& osplit.getBody().defequals(body, sigma, alpha.extend(id1, osplit.getId1()).extend(id2, osplit.getId2()));
+		return o instanceof ASTSplit osplit && pair.defequals(osplit.getPair(), sigma, alpha)
+			&& body.defequals(osplit.getBody(), sigma, alpha.extend(id1, osplit.getId1()).extend(id2, osplit.getId2()));
     }
 
 	@Override

@@ -48,8 +48,8 @@ public class ASTPrint extends ASTNode {
 	}
 
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-		return o instanceof ASTPrint oprint && oprint.getExp().defequals(exp, sigma, alpha)
-			&& oprint.getNewline() == newline;
+		return o instanceof ASTPrint oprint && newline == oprint.getNewline()
+			&& exp.defequals(oprint.getExp(), sigma, alpha);
     }
 
 	@Override

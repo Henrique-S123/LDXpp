@@ -89,8 +89,8 @@ public class ASTCmpOp extends ASTNode {
     }
 
 	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-		return o instanceof ASTCmpOp oop && oop.getOp().equals(op) &&
-			oop.getLhs().defequals(lhs, sigma, alpha) && oop.getRhs().defequals(rhs, sigma, alpha);
+		return o instanceof ASTCmpOp oop && op.equals(oop.getOp()) &&
+			lhs.defequals(oop.getLhs(), sigma, alpha) && rhs.defequals(oop.getRhs(), sigma, alpha);
 	}
 
 	@Override

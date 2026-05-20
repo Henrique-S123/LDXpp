@@ -24,7 +24,7 @@ public class ASTLInt extends ASTNode  {
 	}
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTLInt oli && oli.getVal() == v;
+        return o instanceof ASTLInt oli && v == oli.getVal();
     }
 
     @Override

@@ -77,8 +77,8 @@ public class ASTApp extends ASTNode  {
     }
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTApp oapp && oapp.getFunc().defequals(func, sigma, alpha)
-            && oapp.getArg().defequals(arg, sigma, alpha);
+        return o instanceof ASTApp oapp && func.defequals(oapp.getFunc(), sigma, alpha)
+            && arg.defequals(oapp.getArg(), sigma, alpha);
     }
 
     @Override

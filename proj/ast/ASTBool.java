@@ -24,7 +24,7 @@ public class ASTBool extends ASTNode  {
 	}
 
     public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTBool ob && ob.getVal() == b;
+        return o instanceof ASTBool ob && b == ob.getVal();
     }
 
     @Override
