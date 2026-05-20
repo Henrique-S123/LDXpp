@@ -23,7 +23,7 @@ public class ASTInt extends ASTNode  {
 		return new ASTTInt();
 	}
     
-    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
         return o instanceof ASTInt oi && v == oi.getVal();
     }
 

@@ -39,9 +39,9 @@ public class ASTTPair implements ASTType {
         return first.isSubtypeOf(ofirst, e, alpha) && second.isSubtypeOf(osecond, e, alpha.extend(id, oid));
     }
 
-    public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTTPair opair && first.defequals(opair.getFirst(), sigma, alpha)
-            && second.defequals(opair.getSecond(), sigma, alpha.extend(id, opair.getId()));
+    public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
+        return o instanceof ASTTPair opair && first.defequals(sl, opair.getFirst(), sr, alpha)
+            && second.defequals(sl, opair.getSecond(), sr, alpha.extend(id, opair.getId()));
     }
 
     public ASTType inst(String instId, ASTNode n) {

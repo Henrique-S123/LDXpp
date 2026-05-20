@@ -51,8 +51,8 @@ public class ASTTypeDef extends ASTNode {
 		return new ASTTypeDef(ltd, body.subs(subsId, node));
 	}
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTTypeDef otype && body.defequals(otype.getBody(), sigma, alpha)
+    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
+        return o instanceof ASTTypeDef otype && body.defequals(sl, otype.getBody(), sr, alpha)
             && ltd.equals(otype.getLtd());
     }
 

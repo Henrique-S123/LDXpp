@@ -121,14 +121,14 @@ public class ASTMatch extends ASTNode {
 		return new ASTMatch(test.subs(subsId, node), cases);
 	}
 
-	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-		if (o instanceof ASTMatch omatch && test.defequals(omatch.getTest(), sigma, alpha)) {
+	public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
+		if (o instanceof ASTMatch omatch && test.defequals(sl, omatch.getTest(), sr, alpha)) {
 			Map<String, MatchCase> other = omatch.getCases();
 			if (cases.size() != other.size()) return false;
 			for (String label : cases.keySet()) {
 				MatchCase ownCase = cases.get(label);
 				MatchCase otherCase = other.get(label);
-				if (otherCase == null || !ownCase.getExp().defequals(otherCase.getExp(), sigma, alpha.extend(ownCase.getId(), otherCase.getId()))) return false;
+				if (otherCase == null || !ownCase.getExp().defequals(sl, otherCase.getExp(), sr, alpha.extend(ownCase.getId(), otherCase.getId()))) return false;
 			}
 			return true;
 		}

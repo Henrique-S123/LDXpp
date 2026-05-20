@@ -79,9 +79,9 @@ public class ASTIf extends ASTNode {
         return new ASTIf(test.subs(subsId, node), conseq.subs(subsId, node), alt.subs(subsId, node));
     }
 
-	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-		return o instanceof ASTIf oif && test.defequals(oif.getTest(), sigma, alpha)
-			&& conseq.defequals(oif.getConseq(), sigma, alpha) && alt.defequals(oif.getAlt(), sigma, alpha);
+	public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
+		return o instanceof ASTIf oif && test.defequals(sl, oif.getTest(), sr, alpha)
+			&& conseq.defequals(sl, oif.getConseq(), sr, alpha) && alt.defequals(sl, oif.getAlt(), sr, alpha);
 	}
 
 	@Override

@@ -125,9 +125,9 @@ public class ASTFunc extends ASTNode  {
         return new ASTFunc(id, body.subs(subsId, node), argtype, normEnv, sig);
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTFunc ofunc && argtype.defequals(ofunc.getArgtype(), sigma, alpha)
-            && body.defequals(ofunc.getBody(), sigma, alpha.extend(id, ofunc.getId()));
+    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
+        return o instanceof ASTFunc ofunc && argtype.defequals(sl, ofunc.getArgtype(), sr, alpha)
+            && body.defequals(sl, ofunc.getBody(), sr, alpha.extend(id, ofunc.getId()));
     }
 
     @Override

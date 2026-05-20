@@ -112,9 +112,9 @@ public class ASTArithOp extends ASTNode {
         return new ASTArithOp(lhs.subs(subsId, node), rhs.subs(subsId, node), op);
     }
 
-	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+	public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
 		return o instanceof ASTArithOp oop && op.equals(oop.getOp()) && 
-			lhs.defequals(oop.getLhs(), sigma, alpha) && rhs.defequals(oop.getRhs(), sigma, alpha);
+			lhs.defequals(sl, oop.getLhs(), sr, alpha) && rhs.defequals(sl, oop.getRhs(), sr, alpha);
 	}
 
 	@Override

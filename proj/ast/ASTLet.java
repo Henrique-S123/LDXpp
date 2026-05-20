@@ -114,10 +114,10 @@ public class ASTLet extends ASTNode {
 		return new ASTLet(id, expr.subs(subsId, node), declType, body.subs(subsId, node));
 	}
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTLet olet && expr.defequals(olet.getExpr(), sigma, alpha)
-            && declType.defequals(olet.getDeclType(), sigma, alpha)
-            && body.defequals(olet.getBody(), sigma, alpha.extend(id, olet.getId()));
+    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
+        return o instanceof ASTLet olet && expr.defequals(sl, olet.getExpr(), sr, alpha)
+            && declType.defequals(sl, olet.getDeclType(), sr, alpha)
+            && body.defequals(sl, olet.getBody(), sr, alpha.extend(id, olet.getId()));
     }
 
     @Override

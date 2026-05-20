@@ -35,7 +35,7 @@ public abstract class ASTNode {
         return this;
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
         return false;
     }
 

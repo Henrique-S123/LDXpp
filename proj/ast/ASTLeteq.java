@@ -87,8 +87,8 @@ public class ASTLeteq extends ASTNode {
 		return new ASTLeteq(id, expr.subs(subsId, node), body.subs(subsId, node));
 	}
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTLeteq oleteq && expr.defequals(oleteq.getExpr(), sigma, alpha)
-            && body.defequals(oleteq.getBody(), sigma, alpha.extend(id, oleteq.getId()));
+    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
+        return o instanceof ASTLeteq oleteq && expr.defequals(sl, oleteq.getExpr(), sr, alpha)
+            && body.defequals(sl, oleteq.getBody(), sr, alpha.extend(id, oleteq.getId()));
     }
 }

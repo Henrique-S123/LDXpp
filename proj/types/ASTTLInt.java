@@ -14,7 +14,7 @@ public class ASTTLInt implements ASTLinType {
         return o instanceof ASTTLInt;
     }
 
-    public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {
+    public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
         return o instanceof ASTTLInt;
     }
 

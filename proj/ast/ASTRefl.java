@@ -26,11 +26,11 @@ public class ASTRefl extends ASTNode  {
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
         ASTNode ln = left.normalize(sigma);
         ASTNode rn = right.normalize(sigma);
-        if (ln.defequals(rn, sigma, new AlphaEnv())) return t;
+        if (ln.defequals(sigma, rn, sigma, new AlphaEnv())) return t;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
         return o instanceof ASTRefl;
     }
 

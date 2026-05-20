@@ -47,9 +47,9 @@ public class ASTPrint extends ASTNode {
 		return new ASTPrint(exp.subs(subsId, node), newline);
 	}
 
-	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+	public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
 		return o instanceof ASTPrint oprint && newline == oprint.getNewline()
-			&& exp.defequals(oprint.getExp(), sigma, alpha);
+			&& exp.defequals(sl, oprint.getExp(), sr, alpha);
     }
 
 	@Override

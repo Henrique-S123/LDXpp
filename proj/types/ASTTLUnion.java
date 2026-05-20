@@ -28,13 +28,13 @@ public class ASTTLUnion implements ASTLinType {
         return false;
     }
 
-    public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {
+    public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
         if (o instanceof ASTTLUnion olunion) {
             Map<String, ASTType> other = olunion.getMap();
             if (ll.size() != other.size()) return false;
             for (String label : ll.keySet()) {
                 ASTType otherType = other.get(label);
-                if (otherType == null || !ll.get(label).defequals(otherType, sigma, alpha)) return false;
+                if (otherType == null || !ll.get(label).defequals(sl, otherType, sr, alpha)) return false;
             }
             return true;
         }

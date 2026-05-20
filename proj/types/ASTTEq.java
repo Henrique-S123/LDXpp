@@ -32,14 +32,15 @@ public class ASTTEq implements ASTType {
 
     public boolean isSubtypeOf(ASTType o, EnvSet e, AlphaEnv alpha) {
         if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e, alpha);
+        Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
         return o instanceof ASTTEq eq && type.isSubtypeOf(eq.getType(), e, alpha)
-            && term1.defequals(eq.getTerm1(), e.getEnv(ENV.SIGMA), alpha)
-            && term2.defequals(eq.getTerm2(), e.getEnv(ENV.SIGMA), alpha);
+            && term1.defequals(sigma, eq.getTerm1(), sigma, alpha)
+            && term2.defequals(sigma, eq.getTerm2(), sigma, alpha);
     }
 
-    public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTTEq eq && term1.defequals(eq.getTerm1(), sigma, alpha)
-            && term2.defequals(eq.getTerm2(), sigma, alpha) && type.defequals(eq.getType(), sigma, alpha);
+    public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
+        return o instanceof ASTTEq eq && term1.defequals(sl, eq.getTerm1(), sr, alpha)
+            && term2.defequals(sl, eq.getTerm2(), sr, alpha) && type.defequals(sl, eq.getType(), sr, alpha);
     }
 
     public ASTType inst(String instId, ASTNode n) {

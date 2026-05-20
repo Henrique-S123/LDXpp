@@ -29,13 +29,13 @@ public class ASTTUnion implements ASTType {
         return true;
     }
 
-    public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {
+    public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
         if (o instanceof ASTTUnion ounion) {
             Map<String, ASTType> other = ounion.getMap();
             if (ll.size() != other.size()) return false;
             for (String label : ll.keySet()) {
                 ASTType otherType = other.get(label);
-                if (otherType == null || !ll.get(label).defequals(otherType, sigma, alpha)) return false;
+                if (otherType == null || !ll.get(label).defequals(sl, otherType, sr, alpha)) return false;
             }
             return true;
         }

@@ -39,9 +39,9 @@ public class ASTTLollipop implements ASTLinType {
         return odom.isSubtypeOf(dom, e, alpha) && codom.isSubtypeOf(ocodom, e, alpha.extend(id, oid));
     }
 
-    public boolean defequals(ASTType o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTTLollipop olloli && dom.defequals(olloli.getDom(), sigma, alpha)
-            && codom.defequals(olloli.getCodom(), sigma, alpha.extend(id, olloli.getId()));
+    public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
+        return o instanceof ASTTLollipop olloli && dom.defequals(sl, olloli.getDom(), sr, alpha)
+            && codom.defequals(sl, olloli.getCodom(), sr, alpha.extend(id, olloli.getId()));
     }
 
     public ASTType inst(String instId, ASTNode n) {

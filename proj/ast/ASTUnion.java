@@ -51,9 +51,9 @@ public class ASTUnion extends ASTNode {
 		return new ASTUnion(subsId, expr.subs(subsId, node));
 	}
 
-	public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+	public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
 		return o instanceof ASTUnion ounion && label.equals(ounion.getLabel())
-			&& expr.defequals(ounion.getExpr(), sigma, alpha);
+			&& expr.defequals(sl, ounion.getExpr(), sr, alpha);
     }
 
 	@Override

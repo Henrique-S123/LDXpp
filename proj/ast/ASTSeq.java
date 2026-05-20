@@ -51,9 +51,9 @@ public class ASTSeq extends ASTNode {
         return new ASTSeq(first.subs(subsId, node), second.subs(subsId, node));
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
-        return o instanceof ASTSeq oseq && first.defequals(oseq.getFirst(), sigma, alpha)
-            && second.defequals(oseq.getSecond(), sigma, alpha);
+    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
+        return o instanceof ASTSeq oseq && first.defequals(sl, oseq.getFirst(), sr, alpha)
+            && second.defequals(sl, oseq.getSecond(), sr, alpha);
     }
 
     @Override

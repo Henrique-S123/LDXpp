@@ -27,7 +27,7 @@ public class ASTCheck extends ASTNode {
         Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
         ASTNode ln = left.normalize(sigma);
         ASTNode rn = right.normalize(sigma);
-        if (ln.defequals(rn, sigma, new AlphaEnv())) return new ASTTEq(left, right, t);
+        if (ln.defequals(sigma, rn, sigma, new AlphaEnv())) return new ASTTEq(left, right, t);
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 

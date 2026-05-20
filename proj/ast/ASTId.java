@@ -39,7 +39,7 @@ public class ASTId extends ASTNode	{
         return this;
     }
 
-    public boolean defequals(ASTNode o, Env<ASTType> sigma, AlphaEnv alpha) {
+    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
         if (o instanceof ASTId oid) {
             String s1 = alpha.getLeft().find(id);
             String s2 = alpha.getRight().find(oid.getId());
