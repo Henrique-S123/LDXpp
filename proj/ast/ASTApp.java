@@ -2,6 +2,7 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
+import proj.defeq.TermClosure;
 import proj.env.*;
 import proj.errors.*;
 
