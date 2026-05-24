@@ -41,11 +41,6 @@ public class ASTTypeDef extends ASTNode {
     public ASTNode weaknorm(Env<ASTNode> sub) {
         return new ASTTypeDef(ltd, body.weaknorm(sub));
     }
-    
-    public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode nbody = body.solve(sigma);
-        return (nbody == null) ? null : new ASTTypeDef(ltd, nbody);
-    }
 
     public ASTNode subs(String subsId, ASTNode node) {
 		return new ASTTypeDef(ltd, body.subs(subsId, node));

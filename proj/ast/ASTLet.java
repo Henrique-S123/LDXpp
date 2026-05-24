@@ -102,11 +102,6 @@ public class ASTLet extends ASTNode {
         return body.weaknorm(env);
     }
 
-    public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode nexpr = expr.solve(sigma);
-        return nexpr == null ? null : new ASTLet(id, nexpr, declType, body);
-    }
-
     public ASTNode subs(String subsId, ASTNode node) {
 		return new ASTLet(id, expr.subs(subsId, node), declType, body.subs(subsId, node));
 	}

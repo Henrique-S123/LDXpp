@@ -38,11 +38,6 @@ public class ASTPrint extends ASTNode {
 		return new ASTPrint(exp.weaknorm(sub), newline);
     }
 
-	public ASTNode solve(Env<ASTType> sigma) {
-		ASTNode nexp = exp.solve(sigma);
-		return (nexp == null) ? null : new ASTPrint(nexp, newline);
-    }
-
 	public ASTNode subs(String subsId, ASTNode node) {
 		return new ASTPrint(exp.subs(subsId, node), newline);
 	}
