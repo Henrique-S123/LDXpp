@@ -104,10 +104,10 @@ public final class DefEq {
             return ln.getLtd().equals(rn.getLtd())
                 && defequals(ln.getBody(), sl, rn.getBody(), sr, alpha);
         
-        ASTNode s = l.solve(sl);
-        if (s != null) return defequals(s.weaknorm(), sl, r, sr, alpha);
+        TermClosure s = l.solve(sl);
+        if (s != null) return defequals(s.term().weaknorm(), s.env(), r, sr, alpha);
         s = r.solve(sr);
-        if (s != null) return defequals(l, sl, s.weaknorm(), sr, alpha);
+        if (s != null) return defequals(l, sl, s.term().weaknorm(), s.env(), alpha);
         return false;
     }
 }

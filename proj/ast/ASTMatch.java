@@ -101,9 +101,9 @@ public class ASTMatch extends ASTNode {
 		return body.weaknorm(env);
     }
 
-	public ASTNode solve(Env<ASTType> sigma) {
-		ASTNode ntest = test.solve(sigma);
-		return ntest == null ? null : new ASTMatch(ntest, cases);
+	public TermClosure solve(Env<ASTType> sigma) {
+		TermClosure ntest = test.solve(sigma);
+		return ntest == null ? null : new TermClosure(new ASTMatch(ntest.term(), cases), sigma);
     }
 
 	public ASTNode subs(String subsId, ASTNode node) {

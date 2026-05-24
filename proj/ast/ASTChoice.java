@@ -49,9 +49,9 @@ public class ASTChoice extends ASTNode  {
         return choice == 0 ? first.weaknorm(sub) : second.weaknorm(sub);
     }
 
-    public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode npair = pair.solve(sigma);
-        return (npair == null) ? null : new ASTChoice(npair, choice);
+    public TermClosure solve(Env<ASTType> sigma) {
+        TermClosure npair = pair.solve(sigma);
+        return (npair == null) ? null : new TermClosure(new ASTChoice(npair.term(), choice), sigma);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

@@ -27,7 +27,7 @@ public abstract class ASTNode {
         return this.weaknorm(new Env<ASTNode>());
     }
 
-    public ASTNode solve(Env<ASTType> sigma) {
+    public TermClosure solve(Env<ASTType> sigma) {
         return null;
     }
 
@@ -46,9 +46,9 @@ public abstract class ASTNode {
             if (ln instanceof ASTChoice c && c.getPair() instanceof ASTPair p) sig = p.getSig();
             if (ln instanceof ASTSplit s && s.getPair() instanceof ASTTensor t) sig = t.getSig();
             ln = ln.weaknorm();
-            ASTNode sln = ln.solve(sig);
+            TermClosure sln = ln.solve(sig);
             if (sln == null) return ln;
-            ln = sln;
+            ln = sln.term();
         }
     }
 }

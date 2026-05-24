@@ -75,9 +75,9 @@ public class ASTLeteq extends ASTNode {
         return body.weaknorm(esub);
     }
 
-    public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode nexpr = expr.solve(sigma);
-        return nexpr == null ? null : new ASTLeteq(id, nexpr, body);
+    public TermClosure solve(Env<ASTType> sigma) {
+        TermClosure nexpr = expr.solve(sigma);
+        return nexpr == null ? null : new TermClosure(new ASTLeteq(id, nexpr.term(), body), sigma);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

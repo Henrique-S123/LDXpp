@@ -64,9 +64,9 @@ public class ASTApp extends ASTNode  {
         return body.weaknorm(env);
     }
 
-    public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode nfunc = func.solve(sigma);
-        return nfunc ==  null ? null : new ASTApp(nfunc, arg);
+    public TermClosure solve(Env<ASTType> sigma) {
+        TermClosure nfunc = func.solve(sigma);
+        return nfunc ==  null ? null : new TermClosure(new ASTApp(nfunc.term(), arg), sigma);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

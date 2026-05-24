@@ -87,9 +87,9 @@ public class ASTSplit extends ASTNode {
         return body.weaknorm(env);
     }
 
-	public ASTNode solve(Env<ASTType> sigma) {
-		ASTNode npair = pair.solve(sigma);
-		return npair == null ? null : new ASTSplit(npair, id1, id2, body);
+	public TermClosure solve(Env<ASTType> sigma) {
+		TermClosure npair = pair.solve(sigma);
+		return npair == null ? null : new TermClosure(new ASTSplit(npair.term(), id1, id2, body), sigma);
     }
 
 	public ASTNode subs(String subsId, ASTNode node) {

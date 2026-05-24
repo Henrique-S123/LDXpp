@@ -29,8 +29,9 @@ public class ASTId extends ASTNode	{
         return (n != null) ? n : this;
     }
 
-    public ASTNode solve(Env<ASTType> sigma) {
-        return sigma.findEq(id);
+    public TermClosure solve(Env<ASTType> sigma) {
+        ASTNode n = sigma.findEq(id);
+        return n == null ? null : new TermClosure(n, sigma);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

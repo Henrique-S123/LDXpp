@@ -39,9 +39,9 @@ public class ASTSeq extends ASTNode {
         return new ASTSeq(first.weaknorm(sub), second.weaknorm(sub));
     }
 
-    public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode nfirst = first.solve(sigma);
-        return nfirst == null ? null : new ASTSeq(nfirst, second);
+    public TermClosure solve(Env<ASTType> sigma) {
+        TermClosure nfirst = first.solve(sigma);
+        return nfirst == null ? null : new TermClosure(new ASTSeq(nfirst.term(), second), sigma);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

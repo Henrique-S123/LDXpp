@@ -76,11 +76,11 @@ public class ASTCmpOp extends ASTNode {
 		return new ASTCmpOp(lhs.weaknorm(sub), rhs.weaknorm(sub), op);
     }
 
-	public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode nlhs = lhs.solve(sigma);
-        if (nlhs != null) return new ASTCmpOp(nlhs, rhs, op);
-        ASTNode nrhs = rhs.solve(sigma);
-        if (nrhs != null) return new ASTCmpOp(lhs, nrhs, op);
+	public TermClosure solve(Env<ASTType> sigma) {
+		TermClosure nlhs = lhs.solve(sigma);
+        if (nlhs != null) return new TermClosure(new ASTCmpOp(nlhs.term(), rhs, op), sigma);
+        TermClosure nrhs = rhs.solve(sigma);
+        if (nrhs != null) return new TermClosure(new ASTCmpOp(lhs, nrhs.term(), op), sigma);
         return null;
     }
 
