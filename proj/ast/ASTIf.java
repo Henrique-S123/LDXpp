@@ -67,22 +67,12 @@ public class ASTIf extends ASTNode {
 
 	public ASTNode solve(Env<ASTType> sigma) {
 		ASTNode ntest = test.solve(sigma);
-		if (ntest != null) return new ASTIf(ntest, conseq, alt);
-		ASTNode nconseq = conseq.solve(sigma);
-		if (nconseq != null) return new ASTIf(test, nconseq, alt);
-		ASTNode nalt = alt.solve(sigma);
-		if (nalt != null) return new ASTIf(test, conseq, nalt);
-        return null;
+		return ntest == null ? null : new ASTIf(ntest, conseq, alt);
     }
 
 	public ASTNode subs(String subsId, ASTNode node) {
         return new ASTIf(test.subs(subsId, node), conseq.subs(subsId, node), alt.subs(subsId, node));
     }
-
-	public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-		return o instanceof ASTIf oif && test.defequals(sl, oif.getTest(), sr, alpha)
-			&& conseq.defequals(sl, oif.getConseq(), sr, alpha) && alt.defequals(sl, oif.getAlt(), sr, alpha);
-	}
 
 	@Override
 	public String toString() {

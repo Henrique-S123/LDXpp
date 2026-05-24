@@ -122,11 +122,6 @@ public class ASTLFunc extends ASTNode  {
         return new ASTLFunc(id, body.subs(subsId, node), argtype, normEnv, sig);
     }
 
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTLFunc olfunc && argtype.defequals(sl, olfunc.getArgtype(), sr, alpha)
-            && body.defequals(sl, olfunc.getBody(), sr, alpha.extend(id, olfunc.getId()));
-    }
-
     @Override
     public String toString() {
         return String.format("lfn %s:%s => {%s}", id, argtype, body);

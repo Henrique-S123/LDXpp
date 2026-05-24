@@ -41,19 +41,11 @@ public class ASTSeq extends ASTNode {
 
     public ASTNode solve(Env<ASTType> sigma) {
         ASTNode nfirst = first.solve(sigma);
-        if (nfirst != null) return new ASTSeq(nfirst, second);
-        ASTNode nsecond = second.solve(sigma);
-        if (nsecond != null) return new ASTSeq(first, nsecond);
-        return null;
+        return nfirst == null ? null : new ASTSeq(nfirst, second);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
         return new ASTSeq(first.subs(subsId, node), second.subs(subsId, node));
-    }
-
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTSeq oseq && first.defequals(sl, oseq.getFirst(), sr, alpha)
-            && second.defequals(sl, oseq.getSecond(), sr, alpha);
     }
 
     @Override

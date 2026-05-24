@@ -86,11 +86,6 @@ public class ASTTensor extends ASTNode {
         return new ASTTensor(first.subs(subsId, node), second.subs(subsId, node), sig);
     }
 
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTTensor otensor && first.defequals(sl, otensor.getFirst(), sr, alpha) &&
-            second.defequals(sl, otensor.getSecond(), sr, alpha);
-    }
-
     @Override
     public String toString() {
         return String.format("(%s | %s)", first, second);

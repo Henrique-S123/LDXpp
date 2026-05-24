@@ -77,18 +77,10 @@ public class ASTLeteq extends ASTNode {
 
     public ASTNode solve(Env<ASTType> sigma) {
         ASTNode nexpr = expr.solve(sigma);
-        if (nexpr != null) return new ASTLeteq(id, nexpr, body);
-        ASTNode nbody = body.solve(sigma);
-        if (nbody != null) return new ASTLeteq(id, expr, nbody);
-        return null;
+        return nexpr == null ? null : new ASTLeteq(id, nexpr, body);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
 		return new ASTLeteq(id, expr.subs(subsId, node), body.subs(subsId, node));
 	}
-
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTLeteq oleteq && expr.defequals(sl, oleteq.getExpr(), sr, alpha)
-            && body.defequals(sl, oleteq.getBody(), sr, alpha.extend(id, oleteq.getId()));
-    }
 }

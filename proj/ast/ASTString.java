@@ -20,10 +20,6 @@ public class ASTString extends ASTNode  {
 
     public ASTType typecheck(EnvSet e) {
 		return new ASTTString();
-	}
-
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTString ostr && s.equals(ostr.getVal());
     }
 
     @Override

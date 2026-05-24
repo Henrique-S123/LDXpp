@@ -91,11 +91,6 @@ public class ASTPair extends ASTNode {
         return new ASTPair(first.subs(subsId, node), second.subs(subsId, node), sig);
     }
 
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTPair opair && first.defequals(sl, opair.getFirst(), sr, alpha)
-            && second.defequals(sl, opair.getSecond(), sr, alpha);
-    }
-
     @Override
     public String toString() {
         return String.format("(%s, %s)", first, second);

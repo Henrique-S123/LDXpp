@@ -104,21 +104,12 @@ public class ASTLet extends ASTNode {
 
     public ASTNode solve(Env<ASTType> sigma) {
         ASTNode nexpr = expr.solve(sigma);
-        if (nexpr != null) return new ASTLet(id, nexpr, declType, body);
-        ASTNode nbody = body.solve(sigma);
-        if (nbody != null) return new ASTLet(id, expr, declType, nbody);
-        return null;
+        return nexpr == null ? null : new ASTLet(id, nexpr, declType, body);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
 		return new ASTLet(id, expr.subs(subsId, node), declType, body.subs(subsId, node));
 	}
-
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTLet olet && expr.defequals(sl, olet.getExpr(), sr, alpha)
-            && declType.defequals(sl, olet.getDeclType(), sr, alpha)
-            && body.defequals(sl, olet.getBody(), sr, alpha.extend(id, olet.getId()));
-    }
 
     @Override
     public String toString() {

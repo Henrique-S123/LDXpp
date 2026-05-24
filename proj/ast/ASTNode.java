@@ -35,10 +35,6 @@ public abstract class ASTNode {
         return this;
     }
 
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        return false;
-    }
-
     public ASTNode normalize(Env<ASTType> sigma) {
         ASTNode ln = this;
         while (true) {

@@ -64,12 +64,20 @@ public class Env <E>{
 
     public E remove(String id) { return search(id, true); }
 
-    public E findEq(String id) {
+    public ASTNode findEq(String id) {
+        // TODO: review
         Env<E> curr = this;
         while (curr != null) {
             for (E val : curr.bindings.values())
                 if (val instanceof ASTTEq teq && teq.getTerm1() instanceof ASTId nid && id.equals(nid.getId()))
-                    return val;
+                    return teq.getTerm2();
+            curr = curr.anc;
+        }
+        curr = this;
+        while (curr != null) {
+            for (E val : curr.bindings.values())
+                if (val instanceof ASTTEq teq && teq.getTerm2() instanceof ASTId nid && id.equals(nid.getId()))
+                    return teq.getTerm1();
             curr = curr.anc;
         }
         return null;

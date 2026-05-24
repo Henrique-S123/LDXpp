@@ -2,6 +2,7 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
+import proj.defeq.DefEq;
 import proj.env.*;
 import proj.env.EnvSet.ENV;
 import proj.errors.*;
@@ -25,9 +26,7 @@ public class ASTCheck extends ASTNode {
             throw new TypeCheckError(ErrorMessages.termsWithDifferentTypes(left, right, t, t2));
 
         Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
-        ASTNode ln = left.normalize(sigma);
-        ASTNode rn = right.normalize(sigma);
-        if (ln.defequals(sigma, rn, sigma, new AlphaEnv())) return new ASTTEq(left, right, t);
+        if (DefEq.defequals(left.weaknorm(), sigma, right.weaknorm(), sigma)) return new ASTTEq(left, right, t);
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 

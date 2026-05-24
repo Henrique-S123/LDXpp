@@ -103,13 +103,7 @@ public class ASTMatch extends ASTNode {
 
 	public ASTNode solve(Env<ASTType> sigma) {
 		ASTNode ntest = test.solve(sigma);
-		if (ntest != null) return new ASTMatch(ntest, cases);
-		for (String label : cases.keySet()) {
-			MatchCase c = cases.get(label);
-			ASTNode nexp = c.getExp().solve(sigma);
-			if (nexp != null) { cases.put(label, new MatchCase(c.getId(), nexp)); return new ASTMatch(test, cases); }
-		}
-        return null;
+		return ntest == null ? null : new ASTMatch(ntest, cases);
     }
 
 	public ASTNode subs(String subsId, ASTNode node) {
@@ -120,20 +114,6 @@ public class ASTMatch extends ASTNode {
 		}
 		return new ASTMatch(test.subs(subsId, node), cases);
 	}
-
-	public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-		if (o instanceof ASTMatch omatch && test.defequals(sl, omatch.getTest(), sr, alpha)) {
-			Map<String, MatchCase> other = omatch.getCases();
-			if (cases.size() != other.size()) return false;
-			for (String label : cases.keySet()) {
-				MatchCase ownCase = cases.get(label);
-				MatchCase otherCase = other.get(label);
-				if (otherCase == null || !ownCase.getExp().defequals(sl, otherCase.getExp(), sr, alpha.extend(ownCase.getId(), otherCase.getId()))) return false;
-			}
-			return true;
-		}
-		return false;
-    }
 
 	@Override
 	public String toString() {

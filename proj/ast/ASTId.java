@@ -30,23 +30,12 @@ public class ASTId extends ASTNode	{
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
-        ASTType eq = sigma.findEq(id);
-        return (eq == null) ? null : ((ASTTEq) eq).getTerm2();
+        return sigma.findEq(id);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
         if (id.equals(subsId)) return node;
         return this;
-    }
-
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        if (o instanceof ASTId oid) {
-            String s1 = alpha.getLeft().find(id);
-            String s2 = alpha.getRight().find(oid.getId());
-            if (s1 != null && s2 != null) return s1.equals(s2);
-            return id.equals(oid.getId());
-        }
-        return false;
     }
 
     @Override

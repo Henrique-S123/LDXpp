@@ -66,19 +66,11 @@ public class ASTApp extends ASTNode  {
 
     public ASTNode solve(Env<ASTType> sigma) {
         ASTNode nfunc = func.solve(sigma);
-        if (nfunc != null) return new ASTApp(nfunc, arg);
-        ASTNode narg = arg.solve(sigma);
-        if (narg != null) return new ASTApp(func, narg);
-        return null;
+        return nfunc ==  null ? null : new ASTApp(nfunc, arg);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
         return new ASTApp(func.subs(subsId, node), arg.subs(subsId, node));
-    }
-
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTApp oapp && func.defequals(sl, oapp.getFunc(), sr, alpha)
-            && arg.defequals(sl, oapp.getArg(), sr, alpha);
     }
 
     @Override

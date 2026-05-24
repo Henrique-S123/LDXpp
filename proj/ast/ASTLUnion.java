@@ -47,11 +47,6 @@ public class ASTLUnion extends ASTNode {
 		return new ASTLUnion(subsId, expr.subs(subsId, node));
 	}
 
-	public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-		return o instanceof ASTLUnion olunion && label.equals(olunion.getLabel())
-			&& expr.defequals(sl, olunion.getExpr(), sr, alpha);
-    }
-
 	@Override
 	public String toString() {
 		return String.format("%s(%s)", label, expr);

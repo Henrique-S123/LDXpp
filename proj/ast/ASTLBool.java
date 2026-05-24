@@ -23,10 +23,6 @@ public class ASTLBool extends ASTNode  {
 		return new ASTTLBool();
 	}
 
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTLBool olb && b == olb.getVal();
-    }
-
     @Override
     public String toString() {
         return String.valueOf(b) + "l";

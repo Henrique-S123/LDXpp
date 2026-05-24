@@ -21,10 +21,6 @@ public class ASTLInt extends ASTNode  {
 
     public ASTType typecheck(EnvSet e) {;
 		return new ASTTLInt();
-	}
-
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTLInt oli && v == oli.getVal();
     }
 
     @Override

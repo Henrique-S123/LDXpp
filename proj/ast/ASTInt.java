@@ -22,10 +22,6 @@ public class ASTInt extends ASTNode  {
     public ASTType typecheck(EnvSet e) {
 		return new ASTTInt();
 	}
-    
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTInt oi && v == oi.getVal();
-    }
 
     @Override
     public String toString() {

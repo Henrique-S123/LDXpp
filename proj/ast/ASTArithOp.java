@@ -112,11 +112,6 @@ public class ASTArithOp extends ASTNode {
         return new ASTArithOp(lhs.subs(subsId, node), rhs.subs(subsId, node), op);
     }
 
-	public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-		return o instanceof ASTArithOp oop && op.equals(oop.getOp()) && 
-			lhs.defequals(sl, oop.getLhs(), sr, alpha) && rhs.defequals(sl, oop.getRhs(), sr, alpha);
-	}
-
 	@Override
 	public String toString() {
 		if (op == "-u") return String.format("-%s", rhs);

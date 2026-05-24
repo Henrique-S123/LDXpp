@@ -89,20 +89,12 @@ public class ASTSplit extends ASTNode {
 
 	public ASTNode solve(Env<ASTType> sigma) {
 		ASTNode npair = pair.solve(sigma);
-		if (npair != null) return new ASTSplit(npair, id1, id2, body);
-		ASTNode nbody = body.solve(sigma);
-		if (nbody != null) return new ASTSplit(pair, id1, id2, nbody);
-        return null;
+		return npair == null ? null : new ASTSplit(npair, id1, id2, body);
     }
 
 	public ASTNode subs(String subsId, ASTNode node) {
 		return new ASTSplit(pair.subs(subsId, node), id1, id2, body.subs(subsId, node));
 	}
-
-	public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-		return o instanceof ASTSplit osplit && pair.defequals(sl, osplit.getPair(), sr, alpha)
-			&& body.defequals(sl, osplit.getBody(), sr, alpha.extend(id1, osplit.getId1()).extend(id2, osplit.getId2()));
-    }
 
 	@Override
 	public String toString() {

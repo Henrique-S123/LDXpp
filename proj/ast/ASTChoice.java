@@ -58,11 +58,6 @@ public class ASTChoice extends ASTNode  {
         return new ASTChoice(pair.subs(subsId, node), choice);
     }
 
-    public boolean defequals(Env<ASTType> sl, ASTNode o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTChoice ochoice && choice == ochoice.getChoice() &&
-            pair.defequals(sl, ochoice.getPair(), sr, alpha);
-    }
-
     @Override
     public String toString() {
         String s = choice == 0 ? "fst %s" : "snd %s";
