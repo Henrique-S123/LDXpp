@@ -42,11 +42,6 @@ public class ASTUnion extends ASTNode {
 		return new ASTUnion(label, expr.weaknorm(sub));
     }
 
-	public ASTNode solve(Env<ASTType> sigma) {
-		ASTNode nexpr = expr.solve(sigma);
-		return (nexpr == null) ? null : new ASTUnion(label, nexpr);
-    }
-
 	public ASTNode subs(String subsId, ASTNode node) {
 		return new ASTUnion(subsId, expr.subs(subsId, node));
 	}

@@ -113,11 +113,6 @@ public class ASTLFunc extends ASTNode  {
         return new ASTLFunc(id, body, argtype, getNormEnv(), getSig());
     }
 
-    public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode nbody = body.solve(sigma);
-        return (nbody == null) ? null : new ASTLFunc(id, nbody, argtype, normEnv, sig);
-    }
-
     public ASTNode subs(String subsId, ASTNode node) {
         return new ASTLFunc(id, body.subs(subsId, node), argtype, normEnv, sig);
     }
