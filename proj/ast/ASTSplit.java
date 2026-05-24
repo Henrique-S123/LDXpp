@@ -88,8 +88,11 @@ public class ASTSplit extends ASTNode {
     }
 
 	public TermClosure solve(Env<ASTType> sigma) {
-		TermClosure npair = pair.solve(sigma);
-		return npair == null ? null : new TermClosure(new ASTSplit(npair.term(), id1, id2, body), sigma);
+        TermClosure npair = pair.solve(sigma);
+        if (npair == null) return null;
+        Env<ASTType> sig = sigma;
+        if (npair.term() instanceof ASTTensor t) sig = t.getSig();
+        return new TermClosure(new ASTSplit(npair.term(), id1, id2, body), sig);
     }
 
 	public ASTNode subs(String subsId, ASTNode node) {

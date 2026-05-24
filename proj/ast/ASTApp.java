@@ -66,7 +66,11 @@ public class ASTApp extends ASTNode  {
 
     public TermClosure solve(Env<ASTType> sigma) {
         TermClosure nfunc = func.solve(sigma);
-        return nfunc ==  null ? null : new TermClosure(new ASTApp(nfunc.term(), arg), sigma);
+        if (nfunc == null) return null;
+        Env<ASTType> sig = sigma;
+        if (nfunc.term() instanceof ASTFunc f) sig = f.getSig();
+        if (nfunc.term() instanceof ASTLFunc lf) sig = lf.getSig();
+        return new TermClosure(new ASTApp(nfunc.term(), arg), sig);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

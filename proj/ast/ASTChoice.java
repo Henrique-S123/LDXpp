@@ -51,7 +51,10 @@ public class ASTChoice extends ASTNode  {
 
     public TermClosure solve(Env<ASTType> sigma) {
         TermClosure npair = pair.solve(sigma);
-        return (npair == null) ? null : new TermClosure(new ASTChoice(npair.term(), choice), sigma);
+        if (npair == null) return null;
+        Env<ASTType> sig = sigma;
+        if (npair.term() instanceof ASTPair p) sig = p.getSig();
+        return new TermClosure(new ASTChoice(npair.term(), choice), sig);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

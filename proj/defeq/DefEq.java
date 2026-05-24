@@ -52,7 +52,6 @@ public final class DefEq {
             return ln.getArgtype().defequals(ln.getSig(), rn.getArgtype(), rn.getSig(), alpha)
                 && defequals(ln.getBody().weaknorm(), ln.getSig(), rn.getBody().weaknorm(), rn.getSig(), alpha.extend(ln.getId(), rn.getId()));
         if (l instanceof ASTApp ln && r instanceof ASTApp rn)
-            // TODO: use closures
             return defequals(ln.getFunc(), sl, rn.getFunc(), sr, alpha)
                 && defequals(ln.getArg(), sl, rn.getArg(), sr, alpha);
         
@@ -60,13 +59,11 @@ public final class DefEq {
             return defequals(ln.getFirst(), ln.getSig(), rn.getFirst(), rn.getSig(), alpha)
                 && defequals(ln.getSecond(), ln.getSig(), rn.getSecond(), rn.getSig(), alpha);
         if (l instanceof ASTChoice ln && r instanceof ASTChoice rn && ln.getChoice() == rn.getChoice())
-            // TODO: use closures
             return defequals(ln.getPair(), sl, rn.getPair(), sr, alpha);
         if (l instanceof ASTTensor ln && r instanceof ASTTensor rn)
             return defequals(ln.getFirst(), ln.getSig(), rn.getFirst(), rn.getSig(), alpha)
                 && defequals(ln.getSecond(), ln.getSig(), rn.getSecond(), rn.getSig(), alpha);
         if (l instanceof ASTSplit ln && r instanceof ASTSplit rn)
-            // TODO: use closures
             return defequals(ln.getPair(), sl, rn.getPair(), sr, alpha)
                 && defequals(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId1(), rn.getId1()).extend(ln.getId2(), rn.getId2()));
         
