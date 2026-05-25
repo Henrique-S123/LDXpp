@@ -1,3 +1,3 @@
 package proj.types;
 
-public interface ASTLinType extends ASTType {}
+public class ASTLinType extends ASTType {}

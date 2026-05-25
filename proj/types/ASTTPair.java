@@ -3,7 +3,7 @@ package proj.types;
 import proj.ast.ASTNode;
 import proj.env.*;
 
-public class ASTTPair implements ASTType {
+public class ASTTPair extends ASTType {
     ASTType first, second;
     String id;
 

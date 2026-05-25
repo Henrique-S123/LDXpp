@@ -1,9 +1,8 @@
 package proj.types;
 
-import proj.ast.ASTNode;
 import proj.env.*;
 
-public class ASTTString implements ASTType {
+public class ASTTString extends ASTType {
 
     public String toString() {
         return "string";
@@ -16,9 +15,5 @@ public class ASTTString implements ASTType {
 
     public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
         return o instanceof ASTTString;
-    }
-
-    public ASTType inst(String instId, ASTNode n) {
-        return this;
     }
 }

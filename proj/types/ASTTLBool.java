@@ -1,9 +1,8 @@
 package proj.types;
 
-import proj.ast.ASTNode;
 import proj.env.*;
 
-public class ASTTLBool implements ASTLinType {
+public class ASTTLBool extends ASTLinType {
 
     public String toString() {
         return "linbool";
@@ -16,9 +15,5 @@ public class ASTTLBool implements ASTLinType {
 
     public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
         return o instanceof ASTTLBool;
-    }
-
-    public ASTType inst(String instId, ASTNode n) {
-        return this;
     }
 }

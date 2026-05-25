@@ -3,7 +3,7 @@ package proj.types;
 import proj.ast.ASTNode;
 import proj.env.*;
 
-public class ASTTLollipop implements ASTLinType {
+public class ASTTLollipop extends ASTLinType {
     ASTType dom, codom;
     String id;
 

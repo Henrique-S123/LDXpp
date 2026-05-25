@@ -1,9 +1,8 @@
 package proj.types;
 
-import proj.ast.ASTNode;
 import proj.env.*;
 
-public class ASTTLInt implements ASTLinType {
+public class ASTTLInt extends ASTLinType {
     
     public String toString() {
         return "linint";
@@ -16,10 +15,6 @@ public class ASTTLInt implements ASTLinType {
 
     public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
         return o instanceof ASTTLInt;
-    }
-
-    public ASTType inst(String instId, ASTNode n) {
-        return this;
     }
 }
 

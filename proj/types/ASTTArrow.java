@@ -3,7 +3,7 @@ package proj.types;
 import proj.ast.ASTNode;
 import proj.env.*;
 
-public class ASTTArrow implements ASTType {
+public class ASTTArrow extends ASTType {
     ASTType dom, codom;
     String id;
 

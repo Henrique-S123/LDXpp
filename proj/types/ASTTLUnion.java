@@ -5,7 +5,7 @@ import proj.env.*;
 
 import java.util.Map;
 
-public class ASTTLUnion implements ASTLinType {
+public class ASTTLUnion extends ASTLinType {
 
     Map<String, ASTType> ll;
 

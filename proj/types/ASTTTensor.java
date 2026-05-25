@@ -3,7 +3,7 @@ package proj.types;
 import proj.ast.ASTNode;
 import proj.env.*;
 
-public class ASTTTensor implements ASTLinType {
+public class ASTTTensor extends ASTLinType {
     ASTType first, second;
     String id;
 
