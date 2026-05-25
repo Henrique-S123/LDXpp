@@ -2,7 +2,6 @@ package proj.errors;
 
 import proj.values.*;
 import proj.types.*;
-import proj.env.*;
 import proj.ast.*;
 import java.util.Set;
 

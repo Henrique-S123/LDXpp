@@ -8,14 +8,14 @@ import java.util.*;
 
 public class EnvSet {
     Env<ASTType> gamma, delta, phi, sigma;
-    ArrayList<String> usedLinears;
+    Set<String> usedLinears;
 
     public EnvSet() {
         gamma = new Env<ASTType>();
         delta = new Env<ASTType>();
         phi = new Env<ASTType>();
         sigma = new Env<ASTType>();
-        usedLinears = new ArrayList<String>();
+        usedLinears = new HashSet<String>();
     }
 
     public EnvSet(EnvSet o) {
@@ -23,7 +23,7 @@ public class EnvSet {
         delta = o.delta.copy(true);
         phi = o.phi.copy(true);
         sigma = o.sigma.copy(true);
-        usedLinears = new ArrayList<String>(o.getUsedLinears());
+        usedLinears = new HashSet<String>(o.getUsedLinears());
     }
 
     public static enum ENV { GAMMA, DELTA, PHI, SIGMA }
@@ -44,7 +44,7 @@ public class EnvSet {
         return tmp;
     }
 
-    public ArrayList<String> getUsedLinears() {
+    public Set<String> getUsedLinears() {
         return usedLinears;
     }
 
@@ -59,11 +59,6 @@ public class EnvSet {
             case PHI -> this.phi = e;
             case SIGMA -> this.sigma = e;
         }
-    }
-
-    /* Checks */
-    public boolean unusedLinears() {
-        return !delta.isEmpty();
     }
 
     /* Open scopes */

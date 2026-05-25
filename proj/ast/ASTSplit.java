@@ -66,7 +66,7 @@ public class ASTSplit extends ASTNode {
 		e.addEq(new ASTTEq(new ASTTensor(new ASTId(id1), new ASTId(id2)), pair, tt));
 
 		ASTType rt = body.typecheck(e);
-		if (e.unusedLinears()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
+		if (!e.getUnusedLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
 
 		if (lin1 || lin2) e.closeEnvScope(ENV.DELTA);
 		if (!lin1 || !lin2) e.closeEnvScope(ENV.GAMMA);

@@ -46,7 +46,7 @@ public class ASTLeteq extends ASTNode {
         e.bindToEnv(ENV.SIGMA, id, t);
 
         ASTType rt = body.typecheck(e);
-        if (e.unusedLinears()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
+        if (!e.getUnusedLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
         e.closeEnvScope(ENV.SIGMA);
         return rt;
     }
@@ -60,7 +60,7 @@ public class ASTLeteq extends ASTNode {
         e.bindToEnv(ENV.SIGMA, id, t);
 
         ASTType rt = body.typecheck(e, target);
-        if (e.unusedLinears()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
+        if (!e.getUnusedLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
         e.closeEnvScope(ENV.SIGMA);
         return rt;
     }
