@@ -47,7 +47,7 @@ public class ASTPair extends ASTNode {
         Env<ASTType> prevDelta = e.popDelta();
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
-        e.setEnv(ENV.DELTA, prevDelta);
+        e.pushDelta(prevDelta);
         setSig(e.getEnv(ENV.SIGMA));
         return new ASTTPair(t1, t2, null);
     }
@@ -70,7 +70,7 @@ public class ASTPair extends ASTNode {
         if (!t2.isSubtypeOf(insttgt2, e, new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtype(t2, tgt2));
 
         e.closeEnvScope(ENV.SIGMA);
-        e.setEnv(ENV.DELTA, prevDelta);
+        e.pushDelta(prevDelta);
         setSig(e.getEnv(ENV.SIGMA));
         return new ASTTPair(tgt1, tgt2, tgtid);
     }

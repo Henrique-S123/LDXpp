@@ -33,7 +33,7 @@ public class ASTUnion extends ASTNode {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
 		Env<ASTType> prevDelta = e.popDelta();
 		ASTType t = expr.typecheck(e);
-		e.setEnv(ENV.DELTA, prevDelta);
+		e.pushDelta(prevDelta);
 		ll.put(label, t);
 		return new ASTTUnion(ll);
 	}

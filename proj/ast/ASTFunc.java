@@ -76,7 +76,7 @@ public class ASTFunc extends ASTNode  {
 
         ASTType tb = body.typecheck(e);
 
-        e.setEnv(ENV.DELTA, prevDelta);
+        e.pushDelta(prevDelta);
         e.closeEnvScope(ENV.GAMMA);
         e.closeEnvScope(ENV.SIGMA);
         return new ASTTArrow(targtype, tb, id);
@@ -104,7 +104,7 @@ public class ASTFunc extends ASTNode  {
 
         ASTType tb = body.typecheck(e, tcodom);
 
-        e.setEnv(ENV.DELTA, prevDelta);
+        e.pushDelta(prevDelta);
         e.closeEnvScope(ENV.GAMMA);
         e.closeEnvScope(ENV.SIGMA);
 

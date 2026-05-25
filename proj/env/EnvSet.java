@@ -44,21 +44,16 @@ public class EnvSet {
         return tmp;
     }
 
+    public void pushDelta(Env<ASTType> d) {
+        delta = d;
+    }
+
     public Set<String> getUsedLinears() {
         return usedLinears;
     }
 
     public Set<String> getUnusedLinears() {
         return delta.getScopeIds();
-    }
-
-    public void setEnv(ENV env, Env<ASTType> e) {
-        switch (env) {
-            case GAMMA -> this.gamma = e;
-            case DELTA -> this.delta = e;
-            case PHI -> this.phi = e;
-            case SIGMA -> this.sigma = e;
-        }
     }
 
     /* Open scopes */
