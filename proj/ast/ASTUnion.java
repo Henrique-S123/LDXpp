@@ -3,7 +3,6 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
-import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 import java.util.HashMap;

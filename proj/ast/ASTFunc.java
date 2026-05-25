@@ -71,7 +71,7 @@ public class ASTFunc extends ASTNode  {
         e.openEnvScope(ENV.SIGMA);
         e.bindToEnv(ENV.GAMMA, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
-        setSig(e.getEnv(ENV.SIGMA));
+        setSig(e.getSigma());
         Env<ASTType> prevDelta = e.popDelta();
 
         ASTType tb = body.typecheck(e);
@@ -100,7 +100,7 @@ public class ASTFunc extends ASTNode  {
 
         e.bindToEnv(ENV.GAMMA, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
-        setSig(e.getEnv(ENV.SIGMA));
+        setSig(e.getSigma());
 
         ASTType tb = body.typecheck(e, tcodom);
 

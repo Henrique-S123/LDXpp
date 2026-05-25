@@ -4,7 +4,6 @@ import proj.values.*;
 import proj.types.*;
 import proj.defeq.DefEq;
 import proj.env.*;
-import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTRefl extends ASTNode  {
@@ -23,7 +22,7 @@ public class ASTRefl extends ASTNode  {
         if (!(t instanceof ASTTEq tt))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", t));
 
-        Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
+        Env<ASTType> sigma = e.getSigma();
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
         if (DefEq.defequals(left.weaknorm(), sigma, right.weaknorm(), sigma)) return t;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));

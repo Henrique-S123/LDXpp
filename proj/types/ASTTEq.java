@@ -3,7 +3,6 @@ package proj.types;
 import proj.ast.*;
 import proj.defeq.DefEq;
 import proj.env.*;
-import proj.env.EnvSet.ENV;
 
 public class ASTTEq implements ASTType {
     ASTNode term1, term2;
@@ -33,7 +32,7 @@ public class ASTTEq implements ASTType {
 
     public boolean isSubtypeOf(ASTType o, EnvSet e, AlphaEnv alpha) {
         if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e, alpha);
-        Env<ASTType> sigma = e.getEnv(ENV.SIGMA);
+        Env<ASTType> sigma = e.getSigma();
         return o instanceof ASTTEq eq && type.isSubtypeOf(eq.getType(), e, alpha)
             && DefEq.defequals(term1, sigma, eq.getTerm1(), sigma, alpha)
             && DefEq.defequals(term2, sigma, eq.getTerm2(), sigma, alpha);

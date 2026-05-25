@@ -29,13 +29,8 @@ public class EnvSet {
     public static enum ENV { GAMMA, DELTA, PHI, SIGMA }
 
     /* Getters and Setters */
-    public Env<ASTType> getEnv(ENV env) {
-        return switch (env) {
-            case GAMMA -> gamma;
-            case DELTA -> delta;
-            case PHI -> phi;
-            case SIGMA -> sigma;
-        };
+    public Env<ASTType> getSigma() {
+        return sigma;
     }
 
     public Env<ASTType> popDelta() {

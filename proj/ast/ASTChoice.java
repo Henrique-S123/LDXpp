@@ -4,7 +4,6 @@ import proj.values.*;
 import proj.types.*;
 import proj.defeq.TermClosure;
 import proj.env.*;
-import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTChoice extends ASTNode  {
@@ -36,7 +35,7 @@ public class ASTChoice extends ASTNode  {
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		ASTType tp = pair.typecheck(e);
         if (tp instanceof ASTTPair tpair) {
-            return choice > 0 ? tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, 0).normalize(e.getEnv(ENV.SIGMA))) : tpair.getFirst();
+            return choice > 0 ? tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, 0).normalize(e.getSigma())) : tpair.getFirst();
         } else {
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice > 0 ? "snd" : "fst", tp));
         }

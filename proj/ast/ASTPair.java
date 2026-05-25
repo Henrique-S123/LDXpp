@@ -48,7 +48,7 @@ public class ASTPair extends ASTNode {
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
         e.pushDelta(prevDelta);
-        setSig(e.getEnv(ENV.SIGMA));
+        setSig(e.getSigma());
         return new ASTTPair(t1, t2, null);
     }
 
@@ -71,7 +71,7 @@ public class ASTPair extends ASTNode {
 
         e.closeEnvScope(ENV.SIGMA);
         e.pushDelta(prevDelta);
-        setSig(e.getEnv(ENV.SIGMA));
+        setSig(e.getSigma());
         return new ASTTPair(tgt1, tgt2, tgtid);
     }
 

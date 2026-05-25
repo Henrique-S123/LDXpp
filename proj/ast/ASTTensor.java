@@ -46,7 +46,7 @@ public class ASTTensor extends ASTNode {
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
-        setSig(e.getEnv(ENV.SIGMA));
+        setSig(e.getSigma());
         return new ASTTTensor(t1, t2, null);
     }
 
@@ -66,7 +66,7 @@ public class ASTTensor extends ASTNode {
         if (!t2.isSubtypeOf(insttgt2, e, new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtype(t2, tgt2));
         
         e.closeEnvScope(ENV.SIGMA);
-        setSig(e.getEnv(ENV.SIGMA));
+        setSig(e.getSigma());
         return new ASTTTensor(tgt1, tgt2, tgtid);
     }
 
