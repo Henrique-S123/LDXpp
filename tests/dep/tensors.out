@@ -4,7 +4,7 @@ type: (x:linbool | x ≡ truel : linbool), value: (truel | refl)
 type: linbool, value: truel
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [x: linbool]
+class proj.errors.TypeCheckError: There are unused linear values: [x]
 
 
 class proj.errors.TypeCheckError: refl expects a type to be typed against

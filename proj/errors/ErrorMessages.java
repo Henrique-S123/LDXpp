@@ -53,7 +53,7 @@ public final class ErrorMessages {
     }
 
     // Linearity errors
-    public static String unusedLinearValues(Env<ASTType> env) {
+    public static String unusedLinearValues(Set<String> env) {
         return String.format("There are unused linear values: %s", env);
     }
 

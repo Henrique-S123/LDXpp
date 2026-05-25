@@ -16,10 +16,10 @@ class proj.errors.EnvironmentError: Linear value of 'f' has already been consume
 class proj.errors.EnvironmentError: Linear value of 'x' has already been consumed and cannot be used again
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [x: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [x]
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [f: (x:linint)-o>linint]
+class proj.errors.TypeCheckError: There are unused linear values: [f]
 
 
 type: linint, value: 3l
@@ -31,7 +31,7 @@ class proj.errors.EnvironmentError: Linear value of 'y' has already been consume
 class proj.errors.EnvironmentError: Linear value of 'f' has already been consumed and cannot be used again
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [x: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [x]
 
 
 class proj.errors.EnvironmentError: Linear value of 'z' has already been consumed and cannot be used again
@@ -52,7 +52,7 @@ type: linint, value: 2l
 type: (linint | linint), value: (6l | 8l)
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [s2: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [s2]
 
 
 type: (linint | linint), value: (2l | 1l)

@@ -31,27 +31,27 @@ type: int, value: 42
 type: linint, value: 1l
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [f: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [f]
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [f: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [f]
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [s: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [s]
 
 
 type: linint, value: 2l
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [s: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [s]
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [s: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [s]
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [f: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [f]
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [s: linint; f: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [s, f]
 
 

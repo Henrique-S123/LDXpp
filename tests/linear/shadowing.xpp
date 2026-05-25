@@ -1,0 +1,13 @@
+let x = 1l; let x = 2l; x;;
+
+let x = 1l; let x = 2l; x + x;;
+
+let x = 1l; let x = 2l; x + x + x;;
+
+let x = 1l; x + (let x = 2l; x);;
+
+let x = 1l; (let x = 2l; x) + x;;
+
+let x = 1; let x = 1l; x;;
+
+let x = 1l; let x = 1; x;;

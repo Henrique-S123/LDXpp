@@ -13,16 +13,16 @@ type: int, value: 3
 type: int, value: 1
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [x: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [x]
 
 
 class proj.errors.TypeCheckError: Branches are using different linear values: [y] and [x]
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [y: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [y]
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [x: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [x]
 
 
 type: linbool, value: truel

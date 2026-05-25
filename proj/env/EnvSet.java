@@ -48,8 +48,8 @@ public class EnvSet {
         return usedLinears;
     }
 
-    public Env<ASTType> getUnusedLinears() {
-        return delta;
+    public Set<String> getUnusedLinears() {
+        return delta.getScopeIds();
     }
 
     public void setEnv(ENV env, Env<ASTType> e) {

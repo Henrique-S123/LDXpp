@@ -17,10 +17,10 @@ class proj.errors.EnvironmentError: Identifier 'x' not found
 type: linint, value: 10l
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [x: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [x]
 
 
-class proj.errors.TypeCheckError: There are unused linear values: [x: linint]
+class proj.errors.TypeCheckError: There are unused linear values: [x]
 
 
 type: linint, value: 11l
