@@ -22,7 +22,9 @@ public final class DefEq {
             String s1 = alpha.getLeft().find(ln.getId());
             String s2 = alpha.getRight().find(rn.getId());
             if (s1 != null && s2 != null) return s1.equals(s2);
-            // TODO: add return ln.getId().equals(rn.getId()); ?
+            if (ln.getId().equals(rn.getId())
+                && sl.retrieveScope(ln.getId()) == sr.retrieveScope(rn.getId()))
+                    return true;
         }
 
         if (l instanceof ASTLet ln && r instanceof ASTLet rn)

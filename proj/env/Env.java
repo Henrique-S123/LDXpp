@@ -64,6 +64,15 @@ public class Env <E>{
 
     public E remove(String id) { return search(id, true); }
 
+    public Env<E> retrieveScope(String id) {
+        Env<E> curr = this;
+        while (curr != null) {
+            if (curr.bindings.containsKey(id)) return curr;
+            curr = curr.anc;
+        }
+        return null;
+    }
+
     public ASTNode findEq(String id) {
         // TODO: review
         Env<E> curr = this;
