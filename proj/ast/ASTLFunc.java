@@ -76,7 +76,7 @@ public class ASTLFunc extends ASTNode  {
 
         ASTType tb = body.typecheck(e);
 
-        if (!(e.getEnv(ENV.DELTA).isEmpty())) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getEnv(ENV.DELTA)));
+        if (e.unusedLinears()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
         return new ASTTLollipop(targtype, tb, id);

@@ -59,8 +59,7 @@ public class ASTLet extends ASTNode {
         e.bindToEnv(ENV.SIGMA, id, tt);
 
         ASTType rt = body.typecheck(e);
-        if (!(e.getEnv(ENV.DELTA).isEmpty()))
-            throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getEnv(ENV.DELTA)));
+        if (e.unusedLinears()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
 
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
@@ -86,9 +85,7 @@ public class ASTLet extends ASTNode {
         e.bindToEnv(ENV.SIGMA, id, tt);
 
         ASTType rt = body.typecheck(e, target);
-        if (!(e.getEnv(ENV.DELTA).isEmpty()))
-            throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getEnv(ENV.DELTA)));
-
+        if (e.unusedLinears()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
 

@@ -48,6 +48,10 @@ public class EnvSet {
         return usedLinears;
     }
 
+    public Env<ASTType> getUnusedLinears() {
+        return delta;
+    }
+
     public void setEnv(ENV env, Env<ASTType> e) {
         switch (env) {
             case GAMMA -> this.gamma = e;
@@ -55,6 +59,11 @@ public class EnvSet {
             case PHI -> this.phi = e;
             case SIGMA -> this.sigma = e;
         }
+    }
+
+    /* Checks */
+    public boolean unusedLinears() {
+        return !delta.isEmpty();
     }
 
     /* Open scopes */
