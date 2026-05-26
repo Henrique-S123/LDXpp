@@ -65,8 +65,6 @@ public class ASTMatch extends ASTNode {
 			env.bindToEnv(envChoice, c.getId(), tlabel);
 			env.bindToEnv(ENV.SIGMA, c.getId(), tlabel);
 			tcase = c.getExp().typecheck(env);
-			env.closeEnvScope(envChoice);
-			env.closeEnvScope(ENV.SIGMA);
 
 			if (matchUsedLinears == null) {
 				matchUsedLinears = new HashSet<String>(e.getUsedLinears());
@@ -82,6 +80,8 @@ public class ASTMatch extends ASTNode {
 			if ((tcase.isSubtypeOf(rettype, env, new AlphaEnv()) && rettype.isSubtypeOf(tcase, env, new AlphaEnv())) || rettype == null)
 				rettype = tcase;
 			else throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tcase, rettype));
+			env.closeEnvScope(envChoice);
+			env.closeEnvScope(ENV.SIGMA);
 		}
 		return rettype;
 	}

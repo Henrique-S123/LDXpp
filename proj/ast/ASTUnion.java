@@ -30,7 +30,7 @@ public class ASTUnion extends ASTNode {
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
-		Env<ASTType> prevDelta = e.popDelta();
+		Env<LinearBinding> prevDelta = e.popDelta();
 		ASTType t = expr.typecheck(e);
 		e.pushDelta(prevDelta);
 		ll.put(label, t);

@@ -5,6 +5,8 @@ import proj.types.*;
 import proj.values.VClos;
 
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.function.Function;
 
 public class Env <E>{
     Env<E> anc;
@@ -24,10 +26,6 @@ public class Env <E>{
         this.bindings = m;
     }
 
-    public Set<String> getScopeIds() {
-        return bindings.keySet();
-    }
-
     public Env<E> beginScope(){
         return new Env<E>(this);
     }
@@ -40,9 +38,18 @@ public class Env <E>{
         return bindings.isEmpty();
     }
 
-    public Env<E> copy(boolean deep) {
-        Env<E> e = new Env<>(deep ? (this.anc == null ? null : this.anc.copy(deep)) : this.anc);
-        e.setBindings(new HashMap<String,E>(this.bindings));
+    public Env<E> copy() {
+        Env<E> e = new Env<>((this.anc == null ? null : this.anc.copy()));
+        e.setBindings(new HashMap<String, E>(bindings));
+        return e;
+    }
+
+    public Env<E> copy(Function<E, E> copier) {
+        Env<E> e = new Env<>((this.anc == null ? null : this.anc.copy(copier)));
+        Map<String, E> copiedBindings = new HashMap<String, E>();
+        for (var entry : bindings.entrySet())
+            copiedBindings.put(entry.getKey(), copier.apply(entry.getValue()));
+        e.setBindings(copiedBindings);
         return e;
     }
 
@@ -50,19 +57,15 @@ public class Env <E>{
         bindings.put(id, bind);
     }
 
-    private E search(String id, boolean consume) {
+    public E find(String id) {
         Env<E> curr = this;
         while (curr != null) {
-            E val = consume ? curr.bindings.remove(id) : curr.bindings.get(id);
+            E val = curr.bindings.get(id);
             if (val != null) return val;
             curr = curr.anc;
         }
         return null;
     }
-
-    public E find(String id) { return search(id, false); }
-
-    public E remove(String id) { return search(id, true); }
 
     public Env<E> retrieveScope(String id) {
         Env<E> curr = this;
@@ -71,6 +74,18 @@ public class Env <E>{
             curr = curr.anc;
         }
         return null;
+    }
+
+    public Set<String> filterIds(Env<E> stop, Predicate<E> pred) {
+        Set<String> result = new HashSet<String>();
+        Env<E> curr = this;
+        while (curr != stop) {
+            curr.bindings.forEach((id, val) -> {
+                if (pred.test(val)) result.add(id);
+            });
+            curr = curr.anc;
+        }
+        return result;
     }
 
     public ASTNode findEq(String id) {

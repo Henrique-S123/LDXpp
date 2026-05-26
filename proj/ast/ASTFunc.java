@@ -72,7 +72,7 @@ public class ASTFunc extends ASTNode  {
         e.bindToEnv(ENV.GAMMA, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
         setSig(e.getSigma());
-        Env<ASTType> prevDelta = e.popDelta();
+        Env<LinearBinding> prevDelta = e.popDelta();
 
         ASTType tb = body.typecheck(e);
 
@@ -92,7 +92,7 @@ public class ASTFunc extends ASTNode  {
         else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", t));
 
         ASTType targtype = e.unfold(argtype);
-        Env<ASTType> prevDelta = e.popDelta();
+        Env<LinearBinding> prevDelta = e.popDelta();
         e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(ENV.GAMMA);
 

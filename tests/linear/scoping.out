@@ -1,0 +1,21 @@
+class proj.errors.TypeCheckError: There are unused linear values: [x]
+
+
+class proj.errors.EnvironmentError: Linear value of 'x' has already been consumed and cannot be used again
+
+
+class proj.errors.EnvironmentError: Linear value of 'x' has already been consumed and cannot be used again
+
+
+type: linint, value: 3l
+
+
+type: linint, value: 3l
+
+
+class proj.errors.EnvironmentError: Identifier 'x' already declared
+
+
+class proj.errors.EnvironmentError: Identifier 'x' already declared
+
+

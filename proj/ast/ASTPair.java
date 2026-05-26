@@ -44,7 +44,7 @@ public class ASTPair extends ASTNode {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        Env<ASTType> prevDelta = e.popDelta();
+        Env<LinearBinding> prevDelta = e.popDelta();
         ASTType t1 = first.typecheck(e);
         ASTType t2 = second.typecheck(e);
         e.pushDelta(prevDelta);
@@ -59,7 +59,7 @@ public class ASTPair extends ASTNode {
         else if (t instanceof ASTTTensor tensor) { tgt1 = tensor.getFirst(); tgt2 = tensor.getSecond(); tgtid = tensor.getId(); }
         else throw new TypeCheckError(ErrorMessages.typeMismatch("pair or tensor", t));
 
-        Env<ASTType> prevDelta = e.popDelta();
+        Env<LinearBinding> prevDelta = e.popDelta();
         e.openEnvScope(ENV.SIGMA);
 
         ASTType t1 = first.typecheck(e, tgt1);
