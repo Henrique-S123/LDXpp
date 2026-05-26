@@ -34,13 +34,13 @@ public class ASTTEq extends ASTType {
         if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e, alpha);
         Env<ASTType> sigma = e.getSigma();
         return o instanceof ASTTEq eq && type.isSubtypeOf(eq.getType(), e, alpha)
-            && DefEq.defequals(term1, sigma, eq.getTerm1(), sigma, alpha)
-            && DefEq.defequals(term2, sigma, eq.getTerm2(), sigma, alpha);
+            && DefEq.termdefeq(term1, sigma, eq.getTerm1(), sigma, alpha)
+            && DefEq.termdefeq(term2, sigma, eq.getTerm2(), sigma, alpha);
     }
 
     public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTTEq eq && DefEq.defequals(term1, sl, eq.getTerm1(), sr, alpha)
-            && DefEq.defequals(term2, sl, eq.getTerm2(), sr, alpha) && type.defequals(sl, eq.getType(), sr, alpha);
+        return o instanceof ASTTEq eq && DefEq.termdefeq(term1, sl, eq.getTerm1(), sr, alpha)
+            && DefEq.termdefeq(term2, sl, eq.getTerm2(), sr, alpha) && type.defequals(sl, eq.getType(), sr, alpha);
     }
 
     public ASTType inst(String instId, ASTNode n) {
