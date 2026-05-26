@@ -40,11 +40,6 @@ public class ASTTArrow extends ASTType {
         return odom.isSubtypeOf(dom, e, alpha) && codom.isSubtypeOf(ocodom, e, alpha.extend(id, oid));
     }
 
-    public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTTArrow oarr && dom.defequals(sl, oarr.getDom(), sr, alpha)
-            && codom.defequals(sl, oarr.getCodom(), sr, alpha.extend(id, oarr.getId()));
-    }
-
     public ASTType inst(String instId, ASTNode n) {
         return new ASTTArrow(dom.inst(instId, n), codom.inst(instId, n), id);
     }

@@ -28,7 +28,7 @@ public final class DefEq {
         }
 
         if (l instanceof ASTLet ln && r instanceof ASTLet rn)
-            return ln.getDeclType().defequals(sl, rn.getDeclType(), sr, alpha)
+            return typedefeq(ln.getDeclType(), sl, rn.getDeclType(), sr, alpha)
                 && termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha)
                 && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId(), rn.getId()));
         
@@ -48,10 +48,10 @@ public final class DefEq {
                 && termdefeq(ln.getAlt(), sl, rn.getAlt(), sr, alpha);
         
         if (l instanceof ASTFunc ln && r instanceof ASTFunc rn)
-            return ln.getArgtype().defequals(ln.getSig(), rn.getArgtype(), rn.getSig(), alpha)
+            return typedefeq(ln.getArgtype(), ln.getSig(), rn.getArgtype(), rn.getSig(), alpha)
                 && termdefeq(ln.getBody().weaknorm(), ln.getSig(), rn.getBody().weaknorm(), rn.getSig(), alpha.extend(ln.getId(), rn.getId()));
         if (l instanceof ASTLFunc ln && r instanceof ASTLFunc rn)
-            return ln.getArgtype().defequals(ln.getSig(), rn.getArgtype(), rn.getSig(), alpha)
+            return typedefeq(ln.getArgtype(), ln.getSig(), rn.getArgtype(), rn.getSig(), alpha)
                 && termdefeq(ln.getBody().weaknorm(), ln.getSig(), rn.getBody().weaknorm(), rn.getSig(), alpha.extend(ln.getId(), rn.getId()));
         if (l instanceof ASTApp ln && r instanceof ASTApp rn)
             return termdefeq(ln.getFunc(), sl, rn.getFunc(), sr, alpha)
@@ -75,14 +75,14 @@ public final class DefEq {
             return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha);
         if (l instanceof ASTMatch ln && r instanceof ASTMatch rn) {
             if (termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha)) return false;
-            Map<String, MatchCase> own = ln.getCases();
-            Map<String, MatchCase> other = ln.getCases();
-			if (own.size() != other.size()) return false;
+            Map<String, MatchCase> left = ln.getCases();
+            Map<String, MatchCase> right = rn.getCases();
+			if (left.size() != right.size()) return false;
             for (String label : ln.getCases().keySet()) {
-                MatchCase ownCase = own.get(label);
-				MatchCase otherCase = other.get(label);
-				if (otherCase == null ||
-                    !termdefeq(ownCase.getExp(), sl, otherCase.getExp(), sr, alpha.extend(ownCase.getId(), otherCase.getId()))) return false;
+                MatchCase leftCase = left.get(label);
+				MatchCase rightCase = right.get(label);
+				if (rightCase == null ||
+                    !termdefeq(leftCase.getExp(), sl, rightCase.getExp(), sr, alpha.extend(leftCase.getId(), rightCase.getId()))) return false;
             }
             return true;
         }
@@ -109,4 +109,65 @@ public final class DefEq {
         if (s != null) return termdefeq(l, sl, s.term().weaknorm(), s.env(), alpha);
         return false;
     }
+
+    public static final boolean typedefeq(ASTType l, Env<ASTType> sl, ASTType r, Env<ASTType> sr) {
+        return typedefeq(l, sl, r, sr, new AlphaEnv());
+    }
+
+    public static final boolean typedefeq(ASTType l, Env<ASTType> sl, ASTType r, Env<ASTType> sr, AlphaEnv alpha) {
+        if (l instanceof ASTTInt && r instanceof ASTTInt) return true;
+        if (l instanceof ASTTLInt && r instanceof ASTTLInt) return true;
+        if (l instanceof ASTTBool && r instanceof ASTTBool) return true;
+        if (l instanceof ASTTLBool && r instanceof ASTTLBool) return true;
+        if (l instanceof ASTTString && r instanceof ASTTString) return true;
+        if (l instanceof ASTTUnit && r instanceof ASTTUnit) return true;
+
+        if (l instanceof ASTTId lt && r instanceof ASTTId rt)
+            return lt.getId().equals(rt.getId());
+
+        if (l instanceof ASTTArrow lt && r instanceof ASTTArrow rt)
+            return typedefeq(lt.getDom(), sl, rt.getDom(), sr, alpha)
+                && typedefeq(lt.getCodom(), sl, rt.getCodom(), sr, alpha.extend(lt.getId(), rt.getId()));
+        if (l instanceof ASTTLollipop lt && r instanceof ASTTLollipop rt)
+            return typedefeq(lt.getDom(), sl, rt.getDom(), sr, alpha)
+                && typedefeq(lt.getCodom(), sl, rt.getCodom(), sr, alpha.extend(lt.getId(), rt.getId()));
+        
+        if (l instanceof ASTTPair lt && r instanceof ASTTPair rt)
+            return typedefeq(lt.getFirst(), sl, rt.getFirst(), sr, alpha)
+                && typedefeq(lt.getSecond(), sl, rt.getSecond(), sr, alpha.extend(lt.getId(), rt.getId()));
+        if (l instanceof ASTTTensor lt && r instanceof ASTTTensor rt)
+            return typedefeq(lt.getFirst(), sl, rt.getFirst(), sr, alpha)
+                && typedefeq(lt.getSecond(), sl, rt.getSecond(), sr, alpha.extend(lt.getId(), rt.getId()));
+        
+        if (l instanceof ASTTUnion lt && r instanceof ASTTUnion rt) {
+            Map<String, ASTType> left = lt.getMap();
+            Map<String, ASTType> right = rt.getMap();
+            if (left.size() != right.size()) return false;
+            for (String label : left.keySet()) {
+                ASTType leftType = left.get(label);
+                ASTType rightType = right.get(label);
+                if (rightType == null || !typedefeq(leftType, sl, rightType, sr, alpha)) return false;
+            }
+            return true;
+        }
+        if (l instanceof ASTTLUnion lt && r instanceof ASTTLUnion rt) {
+            Map<String, ASTType> left = lt.getMap();
+            Map<String, ASTType> right = rt.getMap();
+            if (left.size() != right.size()) return false;
+            for (String label : left.keySet()) {
+                ASTType leftType = left.get(label);
+                ASTType rightType = right.get(label);
+                if (rightType == null || !typedefeq(leftType, sl, rightType, sr, alpha)) return false;
+            }
+            return true;
+        }
+
+        if (l instanceof ASTTEq lt && r instanceof ASTTEq rt)
+            return termdefeq(lt.getTerm1(), sl, rt.getTerm1(), sr, alpha)
+                && termdefeq(lt.getTerm2(), sl, rt.getTerm2(), sr, alpha)
+                && typedefeq(lt.getType(), sl, rt.getType(), sr, alpha);
+
+        return false;
+    }
+
 }

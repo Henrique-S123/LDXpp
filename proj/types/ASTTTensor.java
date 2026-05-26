@@ -38,11 +38,6 @@ public class ASTTTensor extends ASTLinType {
         return false;
     }
 
-    public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTTTensor otensor && first.defequals(sl, otensor.getFirst(), sr, alpha)
-            && second.defequals(sl, otensor.getSecond(), sr, alpha.extend(id, otensor.getId()));
-    }
-
     public ASTType inst(String instId, ASTNode n) {
         return new ASTTTensor(first.inst(instId, n), second.inst(instId, n), id);
     }

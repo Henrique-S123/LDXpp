@@ -29,19 +29,6 @@ public class ASTTUnion extends ASTType {
         return true;
     }
 
-    public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
-        if (o instanceof ASTTUnion ounion) {
-            Map<String, ASTType> other = ounion.getMap();
-            if (ll.size() != other.size()) return false;
-            for (String label : ll.keySet()) {
-                ASTType otherType = other.get(label);
-                if (otherType == null || !ll.get(label).defequals(sl, otherType, sr, alpha)) return false;
-            }
-            return true;
-        }
-        return false;
-    }
-
     public String toString() {
         String fill = "";
         for (String k : ll.keySet()) fill += String.format("%s = %s; ", k, ll.get(k));
