@@ -1,17 +1,3 @@
-type NatL = linunion {$zero:(), $succ:NatL};
-let nl0 = $zero(());
-let nl1 = $succ(nl0);
-let nl2 = $succ(nl1);
-let ladd:NatL-o>NatL-o>NatL = lfn
-    a:NatL, b:NatL =o> {
-        match a {
-            $zero(m) -> m; b
-            |
-            $succ(m) -> $succ(ladd(m)(b))
-        }
-    };
-ladd(nl2)(nl1);;
-
 type NODE = (int, LIST);
 type LIST = union { #nil: (), #cons: NODE };
 let l0:LIST = #nil (());
