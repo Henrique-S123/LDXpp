@@ -34,3 +34,12 @@ class proj.errors.TypeCheckError: Terms 2 > 3 and true are not definitionally eq
 type: 2 ≡ 2 : int, value: refl
 
 
+type: int, value: 8083
+
+
+type: (x:int, 0 <= x && x <= 100 ≡ true : bool), value: (21, refl)
+
+
+class proj.errors.TypeCheckError: Terms 0 <= 150 && 150 <= 100 and true are not definitionally equal
+
+

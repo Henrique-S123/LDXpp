@@ -80,3 +80,14 @@ type igt3 = (x:int, ((x>3)=true:bool));
 let p:igt3 = (2, refl); p;;
 
 let f:(x:int) -> (x=x:int) = fn x:int => {let y = 1; refl}; f(2);;
+
+type Pos = (x:int, ((x>0)=true:bool));
+let port:Pos = (8080, refl);
+let retries:Pos = (3, refl);
+fst(port) + fst(retries);;
+
+type Percent = (x:int, ((0<=x && x<=100)=true:bool));
+let tax:Percent = (21, refl); tax;;
+
+type Percent = (x:int, ((0<=x && x<=100)=true:bool));
+let bad:Percent = (150, refl); bad;;

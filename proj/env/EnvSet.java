@@ -112,11 +112,7 @@ public class EnvSet {
 
     /* Unfold operation */
     public ASTType unfold(ASTType t) {
-        if (t instanceof ASTTId tid) {
-            return unfold((ASTType) phi.find(tid.getId()));
-        } else {
-            return t;
-        }
+        return (t instanceof ASTTId tid) ? unfold(phi.find(tid.getId())) : t;
     }
 
     public String toString() {

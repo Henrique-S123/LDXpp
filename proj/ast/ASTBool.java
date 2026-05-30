@@ -12,7 +12,7 @@ public class ASTBool extends ASTNode  {
     }
 
     public boolean getVal() {
-      return this.b;
+      return b;
     }
 
     public IValue eval(Env<IValue> e) {
