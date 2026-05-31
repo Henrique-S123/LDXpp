@@ -77,9 +77,10 @@ public class ASTMatch extends ASTNode {
 			caseUsedLineares.remove(c.getId());
 			if (!caseUsedLineares.equals(matchUsedLinears))
 				throw new TypeCheckError(ErrorMessages.branchesDifferentLinears(caseUsedLineares, matchUsedLinears));
-			if ((tcase.isSubtypeOf(rettype, env, new AlphaEnv()) && rettype.isSubtypeOf(tcase, env, new AlphaEnv())) || rettype == null)
+			if (rettype == null || rettype.isSubtypeOf(tcase, env, new AlphaEnv()))
 				rettype = tcase;
-			else throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tcase, rettype));
+			else if (!tcase.isSubtypeOf(rettype, env, new AlphaEnv()))
+				throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tcase, rettype));
 			env.closeEnvScope(envChoice);
 			env.closeEnvScope(ENV.SIGMA);
 		}

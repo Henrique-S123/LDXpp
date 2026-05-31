@@ -1,0 +1,18 @@
+type: (x:linbool | x ≡ truel : linbool), value: (truel, refl)
+
+
+class proj.errors.TypeCheckError: Terms true and truel are not definitionally equal
+
+
+type: (x:linbool | x ≡ true : linbool), value: (true, refl)
+
+
+class proj.errors.TypeCheckError: Type linbool is not a subtype of bool
+
+
+class proj.errors.TypeCheckError: Terms true and truel are not definitionally equal
+
+
+type: (x:bool | x ≡ true : linbool), value: (true, refl)
+
+
