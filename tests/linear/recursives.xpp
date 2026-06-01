@@ -6,6 +6,8 @@ let fact = rec f:int-o>int {
 };
 fact(3);;
 
+let fact = rec f:int { 5 }; fact(3);;
+
 let fact = rec f:int-o>int {
     lfn x:int =o> {
         if (x==0) {1}

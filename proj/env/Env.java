@@ -2,7 +2,6 @@ package proj.env;
 
 import proj.ast.*;
 import proj.types.*;
-import proj.values.VClos;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -110,7 +109,7 @@ public class Env <E>{
     public String toString() {
         String fill = "";
         for (String s : bindings.keySet())
-        fill += String.format("%s: %s; ", s, (bindings.get(s) instanceof VClos) ? s : bindings.get(s).toString());
+        fill += String.format("%s: %s; ", s, bindings.get(s).toString());
         if (bindings.size() > 0) fill = fill.substring(0, fill.length()-2);
         return String.format("[%s]", fill);
     }
