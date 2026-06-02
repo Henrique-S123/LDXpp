@@ -1,8 +1,10 @@
 package proj.types;
 
 import proj.ast.*;
-import proj.defeq.DefEq;
+import proj.defeq.*;
 import proj.env.*;
+
+import java.util.HashSet;
 
 public class ASTTEq extends ASTType {
     ASTNode term1, term2;
@@ -34,8 +36,8 @@ public class ASTTEq extends ASTType {
         if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e, alpha);
         Env<ASTType> sigma = e.getSigma();
         return o instanceof ASTTEq eq && type.isSubtypeOf(eq.getType(), e, alpha)
-            && DefEq.termdefeq(term1, sigma, eq.getTerm1(), sigma, alpha, e.getPhi())
-            && DefEq.termdefeq(term2, sigma, eq.getTerm2(), sigma, alpha, e.getPhi());
+            && DefEq.termdefeq(term1, sigma, eq.getTerm1(), sigma, alpha, e.getPhi(), new HashSet<IdPair>())
+            && DefEq.termdefeq(term2, sigma, eq.getTerm2(), sigma, alpha, e.getPhi(), new HashSet<IdPair>());
     }
 
     public ASTType inst(String instId, ASTNode n) {
