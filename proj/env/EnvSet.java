@@ -30,6 +30,10 @@ public class EnvSet {
         return sigma;
     }
 
+    public Env<ASTType> getPhi() {
+        return phi;
+    }
+
     public Env<LinearBinding> popDelta() {
         Env<LinearBinding> tmp = this.delta;
         this.delta = new Env<LinearBinding>();

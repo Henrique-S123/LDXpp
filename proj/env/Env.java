@@ -105,6 +105,11 @@ public class Env <E>{
         }
         return null;
     }
+    
+
+    public ASTType unfold(ASTType t) {
+        return (t instanceof ASTTId tid) ? unfold((ASTType) find(tid.getId())) : t;
+    }
 
     public String toString() {
         String fill = "";
