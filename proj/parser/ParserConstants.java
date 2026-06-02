@@ -87,53 +87,55 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int LFN = 42;
   /** RegularExpression Id. */
-  int ARROW = 43;
+  int REC = 43;
   /** RegularExpression Id. */
-  int DLOLLIPOP = 44;
+  int ARROW = 44;
   /** RegularExpression Id. */
-  int SLIMARROW = 45;
+  int DLOLLIPOP = 45;
   /** RegularExpression Id. */
-  int LOLLIPOP = 46;
+  int SLIMARROW = 46;
   /** RegularExpression Id. */
-  int FST = 47;
+  int LOLLIPOP = 47;
   /** RegularExpression Id. */
-  int SND = 48;
+  int FST = 48;
   /** RegularExpression Id. */
-  int MATCH = 49;
+  int SND = 49;
   /** RegularExpression Id. */
-  int TYPE = 50;
+  int MATCH = 50;
   /** RegularExpression Id. */
-  int TINT = 51;
+  int TYPE = 51;
   /** RegularExpression Id. */
-  int TLINT = 52;
+  int TINT = 52;
   /** RegularExpression Id. */
-  int TBOOL = 53;
+  int TLINT = 53;
   /** RegularExpression Id. */
-  int TLBOOL = 54;
+  int TBOOL = 54;
   /** RegularExpression Id. */
-  int TSTRING = 55;
+  int TLBOOL = 55;
   /** RegularExpression Id. */
-  int TUNION = 56;
+  int TSTRING = 56;
   /** RegularExpression Id. */
-  int TLUNION = 57;
+  int TUNION = 57;
   /** RegularExpression Id. */
-  int TEQ = 58;
+  int TLUNION = 58;
   /** RegularExpression Id. */
-  int SPLIT = 59;
+  int TEQ = 59;
   /** RegularExpression Id. */
-  int CHECK = 60;
+  int SPLIT = 60;
   /** RegularExpression Id. */
-  int LABEL = 61;
+  int CHECK = 61;
   /** RegularExpression Id. */
-  int LLABEL = 62;
+  int LABEL = 62;
   /** RegularExpression Id. */
-  int String = 63;
+  int LLABEL = 63;
   /** RegularExpression Id. */
-  int Id = 64;
+  int String = 64;
   /** RegularExpression Id. */
-  int LinNum = 65;
+  int Id = 65;
   /** RegularExpression Id. */
-  int Num = 66;
+  int LinNum = 66;
+  /** RegularExpression Id. */
+  int Num = 67;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -183,6 +185,7 @@ public interface ParserConstants {
     "\"println\"",
     "\"fn\"",
     "\"lfn\"",
+    "\"rec\"",
     "\"=>\"",
     "\"=o>\"",
     "\"->\"",

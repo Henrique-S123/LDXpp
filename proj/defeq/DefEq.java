@@ -56,6 +56,7 @@ public final class DefEq {
         if (l instanceof ASTApp ln && r instanceof ASTApp rn)
             return termdefeq(ln.getFunc(), sl, rn.getFunc(), sr, alpha)
                 && termdefeq(ln.getArg(), sl, rn.getArg(), sr, alpha);
+        // TODO: add ASTRec case
         
         if (l instanceof ASTPair ln && r instanceof ASTPair rn)
             return termdefeq(ln.getFirst(), ln.getSig(), rn.getFirst(), rn.getSig(), alpha)

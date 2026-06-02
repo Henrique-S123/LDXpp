@@ -1,0 +1,12 @@
+type: int, value: 6
+
+
+class proj.errors.TypeCheckError: Illegal type to rec: int
+
+
+class proj.errors.EnvironmentError: Linear value of 'fact' has already been consumed and cannot be used again
+
+
+type: NatL, value: linear union $succ(linear union $succ(linear union $succ(linear union $zero(()))))
+
+
