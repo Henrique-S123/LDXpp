@@ -1,11 +1,18 @@
 TEST_DIR ?= tests
 TESTS := $(shell find $(TEST_DIR) -type f -name '*.xpp')
+DEBUG ?= false
+
+ifeq ($(DEBUG),true)
+    FLAGS := -Ddebug=true -cp
+else
+    FLAGS := -cp
+endif
 
 all:
 	javacc -STATIC=false -OUTPUT_DIRECTORY=proj/parser/ proj/parser/ParserLDXpp.jj
 	javac -d proj/out/ -Xlint:unchecked proj/values/*.java proj/parser/*.java proj/ast/*.java proj/*.java proj/types/*.java
 	echo '#!/bin/bash' > x++
-	echo 'java -cp proj/out/ proj.Xppint "$$@"' >> x++
+	echo 'java $(FLAGS) proj/out/ proj.Xppint "$$@"' >> x++
 	chmod +x x++
 
 clean:

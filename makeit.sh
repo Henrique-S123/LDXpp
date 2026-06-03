@@ -1,4 +1,4 @@
 #!/bin/sh
 
 make clean
-make
+make $1

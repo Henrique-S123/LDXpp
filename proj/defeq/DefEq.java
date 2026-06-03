@@ -3,6 +3,7 @@ package proj.defeq;
 import proj.ast.*;
 import proj.env.*;
 import proj.types.*;
+import proj.debug.Debug;
 
 import java.util.*;
 
@@ -12,6 +13,8 @@ public final class DefEq {
     }
 
     public static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Set<IdPair> seen) {
+        Debug.log(String.format("left: %s\t\tright: %s", l, r));
+
         if (l instanceof ASTInt ln && r instanceof ASTInt rn) return ln.getVal() == rn.getVal();
         if (l instanceof ASTLInt ln && r instanceof ASTLInt rn) return ln.getVal() == rn.getVal();
         if (l instanceof ASTBool ln && r instanceof ASTBool rn) return ln.getVal() == rn.getVal();
