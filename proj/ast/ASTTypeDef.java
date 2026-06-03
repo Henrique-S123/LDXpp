@@ -31,8 +31,11 @@ public class ASTTypeDef extends ASTNode {
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
         e.openEnvScope(ENV.PHI);
-        for (String s : ltd.keySet())
-            e.bindToEnv(ENV.PHI, s, ltd.get(s));
+        for (String s : ltd.keySet()) {
+            ASTType t = ltd.get(s);
+            t.setSig(e.getSigma());
+            e.bindToEnv(ENV.PHI, s, t);
+        }
         ASTType ret = this.body.typecheck(e);
         e.closeEnvScope(ENV.PHI);
         return ret;

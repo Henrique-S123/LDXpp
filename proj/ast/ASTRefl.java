@@ -22,9 +22,9 @@ public class ASTRefl extends ASTNode  {
         if (!(t instanceof ASTTEq tt))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", t));
 
-        Env<ASTType> sigma = e.getSigma();
+        Env<ASTType> sig = (tt.getSig() != null) ? tt.getSig() : e.getSigma();
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
-        if (DefEq.termdefeq(left.weaknorm(), sigma, right.weaknorm(), sigma, e.getPhi())) return t;
+        if (DefEq.termdefeq(left.weaknorm(), sig, right.weaknorm(), sig, e.getPhi())) return t;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 

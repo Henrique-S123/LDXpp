@@ -25,6 +25,12 @@ public class ASTTArrow extends ASTType {
         return id;
     }
 
+    public void setSig(Env<ASTType> s) {
+        sig = s;
+        dom.setSig(s);
+        codom.setSig(s);
+    }
+
     public String toString() {
         String domStr = (id == null) ? ""+dom : String.format("(%s:%s)", id, dom);
         return String.format("%s->%s", domStr, codom);

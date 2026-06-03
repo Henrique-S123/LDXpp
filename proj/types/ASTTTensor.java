@@ -25,6 +25,12 @@ public class ASTTTensor extends ASTLinType {
         return id;
     }
 
+    public void setSig(Env<ASTType> s) {
+        sig = s;
+        first.setSig(s);
+        second.setSig(s);
+    }
+
     public String toString() {
         return String.format("(%s%s | %s)", id != null ? id+":" : "", first, second);
     }

@@ -127,7 +127,9 @@ public final class DefEq {
             if (lt.getId().equals(rt.getId())) return true;
             if (seen.contains(new IdPair(lt.getId(), rt.getId()))) return true;
             seen.add(new IdPair(lt.getId(), rt.getId()));
-            return typedefeq(phi.unfold(lt), sl, phi.unfold(rt), sr, alpha, phi, seen);
+            ASTType newl = phi.unfold(lt);
+            ASTType newr = phi.unfold(rt);
+            return typedefeq(newl, newl.getSig(), newr, newr.getSig(), alpha, phi, seen);
         }
         
         if (l instanceof ASTTArrow lt && r instanceof ASTTArrow rt)
