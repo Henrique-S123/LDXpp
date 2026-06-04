@@ -267,21 +267,27 @@ ASTNode Exp() :
 }
 
 ASTNode Term() :
-{Token op, n;
-  ASTNode t1, t2;
-  ASTType tt1, tt2; }
+{ ASTNode t1, t2; }
 {
-     t1 = Fact()
+     t1 = App()
     (
-     <STAR> t2 = Fact()   { t1 = new ASTArithOp(t1,t2,"*"); }
+     <STAR> t2 = App()   { t1 = new ASTArithOp(t1,t2,"*"); }
 		 |
-		 <DIV> t2 = Fact()  { t1 = new ASTArithOp(t1,t2,"/"); }
-		 |
-     <LRPAR> { t1 = new ASTApp(t1, new ASTUnit()); }
-     |
-     <LPAR> t2 = Let() <RPAR> { t1 = new ASTApp(t1, t2); }
+		 <DIV> t2 = App()  { t1 = new ASTArithOp(t1,t2,"/"); }
     )*
      { return t1; }
+}
+
+ASTNode App() :
+{ ASTNode t1, t2; }
+{
+  t1 = Fact()
+  (
+    <LRPAR> { t1 = new ASTApp(t1, new ASTUnit()); }
+    |
+    <LPAR> t2 = Let() <RPAR> { t1 = new ASTApp(t1, t2); }
+  )*
+  { return t1; }
 }
 
 ASTNode Fact() :
