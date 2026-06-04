@@ -89,10 +89,12 @@ public class ASTMatch extends ASTNode {
 
 	public ASTNode weaknorm(Env<ASTNode> sub) {
 		ASTNode exp, tn = test.weaknorm(sub);
+		Map<String, MatchCase> newcases = new HashMap<String, MatchCase>();
+		cases.forEach((label, c) -> newcases.put(label, new MatchCase(c.getId(), c.getExp().weaknorm(sub))));
 		String label;
 		if (tn instanceof ASTUnion un) { exp = un.getExpr(); label = un.getLabel(); }
 		else if (tn instanceof ASTLUnion lun) { exp = lun.getExpr(); label = lun.getLabel(); }
-		else return new ASTMatch(tn, cases);
+		else return new ASTMatch(tn, newcases);
 
 		MatchCase c = cases.get(label);
 		String id = c.getId();
