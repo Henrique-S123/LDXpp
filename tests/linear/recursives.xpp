@@ -1,20 +1,18 @@
 let fact = rec f:int-o>int {
     lfn x:int =o> {
         if (x==0) {1}
-        else {x * (f(x-1))}
+        else {x * f(x-1)}
     }
-};
-fact(3);;
+}; fact(3);;
 
 let fact = rec f:int { 5 }; fact(3);;
 
 let fact = rec f:int-o>int {
     lfn x:int =o> {
         if (x==0) {1}
-        else {x * (f(x-1))}
+        else {x * f(x-1)}
     }
-};
-fact(3) + fact(2);;
+}; fact(3) + fact(2);;
 
 type NatL = linunion {$zero:(), $succ:NatL};
 let nl1 = $succ($zero(()));
