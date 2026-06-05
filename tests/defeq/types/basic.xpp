@@ -18,6 +18,6 @@ string ?T bool;;
 
 string ?T string;;
 
-unit ?T int;;
+() ?T int;;
 
-unit ?T unit;;
+() ?T ();;

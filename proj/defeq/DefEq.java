@@ -177,6 +177,15 @@ public final class DefEq {
                 && termdefeq(lt.getTerm2(), sl, rt.getTerm2(), sr, alpha, phi, seen)
                 && typedefeq(lt.getType(), sl, rt.getType(), sr, alpha, phi, seen);
 
+        if (l instanceof ASTTId lt) {
+            ASTType newl = phi.unfold(lt);
+            return typedefeq(newl, newl.getSig(), r, sr, alpha, phi, seen);
+        }
+        if (r instanceof ASTTId rt) {
+            ASTType newr = phi.unfold(rt);
+            return typedefeq(l, sl, newr, newr.getSig(), alpha, phi, seen);
+        }
+        
         return false;
     }
 
