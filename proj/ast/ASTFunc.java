@@ -82,14 +82,14 @@ public class ASTFunc extends ASTNode  {
         return new ASTTArrow(targtype, tb, id);
 	}
 
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        ASTType tt = e.unfold(t);
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+        ASTType tt = e.unfold(target);
         ASTType tdom, tcodom;
         String tid;
 
         if (tt instanceof ASTTArrow arrow) { tdom = arrow.getDom(); tcodom = arrow.getCodom(); tid = arrow.getId(); }
         else if (tt instanceof ASTTLollipop lolli) { tdom = lolli.getDom(); tcodom = lolli.getCodom(); tid = lolli.getId(); }
-        else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", t));
+        else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
 
         ASTType targtype = e.unfold(argtype);
         Env<LinearBinding> prevDelta = e.popDelta();

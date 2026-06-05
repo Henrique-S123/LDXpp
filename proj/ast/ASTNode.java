@@ -16,7 +16,7 @@ public abstract class ASTNode {
         throw new TypeCheckError("Undefined method.");
     }
 
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
         return typecheck(e);
     }
 

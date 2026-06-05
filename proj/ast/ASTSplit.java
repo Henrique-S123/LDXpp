@@ -45,6 +45,10 @@ public class ASTSplit extends ASTNode {
     }
 
 	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+        return typecheck(e, null);
+    }
+
+	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
 		if (id1.equals(id2)) throw new TypeCheckError(ErrorMessages.splitIdsMustBeDifferent());
 		ASTType tt = pair.typecheck(e);
 		tt = e.unfold(tt);
@@ -65,7 +69,7 @@ public class ASTSplit extends ASTNode {
 		e.bindToEnv(ENV.SIGMA, id2, t2);
 		e.addEq(new ASTTEq(new ASTTensor(new ASTId(id1), new ASTId(id2)), pair, tt));
 
-		ASTType rt = body.typecheck(e);
+		ASTType rt = (target == null) ? body.typecheck(e) : body.typecheck(e, target);
 		if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
 
 		if (lin1 || lin2) e.closeEnvScope(ENV.DELTA);

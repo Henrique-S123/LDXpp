@@ -50,11 +50,11 @@ public class ASTTensor extends ASTNode {
         return new ASTTTensor(t1, t2, null);
     }
 
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
         ASTType tgt1, tgt2;
         String tgtid;
-        if (t instanceof ASTTTensor tensor) { tgt1 = tensor.getFirst(); tgt2 = tensor.getSecond(); tgtid = tensor.getId(); }
-        else throw new TypeCheckError(ErrorMessages.typeMismatch("tensor", t));
+        if (target instanceof ASTTTensor tensor) { tgt1 = tensor.getFirst(); tgt2 = tensor.getSecond(); tgtid = tensor.getId(); }
+        else throw new TypeCheckError(ErrorMessages.typeMismatch("tensor", target));
 
         e.openEnvScope(ENV.SIGMA);
 

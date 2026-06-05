@@ -42,28 +42,7 @@ public class ASTLet extends ASTNode {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        ASTType tt = (declType != null) ? declType : expr.typecheck(e);
-        tt = e.unfold(tt);
-
-        ENV env = (tt instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
-        e.openEnvScope(env);
-        e.openEnvScope(ENV.SIGMA);
-
-        e.bindToEnv(env, id, tt);
-        if (declType != null) {
-            ASTType exprType = expr.typecheck(e, tt);
-            if (!(exprType.isSubtypeOf(tt, e, new AlphaEnv()))) throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
-        }
-
-        e.addEq(new ASTTEq(new ASTId(id), expr, tt));
-        e.bindToEnv(ENV.SIGMA, id, tt);
-
-        ASTType rt = body.typecheck(e);
-        if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
-        e.closeEnvScope(env);
-        e.closeEnvScope(ENV.SIGMA);
-
-        return rt;
+        return typecheck(e, null);
 	}
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
@@ -83,7 +62,7 @@ public class ASTLet extends ASTNode {
         e.addEq(new ASTTEq(new ASTId(id), expr, tt));
         e.bindToEnv(ENV.SIGMA, id, tt);
 
-        ASTType rt = body.typecheck(e, target);
+        ASTType rt = (target == null) ? body.typecheck(e) : body.typecheck(e, target);
         if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);

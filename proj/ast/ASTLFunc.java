@@ -82,13 +82,13 @@ public class ASTLFunc extends ASTNode  {
         return new ASTTLollipop(targtype, tb, id);
 	}
 
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
-        ASTType tt = e.unfold(t);
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+        ASTType tt = e.unfold(target);
         ASTType tdom, tcodom;
         String tid;
 
         if (tt instanceof ASTTLollipop lolli) { tdom = lolli.getDom(); tcodom = lolli.getCodom(); tid = lolli.getId(); }
-        else throw new TypeCheckError(ErrorMessages.typeMismatch("lollipop", t));
+        else throw new TypeCheckError(ErrorMessages.typeMismatch("lollipop", target));
 
         ASTType targtype = e.unfold(argtype);
         ENV env = (targtype instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;

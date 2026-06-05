@@ -42,6 +42,10 @@ public class ASTMatch extends ASTNode {
     }
 
 	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+        return typecheck(e, null);
+    }
+
+	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
 		ASTType tt = test.typecheck(e), rettype = null, tcase;
 		HashSet<String> matchUsedLinears = null;
 		tt = e.unfold(tt);
@@ -64,7 +68,7 @@ public class ASTMatch extends ASTNode {
 			env.openEnvScope(ENV.SIGMA);
 			env.bindToEnv(envChoice, c.getId(), tlabel);
 			env.bindToEnv(ENV.SIGMA, c.getId(), tlabel);
-			tcase = c.getExp().typecheck(env);
+			tcase = (target == null) ? c.getExp().typecheck(env) : c.getExp().typecheck(env, target);
 
 			if (matchUsedLinears == null) {
 				matchUsedLinears = new HashSet<String>(e.getUsedLinears());

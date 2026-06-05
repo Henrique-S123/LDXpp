@@ -52,12 +52,12 @@ public class ASTPair extends ASTNode {
         return new ASTTPair(t1, t2, null);
     }
 
-    public ASTType typecheck(EnvSet e, ASTType t) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
         ASTType tgt1, tgt2;
         String tgtid;
-        if (t instanceof ASTTPair pair) { tgt1 = pair.getFirst(); tgt2 = pair.getSecond(); tgtid = pair.getId(); }
-        else if (t instanceof ASTTTensor tensor) { tgt1 = tensor.getFirst(); tgt2 = tensor.getSecond(); tgtid = tensor.getId(); }
-        else throw new TypeCheckError(ErrorMessages.typeMismatch("pair or tensor", t));
+        if (target instanceof ASTTPair pair) { tgt1 = pair.getFirst(); tgt2 = pair.getSecond(); tgtid = pair.getId(); }
+        else if (target instanceof ASTTTensor tensor) { tgt1 = tensor.getFirst(); tgt2 = tensor.getSecond(); tgtid = tensor.getId(); }
+        else throw new TypeCheckError(ErrorMessages.typeMismatch("pair or tensor", target));
 
         Env<LinearBinding> prevDelta = e.popDelta();
         e.openEnvScope(ENV.SIGMA);
