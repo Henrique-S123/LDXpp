@@ -9,10 +9,10 @@ import java.util.*;
 
 public final class DefEq {
     public static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, Env<ASTType> phi) {
-        return termdefeq(l, sl, r, sr, new AlphaEnv(), phi, new HashSet<IdPair>());
+        return termdefeq(l, sl, r, sr, new AlphaEnv(), phi);
     }
 
-    public static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Set<IdPair> seen) {
+    public static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi) {
         Debug.log(String.format("left: %s", l));
         Debug.log(String.format("right: %s", r));
         Debug.nl();
@@ -33,54 +33,54 @@ public final class DefEq {
         }
 
         if (l instanceof ASTLet ln && r instanceof ASTLet rn)
-            return typedefeq(ln.getDeclType(), sl, rn.getDeclType(), sr, alpha, phi, seen)
-                && termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, seen)
-                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId(), rn.getId()), phi, seen);
+            return typedefeq(ln.getDeclType(), sl, rn.getDeclType(), sr, alpha, phi, new HashSet<IdPair>())
+                && termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi)
+                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId(), rn.getId()), phi);
         
         if (l instanceof ASTArithOp ln && r instanceof ASTArithOp rn && ln.getOp().equals(rn.getOp()))
-            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi, seen)
-                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi, seen);
+            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi)
+                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi);
         if (l instanceof ASTCmpOp ln && r instanceof ASTCmpOp rn && ln.getOp().equals(rn.getOp()))
-            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi, seen)
-                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi, seen);
+            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi)
+                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi);
         if (l instanceof ASTLogicOp ln && r instanceof ASTLogicOp rn && ln.getOp().equals(rn.getOp()))
-            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi, seen)
-                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi, seen);
+            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi)
+                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi);
         
         if (l instanceof ASTIf ln && r instanceof ASTIf rn)
-            return termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi, seen)
-                && termdefeq(ln.getConseq(), sl, rn.getConseq(), sr, alpha, phi, seen)
-                && termdefeq(ln.getAlt(), sl, rn.getAlt(), sr, alpha, phi, seen);
+            return termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi)
+                && termdefeq(ln.getConseq(), sl, rn.getConseq(), sr, alpha, phi)
+                && termdefeq(ln.getAlt(), sl, rn.getAlt(), sr, alpha, phi);
         
         if (l instanceof ASTFunc ln && r instanceof ASTFunc rn)
-            return typedefeq(ln.getArgtype(), ln.getSig(), rn.getArgtype(), rn.getSig(), alpha, phi, seen)
-                && termdefeq(ln.getBody().weaknorm(), ln.getSig(), rn.getBody().weaknorm(), rn.getSig(), alpha.extend(ln.getId(), rn.getId()), phi, seen);
+            return typedefeq(ln.getArgtype(), ln.getSig(), rn.getArgtype(), rn.getSig(), alpha, phi, new HashSet<IdPair>())
+                && termdefeq(ln.getBody().weaknorm(), ln.getSig(), rn.getBody().weaknorm(), rn.getSig(), alpha.extend(ln.getId(), rn.getId()), phi);
         if (l instanceof ASTLFunc ln && r instanceof ASTLFunc rn)
-            return typedefeq(ln.getArgtype(), ln.getSig(), rn.getArgtype(), rn.getSig(), alpha, phi, seen)
-                && termdefeq(ln.getBody().weaknorm(), ln.getSig(), rn.getBody().weaknorm(), rn.getSig(), alpha.extend(ln.getId(), rn.getId()), phi, seen);
+            return typedefeq(ln.getArgtype(), ln.getSig(), rn.getArgtype(), rn.getSig(), alpha, phi, new HashSet<IdPair>())
+                && termdefeq(ln.getBody().weaknorm(), ln.getSig(), rn.getBody().weaknorm(), rn.getSig(), alpha.extend(ln.getId(), rn.getId()), phi);
         if (l instanceof ASTApp ln && r instanceof ASTApp rn)
-            return termdefeq(ln.getFunc(), sl, rn.getFunc(), sr, alpha, phi, seen)
-                && termdefeq(ln.getArg(), sl, rn.getArg(), sr, alpha, phi, seen);
+            return termdefeq(ln.getFunc(), sl, rn.getFunc(), sr, alpha, phi)
+                && termdefeq(ln.getArg(), sl, rn.getArg(), sr, alpha, phi);
         // TODO: add ASTRec case
         
         if (l instanceof ASTPair ln && r instanceof ASTPair rn)
-            return termdefeq(ln.getFirst(), ln.getSig(), rn.getFirst(), rn.getSig(), alpha, phi, seen)
-                && termdefeq(ln.getSecond(), ln.getSig(), rn.getSecond(), rn.getSig(), alpha, phi, seen);
+            return termdefeq(ln.getFirst(), ln.getSig(), rn.getFirst(), rn.getSig(), alpha, phi)
+                && termdefeq(ln.getSecond(), ln.getSig(), rn.getSecond(), rn.getSig(), alpha, phi);
         if (l instanceof ASTChoice ln && r instanceof ASTChoice rn && ln.getChoice() == rn.getChoice())
-            return termdefeq(ln.getPair(), sl, rn.getPair(), sr, alpha, phi, seen);
+            return termdefeq(ln.getPair(), sl, rn.getPair(), sr, alpha, phi);
         if (l instanceof ASTTensor ln && r instanceof ASTTensor rn)
-            return termdefeq(ln.getFirst(), ln.getSig(), rn.getFirst(), rn.getSig(), alpha, phi, seen)
-                && termdefeq(ln.getSecond(), ln.getSig(), rn.getSecond(), rn.getSig(), alpha, phi, seen);
+            return termdefeq(ln.getFirst(), ln.getSig(), rn.getFirst(), rn.getSig(), alpha, phi)
+                && termdefeq(ln.getSecond(), ln.getSig(), rn.getSecond(), rn.getSig(), alpha, phi);
         if (l instanceof ASTSplit ln && r instanceof ASTSplit rn)
-            return termdefeq(ln.getPair(), sl, rn.getPair(), sr, alpha, phi, seen)
-                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId1(), rn.getId1()).extend(ln.getId2(), rn.getId2()), phi, seen);
+            return termdefeq(ln.getPair(), sl, rn.getPair(), sr, alpha, phi)
+                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId1(), rn.getId1()).extend(ln.getId2(), rn.getId2()), phi);
         
         if (l instanceof ASTUnion ln && r instanceof ASTUnion rn && ln.getLabel().equals(rn.getLabel()))
-            return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, seen);
+            return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi);
         if (l instanceof ASTLUnion ln && r instanceof ASTLUnion rn && ln.getLabel().equals(rn.getLabel()))
-            return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, seen);
+            return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi);
         if (l instanceof ASTMatch ln && r instanceof ASTMatch rn) {
-            if (termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi, seen)) return false;
+            if (termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi)) return false;
             Map<String, MatchCase> left = ln.getCases();
             Map<String, MatchCase> right = rn.getCases();
 			if (left.size() != right.size()) return false;
@@ -88,31 +88,31 @@ public final class DefEq {
                 MatchCase leftCase = left.get(label);
 				MatchCase rightCase = right.get(label);
 				if (rightCase == null ||
-                    !termdefeq(leftCase.getExp(), sl, rightCase.getExp(), sr, alpha.extend(leftCase.getId(), rightCase.getId()), phi, seen)) return false;
+                    !termdefeq(leftCase.getExp(), sl, rightCase.getExp(), sr, alpha.extend(leftCase.getId(), rightCase.getId()), phi)) return false;
             }
             return true;
         }
 
         if (l instanceof ASTUnit && r instanceof ASTUnit) return true;
         if (l instanceof ASTSeq ln && r instanceof ASTSeq rn)
-            return termdefeq(ln.getFirst(), sl, rn.getSecond(), sr, alpha, phi, seen)
-                && termdefeq(ln.getSecond(), sl, rn.getSecond(), sr, alpha, phi, seen);
+            return termdefeq(ln.getFirst(), sl, rn.getSecond(), sr, alpha, phi)
+                && termdefeq(ln.getSecond(), sl, rn.getSecond(), sr, alpha, phi);
         if (l instanceof ASTPrint ln && r instanceof ASTPrint rn && ln.getNewline() == rn.getNewline())
-            return termdefeq(ln.getExp(), sl, rn.getExp(), sr, alpha, phi, seen);
+            return termdefeq(ln.getExp(), sl, rn.getExp(), sr, alpha, phi);
 
         if (l instanceof ASTRefl && r instanceof ASTRefl) return true;
         if (l instanceof ASTLeteq ln && r instanceof ASTLeteq rn)
-            return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, seen)
-                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId(), rn.getId()), phi, seen);
+            return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi)
+                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId(), rn.getId()), phi);
         
         if (l instanceof ASTTypeDef ln && r instanceof ASTTypeDef rn)
             return ln.getLtd().equals(rn.getLtd())
-                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha, phi, seen);
+                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha, phi);
         
         TermClosure s = l.solve(sl);
-        if (s != null) return termdefeq(s.term().weaknorm(), s.env(), r, sr, alpha, phi, seen);
+        if (s != null) return termdefeq(s.term().weaknorm(), s.env(), r, sr, alpha, phi);
         s = r.solve(sr);
-        if (s != null) return termdefeq(l, sl, s.term().weaknorm(), s.env(), alpha, phi, seen);
+        if (s != null) return termdefeq(l, sl, s.term().weaknorm(), s.env(), alpha, phi);
         return false;
     }
 
@@ -175,8 +175,8 @@ public final class DefEq {
         }
 
         if (l instanceof ASTTEq lt && r instanceof ASTTEq rt)
-            return termdefeq(lt.getTerm1(), sl, rt.getTerm1(), sr, alpha, phi, seen)
-                && termdefeq(lt.getTerm2(), sl, rt.getTerm2(), sr, alpha, phi, seen)
+            return termdefeq(lt.getTerm1(), sl, rt.getTerm1(), sr, alpha, phi)
+                && termdefeq(lt.getTerm2(), sl, rt.getTerm2(), sr, alpha, phi)
                 && typedefeq(lt.getType(), sl, rt.getType(), sr, alpha, phi, seen);
 
         if (l instanceof ASTTId lt) {
