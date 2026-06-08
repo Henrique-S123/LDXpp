@@ -80,7 +80,7 @@ public final class DefEq {
         if (l instanceof ASTLUnion ln && r instanceof ASTLUnion rn && ln.getLabel().equals(rn.getLabel()))
             return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi);
         if (l instanceof ASTMatch ln && r instanceof ASTMatch rn) {
-            if (termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi)) return false;
+            if (!termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi)) return false;
             Map<String, MatchCase> left = ln.getCases();
             Map<String, MatchCase> right = rn.getCases();
 			if (left.size() != right.size()) return false;

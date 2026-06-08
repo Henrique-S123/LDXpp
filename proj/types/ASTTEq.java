@@ -4,8 +4,6 @@ import proj.ast.*;
 import proj.defeq.*;
 import proj.env.*;
 
-import java.util.HashSet;
-
 public class ASTTEq extends ASTType {
     ASTNode term1, term2;
     ASTType type;

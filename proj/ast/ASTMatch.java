@@ -68,6 +68,7 @@ public class ASTMatch extends ASTNode {
 			env.openEnvScope(ENV.SIGMA);
 			env.bindToEnv(envChoice, c.getId(), tlabel);
 			env.bindToEnv(ENV.SIGMA, c.getId(), tlabel);
+			env.addEq(new ASTTEq(test, new ASTUnion(entry.getKey(), new ASTId(c.getId())), tt));
 			tcase = (target == null) ? c.getExp().typecheck(env) : c.getExp().typecheck(env, target);
 
 			if (matchUsedLinears == null) {
@@ -81,10 +82,17 @@ public class ASTMatch extends ASTNode {
 			caseUsedLineares.remove(c.getId());
 			if (!caseUsedLineares.equals(matchUsedLinears))
 				throw new TypeCheckError(ErrorMessages.branchesDifferentLinears(caseUsedLineares, matchUsedLinears));
-			if (rettype == null || rettype.isSubtypeOf(tcase, env, new AlphaEnv()))
-				rettype = tcase;
-			else if (!tcase.isSubtypeOf(rettype, env, new AlphaEnv()))
-				throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tcase, rettype));
+			if (target == null) {
+				if (rettype == null || rettype.isSubtypeOf(tcase, env, new AlphaEnv()))
+					rettype = tcase;
+				else if (!tcase.isSubtypeOf(rettype, env, new AlphaEnv()))
+					throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tcase, rettype));
+			} else {
+				rettype = target;
+				if (!tcase.isSubtypeOf(target, env, new AlphaEnv()))
+					throw new TypeCheckError(ErrorMessages.notSubtype(tcase, target));
+			}
+
 			env.closeEnvScope(envChoice);
 			env.closeEnvScope(ENV.SIGMA);
 		}

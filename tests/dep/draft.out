@@ -10,3 +10,6 @@ class proj.errors.TypeCheckError: Terms n2 and add(n2)(n1) are not definitionall
 type: (z:Nat, z ≡ add(n1)(n1) : Nat), value: (union #succ(union #succ(union #zero(()))), refl)
 
 
+type: (z:LIST, size(z) ≡ n2 : Nat), value: (union #cons((union #succ(union #succ(union #zero(()))), union #cons((union #succ(union #zero(())), union #nil(()))))), refl)
+
+
