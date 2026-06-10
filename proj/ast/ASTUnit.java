@@ -7,7 +7,7 @@ public class ASTUnit extends ASTNode  {
 
     public ASTUnit() {}
 
-    public ASTType typecheck(EnvSet e) {
+    public ASTType typeinfer(EnvSet e) {
         return new ASTTUnit();
     }
 

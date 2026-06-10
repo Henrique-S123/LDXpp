@@ -32,8 +32,8 @@ public class ASTChoice extends ASTNode  {
         }           
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-		ASTType tp = pair.typecheck(e);
+    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
+		ASTType tp = pair.typeinfer(e);
         if (tp instanceof ASTTPair tpair) {
             return choice > 0 ? tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, 0).normalize(e.getSigma())) : tpair.getFirst();
         } else {

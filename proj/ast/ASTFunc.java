@@ -65,7 +65,7 @@ public class ASTFunc extends ASTNode  {
         return new VClos(e, id, body, false);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
         argtype.check(e.getSigma(), e.getPhi());
         ASTType targtype = e.unfold(argtype);
         e.openEnvScope(ENV.GAMMA);
@@ -75,7 +75,7 @@ public class ASTFunc extends ASTNode  {
         setSig(e.getSigma());
         Env<LinearBinding> prevDelta = e.popDelta();
 
-        ASTType tb = body.typecheck(e);
+        ASTType tb = body.typeinfer(e);
 
         e.pushDelta(prevDelta);
         e.closeEnvScope(ENV.GAMMA);

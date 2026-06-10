@@ -65,7 +65,7 @@ public class ASTLFunc extends ASTNode  {
         return new VClos(e, id, body, true);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
         argtype.check(e.getSigma(), e.getPhi());
         ASTType targtype = e.unfold(argtype);
         ENV env = (targtype instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
@@ -75,7 +75,7 @@ public class ASTLFunc extends ASTNode  {
         e.bindToEnv(ENV.SIGMA, id, targtype);
         setSig(e.getSigma());
 
-        ASTType tb = body.typecheck(e);
+        ASTType tb = body.typeinfer(e);
 
         if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
         e.closeEnvScope(env);

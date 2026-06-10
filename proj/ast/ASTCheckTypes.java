@@ -18,7 +18,7 @@ public class ASTCheckTypes extends ASTNode {
         return new VBool(true, false);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
         if (DefEq.typedefeq(left, e.getSigma(), right, e.getSigma(), e.getPhi())) return new ASTTUnit();
         throw new TypeCheckError(ErrorMessages.typesNotDefeq(left, right));
     }

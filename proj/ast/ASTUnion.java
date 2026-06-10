@@ -28,10 +28,10 @@ public class ASTUnion extends ASTNode {
 		return new VUnion(label, expr.eval(e), false);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
 		Env<LinearBinding> prevDelta = e.popDelta();
-		ASTType t = expr.typecheck(e);
+		ASTType t = expr.typeinfer(e);
 		e.pushDelta(prevDelta);
 		ll.put(label, t);
 		return new ASTTUnion(ll);

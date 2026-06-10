@@ -27,10 +27,10 @@ public class ASTSeq extends ASTNode {
 		return second.eval(e);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        ASTType tf = first.typecheck(e);
+    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
+        ASTType tf = first.typeinfer(e);
         if (tf instanceof ASTTUnit) {
-            return second.typecheck(e);
+            return second.typeinfer(e);
         } else {
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
         }

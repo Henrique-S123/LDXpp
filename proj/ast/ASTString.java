@@ -18,7 +18,7 @@ public class ASTString extends ASTNode  {
         return new VString(s);                
     }
 
-    public ASTType typecheck(EnvSet e) {
+    public ASTType typeinfer(EnvSet e) {
 		return new ASTTString();
     }
 

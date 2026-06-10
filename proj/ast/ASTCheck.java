@@ -18,9 +18,9 @@ public class ASTCheck extends ASTNode {
         return new VBool(true, false);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        ASTType t = left.typecheck(e);
-        ASTType t2 = right.typecheck(e);
+    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
+        ASTType t = left.typeinfer(e);
+        ASTType t2 = right.typeinfer(e);
         if (!t.isSubtypeOf(t2, e, new AlphaEnv()) || !t2.isSubtypeOf(t, e, new AlphaEnv()))
             throw new TypeCheckError(ErrorMessages.termsWithDifferentTypes(left, right, t, t2));
 

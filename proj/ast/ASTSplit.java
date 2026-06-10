@@ -44,13 +44,13 @@ public class ASTSplit extends ASTNode {
 		} else throw new InterpreterError(ErrorMessages.wrongValueToUnary("split", v));
     }
 
-	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+	public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
         return typecheck(e, null);
     }
 
 	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
 		if (id1.equals(id2)) throw new TypeCheckError(ErrorMessages.splitIdsMustBeDifferent());
-		ASTType tt = pair.typecheck(e);
+		ASTType tt = pair.typeinfer(e);
 		tt = e.unfold(tt);
 		if (!(tt instanceof ASTTTensor ttensor))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
@@ -69,7 +69,7 @@ public class ASTSplit extends ASTNode {
 		e.bindToEnv(ENV.SIGMA, id2, t2);
 		e.addEq(new ASTTEq(new ASTTensor(new ASTId(id1), new ASTId(id2)), pair, tt));
 
-		ASTType rt = (target == null) ? body.typecheck(e) : body.typecheck(e, target);
+		ASTType rt = (target == null) ? body.typeinfer(e) : body.typecheck(e, target);
 		if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
 
 		if (lin1 || lin2) e.closeEnvScope(ENV.DELTA);

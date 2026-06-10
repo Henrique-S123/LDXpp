@@ -41,12 +41,12 @@ public class ASTMatch extends ASTNode {
 		} else throw new InterpreterError(ErrorMessages.wrongValueToUnary("match", vt));
     }
 
-	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+	public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
         return typecheck(e, null);
     }
 
 	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
-		ASTType tt = test.typecheck(e), rettype = null, tcase;
+		ASTType tt = test.typeinfer(e), rettype = null, tcase;
 		HashSet<String> matchUsedLinears = null;
 		tt = e.unfold(tt);
 		if (!(tt instanceof ASTTUnion || tt instanceof ASTTLUnion))
@@ -69,7 +69,7 @@ public class ASTMatch extends ASTNode {
 			env.bindToEnv(envChoice, c.getId(), tlabel);
 			env.bindToEnv(ENV.SIGMA, c.getId(), tlabel);
 			env.addEq(new ASTTEq(test, new ASTUnion(entry.getKey(), new ASTId(c.getId())), tt));
-			tcase = (target == null) ? c.getExp().typecheck(env) : c.getExp().typecheck(env, target);
+			tcase = (target == null) ? c.getExp().typeinfer(env) : c.getExp().typecheck(env, target);
 
 			if (matchUsedLinears == null) {
 				matchUsedLinears = new HashSet<String>(e.getUsedLinears());

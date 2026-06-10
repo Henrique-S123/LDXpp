@@ -29,14 +29,14 @@ public class ASTTypeDef extends ASTNode {
         return body.eval(env);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
         e.openEnvScope(ENV.PHI);
         for (String s : ltd.keySet()) {
             ASTType t = ltd.get(s);
             t.setSig(e.getSigma());
             e.bindToEnv(ENV.PHI, s, t);
         }
-        ASTType ret = this.body.typecheck(e);
+        ASTType ret = this.body.typeinfer(e);
         e.closeEnvScope(ENV.PHI);
         return ret;
     }

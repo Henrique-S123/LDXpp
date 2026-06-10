@@ -54,9 +54,9 @@ public class ASTArithOp extends ASTNode {
 		}
     }
 
-	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-		ASTType tl = lhs.typecheck(e);
-		ASTType tr = rhs.typecheck(e);
+	public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
+		ASTType tl = lhs.typeinfer(e);
+		ASTType tr = rhs.typeinfer(e);
 		if (tl instanceof ASTTInt && tr instanceof ASTTInt) {
 			return new ASTTInt();
 		} else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt)) {

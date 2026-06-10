@@ -19,7 +19,7 @@ public class ASTLBool extends ASTNode  {
         return new VBool(b, true);                
     }
 
-    public ASTType typecheck(EnvSet e) {
+    public ASTType typeinfer(EnvSet e) {
 		return new ASTTLBool();
 	}
 

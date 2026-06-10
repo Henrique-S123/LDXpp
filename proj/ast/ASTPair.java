@@ -43,10 +43,10 @@ public class ASTPair extends ASTNode {
         return new VPair(v1, v2, false);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
         Env<LinearBinding> prevDelta = e.popDelta();
-        ASTType t1 = first.typecheck(e);
-        ASTType t2 = second.typecheck(e);
+        ASTType t1 = first.typeinfer(e);
+        ASTType t2 = second.typeinfer(e);
         e.pushDelta(prevDelta);
         setSig(e.getSigma());
         return new ASTTPair(t1, t2, null);

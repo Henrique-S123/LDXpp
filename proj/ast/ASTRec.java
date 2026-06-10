@@ -33,7 +33,7 @@ public class ASTRec extends ASTNode  {
         return new VRec(e, fid, body, false);
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
         ASTType tfunctype = e.unfold(functype);
         if (!(tfunctype instanceof ASTTArrow || tfunctype instanceof ASTTLollipop))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("rec", tfunctype));
@@ -44,7 +44,7 @@ public class ASTRec extends ASTNode  {
         e.bindToEnv(ENV.SIGMA, fid, tfunctype);
         
         Env<LinearBinding> prevDelta = e.popDelta();
-        ASTType tb = body.typecheck(e);
+        ASTType tb = body.typeinfer(e);
         if (!tb.isSubtypeOf(tfunctype, e, new AlphaEnv()))
             throw new TypeCheckError(ErrorMessages.notSubtype(tb, tfunctype));
         e.pushDelta(prevDelta);

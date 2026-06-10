@@ -21,7 +21,7 @@ public class ASTId extends ASTNode	{
         return env.find(id);
     }
 
-    public ASTType typecheck(EnvSet e) throws EnvironmentError {
+    public ASTType typeinfer(EnvSet e) throws EnvironmentError {
 		return e.findVar(id);
 	}
 

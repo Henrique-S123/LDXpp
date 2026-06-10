@@ -39,18 +39,18 @@ public class ASTIf extends ASTNode {
 		}
     }
 
-	public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+	public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
         return typecheck(e, null);
     }
 
 	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
-		ASTType tt = test.typecheck(e);
+		ASTType tt = test.typeinfer(e);
 		if (!(tt instanceof ASTTBool || tt instanceof ASTTLBool))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("if", tt));
 
 		EnvSet e2 = new EnvSet(e);
-		ASTType tconseq = (target == null) ? conseq.typecheck(e) : conseq.typecheck(e, target);
-		ASTType talt = (target == null) ? alt.typecheck(e2) : alt.typecheck(e2, target);
+		ASTType tconseq = (target == null) ? conseq.typeinfer(e) : conseq.typecheck(e, target);
+		ASTType talt = (target == null) ? alt.typeinfer(e2) : alt.typecheck(e2, target);
 		HashSet<String> conseqLs = new HashSet<String>(e.getUsedLinears());
 		HashSet<String> altLs = new HashSet<String>(e2.getUsedLinears());
 

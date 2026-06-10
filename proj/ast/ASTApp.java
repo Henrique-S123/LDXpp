@@ -49,8 +49,8 @@ public class ASTApp extends ASTNode  {
         }          
     }
 
-    public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
-        ASTType tf = func.typecheck(e);
+    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
+        ASTType tf = func.typeinfer(e);
         tf = e.unfold(tf);
 
         ASTType dom, codom;
