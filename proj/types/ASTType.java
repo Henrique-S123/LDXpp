@@ -15,7 +15,7 @@ public class ASTType  {
         sig = s;
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e, AlphaEnv alpha) {
+    public boolean isSubtypeOf(ASTType o, Env<ASTType> phi, AlphaEnv alpha) {
         return false;
     }
 

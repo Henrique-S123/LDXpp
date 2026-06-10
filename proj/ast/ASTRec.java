@@ -45,7 +45,7 @@ public class ASTRec extends ASTNode  {
         
         Env<LinearBinding> prevDelta = e.popDelta();
         ASTType tb = body.typeinfer(e);
-        if (!tb.isSubtypeOf(tfunctype, e, new AlphaEnv()))
+        if (!tb.isSubtypeOf(tfunctype, e.getPhi(), new AlphaEnv()))
             throw new TypeCheckError(ErrorMessages.notSubtype(tb, tfunctype));
         e.pushDelta(prevDelta);
         return tfunctype;
@@ -66,7 +66,7 @@ public class ASTRec extends ASTNode  {
         e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(ENV.GAMMA);
 
-        if (!tdom.isSubtypeOf(targtype, e, new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtypeFunc(tdom, targtype));
+        if (!tdom.isSubtypeOf(targtype, e.getPhi(), new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtypeFunc(tdom, targtype));
 
         e.bindToEnv(ENV.GAMMA, fid, targtype);
         e.bindToEnv(ENV.SIGMA, fid, targtype);

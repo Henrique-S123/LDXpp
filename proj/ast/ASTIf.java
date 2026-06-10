@@ -56,8 +56,8 @@ public class ASTIf extends ASTNode {
 
 		if (!conseqLs.equals(altLs))
 			throw new TypeCheckError(ErrorMessages.branchesDifferentLinears(conseqLs, altLs));
-		if (tconseq.isSubtypeOf(talt, e, new AlphaEnv())) return tconseq;
-		else if (talt.isSubtypeOf(tconseq, e, new AlphaEnv())) return talt;
+		if (tconseq.isSubtypeOf(talt, e.getPhi(), new AlphaEnv())) return tconseq;
+		else if (talt.isSubtypeOf(tconseq, e.getPhi(), new AlphaEnv())) return talt;
 		else throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tconseq, talt));
 	}
 

@@ -58,7 +58,7 @@ public class ASTLet extends ASTNode {
         e.bindToEnv(env, id, tt);
         if (declType != null) {
             ASTType exprType = expr.typecheck(e, tt);
-            if (!(exprType.isSubtypeOf(tt, e, new AlphaEnv()))) throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
+            if (!(exprType.isSubtypeOf(tt, e.getPhi(), new AlphaEnv()))) throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
         }
 
         e.addEq(new ASTTEq(new ASTId(id), expr, tt));

@@ -36,11 +36,11 @@ public class ASTTTensor extends ASTLinType {
         return String.format("(%s%s | %s)", id != null ? id+":" : "", first, second);
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e, alpha);
+    public boolean isSubtypeOf(ASTType o, Env<ASTType> phi, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), phi, alpha);
         if (o instanceof ASTTTensor otensor) {
-            return first.isSubtypeOf(otensor.getFirst(), e, alpha)
-                && second.isSubtypeOf(otensor.getSecond(), e, alpha.extend(id, otensor.getId()));
+            return first.isSubtypeOf(otensor.getFirst(), phi, alpha)
+                && second.isSubtypeOf(otensor.getSecond(), phi, alpha.extend(id, otensor.getId()));
         }
         return false;
     }

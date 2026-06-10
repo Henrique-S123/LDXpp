@@ -1,7 +1,6 @@
 package proj.types;
 
 import proj.ast.*;
-import proj.defeq.*;
 import proj.env.*;
 import proj.errors.*;
 
@@ -35,12 +34,12 @@ public class ASTTEq extends ASTType {
         return String.format("%s ≡ %s : %s", term1, term2, type);
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e, alpha);
-        Env<ASTType> sigma = e.getSigma();
-        return o instanceof ASTTEq eq && type.isSubtypeOf(eq.getType(), e, alpha)
-            && DefEq.termdefeq(term1, sigma, eq.getTerm1(), sigma, alpha, e.getPhi())
-            && DefEq.termdefeq(term2, sigma, eq.getTerm2(), sigma, alpha, e.getPhi());
+    public boolean isSubtypeOf(ASTType o, Env<ASTType> phi, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), phi, alpha);
+        // Env<ASTType> sigma = phi.getSigma();
+        return o instanceof ASTTEq eq && type.isSubtypeOf(eq.getType(), phi, alpha);
+            // && DefEq.termdefeq(term1, sigma, eq.getTerm1(), sigma, alpha, e.getPhi())
+            // && DefEq.termdefeq(term2, sigma, eq.getTerm2(), sigma, alpha, e.getPhi());
     }
 
     public ASTType inst(String instId, ASTNode n) {

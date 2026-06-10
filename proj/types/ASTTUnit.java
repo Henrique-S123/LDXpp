@@ -8,8 +8,8 @@ public class ASTTUnit extends ASTType {
         return "()";
     }
 
-    public boolean isSubtypeOf(ASTType o, EnvSet e, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(e.unfold(o), e, alpha);
+    public boolean isSubtypeOf(ASTType o, Env<ASTType> phi, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), phi, alpha);
         return o instanceof ASTTUnit;
     }
 
