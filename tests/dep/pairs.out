@@ -7,13 +7,16 @@ type: bool, value: true
 type: true ≡ true : bool, value: refl
 
 
-class proj.errors.TypeCheckError: refl expects a type to be typed against
+class proj.errors.TypeCheckError: refl expects a term annotation
 
 
-class proj.errors.TypeCheckError: refl expects a type to be typed against
+class proj.errors.TypeCheckError: refl expects a term annotation
 
 
-class proj.errors.TypeCheckError: refl expects a type to be typed against
+class proj.errors.TypeCheckError: refl expects a term annotation
+
+
+type: (bool, true ≡ true : bool), value: (true, refl)
 
 
 type: (x:int, x ≡ 2 : int), value: (2, refl)

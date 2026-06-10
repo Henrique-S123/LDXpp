@@ -10,6 +10,8 @@ let p = (true, refl); fst(p);;
 
 let p = (true, refl); snd(p);;
 
+let p = (true, refl(true)); p;;
+
 let p:(x:int, (x=2:int)) = (2, refl); p;;
 
 let p:(x:int, (x=2:int)) = (3, refl); p;;

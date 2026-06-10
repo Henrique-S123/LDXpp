@@ -10,6 +10,8 @@ let p = (truel | refl); split p {x|y -> x};;
 
 let p = (truel | refl); split p {x|y -> y};;
 
+let p = (truel | refl(true)); p;;
+
 let p:(x:linint | (x=2l:linint)) = (2l | refl); p;;
 
 let p:(x:linint | (x=2l:linint)) = (3l | refl); p;;

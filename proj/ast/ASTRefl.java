@@ -7,15 +7,20 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTRefl extends ASTNode  {
+    ASTNode term;
 
-    public ASTRefl() {}
+    public ASTRefl(ASTNode t) {
+        term = t;
+    }
 
     public IValue eval(Env<IValue> e) {
-        return new VRefl();                
+        return new VRefl();
     }
 
     public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
-        throw new TypeCheckError(ErrorMessages.missingExpectedType(this));
+        if (term == null) throw new TypeCheckError(ErrorMessages.missingTermAnnotation());
+        ASTType type = term.typeinfer(e);
+        return new ASTTEq(term, term, type);
 	}
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {

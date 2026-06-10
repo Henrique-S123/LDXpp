@@ -292,7 +292,7 @@ ASTNode App() :
 
 ASTNode Fact() :
 { Token n, n2; 
-  ASTNode t, e1, e2, t2;
+  ASTNode t = null, e1, e2, t2;
   ASTNode body, alt;
   ASTFunc tf, tc, tn;
   ASTLFunc ltf, ltc, ltn;
@@ -328,7 +328,7 @@ ASTNode Fact() :
     | <LPAR> t = TermList() <RPAR>
     | <QUESTION> <LPAR> t = Let() <COMMA> t2 = Let() <RPAR> { t = new ASTCheck(t, t2); }
     | <QUESTIONTYPES> <LPAR> type = Type() <COMMA> type2 = Type() <RPAR> { t = new ASTCheckTypes(type, type2); }
-    | <REFL> { t = new ASTRefl(); }
+    | <REFL> (LOOKAHEAD(2) <LPAR> t = Fact() <RPAR>)? { t = new ASTRefl(t); }
     )
    { return t; }
 }
