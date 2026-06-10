@@ -66,6 +66,7 @@ public class ASTFunc extends ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e) throws TypeCheckError, EnvironmentError {
+        argtype.check(e.getSigma(), e.getPhi());
         ASTType targtype = e.unfold(argtype);
         e.openEnvScope(ENV.GAMMA);
         e.openEnvScope(ENV.SIGMA);
@@ -83,6 +84,7 @@ public class ASTFunc extends ASTNode  {
 	}
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+        argtype.check(e.getSigma(), e.getPhi());
         ASTType tt = e.unfold(target);
         ASTType tdom, tcodom;
         String tid;

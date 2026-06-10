@@ -2,6 +2,7 @@ package proj.types;
 
 import proj.ast.ASTNode;
 import proj.env.*;
+import proj.errors.*;
 
 public class ASTTArrow extends ASTType {
     ASTType dom, codom;
@@ -48,6 +49,14 @@ public class ASTTArrow extends ASTType {
 
     public ASTType inst(String instId, ASTNode n) {
         return new ASTTArrow(dom.inst(instId, n), codom.inst(instId, n), id);
+    }
+
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError, EnvironmentError {
+        dom.check(sigma, phi);
+        Env<ASTType> env = sigma.beginScope();
+        env.assoc(id, dom);
+        codom.check(sigma, phi);
+        return this;
     }
 }
 

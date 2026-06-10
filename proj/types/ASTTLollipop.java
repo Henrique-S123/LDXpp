@@ -2,6 +2,7 @@ package proj.types;
 
 import proj.ast.ASTNode;
 import proj.env.*;
+import proj.errors.*;
 
 public class ASTTLollipop extends ASTLinType {
     ASTType dom, codom;
@@ -47,6 +48,14 @@ public class ASTTLollipop extends ASTLinType {
 
     public ASTType inst(String instId, ASTNode n) {
         return new ASTTLollipop(dom.inst(instId, n), codom.inst(instId, n), id);
+    }
+
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError, EnvironmentError {
+        dom.check(sigma, phi);
+        Env<ASTType> env = sigma.beginScope();
+        env.assoc(id, dom);
+        codom.check(sigma, phi);
+        return this;
     }
 }
 

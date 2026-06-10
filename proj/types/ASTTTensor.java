@@ -2,6 +2,7 @@ package proj.types;
 
 import proj.ast.ASTNode;
 import proj.env.*;
+import proj.errors.*;
 
 public class ASTTTensor extends ASTLinType {
     ASTType first, second;
@@ -46,5 +47,13 @@ public class ASTTTensor extends ASTLinType {
 
     public ASTType inst(String instId, ASTNode n) {
         return new ASTTTensor(first.inst(instId, n), second.inst(instId, n), id);
+    }
+
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError, EnvironmentError {
+        first.check(sigma, phi);
+        Env<ASTType> env = sigma.beginScope();
+        env.assoc(id, first);
+        second.check(sigma, phi);
+        return this;
     }
 }

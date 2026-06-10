@@ -3,6 +3,7 @@ package proj.types;
 import proj.ast.*;
 import proj.defeq.*;
 import proj.env.*;
+import proj.errors.*;
 
 public class ASTTEq extends ASTType {
     ASTNode term1, term2;
@@ -49,6 +50,13 @@ public class ASTTEq extends ASTType {
         ASTType neweq = new ASTTEq(instTerm1, instTerm2, instType);
         neweq.setSig(sig);
         return neweq;
+    }
+
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError, EnvironmentError{
+        type.check(sigma, phi);
+        term1.puretypecheck(sigma, phi, type);
+        term2.puretypecheck(sigma, phi, type);
+        return this;
     }
 }
 

@@ -46,6 +46,8 @@ public class ASTLet extends ASTNode {
 	}
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+        if (declType != null) declType.check(e.getSigma(), e.getPhi());
+
         ASTType tt = (declType != null) ? declType : expr.typecheck(e);
         tt = e.unfold(tt);
 

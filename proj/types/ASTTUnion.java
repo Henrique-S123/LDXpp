@@ -2,6 +2,7 @@ package proj.types;
 
 import proj.ast.ASTNode;
 import proj.env.*;
+import proj.errors.*;
 
 import java.util.Map;
 
@@ -45,6 +46,11 @@ public class ASTTUnion extends ASTType {
 
     public ASTType inst(String instId, ASTNode n) {
         ll.forEach((id, type) -> ll.put(id, type.inst(instId, n)));
+        return this;
+    }
+
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError, EnvironmentError {
+        for (ASTType t : ll.values()) t.check(sigma, phi);
         return this;
     }
 }

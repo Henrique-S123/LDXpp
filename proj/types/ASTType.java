@@ -1,6 +1,7 @@
 package proj.types;
 
 import proj.env.*;
+import proj.errors.*;
 import proj.ast.ASTNode;
 
 public class ASTType  {
@@ -19,6 +20,10 @@ public class ASTType  {
     }
 
     public ASTType inst(String instId, ASTNode n) {
+        return this;
+    }
+
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError, EnvironmentError {
         return this;
     }
 }

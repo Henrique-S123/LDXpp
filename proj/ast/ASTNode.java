@@ -20,6 +20,10 @@ public abstract class ASTNode {
         return typecheck(e);
     }
 
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError, EnvironmentError {
+        return target;
+    }
+
     public ASTNode weaknorm(Env<ASTNode> sub) {
         return this;
     }
