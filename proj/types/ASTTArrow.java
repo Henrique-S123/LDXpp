@@ -37,14 +37,14 @@ public class ASTTArrow extends ASTType {
         return String.format("%s->%s", domStr, codom);
     }
 
-    public boolean isSubtypeOf(ASTType o, Env<ASTType> phi, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), phi, alpha);
+    public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
         ASTType odom, ocodom;
         String oid;
         if (o instanceof ASTTArrow arrow) { odom = arrow.getDom(); ocodom = arrow.getCodom(); oid = arrow.getId(); }
         else if (o instanceof ASTTLollipop lolli) { odom = lolli.getDom(); ocodom = lolli.getCodom(); oid = lolli.getId(); }
         else return false;
-        return odom.isSubtypeOf(dom, phi, alpha) && codom.isSubtypeOf(ocodom, phi, alpha.extend(id, oid));
+        return odom.isSubtypeOf(dom, sigma, phi, alpha) && codom.isSubtypeOf(ocodom, sigma, phi, alpha.extend(id, oid));
     }
 
     public ASTType inst(String instId, ASTNode n) {

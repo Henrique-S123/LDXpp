@@ -8,8 +8,8 @@ public class ASTTLBool extends ASTLinType {
         return "linbool";
     }
 
-    public boolean isSubtypeOf(ASTType o, Env<ASTType> phi, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), phi, alpha);
+    public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
         return o instanceof ASTTLBool;
     }
 

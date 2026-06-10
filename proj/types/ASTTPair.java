@@ -36,14 +36,14 @@ public class ASTTPair extends ASTType {
         return String.format("(%s%s, %s)", id != null ? id+":" : "", first, second);
     }
 
-    public boolean isSubtypeOf(ASTType o, Env<ASTType> phi, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), phi, alpha);
+    public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
         ASTType ofirst, osecond;
         String oid;
         if (o instanceof ASTTPair opair) { ofirst = opair.getFirst(); osecond = opair.getSecond(); oid = opair.getId(); }
         else if (o instanceof ASTTTensor otensor) { ofirst = otensor.getFirst(); osecond = otensor.getSecond(); oid = otensor.getId(); }
         else return false;
-        return first.isSubtypeOf(ofirst, phi, alpha) && second.isSubtypeOf(osecond, phi, alpha.extend(id, oid));
+        return first.isSubtypeOf(ofirst, sigma, phi, alpha) && second.isSubtypeOf(osecond, sigma, phi, alpha.extend(id, oid));
     }
 
     public ASTType inst(String instId, ASTNode n) {

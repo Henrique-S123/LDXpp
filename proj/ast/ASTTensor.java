@@ -59,11 +59,11 @@ public class ASTTensor extends ASTNode {
         e.openEnvScope(ENV.SIGMA);
 
         ASTType t1 = first.typecheck(e, tgt1);
-        if (!t1.isSubtypeOf(tgt1, e.getPhi(), new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtype(t1, tgt1));
+        if (!t1.isSubtypeOf(tgt1, e.getSigma(), e.getPhi(), new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtype(t1, tgt1));
 
         ASTType insttgt2 = (tgtid != null) ? tgt2.inst(tgtid, first) : tgt2;
         ASTType t2 = second.typecheck(e, insttgt2);
-        if (!t2.isSubtypeOf(insttgt2, e.getPhi(), new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtype(t2, tgt2));
+        if (!t2.isSubtypeOf(insttgt2, e.getSigma(), e.getPhi(), new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtype(t2, tgt2));
         
         e.closeEnvScope(ENV.SIGMA);
         setSig(e.getSigma());

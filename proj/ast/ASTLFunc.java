@@ -97,7 +97,7 @@ public class ASTLFunc extends ASTNode  {
         e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(env);
 
-        if (!tdom.isSubtypeOf(targtype, e.getPhi(), new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtypeFunc(tdom, targtype));
+        if (!tdom.isSubtypeOf(targtype, e.getSigma(), e.getPhi(), new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtypeFunc(tdom, targtype));
 
         e.bindToEnv(env, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);

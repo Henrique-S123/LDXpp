@@ -17,9 +17,9 @@ public	class ASTTId extends ASTType	{
         return id;
     }
 
-    public boolean isSubtypeOf(ASTType o, Env<ASTType> phi, AlphaEnv alpha) {
+    public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
         if (o instanceof ASTTId) return id.equals(((ASTTId) o).getId());
-        return phi.unfold(this).isSubtypeOf(o, phi, alpha);
+        return phi.unfold(this).isSubtypeOf(o, sigma, phi, alpha);
     }
 
     public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {

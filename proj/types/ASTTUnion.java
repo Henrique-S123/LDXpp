@@ -24,15 +24,15 @@ public class ASTTUnion extends ASTType {
             ll.get(id).setSig(s);
     }
 
-    public boolean isSubtypeOf(ASTType o, Env<ASTType> phi, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), phi, alpha);
+    public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
         Map<String, ASTType> mb;
         if (o instanceof ASTTUnion ounion) mb = ounion.getMap();
         else if (o instanceof ASTTLUnion olunion) mb = olunion.getMap();
         else return false;
 
         for (String s : ll.keySet())
-            if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), phi, alpha))) return false;
+            if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), sigma, phi, alpha))) return false;
         return true;
     }
 

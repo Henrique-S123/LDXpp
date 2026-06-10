@@ -83,13 +83,13 @@ public class ASTMatch extends ASTNode {
 			if (!caseUsedLineares.equals(matchUsedLinears))
 				throw new TypeCheckError(ErrorMessages.branchesDifferentLinears(caseUsedLineares, matchUsedLinears));
 			if (target == null) {
-				if (rettype == null || rettype.isSubtypeOf(tcase, env.getPhi(), new AlphaEnv()))
+				if (rettype == null || rettype.isSubtypeOf(tcase, env.getSigma(), env.getPhi(), new AlphaEnv()))
 					rettype = tcase;
-				else if (!tcase.isSubtypeOf(rettype, env.getPhi(), new AlphaEnv()))
+				else if (!tcase.isSubtypeOf(rettype, env.getSigma(), env.getPhi(), new AlphaEnv()))
 					throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tcase, rettype));
 			} else {
 				rettype = target;
-				if (!tcase.isSubtypeOf(target, env.getPhi(), new AlphaEnv()))
+				if (!tcase.isSubtypeOf(target, env.getSigma(), env.getPhi(), new AlphaEnv()))
 					throw new TypeCheckError(ErrorMessages.notSubtype(tcase, target));
 			}
 

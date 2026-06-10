@@ -24,12 +24,12 @@ public class ASTTLUnion extends ASTLinType {
             ll.get(id).setSig(s);
     }
 
-    public boolean isSubtypeOf(ASTType o, Env<ASTType> phi, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), phi, alpha);
+    public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
         if (o instanceof ASTTLUnion olunion) {
             Map<String, ASTType> mb = olunion.getMap();
             for (String s : ll.keySet())
-                if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), phi, alpha))) return false;
+                if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), sigma, phi, alpha))) return false;
             return true;
         }
         return false;
