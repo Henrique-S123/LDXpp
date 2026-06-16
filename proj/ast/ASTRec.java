@@ -33,7 +33,7 @@ public class ASTRec extends ASTNode  {
         return new VRec(e, fid, body, false);
     }
 
-    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         functype.check(e.getSigma(), e.getPhi());
         ASTType targetcodom = null;
         if (target != null) {

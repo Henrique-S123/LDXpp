@@ -77,7 +77,7 @@ public class EnvSet {
     }
 
     /* Populate environments */
-    private void checkAlreadyDeclared(ENV env, String id) throws EnvironmentError {
+    private void checkAlreadyDeclared(ENV env, String id) throws TypeCheckError {
         if (
             switch (env) {
                 case GAMMA -> gamma.find(id) != null;
@@ -85,10 +85,10 @@ public class EnvSet {
                 case PHI -> phi.find(id) != null;
                 case SIGMA -> sigma.find(id) != null;
             }
-        ) throw new EnvironmentError(ErrorMessages.alreadyDeclaredVariable(id));
+        ) throw new TypeCheckError(ErrorMessages.alreadyDeclaredVariable(id));
     }
 
-    public void bindToEnv(ENV env, String id, ASTType t) throws EnvironmentError {
+    public void bindToEnv(ENV env, String id, ASTType t) throws TypeCheckError {
         switch (env) {
             case GAMMA -> { checkAlreadyDeclared(ENV.DELTA, id); gamma.assoc(id, t); }
             case DELTA -> { checkAlreadyDeclared(ENV.GAMMA, id); delta.assoc(id, new LinearBinding(t, true)); }
@@ -103,15 +103,15 @@ public class EnvSet {
     }
 
     /* Find binds */
-    public ASTType findVar(String id) throws EnvironmentError {
+    public ASTType findVar(String id) throws TypeCheckError {
         ASTType ret = gamma.find(id);
         if (ret != null) return ret;
         LinearBinding b = delta.find(id);
         if (b != null) {
             if (b.isAvailable()) { b.use(); return b.getType(); }
-            else throw new EnvironmentError(ErrorMessages.alreadyUsedLinear(id));
+            else throw new TypeCheckError(ErrorMessages.alreadyUsedLinear(id));
         }
-        throw new EnvironmentError(ErrorMessages.idNotFound(id));
+        throw new TypeCheckError(ErrorMessages.idNotFound(id));
     }
 
     /* Unfold operation */

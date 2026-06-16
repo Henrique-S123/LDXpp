@@ -8,15 +8,6 @@ import java.util.Set;
 public final class ErrorMessages {
     private ErrorMessages() {}
 
-    // Environment errors
-    public static String alreadyDeclaredVariable(String id) {
-        return String.format("Identifier '%s' already declared", id);
-    }
-
-    public static String idNotFound(String id) {
-        return String.format("Identifier '%s' not found", id);
-    }
-
     // Evaluation errors
     public static String wrongValueToUnary(String op, IValue v) {
         return String.format("Illegal value to %s: %s", op, v);
@@ -31,6 +22,14 @@ public final class ErrorMessages {
     }
 
     // Typechecking errors
+    public static String alreadyDeclaredVariable(String id) {
+        return String.format("Identifier '%s' already declared", id);
+    }
+    
+    public static String idNotFound(String id) {
+        return String.format("Identifier '%s' not found", id);
+    }
+
     public static String illegalTypeToUnary(String op, ASTType t) {
         return String.format("Illegal type to %s: %s", op, t);
     }

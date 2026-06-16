@@ -42,7 +42,7 @@ public class ASTPair extends ASTNode {
         return new VPair(v1, v2, false);
     }
 
-    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         ASTType targetfst = null, targetsnd = null;
         String tgtid = null;
         if (target != null) {

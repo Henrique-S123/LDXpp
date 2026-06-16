@@ -50,7 +50,7 @@ public class ASTTPair extends ASTType {
         return new ASTTPair(first.inst(instId, n), second.inst(instId, n), id);
     }
 
-    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError, EnvironmentError {
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError {
         first.check(sigma, phi);
         Env<ASTType> env = sigma.beginScope();
         env.assoc(id, first);

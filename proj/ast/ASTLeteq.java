@@ -37,7 +37,7 @@ public class ASTLeteq extends ASTNode {
         return body.eval(en);
     }
 
-    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         ASTType t = expr.typecheck(e, null);
         t = e.unfold(t);
 

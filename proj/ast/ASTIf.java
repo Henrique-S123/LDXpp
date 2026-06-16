@@ -39,7 +39,7 @@ public class ASTIf extends ASTNode {
 		}
     }
 
-	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		ASTType tt = test.typecheck(e, null);
 		if (!(tt instanceof ASTTBool || tt instanceof ASTTLBool))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("if", tt));

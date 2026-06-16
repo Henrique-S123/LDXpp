@@ -29,7 +29,7 @@ public class ASTTypeDef extends ASTNode {
         return body.eval(env);
     }
 
-    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         e.openEnvScope(ENV.PHI);
         for (String s : ltd.keySet()) {
             ASTType t = ltd.get(s);

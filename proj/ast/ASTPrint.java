@@ -29,7 +29,7 @@ public class ASTPrint extends ASTNode {
 		return v0;
     }
 
-	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		exp.typecheck(e, null);
 		return new ASTTUnit();
 	}

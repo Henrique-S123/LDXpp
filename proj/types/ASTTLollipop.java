@@ -50,7 +50,7 @@ public class ASTTLollipop extends ASTLinType {
         return new ASTTLollipop(dom.inst(instId, n), codom.inst(instId, n), id);
     }
 
-    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError, EnvironmentError {
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError {
         dom.check(sigma, phi);
         Env<ASTType> env = sigma.beginScope();
         env.assoc(id, dom);

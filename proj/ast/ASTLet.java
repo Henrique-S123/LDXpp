@@ -41,7 +41,7 @@ public class ASTLet extends ASTNode {
         return body.eval(en);
     }
 
-    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         if (declType != null) declType.check(e.getSigma(), e.getPhi());
 
         ASTType tt = (declType != null) ? declType : expr.typecheck(e, null);

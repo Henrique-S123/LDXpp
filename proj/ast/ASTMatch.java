@@ -41,7 +41,7 @@ public class ASTMatch extends ASTNode {
 		} else throw new InterpreterError(ErrorMessages.wrongValueToUnary("match", vt));
     }
 
-	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		ASTType tt = test.typecheck(e, null), rettype = null, tcase;
 		HashSet<String> matchUsedLinears = null;
 		tt = e.unfold(tt);

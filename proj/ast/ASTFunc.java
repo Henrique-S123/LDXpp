@@ -65,7 +65,7 @@ public class ASTFunc extends ASTNode  {
         return new VClos(e, id, body, false);
     }
 
-    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         argtype.check(e.getSigma(), e.getPhi());
         ASTType targetdom = null, targetcodom = null;
         if (target != null) {

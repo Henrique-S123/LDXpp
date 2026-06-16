@@ -17,7 +17,7 @@ public class ASTRefl extends ASTNode  {
         return new VRefl();
     }
 
-    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         if (term == null && target == null) throw new TypeCheckError(ErrorMessages.missingTermAnnotation());
         if (target == null) return new ASTTEq(term, term, term.typecheck(e, null));
 

@@ -44,7 +44,7 @@ public class ASTSplit extends ASTNode {
 		} else throw new InterpreterError(ErrorMessages.wrongValueToUnary("split", v));
     }
 
-	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		if (id1.equals(id2)) throw new TypeCheckError(ErrorMessages.splitIdsMustBeDifferent());
 		ASTType tt = pair.typecheck(e, null);
 		tt = e.unfold(tt);

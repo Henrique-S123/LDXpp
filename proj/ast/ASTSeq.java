@@ -27,7 +27,7 @@ public class ASTSeq extends ASTNode {
 		return second.eval(e);
     }
 
-    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         ASTType tf = first.typecheck(e, null);
         if (tf instanceof ASTTUnit) return second.typecheck(e, target);
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));

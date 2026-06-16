@@ -48,7 +48,7 @@ public class ASTLogicOp extends ASTNode {
 		}
     }
 
-	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		ASTType tl = lhs.typecheck(e, null);
 		ASTType tr = rhs.typecheck(e, null);
 		if (tl instanceof ASTTBool && tr instanceof ASTTBool) return new ASTTBool();

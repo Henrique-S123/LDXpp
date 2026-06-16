@@ -51,7 +51,7 @@ public class ASTTEq extends ASTType {
         return neweq;
     }
 
-    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError, EnvironmentError{
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError {
         type.check(sigma, phi);
         term1.puretypecheck(sigma, phi, type);
         term2.puretypecheck(sigma, phi, type);

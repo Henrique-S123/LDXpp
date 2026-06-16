@@ -28,7 +28,7 @@ public class ASTUnion extends ASTNode {
 		return new VUnion(label, expr.eval(e), false);
     }
 
-    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
 		Env<LinearBinding> prevDelta = e.popDelta();
 		ll.put(label, expr.typecheck(e, null));

@@ -49,7 +49,7 @@ public class ASTApp extends ASTNode  {
         }          
     }
     
-    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         ASTType tf = func.typecheck(e, null);
         tf = e.unfold(tf);
         ASTType dom, codom;

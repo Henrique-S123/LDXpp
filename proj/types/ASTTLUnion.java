@@ -48,7 +48,7 @@ public class ASTTLUnion extends ASTLinType {
         return this;
     }
 
-    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError, EnvironmentError {
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError {
         for (ASTType t : ll.values()) t.check(sigma, phi);
         return this;
     }
