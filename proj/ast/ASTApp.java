@@ -48,11 +48,10 @@ public class ASTApp extends ASTNode  {
             throw new InterpreterError(ErrorMessages.wrongValueToUnary("app", vfunc));
         }          
     }
-
-    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
-        ASTType tf = func.typeinfer(e);
+    
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+        ASTType tf = func.typecheck(e, null);
         tf = e.unfold(tf);
-
         ASTType dom, codom;
         String id;
         if (tf instanceof ASTTArrow fun) { dom = fun.getDom(); codom = fun.getCodom(); id = fun.getId(); }

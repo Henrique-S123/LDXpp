@@ -41,14 +41,10 @@ public class ASTLet extends ASTNode {
         return body.eval(en);
     }
 
-    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
-        return typecheck(e, null);
-	}
-
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
         if (declType != null) declType.check(e.getSigma(), e.getPhi());
 
-        ASTType tt = (declType != null) ? declType : expr.typeinfer(e);
+        ASTType tt = (declType != null) ? declType : expr.typecheck(e, null);
         tt = e.unfold(tt);
 
         ENV env = (tt instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
@@ -64,7 +60,7 @@ public class ASTLet extends ASTNode {
         e.addEq(new ASTTEq(new ASTId(id), expr, tt));
         e.bindToEnv(ENV.SIGMA, id, tt);
 
-        ASTType rt = (target == null) ? body.typeinfer(e) : body.typecheck(e, target);
+        ASTType rt = body.typecheck(e, target);
         if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);

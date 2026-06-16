@@ -18,8 +18,8 @@ public class ASTString extends ASTNode  {
         return new VString(s);                
     }
 
-    public ASTType typeinfer(EnvSet e) {
-		return new ASTTString();
+    public ASTType typecheck(EnvSet e, ASTType target) {
+        return new ASTTString();
     }
 
     @Override

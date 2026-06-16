@@ -17,13 +17,10 @@ public class ASTRefl extends ASTNode  {
         return new VRefl();
     }
 
-    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
-        if (term == null) throw new TypeCheckError(ErrorMessages.missingTermAnnotation());
-        ASTType type = term.typeinfer(e);
-        return new ASTTEq(term, term, type);
-	}
-
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+        if (term == null && target == null) throw new TypeCheckError(ErrorMessages.missingTermAnnotation());
+        if (target == null) return new ASTTEq(term, term, term.typecheck(e, null));
+
         if (!(target instanceof ASTTEq tt))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));
 

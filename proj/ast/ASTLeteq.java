@@ -36,20 +36,16 @@ public class ASTLeteq extends ASTNode {
         en.assoc(id, ve);
         return body.eval(en);
     }
-	
-    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
-        return typecheck(e, null);
-    }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
-        ASTType t = expr.typeinfer(e);
+        ASTType t = expr.typecheck(e, null);
         t = e.unfold(t);
 
         if (!(t instanceof ASTTEq)) throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("leteq", t));
         e.openEnvScope(ENV.SIGMA);
         e.bindToEnv(ENV.SIGMA, id, t);
 
-        ASTType rt = (target == null) ? body.typeinfer(e) : body.typecheck(e, target);
+        ASTType rt = body.typecheck(e, target);
         if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
         e.closeEnvScope(ENV.SIGMA);
         return rt;

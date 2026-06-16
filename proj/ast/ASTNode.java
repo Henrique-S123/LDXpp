@@ -11,13 +11,9 @@ public abstract class ASTNode {
     public IValue eval(Env<IValue> e) throws InterpreterError {
         return new VUnit();
     }
-	
-    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
-        throw new TypeCheckError("Undefined method.");
-    }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
-        return typeinfer(e);
+        throw new TypeCheckError("Undefined method.");
     }
 
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError, EnvironmentError {

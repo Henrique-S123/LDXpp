@@ -23,7 +23,7 @@ public class Xppint {
 					try {
 						exp = parser.Start();
 						if (exp == null) System.exit(0);
-						ASTType t = exp.typeinfer(new EnvSet());
+						ASTType t = exp.typecheck(new EnvSet(), null);
 						IValue v = exp.eval(new Env<IValue>());
 						System.out.println("type: " + t + ", value: " + v);
 					} catch (ParseException e) {
@@ -45,7 +45,7 @@ public class Xppint {
 				System.out.print("# ");
 				exp = parser.Start();
 				if (exp==null) System.exit(0);
-				ASTType t = exp.typeinfer(new EnvSet());
+				ASTType t = exp.typecheck(new EnvSet(), null);
 				System.out.println(t);
 				IValue v = exp.eval(new Env<IValue>());
 				System.out.println(v);

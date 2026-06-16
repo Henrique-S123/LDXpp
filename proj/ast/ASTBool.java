@@ -19,9 +19,9 @@ public class ASTBool extends ASTNode  {
         return new VBool(b, false);                
     }
 
-    public ASTType typeinfer(EnvSet e) {
-		return new ASTTBool();
-	}
+    public ASTType typecheck(EnvSet e, ASTType target) {
+        return new ASTTBool();
+    }
 
     @Override
     public String toString() {

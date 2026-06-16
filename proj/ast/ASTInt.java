@@ -19,9 +19,9 @@ public class ASTInt extends ASTNode  {
         return new VInt(v, false);                
     }
 
-    public ASTType typeinfer(EnvSet e) {
-		return new ASTTInt();
-	}
+    public ASTType typecheck(EnvSet e, ASTType target) {
+        return new ASTTInt();
+    }
 
     @Override
     public String toString() {

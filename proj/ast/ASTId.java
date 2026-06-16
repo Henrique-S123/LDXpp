@@ -21,9 +21,9 @@ public class ASTId extends ASTNode	{
         return env.find(id);
     }
 
-    public ASTType typeinfer(EnvSet e) throws EnvironmentError {
-		return e.findVar(id);
-	}
+    public ASTType typecheck(EnvSet e, ASTType target) throws EnvironmentError {
+        return e.findVar(id);
+    }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
         ASTNode n = sub.find(id);

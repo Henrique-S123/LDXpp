@@ -31,14 +31,12 @@ public class ASTChoice extends ASTNode  {
             throw new InterpreterError(ErrorMessages.wrongValueToUnary(choice > 0 ? "snd" : "fst", vp));
         }           
     }
-
-    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
-		ASTType tp = pair.typeinfer(e);
-        if (tp instanceof ASTTPair tpair) {
+    
+    public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+		ASTType tp = pair.typecheck(e, null);
+        if (tp instanceof ASTTPair tpair)
             return choice > 0 ? tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, 0).normalize(e.getSigma())) : tpair.getFirst();
-        } else {
-            throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice > 0 ? "snd" : "fst", tp));
-        }
+        else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice > 0 ? "snd" : "fst", tp));
 	}
     
     public ASTNode weaknorm(Env<ASTNode> sub) {

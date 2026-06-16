@@ -65,45 +65,29 @@ public class ASTLFunc extends ASTNode  {
         return new VClos(e, id, body, true);
     }
 
-    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
-        argtype.check(e.getSigma(), e.getPhi());
-        ASTType targtype = e.unfold(argtype);
-        ENV env = (targtype instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
-        e.openEnvScope(env);
-        e.openEnvScope(ENV.SIGMA);
-        e.bindToEnv(env, id, targtype);
-        e.bindToEnv(ENV.SIGMA, id, targtype);
-        setSig(e.getSigma());
-
-        ASTType tb = body.typeinfer(e);
-
-        if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
-        e.closeEnvScope(env);
-        e.closeEnvScope(ENV.SIGMA);
-        return new ASTTLollipop(targtype, tb, id);
-	}
-
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
         argtype.check(e.getSigma(), e.getPhi());
-        ASTType tt = e.unfold(target);
-        ASTType tdom, tcodom;
-        String tid;
-
-        if (tt instanceof ASTTLollipop lolli) { tdom = lolli.getDom(); tcodom = lolli.getCodom(); tid = lolli.getId(); }
-        else throw new TypeCheckError(ErrorMessages.typeMismatch("lollipop", target));
+        ASTType targetdom = null, targetcodom = null;
+        if (target != null) {
+            ASTType tt = e.unfold(target);
+            String tid;
+            if (tt instanceof ASTTLollipop lolli) { targetdom = lolli.getDom(); targetcodom = lolli.getCodom(); tid = lolli.getId(); }
+            else throw new TypeCheckError(ErrorMessages.typeMismatch("lollipop", target));
+        }
 
         ASTType targtype = e.unfold(argtype);
         ENV env = (targtype instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
         e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(env);
 
-        if (!tdom.isSubtypeOf(targtype, e.getSigma(), e.getPhi(), new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtypeFunc(tdom, targtype));
+        if (targetdom != null && !targetdom.isSubtypeOf(targtype, e.getSigma(), e.getPhi(), new AlphaEnv()))
+            throw new TypeCheckError(ErrorMessages.notSubtypeFunc(targetdom, targtype));
 
         e.bindToEnv(env, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
         setSig(e.getSigma());
 
-        ASTType tb = body.typecheck(e, tcodom);
+        ASTType tb = body.typecheck(e, targetcodom);
 
         if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
         e.closeEnvScope(env);

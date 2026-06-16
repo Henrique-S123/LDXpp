@@ -54,19 +54,14 @@ public class ASTArithOp extends ASTNode {
 		}
     }
 
-	public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
-		ASTType tl = lhs.typeinfer(e);
-		ASTType tr = rhs.typeinfer(e);
-		if (tl instanceof ASTTInt && tr instanceof ASTTInt) {
-			return new ASTTInt();
-		} else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt)) {
-			return new ASTTLInt();
-		} else if ((tl instanceof ASTTInt || tl instanceof ASTTString) && (tr instanceof ASTTInt || tr instanceof ASTTString) && op == "+") {
-			return new ASTTString();
-		} else {
-			if (op == "-u") throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("unary -", tr));
-			else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
-		}
+	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+		ASTType tl = lhs.typecheck(e, null);
+		ASTType tr = rhs.typecheck(e, null);
+		if (tl instanceof ASTTInt && tr instanceof ASTTInt) return new ASTTInt();
+		else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt)) return new ASTTLInt();
+		else if ((tl instanceof ASTTInt || tl instanceof ASTTString) && (tr instanceof ASTTInt || tr instanceof ASTTString) && op == "+") return new ASTTString();
+		else if (op == "-u") throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("unary -", tr)); 
+		else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
 	}
 
 	public ASTNode weaknorm(Env<ASTNode> sub) {

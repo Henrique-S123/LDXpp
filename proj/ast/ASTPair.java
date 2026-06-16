@@ -3,7 +3,6 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
-import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTPair extends ASTNode {
@@ -43,36 +42,30 @@ public class ASTPair extends ASTNode {
         return new VPair(v1, v2, false);
     }
 
-    public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
-        Env<LinearBinding> prevDelta = e.popDelta();
-        ASTType t1 = first.typeinfer(e);
-        ASTType t2 = second.typeinfer(e);
-        e.pushDelta(prevDelta);
-        setSig(e.getSigma());
-        return new ASTTPair(t1, t2, null);
-    }
-
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
-        ASTType tgt1, tgt2;
-        String tgtid;
-        if (target instanceof ASTTPair pair) { tgt1 = pair.getFirst(); tgt2 = pair.getSecond(); tgtid = pair.getId(); }
-        else if (target instanceof ASTTTensor tensor) { tgt1 = tensor.getFirst(); tgt2 = tensor.getSecond(); tgtid = tensor.getId(); }
-        else throw new TypeCheckError(ErrorMessages.typeMismatch("pair or tensor", target));
+        ASTType targetfst = null, targetsnd = null;
+        String tgtid = null;
+        if (target != null) {
+            ASTType tt = e.unfold(target);
+            if (tt instanceof ASTTPair pair) { targetfst = pair.getFirst(); targetsnd = pair.getSecond(); tgtid = pair.getId(); }
+            else if (tt instanceof ASTTTensor tensor) { targetfst = tensor.getFirst(); targetsnd = tensor.getSecond(); tgtid = tensor.getId(); }
+            else throw new TypeCheckError(ErrorMessages.typeMismatch("pair or tensor", target));
+        }
 
         Env<LinearBinding> prevDelta = e.popDelta();
-        e.openEnvScope(ENV.SIGMA);
 
-        ASTType t1 = first.typecheck(e, tgt1);
-        if (!t1.isSubtypeOf(tgt1, e.getSigma(), e.getPhi(), new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtype(t1, tgt1));
+        ASTType t1 = first.typecheck(e, targetfst);
+        if (targetfst != null && !t1.isSubtypeOf(targetfst, e.getSigma(), e.getPhi(), new AlphaEnv()))
+            throw new TypeCheckError(ErrorMessages.notSubtype(t1, targetfst));
 
-        ASTType insttgt2 = (tgtid != null) ? tgt2.inst(tgtid, first) : tgt2;
+        ASTType insttgt2 = (tgtid != null) ? targetsnd.inst(tgtid, first) : targetsnd;
         ASTType t2 = second.typecheck(e, insttgt2);
-        if (!t2.isSubtypeOf(insttgt2, e.getSigma(), e.getPhi(), new AlphaEnv())) throw new TypeCheckError(ErrorMessages.notSubtype(t2, tgt2));
+        if (targetsnd != null && !t2.isSubtypeOf(insttgt2, e.getSigma(), e.getPhi(), new AlphaEnv()))
+            throw new TypeCheckError(ErrorMessages.notSubtype(t2, targetsnd));
 
-        e.closeEnvScope(ENV.SIGMA);
         e.pushDelta(prevDelta);
         setSig(e.getSigma());
-        return new ASTTPair(tgt1, tgt2, tgtid);
+        return new ASTTPair(targetfst == null ? t1 : targetfst, targetsnd == null ? t2 : targetsnd, tgtid);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {

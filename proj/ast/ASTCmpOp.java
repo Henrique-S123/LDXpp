@@ -48,9 +48,9 @@ public class ASTCmpOp extends ASTNode {
 		} else throw new InterpreterError(ErrorMessages.wrongValueToBinary(op, v1, v2));
     }
 
-	public ASTType typeinfer(EnvSet e) throws TypeCheckError, EnvironmentError {
-		ASTType tl = lhs.typeinfer(e);
-		ASTType tr = rhs.typeinfer(e);
+	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError, EnvironmentError {
+		ASTType tl = lhs.typecheck(e, null);
+		ASTType tr = rhs.typecheck(e, null);
 		if (tl instanceof ASTTInt && tr instanceof ASTTInt) return new ASTTBool();
 		else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt))
 			return new ASTTLBool();

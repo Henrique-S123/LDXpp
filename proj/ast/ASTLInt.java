@@ -19,8 +19,8 @@ public class ASTLInt extends ASTNode  {
         return new VInt(v, true);
     }
 
-    public ASTType typeinfer(EnvSet e) {;
-		return new ASTTLInt();
+    public ASTType typecheck(EnvSet e, ASTType target) {
+        return new ASTTLInt();
     }
 
     @Override
