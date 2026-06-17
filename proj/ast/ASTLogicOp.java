@@ -51,14 +51,8 @@ public class ASTLogicOp extends ASTNode {
 	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		ASTType tl = lhs.typecheck(e, null);
 		ASTType tr = rhs.typecheck(e, null);
-		if (tl instanceof ASTTBool && tr instanceof ASTTBool) {
-			if (target == null || target instanceof ASTTBool) return new ASTTBool();
-        	throw new TypeCheckError(ErrorMessages.typeMismatch("bool", target));
-		}
-		else if ((tl instanceof ASTTBool || tl instanceof ASTTLBool) && (tr instanceof ASTTBool || tr instanceof ASTTLBool)) {
-			if (target == null || target instanceof ASTTLBool) return new ASTTLBool();
-        	throw new TypeCheckError(ErrorMessages.typeMismatch("linbool", target));
-		}
+		if (tl instanceof ASTTBool && tr instanceof ASTTBool) return new ASTTBool();
+		else if ((tl instanceof ASTTBool || tl instanceof ASTTLBool) && (tr instanceof ASTTBool || tr instanceof ASTTLBool)) return new ASTTLBool();
 		else if (op == "~") throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("unary ~", tr));
 		else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
 	}

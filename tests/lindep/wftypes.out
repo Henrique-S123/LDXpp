@@ -1,24 +1,27 @@
-class proj.errors.TypeCheckError: Type mismatch: expected int type but got bool
+class proj.errors.TypeCheckError: Types int and bool are not definitionally equal
 
 
-class proj.errors.TypeCheckError: Type mismatch: expected linint type but got bool
+class proj.errors.TypeCheckError: Types linint and bool are not definitionally equal
 
 
-class proj.errors.TypeCheckError: Type mismatch: expected linint type but got int
+class proj.errors.TypeCheckError: Types linint and int are not definitionally equal
 
 
-class proj.errors.TypeCheckError: Type mismatch: expected int type but got linint
+class proj.errors.TypeCheckError: Types int and linint are not definitionally equal
 
 
-class proj.errors.TypeCheckError: Type mismatch: expected bool type but got int
+class proj.errors.TypeCheckError: Types bool and int are not definitionally equal
 
 
-class proj.errors.TypeCheckError: Type mismatch: expected int type but got bool
+class proj.errors.TypeCheckError: Types int and bool are not definitionally equal
 
 
-class proj.errors.TypeCheckError: Type mismatch: expected bool type but got int
+class proj.errors.TypeCheckError: Types bool and int are not definitionally equal
 
 
-class proj.errors.TypeCheckError: Type mismatch: expected bool type but got int
+class proj.errors.TypeCheckError: Types bool and int are not definitionally equal
+
+
+class proj.errors.TypeCheckError: Types int and bool are not definitionally equal
 
 

@@ -53,8 +53,12 @@ public class ASTTEq extends ASTType {
 
     public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError {
         type.check(sigma, phi);
-        term1.puretypecheck(sigma, phi, type);
-        term2.puretypecheck(sigma, phi, type);
+        ASTType type1 = term1.puretypecheck(sigma, phi, type);
+        if (!DefEq.typedefeq(type1, sigma, type, sigma, phi))
+            throw new TypeCheckError(ErrorMessages.typesNotDefeq(type1, type));
+        ASTType type2 = term2.puretypecheck(sigma, phi, type);
+        if (!DefEq.typedefeq(type2, sigma, type, sigma, phi))
+            throw new TypeCheckError(ErrorMessages.typesNotDefeq(type2, type));
         return this;
     }
 }

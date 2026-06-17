@@ -3,8 +3,6 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
-import proj.errors.ErrorMessages;
-import proj.errors.TypeCheckError;
 
 public class ASTBool extends ASTNode  {
     boolean b;
@@ -25,9 +23,8 @@ public class ASTBool extends ASTNode  {
         return new ASTTBool();
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-        if (target == null || target instanceof ASTTBool) return new ASTTBool();
-        throw new TypeCheckError(ErrorMessages.typeMismatch("bool", target));
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) {
+        return new ASTTBool();
     }
 
     @Override

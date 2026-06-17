@@ -25,6 +25,12 @@ public class ASTId extends ASTNode	{
         return e.findVar(id);
     }
 
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+        ASTType ret = sigma.find(id);
+        if (ret == null) throw new TypeCheckError(ErrorMessages.idNotFound(id));
+        return ret;
+    }
+
     public ASTNode weaknorm(Env<ASTNode> sub) {
         ASTNode n = sub.find(id);
         return (n != null) ? n : this;

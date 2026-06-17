@@ -1,7 +1,6 @@
 package proj.ast;
 
 import proj.env.*;
-import proj.errors.*;
 import proj.types.*;
 
 public class ASTUnit extends ASTNode  {
@@ -12,9 +11,8 @@ public class ASTUnit extends ASTNode  {
         return new ASTTUnit();
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-        if (target == null || target instanceof ASTTUnit) return new ASTTUnit();
-        throw new TypeCheckError(ErrorMessages.typeMismatch("()", target));
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) {
+        return new ASTTUnit();
     }
 
     @Override

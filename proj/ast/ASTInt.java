@@ -3,8 +3,6 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
-import proj.errors.ErrorMessages;
-import proj.errors.TypeCheckError;
 
 public class ASTInt extends ASTNode  {
     int v;
@@ -25,9 +23,8 @@ public class ASTInt extends ASTNode  {
         return new ASTTInt();
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-        if (target == null || target instanceof ASTTInt) return new ASTTInt();
-        throw new TypeCheckError(ErrorMessages.typeMismatch("int", target));
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) {
+        return new ASTTInt();
     }
 
     @Override

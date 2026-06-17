@@ -3,8 +3,6 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
-import proj.errors.ErrorMessages;
-import proj.errors.TypeCheckError;
 
 public class ASTString extends ASTNode  {
     String s;
@@ -24,9 +22,8 @@ public class ASTString extends ASTNode  {
         return new ASTTString();
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-        if (target == null || target instanceof ASTTString) return new ASTTString();
-        throw new TypeCheckError(ErrorMessages.typeMismatch("string", target));
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) {
+        return new ASTTString();
     }
 
     @Override

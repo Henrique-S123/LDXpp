@@ -67,18 +67,9 @@ public class ASTArithOp extends ASTNode {
 	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
 		ASTType tl = lhs.puretypecheck(sigma, phi, null);
 		ASTType tr = rhs.puretypecheck(sigma, phi, null);
-		if (tl instanceof ASTTInt && tr instanceof ASTTInt) {
-			if (target == null || target instanceof ASTTInt) return new ASTTInt();
-        	throw new TypeCheckError(ErrorMessages.typeMismatch("int", target));
-		}
-		else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt)) {
-			if (target == null || target instanceof ASTTLInt) return new ASTTLInt();
-        	throw new TypeCheckError(ErrorMessages.typeMismatch("linint", target));
-		}
-		else if ((tl instanceof ASTTInt || tl instanceof ASTTString) && (tr instanceof ASTTInt || tr instanceof ASTTString) && op == "+") {
-			if (target == null || target instanceof ASTTString) return new ASTTString();
-        	throw new TypeCheckError(ErrorMessages.typeMismatch("string", target));
-		}
+		if (tl instanceof ASTTInt && tr instanceof ASTTInt) return new ASTTInt();
+		else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt)) return new ASTTLInt();
+		else if ((tl instanceof ASTTInt || tl instanceof ASTTString) && (tr instanceof ASTTInt || tr instanceof ASTTString) && op == "+") return new ASTTString();
 		else if (op == "-u") throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("unary -", tr)); 
 		else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
 	}

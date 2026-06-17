@@ -60,14 +60,8 @@ public class ASTCmpOp extends ASTNode {
 	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
 		ASTType tl = lhs.puretypecheck(sigma, phi, null);
 		ASTType tr = rhs.puretypecheck(sigma, phi, null);
-		if (tl instanceof ASTTInt && tr instanceof ASTTInt) {
-			if (target == null || target instanceof ASTTBool) return new ASTTBool();
-        	throw new TypeCheckError(ErrorMessages.typeMismatch("bool", target));
-		}
-		else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt)) {
-			if (target == null || target instanceof ASTTLBool) return new ASTTLBool();
-        	throw new TypeCheckError(ErrorMessages.typeMismatch("linbool", target));
-		}
+		if (tl instanceof ASTTInt && tr instanceof ASTTInt) return new ASTTBool();
+		else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt)) return new ASTTLBool();
 		else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
 	}
 
