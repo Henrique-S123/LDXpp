@@ -25,3 +25,6 @@ class proj.errors.TypeCheckError: Types bool and int are not definitionally equa
 class proj.errors.TypeCheckError: Types int and bool are not definitionally equal
 
 
+class proj.errors.TypeCheckError: Identifier 'y' not found
+
+

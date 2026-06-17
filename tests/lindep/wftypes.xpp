@@ -15,3 +15,5 @@ let p:(x:int, (3>2 = true : int)) = (1, refl); p;;
 let p:(x:int, (true && false = false : int)) = (1, refl); p;;
 
 let p:(x:int, (x=x:bool)) = (1, refl); p;;
+
+let p:(x:int, (y=y:int)) = (1, refl); p;;

@@ -96,6 +96,26 @@ public class ASTFunc extends ASTNode  {
         return new ASTTArrow(targtype, tb, id);
     }
 
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+        argtype.check(sigma, phi);
+        ASTType targetdom = null, targetcodom = null;
+        if (target != null) {
+            ASTType tt = phi.unfold(target);
+            String tid;
+            if (tt instanceof ASTTArrow arrow) { targetdom = arrow.getDom(); targetcodom = arrow.getCodom(); tid = arrow.getId(); }
+            else if (tt instanceof ASTTLollipop lolli) { targetdom = lolli.getDom(); targetcodom = lolli.getCodom(); tid = lolli.getId(); }
+            else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
+        }
+
+        ASTType targtype = phi.unfold(argtype);
+        Env<ASTType> env = sigma.beginScope();
+        if (targetdom != null && !targetdom.isSubtypeOf(targtype, sigma, phi, new AlphaEnv()))
+            throw new TypeCheckError(ErrorMessages.notSubtypeFunc(targetdom, targtype));
+        env.assoc(id, targtype);
+        ASTType tb = body.puretypecheck(env, phi, targetcodom);
+        return new ASTTArrow(targtype, tb, id);
+    }
+
     public ASTNode weaknorm(Env<ASTNode> sub) {
         if (normEnv == null) setNormEnv(sub);
         return new ASTFunc(id, body, argtype, getNormEnv(), getSig());

@@ -63,6 +63,20 @@ public class ASTApp extends ASTNode  {
         else throw new TypeCheckError(ErrorMessages.notSubtypeApp(targ, dom));
 	}
 
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+        ASTType tf = func.puretypecheck(sigma, phi, null);
+        tf = phi.unfold(tf);
+        ASTType dom, codom;
+        String id;
+        if (tf instanceof ASTTArrow fun) { dom = fun.getDom(); codom = fun.getCodom(); id = fun.getId(); }
+        else if (tf instanceof ASTTLollipop fun) { dom = fun.getDom(); codom = fun.getCodom(); id = fun.getId(); }
+        else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("app", tf));
+
+        ASTType targ = arg.puretypecheck(sigma, phi, dom);
+        if (targ instanceof ASTTUnit || targ.isSubtypeOf(dom, sigma, phi, new AlphaEnv())) return codom.inst(id, arg);
+        else throw new TypeCheckError(ErrorMessages.notSubtypeApp(targ, dom));
+	}
+
     public ASTNode weaknorm(Env<ASTNode> sub) {
         ASTNode body, fn = func.weaknorm(sub);
         ASTNode argn = arg.weaknorm(sub);
