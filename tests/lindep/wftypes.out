@@ -13,3 +13,12 @@ class proj.errors.TypeCheckError: Type mismatch: expected int type but got linin
 class proj.errors.TypeCheckError: Type mismatch: expected bool type but got int
 
 
+class proj.errors.TypeCheckError: Type mismatch: expected int type but got bool
+
+
+class proj.errors.TypeCheckError: Type mismatch: expected bool type but got int
+
+
+class proj.errors.TypeCheckError: Type mismatch: expected bool type but got int
+
+
