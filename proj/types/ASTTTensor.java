@@ -53,7 +53,7 @@ public class ASTTTensor extends ASTLinType {
         first.check(sigma, phi);
         Env<ASTType> env = sigma.beginScope();
         env.assoc(id, first);
-        second.check(sigma, phi);
+        second.check(env, phi);
         return this;
     }
 }

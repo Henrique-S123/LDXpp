@@ -54,7 +54,7 @@ public class ASTTLollipop extends ASTLinType {
         dom.check(sigma, phi);
         Env<ASTType> env = sigma.beginScope();
         env.assoc(id, dom);
-        codom.check(sigma, phi);
+        codom.check(env, phi);
         return this;
     }
 }
