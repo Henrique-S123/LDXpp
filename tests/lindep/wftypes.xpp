@@ -1,0 +1,11 @@
+let p:(x:int, (1=1:bool)) = (3, refl); p;;
+
+let p:(x:int, (1l=1l:bool)) = (3, refl); p;;
+
+let p:(x:int, (1=1l:int)) = (3, refl); p;;
+
+let p:(x:int, (1=1l:linint)) = (3, refl); p;;
+
+let p:(x:bool, (true=true:int)) = (true, refl); p;;
+
+let p:(x:int, (x=x:bool)) = (1, refl); p;;

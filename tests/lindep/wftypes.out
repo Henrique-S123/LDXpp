@@ -1,0 +1,15 @@
+class proj.errors.TypeCheckError: Type mismatch: expected int type but got bool
+
+
+class proj.errors.TypeCheckError: Type mismatch: expected linint type but got bool
+
+
+class proj.errors.TypeCheckError: Type mismatch: expected linint type but got int
+
+
+class proj.errors.TypeCheckError: Type mismatch: expected int type but got linint
+
+
+class proj.errors.TypeCheckError: Type mismatch: expected bool type but got int
+
+

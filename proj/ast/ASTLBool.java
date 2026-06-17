@@ -3,6 +3,8 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.errors.ErrorMessages;
+import proj.errors.TypeCheckError;
 
 public class ASTLBool extends ASTNode  {
     boolean b;
@@ -21,6 +23,11 @@ public class ASTLBool extends ASTNode  {
 
     public ASTType typecheck(EnvSet e, ASTType target) {
         return new ASTTLBool();
+    }
+
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+        if (target == null || target instanceof ASTTLBool) return new ASTTLBool();
+        throw new TypeCheckError(ErrorMessages.typeMismatch("linbool", target));
     }
 
     @Override
