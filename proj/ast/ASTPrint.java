@@ -34,6 +34,11 @@ public class ASTPrint extends ASTNode {
 		return new ASTTUnit();
 	}
 
+	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+		exp.puretypecheck(sigma, phi, null);
+		return new ASTTUnit();
+	}
+
 	public ASTNode weaknorm(Env<ASTNode> sub) {
 		return new ASTPrint(exp.weaknorm(sub), newline);
     }

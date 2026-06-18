@@ -38,6 +38,13 @@ public class ASTChoice extends ASTNode  {
             return choice > 0 ? tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, 0).normalize(e.getSigma())) : tpair.getFirst();
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice > 0 ? "snd" : "fst", tp));
 	}
+
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+        ASTType tp = pair.puretypecheck(sigma, phi, null);
+        if (tp instanceof ASTTPair tpair)
+            return choice > 0 ? tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, 0).normalize(sigma)) : tpair.getFirst();
+        else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice > 0 ? "snd" : "fst", tp));
+    }
     
     public ASTNode weaknorm(Env<ASTNode> sub) {
         ASTNode pn = pair.weaknorm(sub);
