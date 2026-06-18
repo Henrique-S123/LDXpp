@@ -66,6 +66,27 @@ public class ASTIf extends ASTNode {
 		}
 	}
 
+	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+		ASTType tt = test.puretypecheck(sigma, phi, null);
+		if (!(tt instanceof ASTTBool || tt instanceof ASTTLBool))
+			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("if", tt));
+
+		ASTType tconseq = conseq.puretypecheck(sigma, phi, target);
+		ASTType talt = alt.puretypecheck(sigma, phi, target);
+
+		if (target != null) {
+			if (!tconseq.isSubtypeOf(target, sigma, phi, new AlphaEnv()))
+				throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tconseq, target));
+			if (!talt.isSubtypeOf(target, sigma, phi, new AlphaEnv()))
+				throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(talt, target));
+			return target;
+		} else {
+			if (tconseq.isSubtypeOf(talt, sigma, phi, new AlphaEnv())) return talt;
+			else if (talt.isSubtypeOf(tconseq, sigma, phi, new AlphaEnv())) return tconseq;
+			else throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tconseq, talt));
+		}
+	}
+
 	public ASTNode weaknorm(Env<ASTNode> sub) {
 		ASTNode tn = test.weaknorm(sub);
 		boolean val;

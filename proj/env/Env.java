@@ -56,6 +56,11 @@ public class Env <E>{
         bindings.put(id, bind);
     }
 
+    public void addEq(E t) {
+        String e = UUID.randomUUID().toString();
+        bindings.put(e, t);
+    }
+
     public E find(String id) {
         Env<E> curr = this;
         while (curr != null) {

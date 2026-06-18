@@ -68,6 +68,23 @@ public class ASTLet extends ASTNode {
         return rt;
 	}
 
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+        if (declType != null) declType.check(sigma, phi);
+
+        ASTType tt = (declType != null) ? declType : expr.puretypecheck(sigma, phi, null);
+        tt = phi.unfold(tt);
+
+        if (declType != null) {
+            ASTType exprType = expr.puretypecheck(sigma, phi, tt);
+            if (!(exprType.isSubtypeOf(tt, sigma, phi, new AlphaEnv())))
+                throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
+        }
+        Env<ASTType> env = sigma.beginScope();
+        sigma.addEq(new ASTTEq(new ASTId(id), expr, tt));
+        env.assoc(id, tt);
+        return body.puretypecheck(env, phi, target);
+    }
+
     public ASTNode weaknorm(Env<ASTNode> sub) {
         ASTNode normExpr = expr.weaknorm(sub);
         Env<ASTNode> env = sub.beginScope();
