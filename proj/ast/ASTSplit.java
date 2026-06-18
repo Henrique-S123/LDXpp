@@ -74,6 +74,22 @@ public class ASTSplit extends ASTNode {
 		return rt;
 	}
 
+	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+        if (id1.equals(id2)) throw new TypeCheckError(ErrorMessages.splitIdsMustBeDifferent());
+		ASTType tt = pair.puretypecheck(sigma, phi, null);
+		tt = phi.unfold(tt);
+		if (!(tt instanceof ASTTTensor ttensor))
+			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
+
+		ASTType t1 = phi.unfold(ttensor.getFirst());
+		ASTType t2 = phi.unfold(ttensor.getSecond());
+		Env<ASTType> env = sigma.beginScope();
+		env.assoc(id1, t1);
+		env.assoc(id2, t2);
+		env.addEq(new ASTTEq(new ASTTensor(new ASTId(id1), new ASTId(id2)), pair, tt));
+		return body.puretypecheck(env, phi, target);
+    }
+
 	public ASTNode weaknorm(Env<ASTNode> sub) {
 		ASTNode pn = pair.weaknorm(sub);
 		ASTNode f, s;

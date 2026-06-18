@@ -41,6 +41,16 @@ public class ASTTypeDef extends ASTNode {
         return ret;
     }
 
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+        Env<ASTType> env = phi.beginScope();
+        for (String s : ltd.keySet()) {
+            ASTType t = ltd.get(s);
+            t.setSig(sigma);
+            env.assoc(s, t);
+        }
+        return body.puretypecheck(sigma, env, target);
+    }
+
     public ASTNode weaknorm(Env<ASTNode> sub) {
         return new ASTTypeDef(ltd, body.weaknorm(sub));
     }

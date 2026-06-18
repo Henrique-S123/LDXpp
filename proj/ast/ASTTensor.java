@@ -64,6 +64,27 @@ public class ASTTensor extends ASTNode {
         return new ASTTTensor(targetfst == null ? t1 : targetfst, targetsnd == null ? t2 : targetsnd, tgtid);
     }
 
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+        ASTType targetfst = null, targetsnd = null;
+        String tgtid = null;
+        if (target != null) {
+            ASTType tt = phi.unfold(target);
+            if (tt instanceof ASTTTensor tensor) { targetfst = tensor.getFirst(); targetsnd = tensor.getSecond(); tgtid = tensor.getId(); }
+            else throw new TypeCheckError(ErrorMessages.typeMismatch("tensor", target));
+        }
+
+        ASTType t1 = first.puretypecheck(sigma, phi, targetfst);
+        if (targetfst != null && !t1.isSubtypeOf(targetfst, sigma, phi, new AlphaEnv()))
+            throw new TypeCheckError(ErrorMessages.notSubtype(t1, targetfst));
+
+        ASTType insttgt2 = (tgtid != null) ? targetsnd.inst(tgtid, first) : targetsnd;
+        ASTType t2 = second.puretypecheck(sigma, phi, insttgt2);
+        if (targetsnd != null && !t2.isSubtypeOf(insttgt2, sigma, phi, new AlphaEnv()))
+            throw new TypeCheckError(ErrorMessages.notSubtype(t2, targetsnd));
+
+        return new ASTTTensor(targetfst == null ? t1 : targetfst, targetsnd == null ? t2 : targetsnd, tgtid);
+    }
+
     public ASTNode weaknorm(Env<ASTNode> sub) {
         return new ASTTensor(first.weaknorm(sub), second.weaknorm(sub), sig);
     }
