@@ -25,7 +25,9 @@ public class ASTCheck extends ASTNode {
             throw new TypeCheckError(ErrorMessages.termsWithDifferentTypes(left, right, t, t2));
 
         Env<ASTType> sigma = e.getSigma();
-        if (DefEq.termdefeq(left.weaknorm(), sigma, right.weaknorm(), sigma, e.getPhi())) return new ASTTEq(left, right, t);
+        ASTNode ln = left.weaknorm();
+        ASTNode rn = right.weaknorm();
+        if (DefEq.termdefeq(ln, sigma, rn, sigma, e.getPhi())) return new ASTTEq(left, right, t);
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
