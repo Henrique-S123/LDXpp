@@ -33,6 +33,12 @@ public class ASTSeq extends ASTNode {
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
 	}
 
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+        ASTType tf = first.puretypecheck(sigma, phi, null);
+        if (tf instanceof ASTTUnit) return second.puretypecheck(sigma, phi, target);
+        else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
+    }
+
 	public ASTNode weaknorm(Env<ASTNode> sub) {
         ASTNode nfirst = first.weaknorm(sub);
         if (nfirst instanceof ASTUnit) return second.weaknorm(sub);

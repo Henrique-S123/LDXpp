@@ -62,6 +62,28 @@ public class ASTRec extends ASTNode  {
         return tfunctype;
     }
 
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+        functype.check(sigma, phi);
+        ASTType targetcodom = null;
+        if (target != null) {
+            ASTType tt = phi.unfold(target);
+            if (tt instanceof ASTTArrow arrow) { targetcodom = arrow.getCodom(); }
+            else if (tt instanceof ASTTLollipop lolli) { targetcodom = lolli.getCodom(); }
+            else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
+        }
+        ASTType tfunctype = phi.unfold(functype);
+        if (!(tfunctype instanceof ASTTArrow || tfunctype instanceof ASTTLollipop))
+            throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("rec", tfunctype));
+
+        Env<ASTType> env = sigma.beginScope();
+        env.assoc(fid, tfunctype);
+        
+        ASTType tb = body.puretypecheck(env, phi, targetcodom);
+        if (targetcodom != null && !tb.isSubtypeOf(targetcodom, sigma, phi, new AlphaEnv()))
+            throw new TypeCheckError(ErrorMessages.notSubtype(tb, targetcodom));
+        return tfunctype;
+    }
+
     public ASTNode weaknorm(Env<ASTNode> sub) {
         return new ASTRec(fid, body, functype);
     }
