@@ -34,6 +34,12 @@ public class ASTLUnion extends ASTNode {
 		return new ASTTLUnion(ll);
 	}
 
+	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
+		ll.put(label, expr.puretypecheck(sigma, phi, null));
+		return new ASTTLUnion(ll);
+	}
+
 	public ASTNode weaknorm(Env<ASTNode> sub) {
 		return new ASTLUnion(label, expr.weaknorm(sub));
     }

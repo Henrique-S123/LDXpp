@@ -57,6 +57,15 @@ public class ASTLogicOp extends ASTNode {
 		else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
 	}
 
+	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+		ASTType tl = lhs.puretypecheck(sigma, phi, null);
+		ASTType tr = rhs.puretypecheck(sigma, phi, null);
+		if (tl instanceof ASTTBool && tr instanceof ASTTBool) return new ASTTBool();
+		else if ((tl instanceof ASTTBool || tl instanceof ASTTLBool) && (tr instanceof ASTTBool || tr instanceof ASTTLBool)) return new ASTTLBool();
+		else if (op == "~") throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("unary ~", tr));
+		else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
+	}
+
 	public ASTNode weaknorm(Env<ASTNode> sub) {
 		ASTNode ln = lhs.weaknorm(sub);
 		ASTNode rn = rhs.weaknorm(sub);
