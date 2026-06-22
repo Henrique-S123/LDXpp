@@ -1,28 +1,28 @@
-class proj.errors.TypeCheckError: Types int and bool are not definitionally equal
+class proj.errors.TypeCheckError: Type int is not a subtype of bool
 
 
-class proj.errors.TypeCheckError: Types linint and bool are not definitionally equal
+class proj.errors.TypeCheckError: Type linint is not a subtype of bool
 
 
-class proj.errors.TypeCheckError: Types linint and int are not definitionally equal
+class proj.errors.TypeCheckError: Type linint is not a subtype of int
 
 
-class proj.errors.TypeCheckError: Types int and linint are not definitionally equal
+class proj.errors.TypeCheckError: Terms 1 and 1l are not definitionally equal
 
 
-class proj.errors.TypeCheckError: Types bool and int are not definitionally equal
+class proj.errors.TypeCheckError: Type bool is not a subtype of int
 
 
-class proj.errors.TypeCheckError: Types int and bool are not definitionally equal
+class proj.errors.TypeCheckError: Type int is not a subtype of bool
 
 
-class proj.errors.TypeCheckError: Types bool and int are not definitionally equal
+class proj.errors.TypeCheckError: Type bool is not a subtype of int
 
 
-class proj.errors.TypeCheckError: Types bool and int are not definitionally equal
+class proj.errors.TypeCheckError: Type bool is not a subtype of int
 
 
-class proj.errors.TypeCheckError: Types int and bool are not definitionally equal
+class proj.errors.TypeCheckError: Type int is not a subtype of bool
 
 
 class proj.errors.TypeCheckError: Identifier 'y' not found

@@ -1,6 +1,7 @@
 package proj.types;
 
 import proj.ast.*;
+import proj.debug.Debug;
 import proj.env.*;
 import proj.errors.*;
 import proj.defeq.*;
@@ -54,11 +55,13 @@ public class ASTTEq extends ASTType {
     public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError {
         type.check(sigma, phi);
         ASTType type1 = term1.puretypecheck(sigma, phi, type);
-        if (!DefEq.typedefeq(type1, sigma, type, sigma, phi))
-            throw new TypeCheckError(ErrorMessages.typesNotDefeq(type1, type));
+        Debug.log("LEFT TERM TYPE: " + type1);
+        if (!type1.isSubtypeOf(type, sigma, phi, new AlphaEnv()))
+            throw new TypeCheckError(ErrorMessages.notSubtype(type1, type));
         ASTType type2 = term2.puretypecheck(sigma, phi, type);
-        if (!DefEq.typedefeq(type2, sigma, type, sigma, phi))
-            throw new TypeCheckError(ErrorMessages.typesNotDefeq(type2, type));
+        Debug.log("LEFT TERM TYPE: " + type2);
+        if (!type2.isSubtypeOf(type, sigma, phi, new AlphaEnv()))
+            throw new TypeCheckError(ErrorMessages.notSubtype(type2, type));
         return this;
     }
 }
