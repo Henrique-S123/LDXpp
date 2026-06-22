@@ -117,7 +117,7 @@ public class ASTFunc extends ASTNode  {
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
-        return new ASTFunc(id, body.weaknorm(sub), argtype, sub, getSig());
+        return new ASTFunc(id, body, argtype, sub, getSig());
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
