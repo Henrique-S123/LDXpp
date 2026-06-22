@@ -1,6 +1,7 @@
 package proj.env;
 
 import proj.ast.*;
+import proj.defeq.DefEq;
 import proj.types.*;
 
 import java.util.*;
@@ -110,7 +111,19 @@ public class Env <E>{
         }
         return null;
     }
-    
+
+    public String findEq(ASTNode t1, ASTNode t2, Env<ASTType> sigma, Env<ASTType> phi) {
+        Env<E> curr = this;
+        while (curr != null) {
+            for (Map.Entry<String, E> entry : curr.bindings.entrySet())
+                if (entry.getValue() instanceof ASTTEq teq &&
+                    ((DefEq.termdefeq(t1, teq.getTerm1(), sigma, phi) && DefEq.termdefeq(t2, teq.getTerm2(), sigma, phi))
+                    || (DefEq.termdefeq(teq.getTerm2(), t1, sigma, phi) && DefEq.termdefeq(teq.getTerm1(), t2, sigma, phi))))
+                return entry.getKey();
+            curr = curr.anc;
+        }
+        return null;
+    }
 
     public ASTType unfold(ASTType t) {
         return (t instanceof ASTTId tid) ? unfold((ASTType) find(tid.getId())) : t;

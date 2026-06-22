@@ -63,8 +63,8 @@ public final class DefEq {
             return typedefeq(ln.getArgtype(), ln.getSig(), rn.getArgtype(), rn.getSig(), alpha, phi, new HashSet<IdPair>())
                 && termdefeq(ln.getBody().weaknorm(), ln.getSig(), rn.getBody().weaknorm(), rn.getSig(), alpha.extend(ln.getId(), rn.getId()), phi);
         if (l instanceof ASTApp ln && r instanceof ASTApp rn)
-            return termdefeq(ln.getFunc(), sl, rn.getFunc(), sr, alpha, phi)
-                && termdefeq(ln.getArg(), sl, rn.getArg(), sr, alpha, phi);
+            if (termdefeq(ln.getFunc(), sl, rn.getFunc(), sr, alpha, phi)
+                && termdefeq(ln.getArg(), sl, rn.getArg(), sr, alpha, phi)) return true;
         // TODO: add ASTRec case
         
         if (l instanceof ASTPair ln && r instanceof ASTPair rn)
@@ -84,17 +84,20 @@ public final class DefEq {
         if (l instanceof ASTLUnion ln && r instanceof ASTLUnion rn && ln.getLabel().equals(rn.getLabel()))
             return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi);
         if (l instanceof ASTMatch ln && r instanceof ASTMatch rn) {
-            if (!termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi)) return false;
-            Map<String, MatchCase> left = ln.getCases();
-            Map<String, MatchCase> right = rn.getCases();
-			if (left.size() != right.size()) return false;
-            for (String label : ln.getCases().keySet()) {
-                MatchCase leftCase = left.get(label);
-				MatchCase rightCase = right.get(label);
-				if (rightCase == null ||
-                    !termdefeq(leftCase.getExp(), sl, rightCase.getExp(), sr, alpha.extend(leftCase.getId(), rightCase.getId()), phi)) return false;
+            if (termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi)) {
+                Map<String, MatchCase> left = ln.getCases();
+                Map<String, MatchCase> right = rn.getCases();
+                if (left.size() == right.size()) {
+                    boolean diff = false;
+                    for (String label : ln.getCases().keySet()) {
+                        MatchCase leftCase = left.get(label);
+                        MatchCase rightCase = right.get(label);
+                        if (rightCase == null ||
+                            !termdefeq(leftCase.getExp(), sl, rightCase.getExp(), sr, alpha.extend(leftCase.getId(), rightCase.getId()), phi)) diff = true;
+                    }
+                    if (!diff) return true;
+                }
             }
-            return true;
         }
 
         if (l instanceof ASTUnit && r instanceof ASTUnit) return true;
