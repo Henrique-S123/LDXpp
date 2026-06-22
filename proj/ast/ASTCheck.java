@@ -24,10 +24,9 @@ public class ASTCheck extends ASTNode {
         if (!t.isSubtypeOf(t2, e.getSigma(), e.getPhi(), new AlphaEnv()) || !t2.isSubtypeOf(t, e.getSigma(), e.getPhi(), new AlphaEnv()))
             throw new TypeCheckError(ErrorMessages.termsWithDifferentTypes(left, right, t, t2));
 
-        Env<ASTType> sigma = e.getSigma();
         ASTNode ln = left.weaknorm();
         ASTNode rn = right.weaknorm();
-        if (DefEq.termdefeq(ln, sigma, rn, sigma, e.getPhi())) return new ASTTEq(left, right, t);
+        if (DefEq.termdefeq(ln, rn, e.getSigma(), e.getPhi())) return new ASTTEq(left, right, t);
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 

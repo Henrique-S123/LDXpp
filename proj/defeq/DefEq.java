@@ -8,8 +8,8 @@ import proj.debug.Debug;
 import java.util.*;
 
 public final class DefEq {
-    public static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, Env<ASTType> phi) {
-        return termdefeq(l, sl, r, sr, new AlphaEnv(), phi);
+    public static final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> sigma, Env<ASTType> phi) {
+        return termdefeq(l, sigma, r, sigma, new AlphaEnv(), phi);
     }
 
     public static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi) {
