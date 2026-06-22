@@ -21,6 +21,14 @@ public class ASTLFunc extends ASTNode  {
         sig = null;
     }
 
+    public ASTLFunc(String i, ASTNode b, ASTType t, Env<ASTNode> sub, Env<ASTType> sigma) {
+        id = i;
+        body = b;
+        argtype = t;
+        normEnv = sub;
+        sig = sigma;
+    }
+
     public String getId() {
         return id;
     }
@@ -108,12 +116,11 @@ public class ASTLFunc extends ASTNode  {
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
         if (normEnv == null) setNormEnv(sub);
-        return this;
+        return new ASTLFunc(id, body, argtype, getNormEnv(), getSig());
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-        body = body.subs(subsId, node);
-        return this;
+        return new ASTLFunc(id, body.subs(subsId, node), argtype, normEnv, sig);
     }
 
     @Override
