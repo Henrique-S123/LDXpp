@@ -19,7 +19,7 @@ public class ASTCheckTypes extends ASTNode {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        if (DefEq.typedefeq(left, e.getSigma(), right, e.getSigma(), e.getPhi())) return new ASTTUnit();
+        if (DefEq.typedefeq(left, right, e.getSigma(), e.getPhi())) return new ASTTUnit();
         throw new TypeCheckError(ErrorMessages.typesNotDefeq(left, right));
     }
 

@@ -16,7 +16,7 @@ public final class DefEq {
         return termdefeq(l, sigma, r, sigma, alpha, phi);
     }
 
-    public static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi) {
+    private static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi) {
         Debug.log(String.format("left: %s", l));
         Debug.log(String.format("right: %s", r));
         Debug.nl();
@@ -120,11 +120,11 @@ public final class DefEq {
         return false;
     }
 
-    public static final boolean typedefeq(ASTType l, Env<ASTType> sl, ASTType r, Env<ASTType> sr, Env<ASTType> phi) {
-        return typedefeq(l, sl, r, sr, new AlphaEnv(), phi, new HashSet<IdPair>());
+    public static final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> sigma, Env<ASTType> phi) {
+        return typedefeq(l, sigma, r, sigma, new AlphaEnv(), phi, new HashSet<IdPair>());
     }
 
-    public static final boolean typedefeq(ASTType l, Env<ASTType> sl, ASTType r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Set<IdPair> seen) {
+    private static final boolean typedefeq(ASTType l, Env<ASTType> sl, ASTType r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Set<IdPair> seen) {
         if (l instanceof ASTTInt && r instanceof ASTTInt) return true;
         if (l instanceof ASTTLInt && r instanceof ASTTLInt) return true;
         if (l instanceof ASTTBool && r instanceof ASTTBool) return true;
