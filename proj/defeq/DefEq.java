@@ -12,6 +12,10 @@ public final class DefEq {
         return termdefeq(l, sigma, r, sigma, new AlphaEnv(), phi);
     }
 
+    public static final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
+        return termdefeq(l, sigma, r, sigma, alpha, phi);
+    }
+
     public static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi) {
         Debug.log(String.format("left: %s", l));
         Debug.log(String.format("right: %s", r));

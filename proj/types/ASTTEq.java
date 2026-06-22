@@ -39,8 +39,8 @@ public class ASTTEq extends ASTType {
     public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
         if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
         return o instanceof ASTTEq eq && type.isSubtypeOf(eq.getType(), sigma, phi, alpha)
-            && DefEq.termdefeq(term1, sigma, eq.getTerm1(), sigma, alpha, phi)
-            && DefEq.termdefeq(term2, sigma, eq.getTerm2(), sigma, alpha, phi);
+            && DefEq.termdefeq(term1, eq.getTerm1(), sigma, phi, alpha)
+            && DefEq.termdefeq(term2, eq.getTerm2(), sigma, phi, alpha);
     }
 
     public ASTType inst(String instId, ASTNode n) {
