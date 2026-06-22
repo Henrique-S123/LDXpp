@@ -33,6 +33,7 @@ public class ASTTypeDef extends ASTNode {
         e.openEnvScope(ENV.PHI);
         for (String s : ltd.keySet()) {
             ASTType t = ltd.get(s);
+            t.check(e.getSigma(), e.getPhi());
             t.setSig(e.getSigma());
             e.bindToEnv(ENV.PHI, s, t);
         }
