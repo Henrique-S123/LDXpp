@@ -52,3 +52,6 @@ let x = 0;
 let f = fn y:int => {x};
 let f2 = fn y:int => {if (true) {0} else {1}};
 (f, 1) ? (f2, 1);;
+
+let f = fn x:int => {2};
+f(5) ? f(3);;

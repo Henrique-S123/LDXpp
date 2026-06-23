@@ -73,3 +73,6 @@ type: fn y:int => {fn z:int => {x}} ≡ fn y:int => {fn z:int => {if(true, 0, 1)
 type: (f, 1) ≡ (f2, 1) : ((y:int)->int, int), value: true
 
 
+type: f(5) ≡ f(3) : int, value: true
+
+
