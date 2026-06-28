@@ -26,7 +26,7 @@ public class ASTCheck extends ASTNode {
 
         ASTNode ln = left.weaknorm();
         ASTNode rn = right.weaknorm();
-        if (DefEq.termdefeq(ln, rn, e.getSigma(), e.getPhi())) return new ASTTEq(left, right, t);
+        if (DefEq.termdefeq(ln, rn, e.getSigma(), e.getPhi(), false)) return new ASTTEq(left, right, t);
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 

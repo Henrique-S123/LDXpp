@@ -2,6 +2,7 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
+import proj.debug.Debug;
 import proj.defeq.TermClosure;
 import proj.env.*;
 import proj.env.EnvSet.ENV;
@@ -52,6 +53,7 @@ public class ASTMatch extends ASTNode {
 			((ASTTUnion) tt).getMap().entrySet() :
 			((ASTTLUnion) tt).getMap().entrySet();
 		for (Map.Entry<String, ASTType> entry : entries) {
+			Debug.log("TYPECHECKING BRANCH " + entry.getKey());
 			MatchCase c = cases.get(entry.getKey());
 			if (c == null)
 				throw new TypeCheckError(ErrorMessages.missingMatchCase(entry.getKey()));

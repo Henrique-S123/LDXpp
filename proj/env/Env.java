@@ -1,6 +1,7 @@
 package proj.env;
 
 import proj.ast.*;
+import proj.debug.Debug;
 import proj.defeq.DefEq;
 import proj.types.*;
 
@@ -112,14 +113,16 @@ public class Env <E>{
         return null;
     }
 
-    public String findEq(ASTNode t1, ASTNode t2, Env<ASTType> sigma, Env<ASTType> phi) {
+    public E findEq(ASTNode t1, ASTNode t2, Env<ASTType> sigma, Env<ASTType> phi) {
         Env<E> curr = this;
         while (curr != null) {
             for (Map.Entry<String, E> entry : curr.bindings.entrySet())
-                if (entry.getValue() instanceof ASTTEq teq &&
-                    ((DefEq.termdefeq(t1, teq.getTerm1(), sigma, phi) && DefEq.termdefeq(t2, teq.getTerm2(), sigma, phi))
-                    || (DefEq.termdefeq(teq.getTerm2(), t1, sigma, phi) && DefEq.termdefeq(teq.getTerm1(), t2, sigma, phi))))
-                return entry.getKey();
+                if (entry.getValue() instanceof ASTTEq teq) {
+                    Debug.log("Testing proof: " + entry.getValue());
+                    if ((DefEq.termdefeq(t1, teq.getTerm1(), sigma, phi, false) && DefEq.termdefeq(t2, teq.getTerm2(), sigma, phi, false))
+                    || (DefEq.termdefeq(teq.getTerm2(), t1, sigma, phi, false) && DefEq.termdefeq(teq.getTerm1(), t2, sigma, phi, false)))
+                        return entry.getValue();
+                }
             curr = curr.anc;
         }
         return null;

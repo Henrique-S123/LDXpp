@@ -8,9 +8,11 @@ import proj.errors.*;
 
 public class ASTRefl extends ASTNode  {
     ASTNode term;
+    boolean hyp;
 
-    public ASTRefl(ASTNode t) {
+    public ASTRefl(ASTNode t, boolean h) {
         term = t;
+        hyp = h;
     }
 
     public IValue eval(Env<IValue> e) {
@@ -26,7 +28,7 @@ public class ASTRefl extends ASTNode  {
 
         Env<ASTType> sig = (tt.getSig() != null) ? tt.getSig() : e.getSigma();
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
-        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), sig, e.getPhi())) return target;
+        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), sig, e.getPhi(), hyp)) return target;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
@@ -39,7 +41,7 @@ public class ASTRefl extends ASTNode  {
 
         Env<ASTType> sig = (tt.getSig() != null) ? tt.getSig() : sigma;
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
-        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), sig, phi)) return target;
+        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), sig, phi, hyp)) return target;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 

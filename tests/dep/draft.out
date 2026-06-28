@@ -1,15 +1,30 @@
-type: Nat, value: union #succ(union #succ(union #succ(union #zero(()))))
+type: Nat, value: #succ(#succ(#succ(#zero(()))))
 
 
-type: (z:Nat, z ≡ add(n2)(n1) : Nat), value: (union #succ(union #succ(union #succ(union #zero(())))), refl)
+type: (z:Nat, z ≡ add(n2)(n1) : Nat), value: (#succ(#succ(#succ(#zero(())))), refl)
 
 
 class proj.errors.TypeCheckError: Terms n2 and add(n2)(n1) are not definitionally equal
 
 
-type: (z:Nat, z ≡ add(n1)(n1) : Nat), value: (union #succ(union #succ(union #zero(()))), refl)
+type: (z:Nat, z ≡ add(n1)(n1) : Nat), value: (#succ(#succ(#zero(()))), refl)
 
 
-type: (z:LIST, size(z) ≡ n2 : Nat), value: (union #cons((union #succ(union #succ(union #zero(()))), union #cons((union #succ(union #zero(())), union #nil(()))))), refl)
+type: (z:LIST, size(z) ≡ n2 : Nat), value: (#cons((#succ(#succ(#zero(()))), #cons((#succ(#zero(())), #nil(()))))), refl)
+
+
+class proj.errors.TypeCheckError: Terms size(#cons((fst n, fst res))) and add(size(la))(size(lb)) are not definitionally equal
+
+
+type: (z:LIST, size(z) ≡ size(fst concat(l0)(l2)) : Nat), value: (#cons((#succ(#succ(#zero(()))), #cons((#succ(#zero(())), #nil(()))))), refl)
+
+
+class proj.errors.TypeCheckError: Terms size(#cons(newpair)) and add(size(la))(size(lb)) are not definitionally equal
+
+
+type: (z:LIST, size(z) ≡ size(fst concat(l0)(l2)) : Nat), value: (#cons((#succ(#succ(#zero(()))), #cons((#succ(#zero(())), #nil(()))))), refl)
+
+
+class proj.errors.TypeCheckError: Terms size(l1) and size(fst concat(l0)(l2)) are not definitionally equal
 
 

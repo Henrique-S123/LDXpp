@@ -57,6 +57,8 @@ TOKEN :
   |
   < LETEQ: "leteq" >
   |
+  < HYP: "hyp" >
+  |
   < DOT : "." >
   |
   < COLON : ":" >
@@ -328,7 +330,8 @@ ASTNode Fact() :
     | <LPAR> t = TermList() <RPAR>
     | <QUESTION> <LPAR> t = Let() <COMMA> t2 = Let() <RPAR> { t = new ASTCheck(t, t2); }
     | <QUESTIONTYPES> <LPAR> type = Type() <COMMA> type2 = Type() <RPAR> { t = new ASTCheckTypes(type, type2); }
-    | <REFL> (LOOKAHEAD(2) <LPAR> t = Fact() <RPAR>)? { t = new ASTRefl(t); }
+    | <REFL> (LOOKAHEAD(2) <LPAR> t = Fact() <RPAR>)? { t = new ASTRefl(t, false); }
+    | <HYP> { t = new ASTRefl(null, true); }
     )
    { return t; }
 }
