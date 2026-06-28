@@ -1,31 +1,31 @@
 class proj.errors.TypeCheckError: Terms 1 and 2 are not definitionally equal
 
 
-type: 1 ≡ 1 : int, value: true
+type: 1 ≡ 1 : int, value: refl
 
 
-class proj.errors.TypeCheckError: Terms 1l and 1 have different types: linint and int
+class proj.errors.TypeCheckError: Type linint is not a subtype of int
 
 
 class proj.errors.TypeCheckError: Terms 1l and 2l are not definitionally equal
 
 
-type: 1l ≡ 1l : linint, value: true
+type: 1l ≡ 1l : linint, value: refl
 
 
 class proj.errors.TypeCheckError: Terms true and false are not definitionally equal
 
 
-type: true ≡ true : bool, value: true
+type: true ≡ true : bool, value: refl
 
 
-class proj.errors.TypeCheckError: Terms truel and true have different types: linbool and bool
+class proj.errors.TypeCheckError: Type linbool is not a subtype of bool
 
 
 class proj.errors.TypeCheckError: Terms truel and falsel are not definitionally equal
 
 
-type: truel ≡ truel : linbool, value: true
+type: truel ≡ truel : linbool, value: refl
 
 
 class proj.errors.TypeCheckError: Terms abc and  are not definitionally equal
@@ -34,12 +34,12 @@ class proj.errors.TypeCheckError: Terms abc and  are not definitionally equal
 class proj.errors.TypeCheckError: Terms abc and ab are not definitionally equal
 
 
-type: abc ≡ abc : string, value: true
+type: abc ≡ abc : string, value: refl
 
 
-class proj.errors.TypeCheckError: Terms () and 0 have different types: () and int
+class proj.errors.TypeCheckError: Type int is not a subtype of ()
 
 
-type: () ≡ () : (), value: true
+type: () ≡ () : (), value: refl
 
 

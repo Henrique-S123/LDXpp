@@ -1,29 +1,29 @@
-1 ? 2;;
+let x:(1=2:int) = refl; x;;
 
-1 ? 1;;
+let x:(1=1:int) = refl; x;;
 
-1l ? 1;;
+let x:(1l=1:int) = refl; x;;
 
-1l ? 2l;;
+let x:(1l=2l:linint) = refl; x;;
 
-1l ? 1l;;
+let x:(1l=1l:linint) = refl; x;;
 
-true ? false;;
+let x:(true=false:bool) = refl; x;;
 
-true ? true;;
+let x:(true=true:bool) = refl; x;;
 
-truel ? true;;
+let x:(truel=false:bool) = refl; x;;
 
-truel ? falsel;;
+let x:(truel=falsel:linbool) = refl; x;;
 
-truel ? truel;;
+let x:(truel=truel:linbool) = refl; x;;
 
-"abc" ? "";;
+let x:("abc"="":string) = refl; x;;
 
-"abc" ? "ab";;
+let x:("abc"="ab":string) = refl; x;;
 
-"abc" ? "abc";;
+let x:("abc"="abc":string) = refl; x;;
 
-() ? 0;;
+let x:(()=0:()) = refl; x;;
 
-() ? ();;
+let x:(()=():()) = refl; x;;
