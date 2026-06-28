@@ -142,6 +142,10 @@ public final class DefEq {
         return typedefeq(l, sigma, r, sigma, new AlphaEnv(), phi, new HashSet<IdPair>(), false);
     }
 
+    public static final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
+        return typedefeq(l, sigma, r, sigma, alpha, phi, new HashSet<IdPair>(), false);
+    }
+
     private static final boolean typedefeq(ASTType l, Env<ASTType> sl, ASTType r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Set<IdPair> seen, boolean hyp) {
         if (l instanceof ASTTInt && r instanceof ASTTInt) return true;
         if (l instanceof ASTTLInt && r instanceof ASTTLInt) return true;
