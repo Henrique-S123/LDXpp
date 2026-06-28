@@ -20,6 +20,6 @@ public class VUnion implements IValue {
     }
     
     public String toString() {
-        return String.format("%sunion %s(%s)", lin ? "linear " : "", label, val);
+        return String.format("%s(%s)", label, val);
     }
 }

@@ -25,10 +25,10 @@ class proj.errors.TypeCheckError: Missing match case for label #val
 type: int, value: 3
 
 
-type: union {#some = int; #none = ()}, value: union #none(())
+type: union {#some = int; #none = ()}, value: #none(())
 
 
-type: union {#some = int; #none = ()}, value: union #some(2)
+type: union {#some = int; #none = ()}, value: #some(2)
 
 
 type: int, value: 1

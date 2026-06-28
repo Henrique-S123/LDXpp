@@ -7,6 +7,6 @@ class proj.errors.TypeCheckError: Illegal type to rec: int
 class proj.errors.TypeCheckError: Linear value of 'fact' has already been consumed and cannot be used again
 
 
-type: NatL, value: linear union $succ(linear union $succ(linear union $succ(linear union $zero(()))))
+type: NatL, value: $succ($succ($succ($zero(()))))
 
 
