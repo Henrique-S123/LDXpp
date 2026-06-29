@@ -113,11 +113,12 @@ public class Env <E>{
         return null;
     }
 
-    public E findEq(ASTNode t1, ASTNode t2, Env<ASTType> sigma, Env<ASTType> phi) {
+    public E findProof(ASTNode t1, ASTNode t2, Env<ASTType> sigma, Env<ASTType> phi) {
         Env<E> curr = this;
         while (curr != null) {
             for (Map.Entry<String, E> entry : curr.bindings.entrySet())
                 if (entry.getValue() instanceof ASTTEq teq) {
+                    if (teq.getTerm1() instanceof ASTId || teq.getTerm2() instanceof ASTId) continue;
                     Debug.log("Testing proof: " + entry.getValue());
                     if ((DefEq.termdefeq(t1, teq.getTerm1(), sigma, phi, false) && DefEq.termdefeq(t2, teq.getTerm2(), sigma, phi, false))
                     || (DefEq.termdefeq(teq.getTerm2(), t1, sigma, phi, false) && DefEq.termdefeq(teq.getTerm1(), t2, sigma, phi, false)))

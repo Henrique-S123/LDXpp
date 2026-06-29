@@ -17,9 +17,9 @@ public final class DefEq {
     }
 
     private static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, boolean ctx) {
+        Debug.nl();
         Debug.log(String.format("left: %s", l));
         Debug.log(String.format("right: %s", r));
-        Debug.nl();
 
         if (l instanceof ASTInt ln && r instanceof ASTInt rn) return ln.getVal() == rn.getVal();
         if (l instanceof ASTLInt ln && r instanceof ASTLInt rn) return ln.getVal() == rn.getVal();
@@ -118,23 +118,30 @@ public final class DefEq {
         
         if (ctx) {
             Debug.log("Search Sigma environment for a proof");
-            ASTType proof = sl.findEq(l, r, sl, phi);
+            ASTType proof = sl.findProof(l, r, sl, phi);
             if (proof != null) {
                 Debug.log("Found proof: " + proof);
                 return true;
             }
-            proof = sr.findEq(l, r, sr, phi);
+            proof = sr.findProof(l, r, sr, phi);
             if (proof != null) {
                 Debug.log("Found proof: " + proof);
                 return true;
             }
         }
         
+        Debug.log("Trying to solve the left side");
         TermClosure s = l.solve(sl);
-        if (s != null) return termdefeq(s.term().weaknorm(), s.env(), r, sr, alpha, phi, ctx);
+        if (s != null) {
+            Debug.log("Solved left side");
+            return termdefeq(s.term().weaknorm(), s.env(), r, sr, alpha, phi, ctx);
+        }
+        Debug.log("Trying to solve the right side");
         s = r.solve(sr);
-        if (s != null) return termdefeq(l, sl, s.term().weaknorm(), s.env(), alpha, phi, ctx);
-        
+        if (s != null) {
+            Debug.log("Solved right side");
+            return termdefeq(l, sl, s.term().weaknorm(), s.env(), alpha, phi, ctx);
+        }
         return false;
     }
 

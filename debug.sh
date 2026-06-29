@@ -1,4 +1,5 @@
 #!/bin/sh
 
 make clean
-make
+make DEBUG=true
+./x++
