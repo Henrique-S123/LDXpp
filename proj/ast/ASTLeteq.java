@@ -77,4 +77,9 @@ public class ASTLeteq extends ASTNode {
     public ASTNode subs(String subsId, ASTNode node) {
 		return new ASTLeteq(id, expr.subs(subsId, node), body.subs(subsId, node));
 	}
+
+    @Override
+    public String toString() {
+		return String.format("leteq(%s, %s, %s)", id, expr, body);
+	}
 }
