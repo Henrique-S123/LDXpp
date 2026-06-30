@@ -2,7 +2,6 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
-import proj.defeq.TermClosure;
 import proj.env.*;
 import proj.errors.*;
 
@@ -54,12 +53,12 @@ public class ASTChoice extends ASTNode  {
         return choice == 0 ? first.weaknorm(sub) : second.weaknorm(sub);
     }
 
-    public TermClosure solve(Env<ASTType> sigma) {
-        TermClosure npair = pair.solve(sigma);
+    public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode npair = pair.solve(sigma);
         if (npair == null) return null;
-        Env<ASTType> sig = sigma;
-        if (npair.term() instanceof ASTPair p) sig = p.getSig();
-        return new TermClosure(new ASTChoice(npair.term(), choice), sig);
+        ASTNode res = new ASTChoice(npair, choice);
+        if (npair instanceof ASTPair p) res.setSig(p.getSig());
+        return res;
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

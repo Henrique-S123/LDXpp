@@ -2,7 +2,6 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
-import proj.defeq.TermClosure;
 import proj.env.*;
 import proj.errors.*;
 
@@ -45,9 +44,9 @@ public class ASTSeq extends ASTNode {
         return new ASTSeq(nfirst, second.weaknorm(sub));
     }
 
-    public TermClosure solve(Env<ASTType> sigma) {
-        TermClosure nfirst = first.solve(sigma);
-        return nfirst == null ? null : new TermClosure(new ASTSeq(nfirst.term(), second), sigma);
+    public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode nfirst = first.solve(sigma);
+        return nfirst == null ? null : new ASTSeq(nfirst, second);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

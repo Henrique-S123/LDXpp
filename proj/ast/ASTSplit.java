@@ -2,7 +2,6 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
-import proj.defeq.TermClosure;
 import proj.env.*;
 import proj.env.EnvSet.ENV;
 import proj.errors.*;
@@ -103,12 +102,12 @@ public class ASTSplit extends ASTNode {
         return body.weaknorm(env);
     }
 
-	public TermClosure solve(Env<ASTType> sigma) {
-        TermClosure npair = pair.solve(sigma);
+	public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode npair = pair.solve(sigma);
         if (npair == null) return null;
-        Env<ASTType> sig = sigma;
-        if (npair.term() instanceof ASTTensor t) sig = t.getSig();
-        return new TermClosure(new ASTSplit(npair.term(), id1, id2, body), sig);
+        ASTNode res = new ASTSplit(npair, id1, id2, body);
+        if (npair instanceof ASTTensor t) res.setSig(t.getSig());
+        return res;
     }
 
 	public ASTNode subs(String subsId, ASTNode node) {

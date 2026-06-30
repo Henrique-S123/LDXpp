@@ -8,6 +8,8 @@ import proj.debug.Debug;
 import java.util.*;
 
 public final class DefEq {
+    public record IdPair(String id1, String id2) {}
+
     public static final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> sigma, Env<ASTType> phi, boolean hyp) {
         return termdefeq(l, sigma, r, sigma, new AlphaEnv(), phi, hyp);
     }
@@ -57,24 +59,24 @@ public final class DefEq {
                 && termdefeq(ln.getAlt(), sl, rn.getAlt(), sr, alpha, phi, ctx)) return true;
         
         if (l instanceof ASTFunc ln && r instanceof ASTFunc rn)
-            return typedefeq(ln.getArgtype(), ln.getSig(), rn.getArgtype(), rn.getSig(), alpha, phi, new HashSet<IdPair>(), ctx)
-                && termdefeq(ln.getBody().weaknorm(), ln.getSig(), rn.getBody().weaknorm(), rn.getSig(), alpha.extend(ln.getId(), rn.getId()), phi, ctx);
+            return typedefeq(ln.getArgtype(), sl, rn.getArgtype(), sr, alpha, phi, new HashSet<IdPair>(), ctx)
+                && termdefeq(ln.getBody().weaknorm(), sl, rn.getBody().weaknorm(), sr, alpha.extend(ln.getId(), rn.getId()), phi, ctx);
         if (l instanceof ASTLFunc ln && r instanceof ASTLFunc rn)
-            return typedefeq(ln.getArgtype(), ln.getSig(), rn.getArgtype(), rn.getSig(), alpha, phi, new HashSet<IdPair>(), ctx)
-                && termdefeq(ln.getBody().weaknorm(), ln.getSig(), rn.getBody().weaknorm(), rn.getSig(), alpha.extend(ln.getId(), rn.getId()), phi, ctx);
+            return typedefeq(ln.getArgtype(), sl, rn.getArgtype(), sr, alpha, phi, new HashSet<IdPair>(), ctx)
+                && termdefeq(ln.getBody().weaknorm(), sl, rn.getBody().weaknorm(), sr, alpha.extend(ln.getId(), rn.getId()), phi, ctx);
         if (l instanceof ASTApp ln && r instanceof ASTApp rn)
             if (termdefeq(ln.getFunc(), sl, rn.getFunc(), sr, alpha, phi, ctx)
                 && termdefeq(ln.getArg(), sl, rn.getArg(), sr, alpha, phi, ctx)) return true;
         // TODO: add ASTRec case
         
         if (l instanceof ASTPair ln && r instanceof ASTPair rn)
-            return termdefeq(ln.getFirst(), ln.getSig(), rn.getFirst(), rn.getSig(), alpha, phi, ctx)
-                && termdefeq(ln.getSecond(), ln.getSig(), rn.getSecond(), rn.getSig(), alpha, phi, ctx);
+            return termdefeq(ln.getFirst(), sl, rn.getFirst(), sr, alpha, phi, ctx)
+                && termdefeq(ln.getSecond(), sl, rn.getSecond(), sr, alpha, phi, ctx);
         if (l instanceof ASTChoice ln && r instanceof ASTChoice rn && ln.getChoice() == rn.getChoice())
             if (termdefeq(ln.getPair(), sl, rn.getPair(), sr, alpha, phi, ctx)) return true;
         if (l instanceof ASTTensor ln && r instanceof ASTTensor rn)
-            return termdefeq(ln.getFirst(), ln.getSig(), rn.getFirst(), rn.getSig(), alpha, phi, ctx)
-                && termdefeq(ln.getSecond(), ln.getSig(), rn.getSecond(), rn.getSig(), alpha, phi, ctx);
+            return termdefeq(ln.getFirst(), sl, rn.getFirst(), sr, alpha, phi, ctx)
+                && termdefeq(ln.getSecond(), sl, rn.getSecond(), sr, alpha, phi, ctx);
         if (l instanceof ASTSplit ln && r instanceof ASTSplit rn)
             if (termdefeq(ln.getPair(), sl, rn.getPair(), sr, alpha, phi, ctx)
                 && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId1(), rn.getId1()).extend(ln.getId2(), rn.getId2()), phi, ctx)) return true;
@@ -131,16 +133,16 @@ public final class DefEq {
         }
         
         Debug.log("Trying to solve the left side");
-        TermClosure s = l.solve(sl);
+        ASTNode s = l.solve(sl);
         if (s != null) {
             Debug.log("Solved left side");
-            return termdefeq(s.term().weaknorm(), s.env(), r, sr, alpha, phi, ctx);
+            return termdefeq(s.weaknorm(), (s.getSig() != null) ? s.getSig() : sl, r, sr, alpha, phi, ctx);
         }
         Debug.log("Trying to solve the right side");
         s = r.solve(sr);
         if (s != null) {
             Debug.log("Solved right side");
-            return termdefeq(l, sl, s.term().weaknorm(), s.env(), alpha, phi, ctx);
+            return termdefeq(l, sl, s.weaknorm(), (s.getSig() != null) ? s.getSig() : sr, alpha, phi, ctx);
         }
         return false;
     }

@@ -2,7 +2,6 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
-import proj.defeq.TermClosure;
 import proj.env.*;
 import proj.errors.*;
 
@@ -106,11 +105,11 @@ public class ASTArithOp extends ASTNode {
 		return new ASTArithOp(lhs.weaknorm(sub), rhs.weaknorm(sub), op);
     }
 
-	public TermClosure solve(Env<ASTType> sigma) {
-		TermClosure nlhs = lhs.solve(sigma);
-        if (nlhs != null) return new TermClosure(new ASTArithOp(nlhs.term(), rhs, op), sigma);
-        TermClosure nrhs = rhs.solve(sigma);
-        if (nrhs != null) return new TermClosure(new ASTArithOp(lhs, nrhs.term(), op), sigma);
+	public ASTNode solve(Env<ASTType> sigma) {
+		ASTNode nlhs = lhs.solve(sigma);
+        if (nlhs != null) return new ASTArithOp(nlhs, rhs, op);
+        ASTNode nrhs = rhs.solve(sigma);
+        if (nrhs != null) return new ASTArithOp(lhs, nrhs, op);
         return null;
     }
 

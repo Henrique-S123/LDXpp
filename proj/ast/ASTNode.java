@@ -2,11 +2,19 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
-import proj.defeq.TermClosure;
 import proj.env.*;
 import proj.errors.*;
 
 public abstract class ASTNode {
+    Env<ASTType> sig;
+
+    public Env<ASTType> getSig() {
+        return sig;
+    }
+
+    public void setSig(Env<ASTType> s) {
+        sig = s;
+    }
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
         return new VUnit();
@@ -28,7 +36,7 @@ public abstract class ASTNode {
         return this.weaknorm(new Env<ASTNode>());
     }
 
-    public TermClosure solve(Env<ASTType> sigma) {
+    public ASTNode solve(Env<ASTType> sigma) {
         return null;
     }
 
@@ -41,10 +49,10 @@ public abstract class ASTNode {
         Env<ASTType> sig = sigma;
         while (true) {
             ln = ln.weaknorm();
-            TermClosure sln = ln.solve(sig);
+            ASTNode sln = ln.solve(sig);
             if (sln == null) return ln;
-            ln = sln.term();
-            sig = sln.env();
+            ln = sln;
+            sig = (sln.getSig() != null) ? sln.getSig() : sig;
         }
     }
 }

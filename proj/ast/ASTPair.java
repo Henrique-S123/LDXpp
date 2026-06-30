@@ -7,7 +7,6 @@ import proj.errors.*;
 
 public class ASTPair extends ASTNode {
     ASTNode first, second;
-    Env<ASTType> sig;
 
     public ASTPair(ASTNode f, ASTNode s) {
         first = f;
@@ -27,14 +26,6 @@ public class ASTPair extends ASTNode {
     public ASTNode getSecond() {
         return second;
     }
-
-    public Env<ASTType> getSig() {
-        return sig;
-    }
-
-    public void setSig(Env<ASTType> s) {
-        sig = s;
-    }
     
     public IValue eval(Env<IValue> e) throws InterpreterError {
         IValue v1 = first.eval(e);
@@ -43,6 +34,7 @@ public class ASTPair extends ASTNode {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
+        setSig(e.getSigma());
         ASTType targetfst = null, targetsnd = null;
         String tgtid = null;
         if (target != null) {
@@ -64,11 +56,11 @@ public class ASTPair extends ASTNode {
             throw new TypeCheckError(ErrorMessages.notSubtype(t2, targetsnd));
 
         e.pushDelta(prevDelta);
-        setSig(e.getSigma());
         return new ASTTPair(targetfst == null ? t1 : targetfst, targetsnd == null ? t2 : targetsnd, tgtid);
     }
 
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+        setSig(sigma);
         ASTType targetfst = null, targetsnd = null;
         String tgtid = null;
         if (target != null) {

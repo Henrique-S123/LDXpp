@@ -2,7 +2,6 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
-import proj.defeq.TermClosure;
 import proj.env.*;
 import proj.errors.*;
 
@@ -91,13 +90,13 @@ public class ASTApp extends ASTNode  {
         return body.weaknorm(env);
     }
 
-    public TermClosure solve(Env<ASTType> sigma) {
-        TermClosure nfunc = func.solve(sigma);
+    public ASTNode solve(Env<ASTType> sigma) {
+        ASTNode nfunc = func.solve(sigma);
         if (nfunc == null) return null;
-        Env<ASTType> sig = sigma;
-        if (nfunc.term() instanceof ASTFunc f) sig = f.getSig();
-        if (nfunc.term() instanceof ASTLFunc lf) sig = lf.getSig();
-        return new TermClosure(new ASTApp(nfunc.term(), arg), sig);
+        ASTNode res = new ASTApp(nfunc, arg);
+        if (nfunc instanceof ASTFunc f) res.setSig(f.getSig());
+        if (nfunc instanceof ASTLFunc lf) res.setSig(lf.getSig());
+        return res;
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

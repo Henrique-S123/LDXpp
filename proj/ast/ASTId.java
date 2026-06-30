@@ -2,7 +2,6 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
-import proj.defeq.TermClosure;
 import proj.env.*;
 import proj.errors.*;
 
@@ -36,9 +35,9 @@ public class ASTId extends ASTNode	{
         return (n != null) ? n : this;
     }
 
-    public TermClosure solve(Env<ASTType> sigma) {
+    public ASTNode solve(Env<ASTType> sigma) {
         ASTNode n = sigma.findEq(id);
-        return n == null ? null : new TermClosure(n, sigma);
+        return n;
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
