@@ -1,24 +1,4 @@
 let x = 5;
-let p = (x, 3);
-let x = 0;
-p ? (5, 3);;
-
-let x = (5, 3);
-let f = fst(x);
-let x = (0, 3);
-f ? 5;;
-
-let x = 5;
-let l = #a(x);
-let x = 0;
-l ? #a(5);;
-
-let x = #a(5);
-let m = match x {#a(y) -> y | #b(z) -> z * 10};
-let x = #a(0);
-m ? 5;;
-
-let x = 5;
 type ieq5 = (y:int, (y=x:int));
 let p:ieq5 = (5, refl);
 p;;

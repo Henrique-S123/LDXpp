@@ -51,8 +51,6 @@ public class ASTLet extends ASTNode {
         e.openEnvScope(ENV.SIGMA);
 
         e.bindToEnv(env, id, tt);
-        e.addEq(new ASTTEq(new ASTId(id), expr, tt));
-        e.bindToEnv(ENV.SIGMA, id, tt);
 
         if (declType != null) {
             ASTType exprType = expr.typecheck(e, tt);
@@ -60,6 +58,8 @@ public class ASTLet extends ASTNode {
         }
 
         expr.setSig(e.getSigma());
+        e.addEq(new ASTTEq(new ASTId(id), expr, tt));
+        e.bindToEnv(ENV.SIGMA, id, tt);
 
         ASTType rt = body.typecheck(e, target);
         if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));

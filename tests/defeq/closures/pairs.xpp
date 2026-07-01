@@ -1,0 +1,53 @@
+let x = 1;
+let t = (x, x);
+let x = 2;
+let e:(t = (1, 1) : (int, int)) = refl; e;;
+
+let x = 1;
+let t = (x, x);
+let x = 2;
+let e:(t = (2, 2) : (int, int)) = refl; e;;
+
+let x = 1;
+let t = (x, x);
+let x = 2;
+let e:(fst(t) = 1 : int) = refl; e;;
+
+let x = 1;
+let t = (x, x);
+let x = 2;
+let e:(fst(t) = 2 : int) = refl; e;;
+
+let x = (1, 1);
+let f = fst(x);
+let x = (2, 2);
+let e:(f = 1 : int) = refl; e;;
+
+let x = (1, 1);
+let f = fst(x);
+let x = (2, 2);
+let e:(f = 2 : int) = refl; e;;
+
+let x = 1;
+let y = 2;
+let p1 = (x, y);
+let x = 10;
+let y = 20;
+let p2 = (x, y);
+let p3 = (p1, p2);
+let e:(fst(fst(p3)) = 1 : int) = refl; e;;
+
+let x = 1;
+let y = 2;
+let p1 = (x, y);
+let x = 10;
+let y = 20;
+let p2 = (x, y);
+let p3 = (p1, p2);
+let e:(fst(fst(p3)) = 10 : int) = refl; e;;
+
+let x = 1;
+let t = (x, x);
+let x = 99;
+let y = t;
+let e:(fst(t) = 1 : int) = refl; e;;
