@@ -121,23 +121,21 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int TLUNION = 59;
   /** RegularExpression Id. */
-  int TEQ = 60;
+  int SPLIT = 60;
   /** RegularExpression Id. */
-  int SPLIT = 61;
+  int CHECK = 61;
   /** RegularExpression Id. */
-  int CHECK = 62;
+  int LABEL = 62;
   /** RegularExpression Id. */
-  int LABEL = 63;
+  int LLABEL = 63;
   /** RegularExpression Id. */
-  int LLABEL = 64;
+  int String = 64;
   /** RegularExpression Id. */
-  int String = 65;
+  int Id = 65;
   /** RegularExpression Id. */
-  int Id = 66;
+  int LinNum = 66;
   /** RegularExpression Id. */
-  int LinNum = 67;
-  /** RegularExpression Id. */
-  int Num = 68;
+  int Num = 67;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -204,7 +202,6 @@ public interface ParserConstants {
     "\"string\"",
     "\"union\"",
     "\"linunion\"",
-    "\"eq\"",
     "\"split\"",
     "\"check\"",
     "<LABEL>",

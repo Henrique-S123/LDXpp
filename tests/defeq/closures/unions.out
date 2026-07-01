@@ -1,6 +1,6 @@
-type: l ≡ #a(5) : union {#a: int}, value: true
+type: l ≡ #a(5) : union {#a: int}, value: refl
 
 
-type: m ≡ 5 : int, value: true
+type: m ≡ 5 : int, value: refl
 
 

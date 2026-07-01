@@ -59,7 +59,7 @@ public class ASTTEq extends ASTType {
         if (!type1.isSubtypeOf(type, sigma, phi, new AlphaEnv()))
             throw new TypeCheckError(ErrorMessages.notSubtype(type1, type));
         ASTType type2 = term2.puretypecheck(sigma, phi, type);
-        Debug.log("LEFT TERM TYPE: " + type2);
+        Debug.log("RIGHT TERM TYPE: " + type2);
         if (!type2.isSubtypeOf(type, sigma, phi, new AlphaEnv()))
             throw new TypeCheckError(ErrorMessages.notSubtype(type2, type));
         return this;
