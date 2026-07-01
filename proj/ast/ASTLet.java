@@ -52,13 +52,15 @@ public class ASTLet extends ASTNode {
         e.openEnvScope(ENV.SIGMA);
 
         e.bindToEnv(env, id, tt);
+        e.addEq(new ASTTEq(new ASTId(id), expr, tt));
+        e.bindToEnv(ENV.SIGMA, id, tt);
+
         if (declType != null) {
             ASTType exprType = expr.typecheck(e, tt);
             if (!(exprType.isSubtypeOf(tt, e.getSigma(), e.getPhi(), new AlphaEnv()))) throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
         }
 
-        e.addEq(new ASTTEq(new ASTId(id), expr, tt));
-        e.bindToEnv(ENV.SIGMA, id, tt);
+        expr.setSig(e.getSigma());
 
         ASTType rt = body.typecheck(e, target);
         if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));

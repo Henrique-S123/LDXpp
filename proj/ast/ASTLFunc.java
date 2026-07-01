@@ -85,7 +85,7 @@ public class ASTLFunc extends ASTNode  {
 
         e.bindToEnv(env, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
-        setSig(e.getSigma());
+        body.setSig(e.getSigma());
 
         ASTType tb = body.typecheck(e, targetcodom);
 
@@ -110,6 +110,8 @@ public class ASTLFunc extends ASTNode  {
         if (targetdom != null && !targetdom.isSubtypeOf(targtype, sigma, phi, new AlphaEnv()))
             throw new TypeCheckError(ErrorMessages.notSubtypeFunc(targetdom, targtype));
         env.assoc(id, targtype);
+        body.setSig(env);
+
         ASTType tb = body.puretypecheck(env, phi, targetcodom);
         return new ASTTArrow(targtype, tb, id);
     }

@@ -7,17 +7,10 @@ import proj.errors.*;
 
 public class ASTTensor extends ASTNode {
     ASTNode first, second;
-    Env<ASTType> sig;
 
     public ASTTensor(ASTNode f, ASTNode s) {
         first = f;
         second = s;
-    }
-
-    public ASTTensor(ASTNode f, ASTNode s, Env<ASTType> si) {
-        first = f;
-        second = s;
-        sig = si;
     }
 
     public ASTNode getFirst() {
@@ -26,14 +19,6 @@ public class ASTTensor extends ASTNode {
 
     public ASTNode getSecond() {
         return second;
-    }
-
-    public Env<ASTType> getSig() {
-        return sig;
-    }
-
-    public void setSig(Env<ASTType> s) {
-        sig = s;
     }
     
     public IValue eval(Env<IValue> e) throws InterpreterError {
@@ -60,7 +45,6 @@ public class ASTTensor extends ASTNode {
         if (targetsnd != null && !t2.isSubtypeOf(insttgt2, e.getSigma(), e.getPhi(), new AlphaEnv()))
             throw new TypeCheckError(ErrorMessages.notSubtype(t2, targetsnd));
         
-        setSig(e.getSigma());
         return new ASTTTensor(targetfst == null ? t1 : targetfst, targetsnd == null ? t2 : targetsnd, tgtid);
     }
 
@@ -86,11 +70,11 @@ public class ASTTensor extends ASTNode {
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
-        return new ASTTensor(first.weaknorm(sub), second.weaknorm(sub), sig);
+        return new ASTTensor(first.weaknorm(sub), second.weaknorm(sub));
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-        return new ASTTensor(first.subs(subsId, node), second.subs(subsId, node), sig);
+        return new ASTTensor(first.subs(subsId, node), second.subs(subsId, node));
     }
 
     @Override

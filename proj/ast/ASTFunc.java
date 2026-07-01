@@ -11,22 +11,19 @@ public class ASTFunc extends ASTNode  {
     ASTNode body;
     ASTType argtype;
     Env<ASTNode> normEnv;
-    Env<ASTType> sig;
 
     public ASTFunc(String i, ASTNode b, ASTType t) {
         id = i;
         body = b;
         argtype = t;
         normEnv = null;
-        sig = null;
     }
 
-    public ASTFunc(String i, ASTNode b, ASTType t, Env<ASTNode> sub, Env<ASTType> sigma) {
+    public ASTFunc(String i, ASTNode b, ASTType t, Env<ASTNode> sub) {
         id = i;
         body = b;
         argtype = t;
         normEnv = sub;
-        sig = sigma;
     }
 
     public String getId() {
@@ -45,20 +42,12 @@ public class ASTFunc extends ASTNode  {
         return normEnv;
     }
 
-    public Env<ASTType> getSig() {
-        return sig;
-    }
-
     public void setBody(ASTNode b) {
         body = b;
     }
 
     public void setNormEnv(Env<ASTNode> e) {
         normEnv = e;
-    }
-
-    public void setSig(Env<ASTType> s) {
-        sig = s;
     }
 
     public IValue eval(Env<IValue> e) {
@@ -86,7 +75,7 @@ public class ASTFunc extends ASTNode  {
 
         e.bindToEnv(ENV.GAMMA, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
-        setSig(e.getSigma());
+        body.setSig(e.getSigma());
 
         ASTType tb = body.typecheck(e, targetcodom);
 
@@ -112,16 +101,18 @@ public class ASTFunc extends ASTNode  {
         if (targetdom != null && !targetdom.isSubtypeOf(targtype, sigma, phi, new AlphaEnv()))
             throw new TypeCheckError(ErrorMessages.notSubtypeFunc(targetdom, targtype));
         env.assoc(id, targtype);
+        body.setSig(env);
+
         ASTType tb = body.puretypecheck(env, phi, targetcodom);
         return new ASTTArrow(targtype, tb, id);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
-        return new ASTFunc(id, body, argtype, sub, getSig());
+        return new ASTFunc(id, body, argtype, sub);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-        return new ASTFunc(id, body.subs(subsId, node), argtype, normEnv, sig);
+        return new ASTFunc(id, body.subs(subsId, node), argtype, normEnv);
     }
 
     @Override

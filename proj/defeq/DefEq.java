@@ -133,13 +133,13 @@ public final class DefEq {
         }
         
         Debug.log("Trying to solve the left side");
-        ASTNode s = l.solve(sl);
+        ASTNode s = l.solve(l.getSig() != null ? l.getSig() : sl);
         if (s != null) {
             Debug.log("Solved left side");
             return termdefeq(s.weaknorm(), (s.getSig() != null) ? s.getSig() : sl, r, sr, alpha, phi, ctx);
         }
         Debug.log("Trying to solve the right side");
-        s = r.solve(sr);
+        s = r.solve(r.getSig() != null ? r.getSig() : sr);
         if (s != null) {
             Debug.log("Solved right side");
             return termdefeq(l, sl, s.weaknorm(), (s.getSig() != null) ? s.getSig() : sr, alpha, phi, ctx);

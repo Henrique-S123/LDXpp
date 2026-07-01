@@ -12,12 +12,6 @@ public class ASTPair extends ASTNode {
         first = f;
         second = s;
     }
-    
-    public ASTPair(ASTNode f, ASTNode s, Env<ASTType> si) {
-        first = f;
-        second = s;
-        sig = si;
-    }
 
     public ASTNode getFirst() {
         return first;
@@ -34,7 +28,6 @@ public class ASTPair extends ASTNode {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        setSig(e.getSigma());
         ASTType targetfst = null, targetsnd = null;
         String tgtid = null;
         if (target != null) {
@@ -60,7 +53,6 @@ public class ASTPair extends ASTNode {
     }
 
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-        setSig(sigma);
         ASTType targetfst = null, targetsnd = null;
         String tgtid = null;
         if (target != null) {
@@ -83,11 +75,11 @@ public class ASTPair extends ASTNode {
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
-        return new ASTPair(first.weaknorm(sub), second.weaknorm(sub), sig);
+        return new ASTPair(first.weaknorm(sub), second.weaknorm(sub));
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-        return new ASTPair(first.subs(subsId, node), second.subs(subsId, node), sig);
+        return new ASTPair(first.subs(subsId, node), second.subs(subsId, node));
     }
 
     @Override
