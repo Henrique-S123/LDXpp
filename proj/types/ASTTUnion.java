@@ -38,7 +38,7 @@ public class ASTTUnion extends ASTType {
 
     public String toString() {
         String fill = "";
-        for (String k : ll.keySet()) fill += String.format("%s = %s; ", k, ll.get(k));
+        for (String k : ll.keySet()) fill += String.format("%s: %s; ", k, ll.get(k));
         if (ll.size() > 0) fill = fill.substring(0, fill.length()-2);
 
         return String.format("union {%s}", fill);

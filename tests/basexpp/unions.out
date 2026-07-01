@@ -25,10 +25,10 @@ class proj.errors.TypeCheckError: Missing match case for label #val
 type: int, value: 3
 
 
-type: union {#some = int; #none = ()}, value: #none(())
+type: union {#some: int; #none: ()}, value: #none(())
 
 
-type: union {#some = int; #none = ()}, value: #some(2)
+type: union {#some: int; #none: ()}, value: #some(2)
 
 
 type: int, value: 1
@@ -64,10 +64,10 @@ type: int, value: 200
 type: int, value: 200
 
 
-class proj.errors.TypeCheckError: Argument type union {#circle = Circle; #rect = Rectangle} is not a subtype of parameter type union {#circle = Circle}
+class proj.errors.TypeCheckError: Argument type union {#circle: Circle; #rect: Rectangle} is not a subtype of parameter type union {#circle: Circle}
 
 
-class proj.errors.TypeCheckError: Argument type union {#circle = Circle; #rect = Rectangle} is not a subtype of parameter type union {#rect = Rectangle}
+class proj.errors.TypeCheckError: Argument type union {#circle: Circle; #rect: Rectangle} is not a subtype of parameter type union {#rect: Rectangle}
 
 
 type: int, value: 200
