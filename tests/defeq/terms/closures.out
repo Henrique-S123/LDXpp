@@ -1,7 +1,10 @@
 type: p ≡ (5, 3) : (int, int), value: true
 
 
-type: p ≡ (5, 3) : (int, int), value: true
+type: f ≡ 5 : int, value: true
+
+
+type: l ≡ #a(5) : union {#a = int}, value: true
 
 
 type: (y:int, y ≡ x : int), value: (5, refl)

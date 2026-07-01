@@ -1,11 +1,17 @@
 let x = 5;
 let p = (x, 3);
-p ? (5, 3);;
-
-let x = 5;
-let p = (x, 3);
 let x = 0;
 p ? (5, 3);;
+
+let x = (5, 3);
+let f = fst(x);
+let x = (0, 3);
+f ? 5;;
+
+let x = 5;
+let l = #a(x);
+let x = 0;
+l ? #a(5);;
 
 let x = 5;
 type ieq5 = (y:int, (y=x:int));
