@@ -7,8 +7,8 @@ import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTLeteq extends ASTNode {
-    String id;
-    ASTNode expr, body;
+    private final String id;
+    private final ASTNode expr, body;
 
     public ASTLeteq(String i, ASTNode e, ASTNode b) {
         id = i;

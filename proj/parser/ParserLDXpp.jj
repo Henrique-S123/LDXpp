@@ -321,8 +321,8 @@ ASTNode Fact() :
 		          <DLOLLIPOP> <LBRA> e2 = Let() <RBRA> { ltc.setBody(e2); t = ltf; }
     | <PRINT> t=Fact() { t = new ASTPrint(t, false); }
     | <PRINTLN> t=Fact() { t = new ASTPrint(t, true); }
-    | <FST> <LPAR> t = Let() <RPAR> { t = new ASTChoice(t, 0); }
-    | <SND> <LPAR> t = Let() <RPAR> { t = new ASTChoice(t, 1); }
+    | <FST> <LPAR> t = Let() <RPAR> { t = new ASTChoice(t, true); }
+    | <SND> <LPAR> t = Let() <RPAR> { t = new ASTChoice(t, false); }
     | <MATCH> t2 = Let() <LBRA> t = Match(t2)
     |  n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); }
     |  n = <LLABEL> <LPAR> t = Let() <RPAR> { t = new ASTLUnion(n.image, t); }

@@ -8,7 +8,7 @@ import proj.errors.*;
 import java.util.HashSet;
 
 public class ASTIf extends ASTNode {
-    ASTNode test, conseq, alt;
+    private final ASTNode test, conseq, alt;
 
 	public ASTIf(ASTNode t, ASTNode c, ASTNode a) {
 		test = t;

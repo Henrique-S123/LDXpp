@@ -10,8 +10,8 @@ import proj.errors.*;
 import java.util.*;
 
 public class ASTMatch extends ASTNode {
-	ASTNode test;
-	Map<String, MatchCase> cases;
+	private final ASTNode test;
+	private final Map<String, MatchCase> cases;
 
 	public ASTMatch(ASTNode t, Map<String, MatchCase> cs) {
 		test = t;

@@ -6,7 +6,7 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTTensor extends ASTNode {
-    ASTNode first, second;
+    private final ASTNode first, second;
 
     public ASTTensor(ASTNode f, ASTNode s) {
         first = f;

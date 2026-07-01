@@ -574,14 +574,14 @@ public class Parser implements ParserConstants {
       jj_consume_token(LPAR);
       t = Let();
       jj_consume_token(RPAR);
-                                      t = new ASTChoice(t, 0);
+                                      t = new ASTChoice(t, true);
       break;
     case SND:
       jj_consume_token(SND);
       jj_consume_token(LPAR);
       t = Let();
       jj_consume_token(RPAR);
-                                      t = new ASTChoice(t, 1);
+                                      t = new ASTChoice(t, false);
       break;
     case MATCH:
       jj_consume_token(MATCH);

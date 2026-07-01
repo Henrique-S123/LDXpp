@@ -5,7 +5,7 @@ import proj.types.*;
 import proj.env.*;
 
 public class ASTInt extends ASTNode  {
-    int v;
+    private final int v;
 
     public ASTInt(int v0) {
         v = v0;

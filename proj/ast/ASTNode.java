@@ -6,7 +6,7 @@ import proj.env.*;
 import proj.errors.*;
 
 public abstract class ASTNode {
-    Env<ASTType> sig;
+    private Env<ASTType> sig;
 
     public Env<ASTType> getSig() {
         return sig;

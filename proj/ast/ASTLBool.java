@@ -5,7 +5,7 @@ import proj.types.*;
 import proj.env.*;
 
 public class ASTLBool extends ASTNode  {
-    boolean b;
+    private final boolean b;
 
     public ASTLBool(boolean b0) {
         b = b0;

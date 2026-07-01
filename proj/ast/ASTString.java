@@ -5,7 +5,7 @@ import proj.types.*;
 import proj.env.*;
 
 public class ASTString extends ASTNode  {
-    String s;
+    private final String s;
 
     public ASTString(String s0) {
         s = s0;

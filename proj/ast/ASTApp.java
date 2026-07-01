@@ -6,7 +6,7 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTApp extends ASTNode  {
-    ASTNode func, arg;
+    private final ASTNode func, arg;
 
     public ASTApp(ASTNode f, ASTNode a) {
         func = f;

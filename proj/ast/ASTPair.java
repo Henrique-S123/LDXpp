@@ -6,7 +6,7 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTPair extends ASTNode {
-    ASTNode first, second;
+    private final ASTNode first, second;
 
     public ASTPair(ASTNode f, ASTNode s) {
         first = f;

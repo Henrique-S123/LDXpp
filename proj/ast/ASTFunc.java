@@ -7,10 +7,10 @@ import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTFunc extends ASTNode  {
-    String id;
-    ASTNode body;
-    ASTType argtype;
-    Env<ASTNode> normEnv;
+    private final String id;
+    private ASTNode body;
+    private final ASTType argtype;
+    private Env<ASTNode> normEnv;
 
     public ASTFunc(String i, ASTNode b, ASTType t) {
         id = i;

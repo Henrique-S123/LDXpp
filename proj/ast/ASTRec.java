@@ -7,9 +7,9 @@ import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTRec extends ASTNode  {
-    String fid;
-    ASTNode body;
-    ASTType functype;
+    private final String fid;
+    private ASTNode body;
+    private final ASTType functype;
 
     public ASTRec(String f, ASTNode b, ASTType t) {
         fid = f;

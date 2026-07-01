@@ -6,8 +6,8 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTLogicOp extends ASTNode {
-    ASTNode lhs, rhs;
-	String op;
+    private final ASTNode lhs, rhs;
+	private final String op;
 
 	public ASTLogicOp(ASTNode l, ASTNode r, String o) {
 		lhs = l;

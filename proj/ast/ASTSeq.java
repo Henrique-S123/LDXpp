@@ -6,7 +6,7 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTSeq extends ASTNode {
-    ASTNode first, second;
+    private final ASTNode first, second;
 
     public ASTSeq(ASTNode f, ASTNode s) {
 		first = f;

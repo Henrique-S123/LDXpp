@@ -7,8 +7,8 @@ import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTSplit extends ASTNode {
-    ASTNode pair, body;
-	String id1, id2;
+    private final ASTNode pair, body;
+	private final String id1, id2;
 
 	public ASTSplit(ASTNode p, String i1, String i2, ASTNode b) {
 		pair = p;

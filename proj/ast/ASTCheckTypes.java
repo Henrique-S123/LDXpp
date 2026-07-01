@@ -7,7 +7,7 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTCheckTypes extends ASTNode {
-    ASTType left, right;
+    private final ASTType left, right;
 
     public ASTCheckTypes(ASTType l, ASTType r) {
         left = l;

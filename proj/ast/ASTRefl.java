@@ -7,8 +7,8 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTRefl extends ASTNode  {
-    ASTNode term;
-    boolean hyp;
+    private final ASTNode term;
+    private final boolean hyp;
 
     public ASTRefl(ASTNode t, boolean h) {
         term = t;

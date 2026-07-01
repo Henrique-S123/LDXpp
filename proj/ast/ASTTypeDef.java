@@ -9,8 +9,8 @@ import proj.errors.*;
 import java.util.HashMap;
 
 public class ASTTypeDef extends ASTNode {
-    HashMap<String, ASTType> ltd;
-    ASTNode body;
+    private final HashMap<String, ASTType> ltd;
+    private final ASTNode body;
 
     public ASTTypeDef(HashMap<String, ASTType> ltdp, ASTNode b) {
         ltd = ltdp;

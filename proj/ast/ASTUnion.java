@@ -8,8 +8,8 @@ import proj.errors.*;
 import java.util.HashMap;
 
 public class ASTUnion extends ASTNode {
-	String label;
-	ASTNode expr;
+	private final String label;
+	private final ASTNode expr;
 
 	public ASTUnion(String l, ASTNode e) {
 		label = l;

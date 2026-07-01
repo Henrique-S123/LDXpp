@@ -6,10 +6,11 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTChoice extends ASTNode  {
-    ASTNode pair;
-    int choice;
+    private final ASTNode pair;
+    // true -> fst, false -> snd
+    private final boolean choice;
 
-    public ASTChoice(ASTNode p, int c) {
+    public ASTChoice(ASTNode p, boolean c) {
         pair = p;
         choice = c;
     }
@@ -18,31 +19,31 @@ public class ASTChoice extends ASTNode  {
         return pair;
     }
 
-    public int getChoice() {
+    public boolean getChoice() {
         return choice;
     }
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
         IValue vp = pair.eval(e);
         if (vp instanceof VPair pair) {
-            return choice > 0 ? pair.getSecond() : pair.getFirst();
+            return choice ? pair.getFirst() : pair.getSecond();
         } else {
-            throw new InterpreterError(ErrorMessages.wrongValueToUnary(choice > 0 ? "snd" : "fst", vp));
+            throw new InterpreterError(ErrorMessages.wrongValueToUnary(choice ? "fst" : "snd", vp));
         }           
     }
     
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		ASTType tp = pair.typecheck(e, null);
         if (tp instanceof ASTTPair tpair)
-            return choice > 0 ? tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, 0).normalize(e.getSigma())) : tpair.getFirst();
-        else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice > 0 ? "snd" : "fst", tp));
+            return choice ? tpair.getFirst() : tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, true).normalize(e.getSigma()));
+        else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice ? "fst" : "snd", tp));
 	}
 
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
         ASTType tp = pair.puretypecheck(sigma, phi, null);
         if (tp instanceof ASTTPair tpair)
-            return choice > 0 ? tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, 0).normalize(sigma)) : tpair.getFirst();
-        else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice > 0 ? "snd" : "fst", tp));
+            return choice ? tpair.getFirst() : tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, true).normalize(sigma));
+        else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice ? "fst" : "snd", tp));
     }
     
     public ASTNode weaknorm(Env<ASTNode> sub) {
@@ -50,7 +51,7 @@ public class ASTChoice extends ASTNode  {
         ASTNode first, second;
         if (pn instanceof ASTPair p) { first = p.getFirst(); second = p.getSecond(); }
         else return new ASTChoice(pn, choice);
-        return choice == 0 ? first.weaknorm(sub) : second.weaknorm(sub);
+        return choice ? first.weaknorm(sub) : second.weaknorm(sub);
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
@@ -67,7 +68,7 @@ public class ASTChoice extends ASTNode  {
 
     @Override
     public String toString() {
-        String s = choice == 0 ? "fst %s" : "snd %s";
+        String s = choice ? "fst %s" : "snd %s";
         return String.format(s, pair);
     }
 }

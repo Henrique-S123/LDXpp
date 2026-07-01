@@ -5,14 +5,14 @@ import proj.types.*;
 import proj.env.*;
 
 public class ASTBool extends ASTNode  {
-    boolean b;
+    private final boolean b;
 
     public ASTBool(boolean b0) {
         b = b0;
     }
 
     public boolean getVal() {
-      return b;
+        return b;
     }
 
     public IValue eval(Env<IValue> e) {

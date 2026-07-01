@@ -6,8 +6,8 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTPrint extends ASTNode {
-    ASTNode exp;
-	boolean newline;
+    private final ASTNode exp;
+	private final boolean newline;
 
 	public ASTPrint(ASTNode e, boolean nl) {
 		exp = e;

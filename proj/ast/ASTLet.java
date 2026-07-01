@@ -7,10 +7,9 @@ import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTLet extends ASTNode {
-    String id;
-    ASTNode expr;
-    ASTType declType;
-    ASTNode body;
+    private final String id;
+    private final ASTNode expr, body;
+    private final ASTType declType;
 
     public ASTLet(String i, ASTNode e, ASTType t, ASTNode b) {
         id = i;
@@ -76,14 +75,16 @@ public class ASTLet extends ASTNode {
         ASTType tt = (declType != null) ? declType : expr.puretypecheck(sigma, phi, null);
         tt = phi.unfold(tt);
 
-        if (declType != null) {
-            ASTType exprType = expr.puretypecheck(sigma, phi, tt);
-            if (!(exprType.isSubtypeOf(tt, sigma, phi, new AlphaEnv())))
-                throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
-        }
         Env<ASTType> env = sigma.beginScope();
         sigma.addEq(new ASTTEq(new ASTId(id), expr, tt));
         env.assoc(id, tt);
+
+        if (declType != null) {
+            ASTType exprType = expr.puretypecheck(env, phi, tt);
+            if (!(exprType.isSubtypeOf(tt, env, phi, new AlphaEnv())))
+                throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
+        }
+
         return body.puretypecheck(env, phi, target);
     }
 
