@@ -6,3 +6,27 @@ let x = 5;
 let p = (x, 3);
 let x = 0;
 p ? (5, 3);;
+
+let x = 5;
+type ieq5 = (y:int, (y=x:int));
+let p:ieq5 = (5, refl);
+p;;
+
+let x = 5;
+type ieq5 = (y:int, (y=x:int));
+let x = 0;
+let p:ieq5 = (5, refl);
+p;;
+
+let x = 5;
+type ieq5 = (y:int, (y=x:int));
+type ieq5dup = ieq5;
+let x = 0;
+let p:ieq5dup = (5, refl);
+p;;
+
+let x = 5;
+type ieq5 = (y:int, z:int, (y=x:int), (z=x:int));
+let x = 0;
+let p:ieq5 = (5, 5, refl, refl);
+p;;
