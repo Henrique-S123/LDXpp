@@ -1,8 +1,8 @@
-match #a(5) {#a(x) -> x | #b(x) -> false} ? 5;;
+let e:(match #a(5) {#a(x) -> x | #b(x) -> false} = 5 : int) = refl; e;;
 
-match #b(5) {#a(x) -> x | #b(x) -> false} ? false;;
+let e:(match #b(5) {#a(x) -> x | #b(x) -> false} = false : bool) = refl; e;;
 
 let x = #a(5);
-match x {#a(x) -> x | #b(x) -> false} ? 5;;
+let e:(match x {#a(x) -> x | #b(x) -> false} = 5 : int) = refl; e;;
 
-match $a(5l) {$a(x) -> x | $b(x) -> falsel} ? 5l;;
+let e:(match $a(5l) {$a(x) -> x | $b(x) -> falsel} = 5l : linint) = refl; e;;

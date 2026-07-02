@@ -1,7 +1,7 @@
-type: fact(3) ≡ 6 : int, value: true
+type: fact(3) ≡ 6 : int, value: refl
 
 
-type: let(fact, int->int, fn x:int => {if(x == 0, 1, x * fact(x - 1))}, fact(3)) ≡ 6 : int, value: true
+type: let(fact, int->int, fn x:int => {if(x == 0, 1, x * fact(x - 1))}, fact(3)) ≡ 6 : int, value: refl
 
 
 class proj.errors.TypeCheckError: Terms fact(3) and 7 are not definitionally equal
