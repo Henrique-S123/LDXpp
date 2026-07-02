@@ -1,28 +1,28 @@
 class proj.errors.TypeCheckError: Terms let(x, 1, x) and let(x, 2, x) are not definitionally equal
 
 
-type: let(x, 1, x) ≡ let(x, 2, 1) : int, value: true
+type: let(x, 1, x) ≡ let(x, 2, 1) : int, value: refl
 
 
-type: let(x, int, 1, x) ≡ let(x, 1, x) : int, value: true
+type: let(x, int, 1, x) ≡ let(x, 1, x) : int, value: refl
 
 
-type: let(x, int, 1, x) ≡ let(x, int, 1, x) : int, value: true
+type: let(x, int, 1, x) ≡ let(x, int, 1, x) : int, value: refl
 
 
-type: fst x ≡ snd y : int, value: true
+type: fst x ≡ snd y : int, value: refl
 
 
-type: x ≡ 1 : int, value: true
+type: x ≡ 1 : int, value: refl
 
 
-type: y ≡ 1 : int, value: true
+type: y ≡ 1 : int, value: refl
 
 
-type: let(x, 1, x) ≡ 1 : int, value: true
+type: let(x, 1, x) ≡ 1 : int, value: refl
 
 
-type: let(x, int, 1, x) ≡ 1 : int, value: true
+type: let(x, int, 1, x) ≡ 1 : int, value: refl
 
 
 class proj.errors.TypeCheckError: Terms let(x, 2, x) and 1 are not definitionally equal
@@ -31,6 +31,6 @@ class proj.errors.TypeCheckError: Terms let(x, 2, x) and 1 are not definitionall
 class proj.errors.TypeCheckError: Terms let(x, int, 2, x) and 1 are not definitionally equal
 
 
-type: let(x, int, 1, x) ≡ let(y, int, 1, y) : int, value: true
+type: let(x, int, 1, x) ≡ let(y, int, 1, y) : int, value: refl
 
 

@@ -1,23 +1,26 @@
-(let x = 1; x) ? (let x = 2; x);;
+let e:((let x = 1; x) = (let x = 2; x) : int) = refl; e;;
 
-(let x = 1; x) ? (let x = 2; 1);;
+let e:((let x = 1; x) = (let x = 2; 1) : int) = refl; e;;
 
-(let x:int = 1; x) ? (let x = 1; x);;
+let e:((let x:int = 1; x) = (let x = 1; x) : int) = refl; e;;
 
-(let x:int = 1; x) ? (let x:int = 1; x);;
+let e:((let x:int = 1; x) = (let x:int = 1; x) : int) = refl; e;;
 
-let x = (1, 2); let y = (3, 1); fst(x) ? snd(y);;
+let x = (1, 2); let y = (3, 1); 
+let e:(fst(x) = snd(y) : int) = refl; e;;
 
-let x = 1; x ? 1;;
+let x = 1;
+let e:(x = 1 : int) = refl; e;;
 
-let x = 1; let y = x; y ? 1;;
+let x = 1; let y = x;
+let e:(y = 1 : int) = refl; e;;
 
-(let x = 1; x) ? 1;;
+let e:((let x = 1; x) = 1 : int) = refl; e;;
 
-(let x:int = 1; x) ? 1;;
+let e:((let x:int = 1; x) = 1 : int) = refl; e;;
 
-(let x = 2; x) ? 1;;
+let e:((let x = 2; x) = 1 : int) = refl; e;;
 
-(let x:int = 2; x) ? 1;;
+let e:((let x:int = 2; x) = 1 : int) = refl; e;;
 
-(let x:int = 1; x) ? (let y:int = 1; y);;
+let e:((let x:int = 1; x) = (let y:int = 1; y) : int) = refl; e;;

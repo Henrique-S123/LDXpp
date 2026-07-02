@@ -1,39 +1,41 @@
-(1, 2) ? (1, 2);;
+let e:((1, 2) = (1, 2) : (int, int)) = refl; e;;
 
-(1, 2) ? (1, 3);;
+let e:((1, 2) = (1, 3) : (int, int)) = refl; e;;
 
-((2, 4), (1, 3)) ? ((2, 4), (1, 3));;
+let e:(((2, 4), (1, 3)) = ((2, 4), (1, 3)) : ((int, int), (int, int))) = refl; e;;
 
-((2, 4), (1, 3)) ? ((2, 4), (1, 4));;
+let e:(((2, 4), (1, 3)) = ((2, 4), (1, 4)) : ((int, int), (int, int))) = refl; e;;
 
-fst((1,2)) ? fst((1,3));;
+let e:(fst((1,2)) = fst((1,3)) : int) = refl; e;;
 
-snd((1,2)) ? snd((3,2));;
+let e:(snd((1,2)) = snd((3,2)) : int) = refl; e;;
 
-snd((1, (2, 3))) ? (2,3);;
+let e:(snd((1, (2, 3))) = (2,3) : (int, int)) = refl; e;;
 
-1 ? fst((fst((1,2)), (2, 1)));;
+let e:(1 = fst((fst((1,2)), (2, 1))) : int) = refl; e;;
 
-(1, 2) ? (1 | 2);;
+let e:((1, 2) = (1 | 2) : (int, int)) = refl; e;;
 
-(1 | 2) ? (1 | 2);;
+let e:((1, 2) = (1 | 2) : (int | int)) = refl; e;;
 
-(1 | 2) ? (1 | 3);;
+let e:((1 | 2) = (1 | 2) : (int | int)) = refl; e;;
 
-((2 | 4) | (1 | 3)) ? ((2 | 4) | (1 | 3));;
+let e:((1 | 2) = (1 | 3) : (int | int)) = refl; e;;
 
-((2 | 4), (1 | 3)) ? ((2 | 4), (1 | 4));;
+let e:(((2 | 4) | (1 | 3)) = ((2 | 4) | (1 | 3)) : ((int | int) | (int | int))) = refl; e;;
 
-split (1 | 2) {f|s -> f} ? split (1 | 3) {f|s -> f};;
+let e:(((2 | 4), (1 | 3)) = ((2 | 4), (1 | 4)) : ((int | int), (int | int))) = refl; e;;
 
-split (1 | 2) {f|s -> f} ? 1;;
+let e:(split (1 | 2) {f|s -> f} = split (1 | 3) {f|s -> f} : int) = refl; e;;
 
-split (1 | 2) {f|s -> s} ? split (3 | 2) {f|s -> s};;
+let e:(split (1 | 2) {f|s -> f} = 1 : int) = refl; e;;
 
-split (1 | 2) {f|s -> s} ? 2;;
+let e:(split (1 | 2) {f|s -> s} = split (3 | 2) {f|s -> s} : int) = refl; e;;
 
-split (1 | (2 | 3)) {f|s -> s} ? (2 | 3);;
+let e:(split (1 | 2) {f|s -> s} = 2 : int) = refl; e;;
 
-1 ? split (split (1 | 2) {f|s -> f} | (2, 1)) {f|s -> f};;
+let e:(split (1 | (2 | 3)) {f|s -> s} = (2 | 3) : (int | int)) = refl; e;;
 
-1 ? split (split (1 | 2) {f|s -> s} | (2, 1)) {f|s -> f};;
+let e:(1 = split (split (1 | 2) {f|s -> f} | (2, 1)) {f|s -> f} : int) = refl; e;;
+
+let e:(1 = split (split (1 | 2) {f|s -> s} | (2, 1)) {f|s -> f} : int) = refl; e;;
