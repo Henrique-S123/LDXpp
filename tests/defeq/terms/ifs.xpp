@@ -1,19 +1,20 @@
-if true {5} else {3} ? if true {5} else {3};;
+let e:(if true {5} else {3} = if true {5} else {3} : int) = refl; e;;
 
-if true {5} else {3} ? if false {5} else {3};;
+let e:(if true {5} else {3} = if false {5} else {3} : int) = refl; e;;
 
-if true {5} else {3} ? if true {5} else {4};;
+let e:(if true {5} else {3} = if true {5} else {4} : int) = refl; e;;
 
-if true {5} else {3} ? if true {6} else {3};;
+let e:(if true {5} else {3} = if true {6} else {3} : int) = refl; e;;
 
-if true {5} else {3} ? 5;;
+let e:(if true {5} else {3} = 5 : int) = refl; e;;
 
-if true {5} else {3} ? 3;;
+let e:(if true {5} else {3} = 3 : int) = refl; e;;
 
-if truel {5} else {3} ? 5;;
+let e:(if truel {5} else {3} = 5 : int) = refl; e;;
 
-if false {5} else {3} ? 3;;
+let e:(if false {5} else {3} = 3 : int) = refl; e;;
 
-if falsel {5} else {3} ? 3;;
+let e:(if falsel {5} else {3} = 3 : int) = refl; e;;
 
-let x = true; if x {5} else {3} ? 5;;
+let x = true;
+let e:(if x {5} else {3} = 5 : int) = refl; e;;
