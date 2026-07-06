@@ -193,7 +193,7 @@ let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) :
                 (#cons(newpair), refl)
         }
     };
-let p:(z:LIST, (size(z)=size(concat(l0)(l2)):Nat)) = (l2, refl); p;;
+let p:(z:LIST, (size(z)=size(fst(concat(l0)(l2))):Nat)) = (l2, refl); p;;
 
 type Nat = union { #zero: (), #succ: Nat };
 let n0 = #zero(());
