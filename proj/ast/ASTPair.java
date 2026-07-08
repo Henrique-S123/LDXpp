@@ -40,12 +40,12 @@ public class ASTPair extends ASTNode {
         Env<LinearBinding> prevDelta = e.popDelta();
 
         ASTType t1 = first.typecheck(e, targetfst);
-        if (targetfst != null && !t1.isSubtypeOf(targetfst, e.getSigma(), e.getPhi(), new AlphaEnv()))
+        if (targetfst != null && !t1.isSubtypeOf(targetfst, e.getSigma(), e.getPhi(), e.getAlpha()))
             throw new TypeCheckError(ErrorMessages.notSubtype(t1, targetfst));
 
         ASTType insttgt2 = (tgtid != null) ? targetsnd.inst(tgtid, first) : targetsnd;
         ASTType t2 = second.typecheck(e, insttgt2);
-        if (targetsnd != null && !t2.isSubtypeOf(insttgt2, e.getSigma(), e.getPhi(), new AlphaEnv()))
+        if (targetsnd != null && !t2.isSubtypeOf(insttgt2, e.getSigma(), e.getPhi(), e.getAlpha()))
             throw new TypeCheckError(ErrorMessages.notSubtype(t2, targetsnd));
 
         e.pushDelta(prevDelta);

@@ -8,12 +8,14 @@ import java.util.*;
 public class EnvSet {
     Env<ASTType> gamma, phi, sigma;
     Env<LinearBinding> delta;
+    AlphaEnv alpha;
 
     public EnvSet() {
         gamma = new Env<ASTType>();
         delta = new Env<LinearBinding>();
         phi = new Env<ASTType>();
         sigma = new Env<ASTType>();
+        alpha = new AlphaEnv();
     }
 
     public EnvSet(EnvSet o) {
@@ -21,6 +23,7 @@ public class EnvSet {
         delta = o.delta.copy(lb -> new LinearBinding(lb.getType(), lb.isAvailable()));
         phi = o.phi.copy();
         sigma = o.sigma.copy();
+        alpha = o.alpha.copy();
     }
 
     public static enum ENV { GAMMA, DELTA, PHI, SIGMA }
@@ -32,6 +35,10 @@ public class EnvSet {
 
     public Env<ASTType> getPhi() {
         return phi;
+    }
+
+    public AlphaEnv getAlpha() {
+        return alpha;
     }
 
     public Env<LinearBinding> popDelta() {
@@ -102,6 +109,10 @@ public class EnvSet {
         this.sigma.assoc(e, t);
     }
 
+    public void extendAlpha(String id1, String id2) {
+        alpha.extend(id1, id2);
+    }
+
     /* Find binds */
     public ASTType findVar(String id) throws TypeCheckError {
         ASTType ret = gamma.find(id);
@@ -112,6 +123,13 @@ public class EnvSet {
             else throw new TypeCheckError(ErrorMessages.alreadyUsedLinear(id));
         }
         throw new TypeCheckError(ErrorMessages.idNotFound(id));
+    }
+
+    public String findBinderId(String id) {
+        String ret = gamma.findBinderId(id);
+        if (ret != null) return ret;
+        ret = delta.findBinderId(id);
+        return ret;
     }
 
     /* Unfold operation */

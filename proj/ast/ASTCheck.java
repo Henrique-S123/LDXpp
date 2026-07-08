@@ -21,7 +21,7 @@ public class ASTCheck extends ASTNode {
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         ASTType t = left.typecheck(e, null);
         ASTType t2 = right.typecheck(e, null);
-        if (!t.isSubtypeOf(t2, e.getSigma(), e.getPhi(), new AlphaEnv()) || !t2.isSubtypeOf(t, e.getSigma(), e.getPhi(), new AlphaEnv()))
+        if (!t.isSubtypeOf(t2, e.getSigma(), e.getPhi(), e.getAlpha()) || !t2.isSubtypeOf(t, e.getSigma(), e.getPhi(), e.getAlpha()))
             throw new TypeCheckError(ErrorMessages.termsWithDifferentTypes(left, right, t, t2));
 
         ASTNode ln = left.weaknorm();

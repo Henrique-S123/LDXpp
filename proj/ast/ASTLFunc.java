@@ -57,9 +57,9 @@ public class ASTLFunc extends ASTNode  {
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         argtype.check(e.getSigma(), e.getPhi());
         ASTType targetdom = null, targetcodom = null;
+        String tid = null;
         if (target != null) {
             ASTType tt = e.unfold(target);
-            String tid;
             if (tt instanceof ASTTLollipop lolli) { targetdom = lolli.getDom(); targetcodom = lolli.getCodom(); tid = lolli.getId(); }
             else throw new TypeCheckError(ErrorMessages.typeMismatch("lollipop", target));
         }
@@ -69,12 +69,13 @@ public class ASTLFunc extends ASTNode  {
         e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(env);
 
-        if (targetdom != null && !targetdom.isSubtypeOf(targtype, e.getSigma(), e.getPhi(), new AlphaEnv()))
+        if (targetdom != null && !targetdom.isSubtypeOf(targtype, e.getSigma(), e.getPhi(), e.getAlpha()))
             throw new TypeCheckError(ErrorMessages.notSubtypeFunc(targetdom, targtype));
 
         e.bindToEnv(env, id, targtype);
         e.bindToEnv(ENV.SIGMA, id, targtype);
         body.setSig(e.getSigma());
+        if (tid != null) e.extendAlpha(id, tid);
 
         ASTType tb = body.typecheck(e, targetcodom);
 

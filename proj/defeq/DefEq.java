@@ -18,8 +18,11 @@ public final class DefEq {
         return termdefeq(l, sigma, r, sigma, alpha, phi, false);
     }
 
+    public static final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, boolean hyp) {
+        return termdefeq(l, sigma, r, sigma, alpha, phi, hyp);
+    }
+
     private static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, boolean ctx) {
-        Debug.nl();
         Debug.log(String.format("left: %s", l));
         Debug.log(String.format("right: %s", r));
 
@@ -33,9 +36,9 @@ public final class DefEq {
             String s1 = alpha.getLeft().find(ln.getId());
             String s2 = alpha.getRight().find(rn.getId());
             if (s1 != null && s2 != null) return s1.equals(s2);
-            if (ln.getId().equals(rn.getId())
-                && sl.retrieveScope(ln.getId()) == sr.retrieveScope(rn.getId()))
-                    return true;
+            Debug.log("LEFT BINDER ID: " + ln.getBinderId());
+            Debug.log("RIGHT BINDER ID: " + rn.getBinderId());
+            if (ln.getBinderId() != null && ln.getBinderId().equals(rn.getBinderId())) return true;
         }
 
         if (l instanceof ASTLet ln && r instanceof ASTLet rn)
@@ -64,9 +67,13 @@ public final class DefEq {
         if (l instanceof ASTLFunc ln && r instanceof ASTLFunc rn)
             return typedefeq(ln.getArgtype(), sl, rn.getArgtype(), sr, alpha, phi, new HashSet<IdPair>(), ctx)
                 && termdefeq(ln.getBody().weaknorm(), sl, rn.getBody().weaknorm(), sr, alpha.extend(ln.getId(), rn.getId()), phi, ctx);
-        if (l instanceof ASTApp ln && r instanceof ASTApp rn)
-            if (termdefeq(ln.getFunc(), sl, rn.getFunc(), sr, alpha, phi, ctx)
-                && termdefeq(ln.getArg(), sl, rn.getArg(), sr, alpha, phi, ctx)) return true;
+        if (l instanceof ASTApp ln && r instanceof ASTApp rn) {
+            Debug.open();
+            Debug.log("Checking if parts are equal");
+            boolean res = termdefeq(ln.getFunc(), sl, rn.getFunc(), sr, alpha, phi, ctx) && termdefeq(ln.getArg(), sl, rn.getArg(), sr, alpha, phi, ctx);
+            Debug.close();
+            if (res) return true;
+        }
         // TODO: add ASTRec case
         
         if (l instanceof ASTPair ln && r instanceof ASTPair rn)
@@ -86,6 +93,9 @@ public final class DefEq {
         if (l instanceof ASTLUnion ln && r instanceof ASTLUnion rn && ln.getLabel().equals(rn.getLabel()))
             return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, ctx);
         if (l instanceof ASTMatch ln && r instanceof ASTMatch rn) {
+            Debug.open();
+            Debug.log("Checking if parts are equal");
+            boolean res = false;
             if (termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi, ctx)) {
                 Map<String, MatchCase> left = ln.getCases();
                 Map<String, MatchCase> right = rn.getCases();
@@ -97,9 +107,11 @@ public final class DefEq {
                         if (rightCase == null ||
                             !termdefeq(leftCase.getExp(), sl, rightCase.getExp(), sr, alpha.extend(leftCase.getId(), rightCase.getId()), phi, ctx)) diff = true;
                     }
-                    if (!diff) return true;
+                    if (!diff) res = true;
                 }
             }
+            Debug.close();
+            if (res) return true;
         }
 
         if (l instanceof ASTUnit && r instanceof ASTUnit) return true;
@@ -125,7 +137,7 @@ public final class DefEq {
                 Debug.log("Found proof: " + proof);
                 return true;
             }
-            proof = sr.findProof(l, r, sr, phi);
+            if (sl != sr) proof = sr.findProof(l, r, sr, phi);
             if (proof != null) {
                 Debug.log("Found proof: " + proof);
                 return true;
@@ -144,6 +156,8 @@ public final class DefEq {
             Debug.log("Solved right side");
             return termdefeq(l, sl, s.weaknorm(), (s.getSig() != null) ? s.getSig() : sr, alpha, phi, ctx);
         }
+        Debug.log("Failed to prove equality");
+        Debug.nl();
         return false;
     }
 

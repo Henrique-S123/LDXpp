@@ -6,7 +6,8 @@ import proj.env.*;
 import proj.errors.*;
 
 public class ASTId extends ASTNode	{	
-    private final String id;	
+    private final String id;
+    private String binderId;
     
     public ASTId(String id)	{
         this.id = id;
@@ -16,17 +17,24 @@ public class ASTId extends ASTNode	{
         return id;
     }
 
+    public String getBinderId() {
+        return binderId;
+    }
+
     public IValue eval(Env<IValue> env) {
         return env.find(id);
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        return e.findVar(id);
+        ASTType ret = e.findVar(id);
+        if (binderId == null) binderId = e.findBinderId(id);
+        return ret;
     }
 
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
         ASTType ret = sigma.find(id);
         if (ret == null) throw new TypeCheckError(ErrorMessages.idNotFound(id));
+        if (binderId == null) binderId = sigma.findBinderId(id);
         return ret;
     }
 

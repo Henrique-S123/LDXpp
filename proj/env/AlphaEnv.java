@@ -10,6 +10,13 @@ public class AlphaEnv {
         right = new Env<String>();
     }
 
+    public AlphaEnv copy() {
+        AlphaEnv newalpha = new AlphaEnv();
+        newalpha.left = left.copy();
+        newalpha.right = right.copy();
+        return newalpha;
+    }
+
     /* Getters */
     public Env<String> getLeft() { return left; }
     public Env<String> getRight() { return right; }

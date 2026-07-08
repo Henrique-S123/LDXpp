@@ -53,14 +53,14 @@ public class ASTIf extends ASTNode {
 			throw new TypeCheckError(ErrorMessages.branchesDifferentLinears(conseqLs, altLs));
 
 		if (target != null) {
-			if (!tconseq.isSubtypeOf(target, e.getSigma(), e.getPhi(), new AlphaEnv()))
+			if (!tconseq.isSubtypeOf(target, e.getSigma(), e.getPhi(), e.getAlpha()))
 				throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tconseq, target));
-			if (!talt.isSubtypeOf(target, e.getSigma(), e.getPhi(), new AlphaEnv()))
+			if (!talt.isSubtypeOf(target, e.getSigma(), e.getPhi(), e.getAlpha()))
 				throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(talt, target));
 			return target;
 		} else {
-			if (tconseq.isSubtypeOf(talt, e.getSigma(), e.getPhi(), new AlphaEnv())) return talt;
-			else if (talt.isSubtypeOf(tconseq, e.getSigma(), e.getPhi(), new AlphaEnv())) return tconseq;
+			if (tconseq.isSubtypeOf(talt, e.getSigma(), e.getPhi(), e.getAlpha())) return talt;
+			else if (talt.isSubtypeOf(tconseq, e.getSigma(), e.getPhi(), e.getAlpha())) return tconseq;
 			else throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tconseq, talt));
 		}
 	}

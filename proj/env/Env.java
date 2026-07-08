@@ -9,21 +9,42 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.Function;
 
-public class Env <E>{
+public class Env<E>{
     Env<E> anc;
-    Map<String, E> bindings;
+    Map<String, Binder<E>> bindings;
+
+    public class Binder<V> {
+        V val;
+        String id;
+
+        public Binder(V v) {
+            val = v;
+            id = UUID.randomUUID().toString();
+        }
+
+        public Binder<V> copy() {
+            Binder<V> b = new Binder<V>(val);
+            b.id = this.id;
+            return b;
+        }
+
+        @Override
+        public String toString() {
+            return val.toString();
+        }
+    }
 
     public Env(){
         anc = null;
-        bindings = new HashMap<String,E>();
+        bindings = new HashMap<String, Binder<E>>();
     }
     
     public Env(Env<E> ancestor){
         anc = ancestor;
-        bindings = new HashMap<String,E>();
+        bindings = new HashMap<String, Binder<E>>();
     }
 
-    private void setBindings(Map<String, E> m) {
+    private void setBindings(Map<String, Binder<E>> m) {
         this.bindings = m;
     }
 
@@ -41,33 +62,52 @@ public class Env <E>{
 
     public Env<E> copy() {
         Env<E> e = new Env<>((this.anc == null ? null : this.anc.copy()));
-        e.setBindings(new HashMap<String, E>(bindings));
+        Map<String, Binder<E>> copiedBindings = new HashMap<>();
+
+        for (Map.Entry<String, Binder<E>> entry : bindings.entrySet()) {
+            copiedBindings.put(entry.getKey(), entry.getValue().copy());
+        }
+
+        e.setBindings(copiedBindings);
         return e;
     }
 
     public Env<E> copy(Function<E, E> copier) {
         Env<E> e = new Env<>((this.anc == null ? null : this.anc.copy(copier)));
-        Map<String, E> copiedBindings = new HashMap<String, E>();
+        Map<String, Binder<E>> copiedBindings = new HashMap<String, Binder<E>>();
         for (var entry : bindings.entrySet())
-            copiedBindings.put(entry.getKey(), copier.apply(entry.getValue()));
+            copiedBindings.put(entry.getKey(), new Binder<E>(copier.apply(entry.getValue().val)));
         e.setBindings(copiedBindings);
         return e;
     }
 
     public void assoc(String id, E bind) {
-        bindings.put(id, bind);
+        if (id.equals("size")) {
+            System.out.println("HERE");
+        }
+        bindings.put(id, new Binder<E>(bind));
     }
 
     public void addEq(E t) {
         String e = UUID.randomUUID().toString();
-        bindings.put(e, t);
+        bindings.put(e, new Binder<E>(t));
     }
 
     public E find(String id) {
         Env<E> curr = this;
         while (curr != null) {
-            E val = curr.bindings.get(id);
-            if (val != null) return val;
+            Binder<E> b = curr.bindings.get(id);
+            if (b != null) return b.val;
+            curr = curr.anc;
+        }
+        return null;
+    }
+
+    public String findBinderId(String id) {
+        Env<E> curr = this;
+        while (curr != null) {
+            Binder<E> b = curr.bindings.get(id);
+            if (b != null) return b.id;
             curr = curr.anc;
         }
         return null;
@@ -87,7 +127,7 @@ public class Env <E>{
         Env<E> curr = this;
         while (curr != stop) {
             curr.bindings.forEach((id, val) -> {
-                if (pred.test(val)) result.add(id);
+                if (pred.test(val.val)) result.add(id);
             });
             curr = curr.anc;
         }
@@ -98,15 +138,15 @@ public class Env <E>{
         // TODO: review
         Env<E> curr = this;
         while (curr != null) {
-            for (E val : curr.bindings.values())
-                if (val instanceof ASTTEq teq && teq.getTerm1() instanceof ASTId nid && id.equals(nid.getId()))
+            for (Binder<E> b : curr.bindings.values())
+                if (b.val instanceof ASTTEq teq && teq.getTerm1() instanceof ASTId nid && id.equals(nid.getId()))
                     return teq.getTerm2();
             curr = curr.anc;
         }
         curr = this;
         while (curr != null) {
-            for (E val : curr.bindings.values())
-                if (val instanceof ASTTEq teq && teq.getTerm2() instanceof ASTId nid && id.equals(nid.getId()))
+            for (Binder<E> b : curr.bindings.values())
+                if (b.val instanceof ASTTEq teq && teq.getTerm2() instanceof ASTId nid && id.equals(nid.getId()))
                     return teq.getTerm1();
             curr = curr.anc;
         }
@@ -116,14 +156,14 @@ public class Env <E>{
     public E findProof(ASTNode t1, ASTNode t2, Env<ASTType> sigma, Env<ASTType> phi) {
         Env<E> curr = this;
         while (curr != null) {
-            for (Map.Entry<String, E> entry : curr.bindings.entrySet())
-                if (entry.getValue() instanceof ASTTEq teq) {
+            for (Map.Entry<String, Binder<E>> entry : curr.bindings.entrySet())
+                if (entry.getValue().val instanceof ASTTEq teq) {
                     if (teq.getTerm1() instanceof ASTId || teq.getTerm2() instanceof ASTId) continue;
                     Debug.log("Testing proof: " + entry.getValue());
                     Debug.open();
                     if ((DefEq.termdefeq(t1, teq.getTerm1(), sigma, phi, false) && DefEq.termdefeq(t2, teq.getTerm2(), sigma, phi, false))
                     || (DefEq.termdefeq(teq.getTerm2(), t1, sigma, phi, false) && DefEq.termdefeq(teq.getTerm1(), t2, sigma, phi, false)))
-                        return entry.getValue();
+                        return entry.getValue().val;
                     Debug.close();
                     Debug.nl();
                 }

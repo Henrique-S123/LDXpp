@@ -28,7 +28,7 @@ public class ASTRefl extends ASTNode  {
 
         Env<ASTType> sig = (tt.getSig() != null) ? tt.getSig() : e.getSigma();
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
-        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), sig, e.getPhi(), hyp)) return target;
+        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), sig, e.getPhi(), e.getAlpha(), hyp)) return target;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 

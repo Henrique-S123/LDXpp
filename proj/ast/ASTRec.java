@@ -53,7 +53,7 @@ public class ASTRec extends ASTNode  {
         
         Env<LinearBinding> prevDelta = e.popDelta();
         ASTType tb = body.typecheck(e, targetcodom);
-        if (targetcodom != null && !tb.isSubtypeOf(targetcodom, e.getSigma(), e.getPhi(), new AlphaEnv()))
+        if (targetcodom != null && !tb.isSubtypeOf(targetcodom, e.getSigma(), e.getPhi(), e.getAlpha()))
             throw new TypeCheckError(ErrorMessages.notSubtype(tb, targetcodom));
 
         e.pushDelta(prevDelta);
