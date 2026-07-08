@@ -17,10 +17,6 @@ public class AlphaEnv {
         return newalpha;
     }
 
-    /* Getters */
-    public Env<String> getLeft() { return left; }
-    public Env<String> getRight() { return right; }
-
     /* Adding new equivalences */
     public AlphaEnv extend(String id1, String id2) {
         left = left.beginScope();
@@ -29,6 +25,13 @@ public class AlphaEnv {
         left.assoc(id1, newid);
         right.assoc(id2, newid);
         return this;
+    }
+
+    /* Testing equivalences */
+    public boolean equiv(String id1, String id2) {
+        String s1 = left.find(id1);
+        String s2 = right.find(id2);
+        return (s1 != null && s1.equals(s2));
     }
 
     public String toString() {

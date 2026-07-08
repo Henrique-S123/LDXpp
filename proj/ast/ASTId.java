@@ -13,12 +13,21 @@ public class ASTId extends ASTNode	{
         this.id = id;
     }
 
+    public ASTId(String id, String bid) {
+        this.id = id;
+        binderId = bid;
+    }
+
     public String getId() {
         return id;
     }
 
     public String getBinderId() {
         return binderId;
+    }
+
+    public void setBinderId(String id) {
+        binderId = id;
     }
 
     public IValue eval(Env<IValue> env) {

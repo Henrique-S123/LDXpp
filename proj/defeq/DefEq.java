@@ -33,12 +33,12 @@ public final class DefEq {
         if (l instanceof ASTString ln && r instanceof ASTString rn) return ln.getVal().equals(rn.getVal());
 
         if (l instanceof ASTId ln && r instanceof ASTId rn) {
-            String s1 = alpha.getLeft().find(ln.getId());
-            String s2 = alpha.getRight().find(rn.getId());
-            if (s1 != null && s2 != null) return s1.equals(s2);
-            Debug.log("LEFT BINDER ID: " + ln.getBinderId());
-            Debug.log("RIGHT BINDER ID: " + rn.getBinderId());
-            if (ln.getBinderId() != null && ln.getBinderId().equals(rn.getBinderId())) return true;
+            if (alpha.equiv(ln.getId(), rn.getId())) return true;
+            String bid1 = ln.getBinderId();
+            String bid2 = rn.getBinderId();
+            Debug.log("LEFT BINDER ID: " + bid1);
+            Debug.log("RIGHT BINDER ID: " + bid2);
+            if (bid1 != null && bid1.equals(bid2)) return true;
         }
 
         if (l instanceof ASTLet ln && r instanceof ASTLet rn)
