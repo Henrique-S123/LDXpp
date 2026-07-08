@@ -22,12 +22,6 @@ public class Env<E>{
             id = UUID.randomUUID().toString();
         }
 
-        public Binder<V> copy() {
-            Binder<V> b = new Binder<V>(val);
-            b.id = this.id;
-            return b;
-        }
-
         @Override
         public String toString() {
             return val.toString();
@@ -44,10 +38,6 @@ public class Env<E>{
         bindings = new HashMap<String, Binder<E>>();
     }
 
-    private void setBindings(Map<String, Binder<E>> m) {
-        this.bindings = m;
-    }
-
     public Env<E> beginScope(){
         return new Env<E>(this);
     }
@@ -56,19 +46,9 @@ public class Env<E>{
         return anc;
     }
 
-    public boolean isEmpty() {
-        return bindings.isEmpty();
-    }
-
     public Env<E> copy() {
         Env<E> e = new Env<>((this.anc == null ? null : this.anc.copy()));
-        Map<String, Binder<E>> copiedBindings = new HashMap<>();
-
-        for (Map.Entry<String, Binder<E>> entry : bindings.entrySet()) {
-            copiedBindings.put(entry.getKey(), entry.getValue().copy());
-        }
-
-        e.setBindings(copiedBindings);
+        e.bindings = new HashMap<>(bindings);
         return e;
     }
 
@@ -77,12 +57,12 @@ public class Env<E>{
         Map<String, Binder<E>> copiedBindings = new HashMap<String, Binder<E>>();
         for (var entry : bindings.entrySet())
             copiedBindings.put(entry.getKey(), new Binder<E>(copier.apply(entry.getValue().val)));
-        e.setBindings(copiedBindings);
+        e.bindings = copiedBindings;
         return e;
     }
 
     public void assoc(String id, E bind) {
-        if (id.equals("size")) {
+        if (id != null && id.equals("size")) {
             System.out.println("HERE");
         }
         bindings.put(id, new Binder<E>(bind));
@@ -108,15 +88,6 @@ public class Env<E>{
         while (curr != null) {
             Binder<E> b = curr.bindings.get(id);
             if (b != null) return b.id;
-            curr = curr.anc;
-        }
-        return null;
-    }
-
-    public Env<E> retrieveScope(String id) {
-        Env<E> curr = this;
-        while (curr != null) {
-            if (curr.bindings.containsKey(id)) return curr;
             curr = curr.anc;
         }
         return null;

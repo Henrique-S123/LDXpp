@@ -105,8 +105,7 @@ public class EnvSet {
     }
 
     public void addEq(ASTTEq t) {
-        String e = UUID.randomUUID().toString();
-        this.sigma.assoc(e, t);
+        this.sigma.addEq(t);
     }
 
     public void extendAlpha(String id1, String id2) {
