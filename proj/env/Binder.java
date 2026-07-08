@@ -11,6 +11,10 @@ public class Binder<V> {
         id = UUID.randomUUID().toString();
     }
 
+    public String getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return val.toString();

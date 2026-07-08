@@ -119,7 +119,7 @@ public class Env<E>{
                     Debug.log("Testing proof: " + entry.getValue());
                     Debug.open();
                     if ((DefEq.termdefeq(t1, teq.getTerm1(), sigma, phi, false) && DefEq.termdefeq(t2, teq.getTerm2(), sigma, phi, false))
-                    || (DefEq.termdefeq(teq.getTerm2(), t1, sigma, phi, false) && DefEq.termdefeq(teq.getTerm1(), t2, sigma, phi, false)))
+                    || (DefEq.termdefeq(t1, teq.getTerm2(), sigma, phi, false) && DefEq.termdefeq(t2, teq.getTerm1(), sigma, phi, false)))
                         return entry.getValue().val;
                     Debug.close();
                     Debug.nl();
