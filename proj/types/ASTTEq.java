@@ -38,9 +38,12 @@ public class ASTTEq extends ASTType {
 
     public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
         if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
-        return o instanceof ASTTEq eq && DefEq.typedefeq(type, eq.getType(), sigma, phi, alpha)
+        Debug.off();
+        boolean res = o instanceof ASTTEq eq && DefEq.typedefeq(type, eq.getType(), sigma, phi, alpha)
             && DefEq.termdefeq(term1.weaknorm(), eq.getTerm1().weaknorm(), sigma, phi, alpha)
             && DefEq.termdefeq(term2.weaknorm(), eq.getTerm2().weaknorm(), sigma, phi, alpha);
+        Debug.on();
+        return res;
     }
 
     public ASTType inst(String instId, ASTNode n) {

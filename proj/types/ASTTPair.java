@@ -43,7 +43,10 @@ public class ASTTPair extends ASTType {
         if (o instanceof ASTTPair opair) { ofirst = opair.getFirst(); osecond = opair.getSecond(); oid = opair.getId(); }
         else if (o instanceof ASTTTensor otensor) { ofirst = otensor.getFirst(); osecond = otensor.getSecond(); oid = otensor.getId(); }
         else return false;
-        return first.isSubtypeOf(ofirst, sigma, phi, alpha) && second.isSubtypeOf(osecond, sigma, phi, alpha.extend(id, oid));
+
+        if (!first.isSubtypeOf(ofirst, sigma, phi, alpha)) return false;
+        if (id != null && oid != null) alpha.extend(id, oid);
+        return second.isSubtypeOf(osecond, sigma, phi, alpha);
     }
 
     public ASTType inst(String instId, ASTNode n) {
@@ -52,8 +55,11 @@ public class ASTTPair extends ASTType {
 
     public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError {
         first.check(sigma, phi);
-        Env<ASTType> env = sigma.beginScope();
-        env.assoc(id, first);
+        Env<ASTType> env = sigma;
+        if (id != null) {
+            env = env.beginScope();
+            env.assoc(id, first);
+        }
         second.check(env, phi);
         return this;
     }

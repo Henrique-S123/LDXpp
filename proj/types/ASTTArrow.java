@@ -44,7 +44,10 @@ public class ASTTArrow extends ASTType {
         if (o instanceof ASTTArrow arrow) { odom = arrow.getDom(); ocodom = arrow.getCodom(); oid = arrow.getId(); }
         else if (o instanceof ASTTLollipop lolli) { odom = lolli.getDom(); ocodom = lolli.getCodom(); oid = lolli.getId(); }
         else return false;
-        return odom.isSubtypeOf(dom, sigma, phi, alpha) && codom.isSubtypeOf(ocodom, sigma, phi, alpha.extend(id, oid));
+
+        if (!odom.isSubtypeOf(dom, sigma, phi, alpha)) return false;
+        if (id != null && oid != null) alpha.extend(id, oid);
+        return codom.isSubtypeOf(ocodom, sigma, phi, alpha);
     }
 
     public ASTType inst(String instId, ASTNode n) {
@@ -53,8 +56,11 @@ public class ASTTArrow extends ASTType {
 
     public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError {
         dom.check(sigma, phi);
-        Env<ASTType> env = sigma.beginScope();
-        env.assoc(id, dom);
+        Env<ASTType> env = sigma;
+        if (id != null) {
+            env = env.beginScope();
+            env.assoc(id, dom);
+        }
         codom.check(env, phi);
         return this;
     }
