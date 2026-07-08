@@ -13,21 +13,6 @@ public class Env<E>{
     Env<E> anc;
     Map<String, Binder<E>> bindings;
 
-    public class Binder<V> {
-        V val;
-        String id;
-
-        public Binder(V v) {
-            val = v;
-            id = UUID.randomUUID().toString();
-        }
-
-        @Override
-        public String toString() {
-            return val.toString();
-        }
-    }
-
     public Env(){
         anc = null;
         bindings = new HashMap<String, Binder<E>>();
@@ -61,11 +46,12 @@ public class Env<E>{
         return e;
     }
 
-    public void assoc(String id, E bind) {
-        if (id != null && id.equals("size")) {
-            System.out.println("HERE");
-        }
-        bindings.put(id, new Binder<E>(bind));
+    public void assoc(String id, E val) {
+        bindings.put(id, new Binder<E>(val));
+    }
+
+    public void assoc(String id, Binder<E> binder) {
+        bindings.put(id, binder);
     }
 
     public void addEq(E t) {

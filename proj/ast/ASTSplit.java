@@ -58,10 +58,12 @@ public class ASTSplit extends ASTNode {
 		if (!lin1 || !lin2) e.openEnvScope(ENV.GAMMA);
 		e.openEnvScope(ENV.SIGMA);
 
-        e.bindToEnv(lin1 ? ENV.DELTA : ENV.GAMMA, id1, t1);
-        e.bindToEnv(lin2 ? ENV.DELTA : ENV.GAMMA, id2, t2);
-		e.bindToEnv(ENV.SIGMA, id1, t1);
-		e.bindToEnv(ENV.SIGMA, id2, t2);
+		Binder<ASTType> b1 = new Binder<ASTType>(t1);
+		Binder<ASTType> b2 = new Binder<ASTType>(t2);
+        e.bindToEnv(lin1 ? ENV.DELTA : ENV.GAMMA, id1, b1);
+        e.bindToEnv(lin2 ? ENV.DELTA : ENV.GAMMA, id2, b2);
+		e.bindToEnv(ENV.SIGMA, id1, b1);
+		e.bindToEnv(ENV.SIGMA, id2, b2);
 		e.addEq(new ASTTEq(new ASTTensor(new ASTId(id1), new ASTId(id2)), pair, tt));
 
 		ASTType rt = body.typecheck(e, target);

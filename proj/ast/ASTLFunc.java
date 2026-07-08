@@ -72,8 +72,9 @@ public class ASTLFunc extends ASTNode  {
         if (targetdom != null && !targetdom.isSubtypeOf(targtype, e.getSigma(), e.getPhi(), e.getAlpha()))
             throw new TypeCheckError(ErrorMessages.notSubtypeFunc(targetdom, targtype));
 
-        e.bindToEnv(env, id, targtype);
-        e.bindToEnv(ENV.SIGMA, id, targtype);
+        Binder<ASTType> b = new Binder<ASTType>(targtype);
+        e.bindToEnv(env, id, b);
+        e.bindToEnv(ENV.SIGMA, id, b);
         body.setSig(e.getSigma());
         if (tid != null) e.extendAlpha(id, tid);
 

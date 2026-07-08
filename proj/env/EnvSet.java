@@ -104,6 +104,15 @@ public class EnvSet {
         }
     }
 
+    public void bindToEnv(ENV env, String id, Binder<ASTType> b) throws TypeCheckError {
+        switch (env) {
+            case GAMMA -> { checkAlreadyDeclared(ENV.DELTA, id); gamma.assoc(id, b); }
+            case DELTA -> { checkAlreadyDeclared(ENV.GAMMA, id); delta.assoc(id, new Binder<LinearBinding>(new LinearBinding(b.val, true))); }
+            case PHI -> { checkAlreadyDeclared(ENV.PHI, id); phi.assoc(id, b); }
+            case SIGMA -> sigma.assoc(id, b);
+        }
+    }
+
     public void addEq(ASTTEq t) {
         this.sigma.addEq(t);
     }

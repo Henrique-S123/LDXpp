@@ -48,8 +48,9 @@ public class ASTRec extends ASTNode  {
 
         e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(ENV.GAMMA);
-        e.bindToEnv(ENV.GAMMA, fid, tfunctype);
-        e.bindToEnv(ENV.SIGMA, fid, tfunctype);
+        Binder<ASTType> b = new Binder<ASTType>(tfunctype);
+        e.bindToEnv(ENV.GAMMA, fid, b);
+        e.bindToEnv(ENV.SIGMA, fid, b);
         
         Env<LinearBinding> prevDelta = e.popDelta();
         ASTType tb = body.typecheck(e, targetcodom);
