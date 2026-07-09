@@ -133,7 +133,7 @@ public final class DefEq {
             return ln.getLtd().equals(rn.getLtd())
                 && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha, phi, t);
         
-        if (t instanceof THyp) {
+        if (t instanceof THyp || t instanceof TEta) {
             Debug.log("Search Sigma environment for a proof");
             ASTType proof = sl.findProof(l, r, sl, alpha, phi);
             if (proof != null) {
@@ -159,6 +159,16 @@ public final class DefEq {
             Debug.log("Solved right side");
             return termdefeq(l, sl, s.weaknorm(), (s.getSig() != null) ? s.getSig() : sr, alpha, phi, t);
         }
+
+        if (t instanceof TEta te && l instanceof ASTId lid && te.getVar().equals(lid.getId())) {
+            Debug.log("η-expanding left side");
+            return termdefeq(lid.etaexpand(sl), sl, r, sr, alpha, phi, t);
+        }
+        if (t instanceof TEta te && r instanceof ASTId rid && te.getVar().equals(rid.getId())) {
+            Debug.log("η-expanding right side");
+            return termdefeq(l, sl, rid.etaexpand(sr), sr, alpha, phi, t);
+        }
+
         Debug.log("Failed to prove equality");
         Debug.nl();
         return false;

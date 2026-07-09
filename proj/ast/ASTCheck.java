@@ -2,8 +2,7 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
-import proj.defeq.DefEq;
-import proj.defeq.TRefl;
+import proj.defeq.*;
 import proj.env.*;
 import proj.errors.*;
 

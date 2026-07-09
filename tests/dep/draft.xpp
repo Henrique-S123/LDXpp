@@ -312,3 +312,22 @@ let copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) =
         }
     };
 copy(l2);;
+
+type NODE = (int, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (());
+let l1:LIST = #cons ((1,l0));
+let l2:LIST = #cons ((2,l1));
+let copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) =
+    fn l:LIST => {
+        match l {
+            #nil(_) -> (l, refl)
+            |
+            #cons(n) ->
+                let res = copy(snd(n));
+                leteq e1 = snd(res);
+                let newpair = (fst(n), fst(res));
+                (#cons(newpair), eta n)
+        }
+    };
+copy(l2);;

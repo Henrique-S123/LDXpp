@@ -28,9 +28,12 @@ type: (z:LIST, size(z) ≡ size(fst concat(l0)(l2)) : Nat), value: (#cons((#succ
 class proj.errors.TypeCheckError: Terms size(l1) and size(fst concat(l0)(l2)) are not definitionally equal
 
 
-type: union {#nil: (); #cons: NODE}, value: #cons((2, #cons((1, #nil(())))))
+class proj.errors.TypeCheckError: Terms l and #cons(newpair) are not definitionally equal
 
 
-type: union {#nil: (); #cons: NODE}, value: #cons((2, #cons((1, #nil(())))))
+class proj.errors.TypeCheckError: Terms l and #cons(newpair) are not definitionally equal
+
+
+type: (lr:LIST, l2 ≡ lr : LIST), value: (#cons((2, #cons((1, #nil(()))))), refl)
 
 
