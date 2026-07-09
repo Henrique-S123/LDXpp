@@ -47,7 +47,7 @@ public class ASTUnion extends ASTNode {
     }
 
 	public ASTNode subs(String subsId, ASTNode node) {
-		return new ASTUnion(subsId, expr.subs(subsId, node));
+		return new ASTUnion(label, expr.subs(subsId, node));
 	}
 
 	@Override

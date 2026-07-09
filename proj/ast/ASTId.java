@@ -26,8 +26,8 @@ public class ASTId extends ASTNode	{
         return binderId;
     }
 
-    public void setBinderId(String id) {
-        binderId = id;
+    public void setBinderId(String bid) {
+        binderId = bid;
     }
 
     public IValue eval(Env<IValue> env) {
