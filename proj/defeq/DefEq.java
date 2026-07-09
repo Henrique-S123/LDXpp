@@ -10,9 +10,6 @@ import java.util.*;
 public final class DefEq {
     public record IdPair(String id1, String id2) {}
 
-    public static final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> sigma, Env<ASTType> phi, Tactic t) {
-        return termdefeq(l, sigma, r, sigma, new AlphaEnv(), phi, t);
-    }
 
     public static final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
         return termdefeq(l, sigma, r, sigma, alpha, phi, new TRefl());
