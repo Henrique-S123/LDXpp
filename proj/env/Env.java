@@ -110,7 +110,7 @@ public class Env<E>{
         return null;
     }
 
-    public E findProof(ASTNode t1, ASTNode t2, Env<ASTType> sigma, Env<ASTType> phi) {
+    public E findProof(ASTNode t1, ASTNode t2, Env<ASTType> sigma, AlphaEnv alpha, Env<ASTType> phi) {
         Env<E> curr = this;
         while (curr != null) {
             for (Map.Entry<String, Binder<E>> entry : curr.bindings.entrySet())
@@ -118,8 +118,8 @@ public class Env<E>{
                     if (teq.getTerm1() instanceof ASTId || teq.getTerm2() instanceof ASTId) continue;
                     Debug.log("Testing proof: " + entry.getValue());
                     Debug.open();
-                    if ((DefEq.termdefeq(t1, teq.getTerm1(), sigma, phi, false) && DefEq.termdefeq(t2, teq.getTerm2(), sigma, phi, false))
-                    || (DefEq.termdefeq(t1, teq.getTerm2(), sigma, phi, false) && DefEq.termdefeq(t2, teq.getTerm1(), sigma, phi, false)))
+                    if ((DefEq.termdefeq(t1, teq.getTerm1(), sigma, phi, alpha) && DefEq.termdefeq(t2, teq.getTerm2(), sigma, phi, alpha))
+                    || (DefEq.termdefeq(t1, teq.getTerm2(), sigma, phi, alpha) && DefEq.termdefeq(t2, teq.getTerm1(), sigma, phi, alpha)))
                         return entry.getValue().val;
                     Debug.close();
                     Debug.nl();

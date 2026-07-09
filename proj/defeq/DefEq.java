@@ -22,7 +22,7 @@ public final class DefEq {
         return termdefeq(l, sigma, r, sigma, alpha, phi, hyp);
     }
 
-    private static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, boolean ctx) {
+    private static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, boolean hyp) {
         Debug.log(String.format("left: %s", l));
         Debug.log(String.format("right: %s", r));
 
@@ -42,61 +42,61 @@ public final class DefEq {
         }
 
         if (l instanceof ASTLet ln && r instanceof ASTLet rn)
-            return typedefeq(ln.getDeclType(), sl, rn.getDeclType(), sr, alpha, phi, new HashSet<IdPair>(), ctx)
-                && termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, ctx)
-                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId(), rn.getId()), phi, ctx);
+            return typedefeq(ln.getDeclType(), sl, rn.getDeclType(), sr, alpha, phi, new HashSet<IdPair>(), hyp)
+                && termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, hyp)
+                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId(), rn.getId()), phi, hyp);
         
         if (l instanceof ASTArithOp ln && r instanceof ASTArithOp rn && ln.getOp().equals(rn.getOp()))
-            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi, ctx)
-                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi, ctx);
+            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi, hyp)
+                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi, hyp);
         if (l instanceof ASTCmpOp ln && r instanceof ASTCmpOp rn && ln.getOp().equals(rn.getOp()))
-            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi, ctx)
-                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi, ctx);
+            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi, hyp)
+                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi, hyp);
         if (l instanceof ASTLogicOp ln && r instanceof ASTLogicOp rn && ln.getOp().equals(rn.getOp()))
-            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi, ctx)
-                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi, ctx);
+            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi, hyp)
+                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi, hyp);
         
         if (l instanceof ASTIf ln && r instanceof ASTIf rn)
-            if (termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi, ctx)
-                && termdefeq(ln.getConseq(), sl, rn.getConseq(), sr, alpha, phi, ctx)
-                && termdefeq(ln.getAlt(), sl, rn.getAlt(), sr, alpha, phi, ctx)) return true;
+            if (termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi, hyp)
+                && termdefeq(ln.getConseq(), sl, rn.getConseq(), sr, alpha, phi, hyp)
+                && termdefeq(ln.getAlt(), sl, rn.getAlt(), sr, alpha, phi, hyp)) return true;
         
         if (l instanceof ASTFunc ln && r instanceof ASTFunc rn)
-            return typedefeq(ln.getArgtype(), sl, rn.getArgtype(), sr, alpha, phi, new HashSet<IdPair>(), ctx)
-                && termdefeq(ln.getBody().weaknorm(), sl, rn.getBody().weaknorm(), sr, alpha.extend(ln.getId(), rn.getId()), phi, ctx);
+            return typedefeq(ln.getArgtype(), sl, rn.getArgtype(), sr, alpha, phi, new HashSet<IdPair>(), hyp)
+                && termdefeq(ln.getBody().weaknorm(), sl, rn.getBody().weaknorm(), sr, alpha.extend(ln.getId(), rn.getId()), phi, hyp);
         if (l instanceof ASTLFunc ln && r instanceof ASTLFunc rn)
-            return typedefeq(ln.getArgtype(), sl, rn.getArgtype(), sr, alpha, phi, new HashSet<IdPair>(), ctx)
-                && termdefeq(ln.getBody().weaknorm(), sl, rn.getBody().weaknorm(), sr, alpha.extend(ln.getId(), rn.getId()), phi, ctx);
+            return typedefeq(ln.getArgtype(), sl, rn.getArgtype(), sr, alpha, phi, new HashSet<IdPair>(), hyp)
+                && termdefeq(ln.getBody().weaknorm(), sl, rn.getBody().weaknorm(), sr, alpha.extend(ln.getId(), rn.getId()), phi, hyp);
         if (l instanceof ASTApp ln && r instanceof ASTApp rn) {
             Debug.open();
             Debug.log("Checking if parts are equal");
-            boolean res = termdefeq(ln.getFunc(), sl, rn.getFunc(), sr, alpha, phi, ctx) && termdefeq(ln.getArg(), sl, rn.getArg(), sr, alpha, phi, ctx);
+            boolean res = termdefeq(ln.getFunc(), sl, rn.getFunc(), sr, alpha, phi, hyp) && termdefeq(ln.getArg(), sl, rn.getArg(), sr, alpha, phi, hyp);
             Debug.close();
             if (res) return true;
         }
         // TODO: add ASTRec case
         
         if (l instanceof ASTPair ln && r instanceof ASTPair rn)
-            return termdefeq(ln.getFirst(), sl, rn.getFirst(), sr, alpha, phi, ctx)
-                && termdefeq(ln.getSecond(), sl, rn.getSecond(), sr, alpha, phi, ctx);
+            return termdefeq(ln.getFirst(), sl, rn.getFirst(), sr, alpha, phi, hyp)
+                && termdefeq(ln.getSecond(), sl, rn.getSecond(), sr, alpha, phi, hyp);
         if (l instanceof ASTChoice ln && r instanceof ASTChoice rn && ln.getChoice() == rn.getChoice())
-            if (termdefeq(ln.getPair(), sl, rn.getPair(), sr, alpha, phi, ctx)) return true;
+            if (termdefeq(ln.getPair(), sl, rn.getPair(), sr, alpha, phi, hyp)) return true;
         if (l instanceof ASTTensor ln && r instanceof ASTTensor rn)
-            return termdefeq(ln.getFirst(), sl, rn.getFirst(), sr, alpha, phi, ctx)
-                && termdefeq(ln.getSecond(), sl, rn.getSecond(), sr, alpha, phi, ctx);
+            return termdefeq(ln.getFirst(), sl, rn.getFirst(), sr, alpha, phi, hyp)
+                && termdefeq(ln.getSecond(), sl, rn.getSecond(), sr, alpha, phi, hyp);
         if (l instanceof ASTSplit ln && r instanceof ASTSplit rn)
-            if (termdefeq(ln.getPair(), sl, rn.getPair(), sr, alpha, phi, ctx)
-                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId1(), rn.getId1()).extend(ln.getId2(), rn.getId2()), phi, ctx)) return true;
+            if (termdefeq(ln.getPair(), sl, rn.getPair(), sr, alpha, phi, hyp)
+                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId1(), rn.getId1()).extend(ln.getId2(), rn.getId2()), phi, hyp)) return true;
         
         if (l instanceof ASTUnion ln && r instanceof ASTUnion rn && ln.getLabel().equals(rn.getLabel()))
-            return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, ctx);
+            return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, hyp);
         if (l instanceof ASTLUnion ln && r instanceof ASTLUnion rn && ln.getLabel().equals(rn.getLabel()))
-            return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, ctx);
+            return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, hyp);
         if (l instanceof ASTMatch ln && r instanceof ASTMatch rn) {
             Debug.open();
             Debug.log("Checking if parts are equal");
             boolean res = false;
-            if (termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi, ctx)) {
+            if (termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi, hyp)) {
                 Map<String, MatchCase> left = ln.getCases();
                 Map<String, MatchCase> right = rn.getCases();
                 if (left.size() == right.size()) {
@@ -105,7 +105,10 @@ public final class DefEq {
                         MatchCase leftCase = left.get(label);
                         MatchCase rightCase = right.get(label);
                         if (rightCase == null ||
-                            !termdefeq(leftCase.getExp(), sl, rightCase.getExp(), sr, alpha.extend(leftCase.getId(), rightCase.getId()), phi, ctx)) diff = true;
+                            !termdefeq(leftCase.getExp(), sl, rightCase.getExp(), sr, alpha.extend(leftCase.getId(), rightCase.getId()), phi, hyp)) {
+                                diff = true;
+                                break;
+                            }
                     }
                     if (!diff) res = true;
                 }
@@ -116,28 +119,28 @@ public final class DefEq {
 
         if (l instanceof ASTUnit && r instanceof ASTUnit) return true;
         if (l instanceof ASTSeq ln && r instanceof ASTSeq rn)
-            if (termdefeq(ln.getFirst(), sl, rn.getSecond(), sr, alpha, phi, ctx)
-                && termdefeq(ln.getSecond(), sl, rn.getSecond(), sr, alpha, phi, ctx)) return true;
+            if (termdefeq(ln.getFirst(), sl, rn.getSecond(), sr, alpha, phi, hyp)
+                && termdefeq(ln.getSecond(), sl, rn.getSecond(), sr, alpha, phi, hyp)) return true;
         if (l instanceof ASTPrint ln && r instanceof ASTPrint rn && ln.getNewline() == rn.getNewline())
-            return termdefeq(ln.getExp(), sl, rn.getExp(), sr, alpha, phi, ctx);
+            return termdefeq(ln.getExp(), sl, rn.getExp(), sr, alpha, phi, hyp);
 
         if (l instanceof ASTRefl && r instanceof ASTRefl) return true;
         if (l instanceof ASTLeteq ln && r instanceof ASTLeteq rn)
-            if (termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, ctx)
-                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId(), rn.getId()), phi, ctx)) return true;
+            if (termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, hyp)
+                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId(), rn.getId()), phi, hyp)) return true;
         
         if (l instanceof ASTTypeDef ln && r instanceof ASTTypeDef rn)
             return ln.getLtd().equals(rn.getLtd())
-                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha, phi, ctx);
+                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha, phi, hyp);
         
-        if (ctx) {
+        if (hyp) {
             Debug.log("Search Sigma environment for a proof");
-            ASTType proof = sl.findProof(l, r, sl, phi);
+            ASTType proof = sl.findProof(l, r, sl, alpha, phi);
             if (proof != null) {
                 Debug.log("Found proof: " + proof);
                 return true;
             }
-            if (sl != sr) proof = sr.findProof(l, r, sr, phi);
+            if (sl != sr) proof = sr.findProof(l, r, sr, alpha, phi);
             if (proof != null) {
                 Debug.log("Found proof: " + proof);
                 return true;
@@ -148,13 +151,13 @@ public final class DefEq {
         ASTNode s = l.solve(l.getSig() != null ? l.getSig() : sl);
         if (s != null) {
             Debug.log("Solved left side");
-            return termdefeq(s.weaknorm(), (s.getSig() != null) ? s.getSig() : sl, r, sr, alpha, phi, ctx);
+            return termdefeq(s.weaknorm(), (s.getSig() != null) ? s.getSig() : sl, r, sr, alpha, phi, hyp);
         }
         Debug.log("Trying to solve the right side");
         s = r.solve(r.getSig() != null ? r.getSig() : sr);
         if (s != null) {
             Debug.log("Solved right side");
-            return termdefeq(l, sl, s.weaknorm(), (s.getSig() != null) ? s.getSig() : sr, alpha, phi, ctx);
+            return termdefeq(l, sl, s.weaknorm(), (s.getSig() != null) ? s.getSig() : sr, alpha, phi, hyp);
         }
         Debug.log("Failed to prove equality");
         Debug.nl();

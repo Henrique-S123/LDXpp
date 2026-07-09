@@ -66,7 +66,7 @@ public class ASTMatch extends ASTNode {
 			Binder<ASTType> b = new Binder<ASTType>(tlabel);
 			env.bindToEnv(envChoice, c.getId(), b);
 			env.bindToEnv(ENV.SIGMA, c.getId(), b);
-			env.addEq(new ASTTEq(test, new ASTUnion(entry.getKey(), new ASTId(c.getId())), tt));
+			env.addEq(new ASTTEq(test, new ASTUnion(entry.getKey(), new ASTId(c.getId(), b.getId())), tt));
 			tcase = c.getExp().typecheck(env, target);
 
 			if (matchUsedLinears == null) {
