@@ -59,7 +59,7 @@ public class ASTLet extends ASTNode {
         }
 
         expr.setSig(e.getSigma());
-        e.addEq(new ASTTEq(new ASTId(id), expr, tt));
+        e.addEq(new ASTTEq(new ASTId(id, b.getId()), expr, tt));
         e.bindToEnv(ENV.SIGMA, id, b);
 
         ASTType rt = body.typecheck(e, target);

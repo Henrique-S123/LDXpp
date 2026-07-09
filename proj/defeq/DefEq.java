@@ -146,6 +146,15 @@ public final class DefEq {
                 return true;
             }
         }
+
+        if (t instanceof TEta te && l instanceof ASTId lid && te.getVar().equals(lid.getId())) {
+            Debug.log("η-expanding left side");
+            return termdefeq(lid.etaexpand(sl), sl, r, sr, alpha, phi, t);
+        }
+        if (t instanceof TEta te && r instanceof ASTId rid && te.getVar().equals(rid.getId())) {
+            Debug.log("η-expanding right side");
+            return termdefeq(l, sl, rid.etaexpand(sr), sr, alpha, phi, t);
+        }
         
         Debug.log("Trying to solve the left side");
         ASTNode s = l.solve(l.getSig() != null ? l.getSig() : sl);
@@ -158,15 +167,6 @@ public final class DefEq {
         if (s != null) {
             Debug.log("Solved right side");
             return termdefeq(l, sl, s.weaknorm(), (s.getSig() != null) ? s.getSig() : sr, alpha, phi, t);
-        }
-
-        if (t instanceof TEta te && l instanceof ASTId lid && te.getVar().equals(lid.getId())) {
-            Debug.log("η-expanding left side");
-            return termdefeq(lid.etaexpand(sl), sl, r, sr, alpha, phi, t);
-        }
-        if (t instanceof TEta te && r instanceof ASTId rid && te.getVar().equals(rid.getId())) {
-            Debug.log("η-expanding right side");
-            return termdefeq(l, sl, rid.etaexpand(sr), sr, alpha, phi, t);
         }
 
         Debug.log("Failed to prove equality");

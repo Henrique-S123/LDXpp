@@ -20,8 +20,10 @@ public class ASTRefl extends ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        if (term == null && target == null) throw new TypeCheckError(ErrorMessages.missingTermAnnotation());
-        if (target == null) return new ASTTEq(term, term, term.typecheck(e, null));
+        if (target == null) {
+            if (term == null) throw new TypeCheckError(ErrorMessages.missingTermAnnotation());
+            return new ASTTEq(term, term, term.typecheck(e, null));
+        }
 
         if (!(target instanceof ASTTEq tt))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));
@@ -33,8 +35,10 @@ public class ASTRefl extends ASTNode  {
     }
 
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        if (term == null && target == null) throw new TypeCheckError(ErrorMessages.missingTermAnnotation());
-        if (target == null) return new ASTTEq(term, term, term.puretypecheck(sigma, phi, alpha, null));
+        if (target == null) {
+            if (term == null) throw new TypeCheckError(ErrorMessages.missingTermAnnotation());
+            return new ASTTEq(term, term, term.puretypecheck(sigma, phi, alpha, null));
+        }
 
         if (!(target instanceof ASTTEq tt))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));

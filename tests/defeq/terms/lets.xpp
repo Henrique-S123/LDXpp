@@ -24,3 +24,7 @@ let e:((let x = 2; x) = 1 : int) = refl; e;;
 let e:((let x:int = 2; x) = 1 : int) = refl; e;;
 
 let e:((let x:int = 1; x) = (let y:int = 1; y) : int) = refl; e;;
+
+let p2:(x:int, (x=2:int)) = (2, refl(2)); p2;;
+
+let p2:(x:int, (x=2:int)) = (5, refl(2)); p2;;
