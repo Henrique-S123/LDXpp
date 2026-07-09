@@ -380,10 +380,12 @@ let splitlist:(n:Nat)->(a:LIST)->(b:LIST, c:LIST, (fst(concat(b)(c)) = a : LIST)
                     #nil(m) -> m; (#nil(()), #nil(()), refl)
                     |
                     #cons(n) ->
-                        let res = splitlist(ns)(snd(n));
-                        leteq e1 = snd(snd(res));
-                        let newpair = (fst(n), fst(res));
-                        (#cons(newpair), fst(snd(res)), hyp)
+                        let val = fst(n); let rest = snd(n);
+                        let res = splitlist(ns)(rest);
+                        let rb = fst(res); let rc = fst(snd(res)); let eihl = snd(snd(res));
+                        leteq e = eihl;
+                        let nrb = #cons((val, rb));
+                        (nrb, rc, hyp)
                 }
         }
     };

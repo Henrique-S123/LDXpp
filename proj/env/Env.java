@@ -118,11 +118,13 @@ public class Env<E>{
                     if (teq.getTerm1() instanceof ASTId || teq.getTerm2() instanceof ASTId) continue;
                     Debug.log("Testing proof: " + entry.getValue());
                     Debug.open();
+                    E res = null;
                     if ((DefEq.termdefeq(t1, teq.getTerm1(), sigma, phi, alpha) && DefEq.termdefeq(t2, teq.getTerm2(), sigma, phi, alpha))
                     || (DefEq.termdefeq(t1, teq.getTerm2(), sigma, phi, alpha) && DefEq.termdefeq(t2, teq.getTerm1(), sigma, phi, alpha)))
-                        return entry.getValue().val;
+                        res = entry.getValue().val;
                     Debug.close();
                     Debug.nl();
+                    if (res != null) return res;
                 }
             curr = curr.anc;
         }
