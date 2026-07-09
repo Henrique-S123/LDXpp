@@ -34,7 +34,7 @@ public class ASTRec extends ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        functype.check(e.getSigma(), e.getPhi());
+        functype.check(e.getSigma(), e.getPhi(), e.getAlpha());
         ASTType targetcodom = null;
         if (target != null) {
             ASTType tt = e.unfold(target);
@@ -63,8 +63,8 @@ public class ASTRec extends ASTNode  {
         return tfunctype;
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-        functype.check(sigma, phi);
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
+        functype.check(sigma, phi, alpha);
         ASTType targetcodom = null;
         if (target != null) {
             ASTType tt = phi.unfold(target);
@@ -79,8 +79,8 @@ public class ASTRec extends ASTNode  {
         Env<ASTType> env = sigma.beginScope();
         env.assoc(fid, tfunctype);
         
-        ASTType tb = body.puretypecheck(env, phi, targetcodom);
-        if (targetcodom != null && !tb.isSubtypeOf(targetcodom, sigma, phi, new AlphaEnv()))
+        ASTType tb = body.puretypecheck(env, phi, alpha, targetcodom);
+        if (targetcodom != null && !tb.isSubtypeOf(targetcodom, sigma, phi, alpha))
             throw new TypeCheckError(ErrorMessages.notSubtype(tb, targetcodom));
         return tfunctype;
     }

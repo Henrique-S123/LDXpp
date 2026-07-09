@@ -11,7 +11,7 @@ public class ASTUnit extends ASTNode  {
         return new ASTTUnit();
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) {
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) {
         return new ASTTUnit();
     }
 

@@ -63,9 +63,9 @@ public class ASTArithOp extends ASTNode {
 		else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
 	}
 
-	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-		ASTType tl = lhs.puretypecheck(sigma, phi, null);
-		ASTType tr = rhs.puretypecheck(sigma, phi, null);
+	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
+		ASTType tl = lhs.puretypecheck(sigma, phi, alpha, null);
+		ASTType tr = rhs.puretypecheck(sigma, phi, alpha, null);
 		if (tl instanceof ASTTInt && tr instanceof ASTTInt) return new ASTTInt();
 		else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt)) return new ASTTLInt();
 		else if ((tl instanceof ASTTInt || tl instanceof ASTTString) && (tr instanceof ASTTInt || tr instanceof ASTTString) && op == "+") return new ASTTString();

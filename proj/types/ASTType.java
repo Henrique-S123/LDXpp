@@ -23,7 +23,7 @@ public class ASTType  {
         return this;
     }
 
-    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError {
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) throws TypeCheckError {
         return this;
     }
 }

@@ -41,7 +41,7 @@ public class ASTLet extends ASTNode {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        if (declType != null) declType.check(e.getSigma(), e.getPhi());
+        if (declType != null) declType.check(e.getSigma(), e.getPhi(), e.getAlpha());
 
         ASTType tt = (declType != null) ? declType : expr.typecheck(e, null);
         tt = e.unfold(tt);
@@ -70,10 +70,10 @@ public class ASTLet extends ASTNode {
         return rt;
 	}
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-        if (declType != null) declType.check(sigma, phi);
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
+        if (declType != null) declType.check(sigma, phi, alpha);
 
-        ASTType tt = (declType != null) ? declType : expr.puretypecheck(sigma, phi, null);
+        ASTType tt = (declType != null) ? declType : expr.puretypecheck(sigma, phi, alpha, null);
         tt = phi.unfold(tt);
 
         Env<ASTType> env = sigma.beginScope();
@@ -81,12 +81,12 @@ public class ASTLet extends ASTNode {
         env.assoc(id, tt);
 
         if (declType != null) {
-            ASTType exprType = expr.puretypecheck(env, phi, tt);
-            if (!(exprType.isSubtypeOf(tt, env, phi, new AlphaEnv())))
+            ASTType exprType = expr.puretypecheck(env, phi, alpha, tt);
+            if (!(exprType.isSubtypeOf(tt, env, phi, alpha)))
                 throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
         }
 
-        return body.puretypecheck(env, phi, target);
+        return body.puretypecheck(env, phi, alpha, target);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {

@@ -23,7 +23,7 @@ public class ASTBool extends ASTNode  {
         return new ASTTBool();
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) {
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) {
         return new ASTTBool();
     }
 

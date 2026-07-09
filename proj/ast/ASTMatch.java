@@ -98,8 +98,8 @@ public class ASTMatch extends ASTNode {
 		return rettype;
 	}
 
-	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-		ASTType tt = test.puretypecheck(sigma, phi, null), rettype = null, tcase;
+	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
+		ASTType tt = test.puretypecheck(sigma, phi, alpha, null), rettype = null, tcase;
 		tt = phi.unfold(tt);
 		if (!(tt instanceof ASTTUnion || tt instanceof ASTTLUnion))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("match", tt));
@@ -115,16 +115,16 @@ public class ASTMatch extends ASTNode {
 			Env<ASTType> env = sigma.beginScope();
 			env.assoc(c.getId(), tlabel);
 			env.addEq(new ASTTEq(test, new ASTUnion(entry.getKey(), new ASTId(c.getId())), tt));
-			tcase = c.getExp().puretypecheck(env, phi, target);
+			tcase = c.getExp().puretypecheck(env, phi, alpha, target);
 			
 			if (target == null) {
-				if (rettype == null || rettype.isSubtypeOf(tcase, env, phi, new AlphaEnv()))
+				if (rettype == null || rettype.isSubtypeOf(tcase, env, phi, alpha))
 					rettype = tcase;
-				else if (!tcase.isSubtypeOf(rettype, env, phi, new AlphaEnv()))
+				else if (!tcase.isSubtypeOf(rettype, env, phi, alpha))
 					throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tcase, rettype));
 			} else {
 				rettype = target;
-				if (!tcase.isSubtypeOf(target, env, phi, new AlphaEnv()))
+				if (!tcase.isSubtypeOf(target, env, phi, alpha))
 					throw new TypeCheckError(ErrorMessages.notSubtype(tcase, target));
 			}
 		}

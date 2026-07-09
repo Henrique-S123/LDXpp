@@ -34,8 +34,8 @@ public class ASTPrint extends ASTNode {
 		return new ASTTUnit();
 	}
 
-	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-		exp.puretypecheck(sigma, phi, null);
+	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
+		exp.puretypecheck(sigma, phi, alpha, null);
 		return new ASTTUnit();
 	}
 

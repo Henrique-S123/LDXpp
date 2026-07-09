@@ -32,9 +32,9 @@ public class ASTSeq extends ASTNode {
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
 	}
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-        ASTType tf = first.puretypecheck(sigma, phi, null);
-        if (tf instanceof ASTTUnit) return second.puretypecheck(sigma, phi, target);
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
+        ASTType tf = first.puretypecheck(sigma, phi, alpha, null);
+        if (tf instanceof ASTTUnit) return second.puretypecheck(sigma, phi, alpha, target);
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
     }
 

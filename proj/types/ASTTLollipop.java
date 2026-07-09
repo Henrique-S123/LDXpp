@@ -53,14 +53,14 @@ public class ASTTLollipop extends ASTLinType {
         return new ASTTLollipop(dom.inst(instId, n), codom.inst(instId, n), id);
     }
 
-    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError {
-        dom.check(sigma, phi);
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) throws TypeCheckError {
+        dom.check(sigma, phi, alpha);
         Env<ASTType> env = sigma;
         if (id != null) {
             env = env.beginScope();
             env.assoc(id, dom);
         }
-        codom.check(env, phi);
+        codom.check(env, phi, alpha);
         return this;
     }
 }

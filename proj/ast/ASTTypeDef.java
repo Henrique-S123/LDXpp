@@ -33,7 +33,7 @@ public class ASTTypeDef extends ASTNode {
         e.openEnvScope(ENV.PHI);
         for (String s : ltd.keySet()) {
             ASTType t = ltd.get(s);
-            t.check(e.getSigma(), e.getPhi());
+            t.check(e.getSigma(), e.getPhi(), e.getAlpha());
             t.setSig(e.getSigma());
             e.bindToEnv(ENV.PHI, s, t);
         }
@@ -42,14 +42,14 @@ public class ASTTypeDef extends ASTNode {
         return ret;
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
         Env<ASTType> env = phi.beginScope();
         for (String s : ltd.keySet()) {
             ASTType t = ltd.get(s);
             t.setSig(sigma);
             env.assoc(s, t);
         }
-        return body.puretypecheck(sigma, env, target);
+        return body.puretypecheck(sigma, env, alpha, target);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {

@@ -50,13 +50,13 @@ public class ASTLeteq extends ASTNode {
         return rt;
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-        ASTType t = expr.puretypecheck(sigma, phi, null);
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
+        ASTType t = expr.puretypecheck(sigma, phi, alpha, null);
         t = phi.unfold(t);
         if (!(t instanceof ASTTEq)) throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("leteq", t));
         Env<ASTType> env = sigma.beginScope();
         env.assoc(id, t);
-        return body.puretypecheck(env, phi, target);
+        return body.puretypecheck(env, phi, alpha, target);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {

@@ -23,7 +23,7 @@ public class ASTLInt extends ASTNode  {
         return new ASTTLInt();
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) {
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) {
         return new ASTTLInt();
     }
 

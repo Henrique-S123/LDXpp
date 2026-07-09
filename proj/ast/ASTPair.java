@@ -52,7 +52,7 @@ public class ASTPair extends ASTNode {
         return new ASTTPair(targetfst == null ? t1 : targetfst, targetsnd == null ? t2 : targetsnd, tgtid);
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
         ASTType targetfst = null, targetsnd = null;
         String tgtid = null;
         if (target != null) {
@@ -62,13 +62,13 @@ public class ASTPair extends ASTNode {
             else throw new TypeCheckError(ErrorMessages.typeMismatch("pair or tensor", target));
         }
 
-        ASTType t1 = first.puretypecheck(sigma, phi, targetfst);
-        if (targetfst != null && !t1.isSubtypeOf(targetfst, sigma, phi, new AlphaEnv()))
+        ASTType t1 = first.puretypecheck(sigma, phi, alpha, targetfst);
+        if (targetfst != null && !t1.isSubtypeOf(targetfst, sigma, phi, alpha))
             throw new TypeCheckError(ErrorMessages.notSubtype(t1, targetfst));
 
         ASTType insttgt2 = (tgtid != null) ? targetsnd.inst(tgtid, first) : targetsnd;
-        ASTType t2 = second.puretypecheck(sigma, phi, insttgt2);
-        if (targetsnd != null && !t2.isSubtypeOf(insttgt2, sigma, phi, new AlphaEnv()))
+        ASTType t2 = second.puretypecheck(sigma, phi, alpha, insttgt2);
+        if (targetsnd != null && !t2.isSubtypeOf(insttgt2, sigma, phi, alpha))
             throw new TypeCheckError(ErrorMessages.notSubtype(t2, targetsnd));
         
         return new ASTTPair(targetfst == null ? t1 : targetfst, targetsnd == null ? t2 : targetsnd, tgtid);

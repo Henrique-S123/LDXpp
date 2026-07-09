@@ -65,23 +65,23 @@ public class ASTIf extends ASTNode {
 		}
 	}
 
-	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-		ASTType tt = test.puretypecheck(sigma, phi, null);
+	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
+		ASTType tt = test.puretypecheck(sigma, phi, alpha, null);
 		if (!(tt instanceof ASTTBool || tt instanceof ASTTLBool))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("if", tt));
 
-		ASTType tconseq = conseq.puretypecheck(sigma, phi, target);
-		ASTType talt = alt.puretypecheck(sigma, phi, target);
+		ASTType tconseq = conseq.puretypecheck(sigma, phi, alpha, target);
+		ASTType talt = alt.puretypecheck(sigma, phi, alpha, target);
 
 		if (target != null) {
-			if (!tconseq.isSubtypeOf(target, sigma, phi, new AlphaEnv()))
+			if (!tconseq.isSubtypeOf(target, sigma, phi, alpha))
 				throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tconseq, target));
-			if (!talt.isSubtypeOf(target, sigma, phi, new AlphaEnv()))
+			if (!talt.isSubtypeOf(target, sigma, phi, alpha))
 				throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(talt, target));
 			return target;
 		} else {
-			if (tconseq.isSubtypeOf(talt, sigma, phi, new AlphaEnv())) return talt;
-			else if (talt.isSubtypeOf(tconseq, sigma, phi, new AlphaEnv())) return tconseq;
+			if (tconseq.isSubtypeOf(talt, sigma, phi, alpha)) return talt;
+			else if (talt.isSubtypeOf(tconseq, sigma, phi, alpha)) return tconseq;
 			else throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tconseq, talt));
 		}
 	}

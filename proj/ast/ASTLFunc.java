@@ -55,7 +55,7 @@ public class ASTLFunc extends ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        argtype.check(e.getSigma(), e.getPhi());
+        argtype.check(e.getSigma(), e.getPhi(), e.getAlpha());
         ASTType targetdom = null, targetcodom = null;
         String tid = null;
         if (target != null) {
@@ -86,24 +86,25 @@ public class ASTLFunc extends ASTNode  {
         return new ASTTLollipop(targtype, tb, id);
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
-        argtype.check(sigma, phi);
+    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
+        argtype.check(sigma, phi, alpha);
         ASTType targetdom = null, targetcodom = null;
+        String tid = null;
         if (target != null) {
             ASTType tt = phi.unfold(target);
-            String tid;
             if (tt instanceof ASTTLollipop lolli) { targetdom = lolli.getDom(); targetcodom = lolli.getCodom(); tid = lolli.getId(); }
             else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
         }
 
         ASTType targtype = phi.unfold(argtype);
         Env<ASTType> env = sigma.beginScope();
-        if (targetdom != null && !targetdom.isSubtypeOf(targtype, sigma, phi, new AlphaEnv()))
+        if (targetdom != null && !targetdom.isSubtypeOf(targtype, sigma, phi, alpha))
             throw new TypeCheckError(ErrorMessages.notSubtypeFunc(targetdom, targtype));
         env.assoc(id, targtype);
         body.setSig(env);
+        if (tid != null) alpha.extend(id, tid);
 
-        ASTType tb = body.puretypecheck(env, phi, targetcodom);
+        ASTType tb = body.puretypecheck(env, phi, alpha, targetcodom);
         return new ASTTArrow(targtype, tb, id);
     }
 

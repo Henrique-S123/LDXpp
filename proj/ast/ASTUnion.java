@@ -36,9 +36,9 @@ public class ASTUnion extends ASTNode {
 		return new ASTTUnion(ll);
 	}
 
-	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, ASTType target) throws TypeCheckError {
+	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
-		ll.put(label, expr.puretypecheck(sigma, phi, null));
+		ll.put(label, expr.puretypecheck(sigma, phi, alpha, null));
 		return new ASTTUnion(ll);
 	}
 

@@ -55,15 +55,15 @@ public class ASTTEq extends ASTType {
         return neweq;
     }
 
-    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError {
-        type.check(sigma, phi);
-        ASTType type1 = term1.puretypecheck(sigma, phi, type);
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) throws TypeCheckError {
+        type.check(sigma, phi, alpha);
+        ASTType type1 = term1.puretypecheck(sigma, phi, alpha, type);
         Debug.log("LEFT TERM TYPE: " + type1);
-        if (!type1.isSubtypeOf(type, sigma, phi, new AlphaEnv()))
+        if (!type1.isSubtypeOf(type, sigma, phi, alpha))
             throw new TypeCheckError(ErrorMessages.notSubtype(type1, type));
-        ASTType type2 = term2.puretypecheck(sigma, phi, type);
+        ASTType type2 = term2.puretypecheck(sigma, phi, alpha, type);
         Debug.log("RIGHT TERM TYPE: " + type2);
-        if (!type2.isSubtypeOf(type, sigma, phi, new AlphaEnv()))
+        if (!type2.isSubtypeOf(type, sigma, phi, alpha))
             throw new TypeCheckError(ErrorMessages.notSubtype(type2, type));
         return this;
     }

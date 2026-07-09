@@ -50,14 +50,14 @@ public class ASTTTensor extends ASTLinType {
         return new ASTTTensor(first.inst(instId, n), second.inst(instId, n), id);
     }
 
-    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi) throws TypeCheckError {
-        first.check(sigma, phi);
+    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) throws TypeCheckError {
+        first.check(sigma, phi, alpha);
         Env<ASTType> env = sigma;
         if (id != null) {
             env = env.beginScope();
             env.assoc(id, first);
         }
-        second.check(env, phi);
+        second.check(env, phi, alpha);
         return this;
     }
 }
