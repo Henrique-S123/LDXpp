@@ -3,6 +3,7 @@ package proj.ast;
 import proj.values.*;
 import proj.types.*;
 import proj.env.*;
+import proj.env.EnvSet.ENV;
 import proj.errors.*;
 
 public class ASTSeq extends ASTNode {
@@ -28,13 +29,21 @@ public class ASTSeq extends ASTNode {
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         ASTType tf = first.typecheck(e, null);
-        if (tf instanceof ASTTUnit) return second.typecheck(e, target);
+        if (tf instanceof ASTTUnit) {
+            e.openEnvScope(ENV.SIGMA);
+            e.addEq(new ASTTEq(first, new ASTUnit(), tf));
+            return second.typecheck(e, target);
+        }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
 	}
 
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
         ASTType tf = first.puretypecheck(sigma, phi, alpha, null);
-        if (tf instanceof ASTTUnit) return second.puretypecheck(sigma, phi, alpha, target);
+        if (tf instanceof ASTTUnit) {
+            Env<ASTType> env = sigma.beginScope();
+            env.addEq(new ASTTEq(first, new ASTUnit(), tf));
+            return second.puretypecheck(env, phi, alpha, target);
+        }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
     }
 

@@ -70,7 +70,7 @@ let l2:LIST = #cons ((n2,l1));
 let size:LIST->Nat =
     fn l:LIST => {
         match l {
-            #nil(_) -> n0
+            #nil(m) -> m; n0
             |
             #cons(n) -> #succ(size(snd(n)))
         }
@@ -98,7 +98,7 @@ let l2:LIST = #cons ((n2,l1));
 let size:LIST->Nat =
     fn l:LIST => {
         match l {
-            #nil(_) -> n0
+            #nil(m) -> m; n0
             |
             #cons(n) -> #succ(size(snd(n)))
         }
@@ -106,7 +106,7 @@ let size:LIST->Nat =
 let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) =
     fn la:LIST, lb:LIST => {
         match la {
-            #nil(_) -> (lb, refl)
+            #nil(m) -> m; (lb, refl)
             |
             #cons(n) ->
                 let res = concat(snd(n))(lb);
@@ -137,7 +137,7 @@ let l2:LIST = #cons ((n2,l1));
 let size:LIST->Nat =
     fn l:LIST => {
         match l {
-            #nil(_) -> n0
+            #nil(m) -> m; n0
             |
             #cons(n) -> #succ(size(snd(n)))
         }
@@ -145,7 +145,7 @@ let size:LIST->Nat =
 let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) =
     fn la:LIST, lb:LIST => {
         match la {
-            #nil(_) -> (lb, refl)
+            #nil(m) -> m; (lb, refl)
             |
             #cons(n) ->
                 let res = concat(snd(n))(lb);
@@ -176,7 +176,7 @@ let l2:LIST = #cons ((n2,l1));
 let size:LIST->Nat =
     fn l:LIST => {
         match l {
-            #nil(_) -> n0
+            #nil(m) -> m; n0
             |
             #cons(n) -> #succ(size(snd(n)))
         }
@@ -184,7 +184,7 @@ let size:LIST->Nat =
 let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) =
     fn la:LIST, lb:LIST => {
         match la {
-            #nil(_) -> (lb, refl)
+            #nil(m) -> m; (lb, refl)
             |
             #cons(n) ->
                 let res = concat(snd(n))(lb);
@@ -216,7 +216,7 @@ let l2:LIST = #cons ((n2,l1));
 let size:LIST->Nat =
     fn l:LIST => {
         match l {
-            #nil(_) -> n0
+            #nil(m) -> m; n0
             |
             #cons(n) -> #succ(size(snd(n)))
         }
@@ -224,7 +224,7 @@ let size:LIST->Nat =
 let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) =
     fn la:LIST, lb:LIST => {
         match la {
-            #nil(_) -> (lb, refl)
+            #nil(m) -> m; (lb, refl)
             |
             #cons(n) ->
                 let res = concat(snd(n))(lb);
@@ -256,7 +256,7 @@ let l2:LIST = #cons ((n2,l1));
 let size:LIST->Nat =
     fn l:LIST => {
         match l {
-            #nil(_) -> n0
+            #nil(m) -> m; n0
             |
             #cons(n) -> #succ(size(snd(n)))
         }
@@ -264,7 +264,7 @@ let size:LIST->Nat =
 let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) =
     fn la:LIST, lb:LIST => {
         match la {
-            #nil(_) -> (lb, refl)
+            #nil(m) -> m; (lb, refl)
             |
             #cons(n) ->
                 let res = concat(snd(n))(lb);
@@ -283,7 +283,7 @@ let l2:LIST = #cons ((2,l1));
 let copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) =
     fn l:LIST => {
         match l {
-            #nil(_) -> (l, refl)
+            #nil(m) -> m; (l, refl)
             |
             #cons(n) ->
                 let res = copy(snd(n));
@@ -302,7 +302,7 @@ let l2:LIST = #cons ((2,l1));
 let copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) =
     fn l:LIST => {
         match l {
-            #nil(_) -> (l, refl)
+            #nil(m) -> m; (l, refl)
             |
             #cons(n) ->
                 let res = copy(snd(n));
@@ -321,7 +321,7 @@ let l2:LIST = #cons ((2,l1));
 let copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) =
     fn l:LIST => {
         match l {
-            #nil(_) -> (l, refl)
+            #nil(m) -> m; (l, refl)
             |
             #cons(n) ->
                 let res = copy(snd(n));
@@ -353,7 +353,7 @@ let l2:LIST = #cons ((n2,l1));
 let size:LIST->Nat =
     fn l:LIST => {
         match l {
-            #nil(_) -> n0
+            #nil(m) -> m; n0
             |
             #cons(n) -> #succ(size(snd(n)))
         }
@@ -361,7 +361,7 @@ let size:LIST->Nat =
 let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) =
     fn la:LIST, lb:LIST => {
         match la {
-            #nil(_) -> (lb, refl)
+            #nil(m) -> m; (lb, refl)
             |
             #cons(n) ->
                 let res = concat(snd(n))(lb);
@@ -373,11 +373,11 @@ let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) :
 let splitlist:(n:Nat)->(a:LIST)->(b:LIST, c:LIST, (fst(concat(b)(c)) = a : LIST)) =
     fn n:Nat, a:LIST => {
         match n {
-            #zero(_) -> (#nil(()), a, refl)
+            #zero(m) -> m; (#nil(()), a, refl)
             |
             #succ(ns) ->
                 match a {
-                    #nil(_) -> (#nil(()), #nil(()), refl)
+                    #nil(m) -> m; (#nil(()), #nil(()), refl)
                     |
                     #cons(n) ->
                         let res = splitlist(ns)(snd(n));

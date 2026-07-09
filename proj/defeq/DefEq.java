@@ -116,7 +116,7 @@ public final class DefEq {
 
         if (l instanceof ASTUnit && r instanceof ASTUnit) return true;
         if (l instanceof ASTSeq ln && r instanceof ASTSeq rn)
-            if (termdefeq(ln.getFirst(), sl, rn.getSecond(), sr, alpha, phi, t)
+            if (termdefeq(ln.getFirst(), sl, rn.getFirst(), sr, alpha, phi, t)
                 && termdefeq(ln.getSecond(), sl, rn.getSecond(), sr, alpha, phi, t)) return true;
         if (l instanceof ASTPrint ln && r instanceof ASTPrint rn && ln.getNewline() == rn.getNewline())
             return termdefeq(ln.getExp(), sl, rn.getExp(), sr, alpha, phi, t);
