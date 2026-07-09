@@ -2,17 +2,17 @@ package proj.ast;
 
 import proj.values.*;
 import proj.types.*;
-import proj.defeq.DefEq;
+import proj.defeq.*;
 import proj.env.*;
 import proj.errors.*;
 
 public class ASTRefl extends ASTNode  {
     private final ASTNode term;
-    private final boolean hyp;
+    private final Tactic tactic;
 
-    public ASTRefl(ASTNode t, boolean h) {
+    public ASTRefl(ASTNode t, Tactic tac) {
         term = t;
-        hyp = h;
+        tactic = tac;
     }
 
     public IValue eval(Env<IValue> e) {
@@ -28,7 +28,7 @@ public class ASTRefl extends ASTNode  {
 
         Env<ASTType> sig = (tt.getSig() != null) ? tt.getSig() : e.getSigma();
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
-        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), sig, e.getPhi(), e.getAlpha(), hyp)) return target;
+        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), sig, e.getPhi(), e.getAlpha(), tactic)) return target;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
@@ -41,7 +41,7 @@ public class ASTRefl extends ASTNode  {
 
         Env<ASTType> sig = (tt.getSig() != null) ? tt.getSig() : sigma;
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
-        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), sig, phi, alpha, hyp)) return target;
+        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), sig, phi, alpha, tactic)) return target;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
