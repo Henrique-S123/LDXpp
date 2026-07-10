@@ -149,18 +149,17 @@ public final class DefEq {
                 return termdefeq(lid.etaexpand(sl), sl, r, sr, alpha, phi, t);
             }
             if (r instanceof ASTId rid && te.getVar().equals(rid.getId())) {
-                Debug.log("η-expanding left side");
+                Debug.log("η-expanding right side");
                 return termdefeq(l, sl, rid.etaexpand(sr), sr, alpha, phi, t);
             }
         }
         
-        Debug.log("Trying to solve the left side");
+        Debug.log("Trying to solve one side");
         ASTNode s = l.solve(l.getSig() != null ? l.getSig() : sl);
         if (s != null) {
             Debug.log("Solved left side");
             return termdefeq(s.weaknorm(), (s.getSig() != null) ? s.getSig() : sl, r, sr, alpha, phi, t);
         }
-        Debug.log("Trying to solve the right side");
         s = r.solve(r.getSig() != null ? r.getSig() : sr);
         if (s != null) {
             Debug.log("Solved right side");

@@ -13,54 +13,32 @@ public class Parser {
 
 PARSER_END(Parser)
 
-SKIP :
-{
-  " "
-| "\t"
-| "\r"
-| "\n"
-}
+SKIP : { " " | "\t" | "\r" | "\n" }
 
 TOKEN :
 {
 
   < LET : "let" >
   |
-  < Bool : ("true"|"false") >
+  < Bool : ("true"|"false") > | < LinBool : ("truel"|"falsel") >
   |
-  < LinBool : ("truel"|"falsel") >
+  < PLUS : "+" > | < MINUS : "-" > | < STAR : "*"> | < DIV : "/">
   |
-  < PLUS : "+" >
+  < EQ : "==" > | < GT : ">" > | < LT : "<" > | < GTEQ : ">=" > | < LTEQ : "<=" > | < DIF : "~=" >
   |
-  < MINUS : "-" >
+  < AND : "&&" > | < OR : "||" > | < NOT : "~" >
   |
-  < STAR : "*">
+  < LPAR : "(" > | < RPAR : ")" > | < LRPAR : "()" >
   |
-  < DIV : "/">
-  |
-  < LPAR : "(" >
-  |
-  < RPAR : ")" >
-  |
-  < LRPAR : "()" >
-  |
-  < LBRA : "{" >
-  |
-  < RBRA : "}" >
+  < LBRA : "{" > | < RBRA : "}" >
   |
   < EQUAL : "=" >
   |
-  < QUESTION : "?">
+  < QUESTION : "?"> | < QUESTIONTYPES : "?T" >
   |
-  < QUESTIONTYPES : "?T" >
+  < REFL: "refl" > | < HYP: "hyp" > | < ETA: "eta" >
   |
-  < REFL: "refl" >
-  |
-  < LETEQ: "leteq" >
-  |
-  < HYP: "hyp" >
-  |
-  < ETA: "eta" >
+  < LETEQ: "leteq" >  
   |
   < DOT : "." >
   |
@@ -73,24 +51,6 @@ TOKEN :
   < COMMA : "," >
   |
   < VERT : "|" >
-  |
-  < AND : "&&" >
-  |
-  < OR : "||" >
-  |
-  < EQ : "==" >
-  |  
-  < GT : ">" >
-  |
-  < LT : "<" >
-  |
-  < GTEQ : ">=" >
-  |
-  < LTEQ : "<=" >
-  |
-  < DIF : "~=" >
-  |
-  < NOT : "~" >
   |
   < IF : "if" >
   |

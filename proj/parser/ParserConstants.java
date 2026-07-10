@@ -25,59 +25,59 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int DIV = 11;
   /** RegularExpression Id. */
-  int LPAR = 12;
+  int EQ = 12;
   /** RegularExpression Id. */
-  int RPAR = 13;
+  int GT = 13;
   /** RegularExpression Id. */
-  int LRPAR = 14;
+  int LT = 14;
   /** RegularExpression Id. */
-  int LBRA = 15;
+  int GTEQ = 15;
   /** RegularExpression Id. */
-  int RBRA = 16;
+  int LTEQ = 16;
   /** RegularExpression Id. */
-  int EQUAL = 17;
+  int DIF = 17;
   /** RegularExpression Id. */
-  int QUESTION = 18;
+  int AND = 18;
   /** RegularExpression Id. */
-  int QUESTIONTYPES = 19;
+  int OR = 19;
   /** RegularExpression Id. */
-  int REFL = 20;
+  int NOT = 20;
   /** RegularExpression Id. */
-  int LETEQ = 21;
+  int LPAR = 21;
   /** RegularExpression Id. */
-  int HYP = 22;
+  int RPAR = 22;
   /** RegularExpression Id. */
-  int ETA = 23;
+  int LRPAR = 23;
   /** RegularExpression Id. */
-  int DOT = 24;
+  int LBRA = 24;
   /** RegularExpression Id. */
-  int COLON = 25;
+  int RBRA = 25;
   /** RegularExpression Id. */
-  int SEMIC = 26;
+  int EQUAL = 26;
   /** RegularExpression Id. */
-  int TERM = 27;
+  int QUESTION = 27;
   /** RegularExpression Id. */
-  int COMMA = 28;
+  int QUESTIONTYPES = 28;
   /** RegularExpression Id. */
-  int VERT = 29;
+  int REFL = 29;
   /** RegularExpression Id. */
-  int AND = 30;
+  int HYP = 30;
   /** RegularExpression Id. */
-  int OR = 31;
+  int ETA = 31;
   /** RegularExpression Id. */
-  int EQ = 32;
+  int LETEQ = 32;
   /** RegularExpression Id. */
-  int GT = 33;
+  int DOT = 33;
   /** RegularExpression Id. */
-  int LT = 34;
+  int COLON = 34;
   /** RegularExpression Id. */
-  int GTEQ = 35;
+  int SEMIC = 35;
   /** RegularExpression Id. */
-  int LTEQ = 36;
+  int TERM = 36;
   /** RegularExpression Id. */
-  int DIF = 37;
+  int COMMA = 37;
   /** RegularExpression Id. */
-  int NOT = 38;
+  int VERT = 38;
   /** RegularExpression Id. */
   int IF = 39;
   /** RegularExpression Id. */
@@ -156,6 +156,15 @@ public interface ParserConstants {
     "\"-\"",
     "\"*\"",
     "\"/\"",
+    "\"==\"",
+    "\">\"",
+    "\"<\"",
+    "\">=\"",
+    "\"<=\"",
+    "\"~=\"",
+    "\"&&\"",
+    "\"||\"",
+    "\"~\"",
     "\"(\"",
     "\")\"",
     "\"()\"",
@@ -165,24 +174,15 @@ public interface ParserConstants {
     "\"?\"",
     "\"?T\"",
     "\"refl\"",
-    "\"leteq\"",
     "\"hyp\"",
     "\"eta\"",
+    "\"leteq\"",
     "\".\"",
     "\":\"",
     "\";\"",
     "\";;\"",
     "\",\"",
     "\"|\"",
-    "\"&&\"",
-    "\"||\"",
-    "\"==\"",
-    "\">\"",
-    "\"<\"",
-    "\">=\"",
-    "\"<=\"",
-    "\"~=\"",
-    "\"~\"",
     "\"if\"",
     "\"else\"",
     "\"print\"",
