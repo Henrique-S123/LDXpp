@@ -28,3 +28,20 @@ let pred:(l:nzNat)->Nat =
         }
     };
 pred((n2, n1, refl));;
+
+type Nat = union { #zero: (), #succ: Nat };
+let n0 = #zero(());
+let n1 = #succ(n0);
+let n2 = #succ(n1);
+type nzNat = (x:Nat, n:Nat, (x = #succ(n) : Nat));
+let pred:(l:nzNat)->Nat = 
+    fn l:nzNat => {
+        let x = fst(l);
+        let n = fst(snd(l));
+        match x {
+            #zero(m) -> m; #zero(())
+            |
+            #succ(m) -> m
+        }
+    };
+pred((n1, n0, refl));;
