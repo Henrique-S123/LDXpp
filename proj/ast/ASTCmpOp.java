@@ -35,7 +35,7 @@ public class ASTCmpOp extends ASTNode {
 			int i2 = vi2.getval();
 			boolean res = switch (op) {
 				case "==" -> i1 == i2;
-				case "~=" -> i1 != i2;
+				case "!=" -> i1 != i2;
 				case ">" -> i1 > i2;
 				case ">=" -> i1 >= i2;
 				case "<" -> i1 < i2;
@@ -71,7 +71,7 @@ public class ASTCmpOp extends ASTNode {
 			int i2 = (rn instanceof ASTInt) ? ((ASTInt) rn).getVal() : ((ASTLInt) rn).getVal();
 			boolean res = switch (op) {
 				case "==" -> i1 == i2;
-				case "~=" -> i1 != i2;
+				case "!=" -> i1 != i2;
 				case ">" -> i1 > i2;
 				case ">=" -> i1 >= i2;
 				case "<" -> i1 < i2;

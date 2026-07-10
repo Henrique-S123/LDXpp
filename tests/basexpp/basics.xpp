@@ -54,7 +54,7 @@ if (y) { 1 } else { x > 1 };;
 
 let x = 1;
 let y = (x > 2);
-if (y) { x ~= 1 } else { y };;
+if (y) { x != 1 } else { y };;
 
 (let x = 1; (x + 1)) * (let x = 2; (x + 3));;
 

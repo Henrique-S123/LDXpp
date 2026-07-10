@@ -1,0 +1,2 @@
+type nonZeroInt = (x:int, (x ~= 0 : int));
+let one:nonZeroInt = (1, refl); one;;
