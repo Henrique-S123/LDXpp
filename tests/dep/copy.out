@@ -1,0 +1,9 @@
+class proj.errors.TypeCheckError: Terms l and #cons(newpair) are not definitionally equal
+
+
+class proj.errors.TypeCheckError: Terms l and #cons(newpair) are not definitionally equal
+
+
+type: (lr:LIST, l2 ≡ lr : LIST), value: (#cons((2, #cons((1, #nil(()))))), refl)
+
+

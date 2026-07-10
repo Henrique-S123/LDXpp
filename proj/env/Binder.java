@@ -11,6 +11,10 @@ public class Binder<V> {
         id = UUID.randomUUID().toString();
     }
 
+    public V getVal() {
+        return val;
+    }
+
     public String getId() {
         return id;
     }

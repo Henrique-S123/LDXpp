@@ -32,85 +32,47 @@ TOKEN :
   |
   < LBRA : "{" > | < RBRA : "}" >
   |
-  < EQUAL : "=" >
-  |
   < QUESTION : "?"> | < QUESTIONTYPES : "?T" >
   |
   < REFL: "refl" > | < HYP: "hyp" > | < ETA: "eta" >
   |
-  < LETEQ: "leteq" >  
+  < LETEQ: "leteq" > | < NEVER: "never" >
   |
-  < DOT : "." >
+  < EQUAL : "=" > | < VERT : "|" >
   |
-  < COLON : ":" >
+  < DOT : "." > | < COLON : ":" >
   |
-  < SEMIC : ";" >
+  < SEMIC : ";" > | < TERM : ";;" > | < COMMA : "," >
   |
-  < TERM : ";;" >
+  < IF : "if" > | < ELSE : "else" >
   |
-  < COMMA : "," >
+  < PRINT : "print" > | < PRINTLN : "println" >
   |
-  < VERT : "|" >
+  < FN : "fn" > | < LFN : "lfn" > | < REC : "rec" >
   |
-  < IF : "if" >
+  < ARROW : "=>" > | < DLOLLIPOP : "=o>" > | < SLIMARROW : "->" > | < LOLLIPOP : "-o>" >
   |
-  < ELSE : "else" >
+  < FST : "fst" > | < SND : "snd" >
   |
-  < PRINT : "print" >
-  |
-  < PRINTLN : "println" >
-  |
-  < FN : "fn" >
-  |
-  < LFN : "lfn" >
-  |
-  < REC : "rec" >
-  |
-  < ARROW : "=>" >
-  |
-  < DLOLLIPOP : "=o>" >
-  |
-  < SLIMARROW : "->" >
-  |
-  < LOLLIPOP : "-o>" >
-  |
-  < FST : "fst" >
-  |
-  < SND : "snd" >
-  |
-  < MATCH : "match" >
+  < MATCH : "match" > | < SPLIT : "split" >
   |
   < TYPE : "type" >
   |
-  < TINT : "int" >
+  < TINT : "int" > | < TLINT : "linint" >
   |
-  < TLINT : "linint" >
-  |
-  < TBOOL : "bool" >
-  |
-  < TLBOOL : "linbool" >
+  < TBOOL : "bool" > | < TLBOOL : "linbool" >
   |
   < TSTRING  : "string" >  
   |
-  < TUNION  : "union" >
+  < TUNION  : "union" > | < TLUNION : "linunion" >
   |
-  < TLUNION : "linunion" >
-  |
-  < SPLIT : "split" >
-  |
-  < CHECK : "check" >
-  |
-  < LABEL : "#" ["a"-"z", "A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* >
-  |
-  < LLABEL : "$" ["a"-"z", "A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* >
+  < LABEL : "#" ["a"-"z", "A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* > | < LLABEL : "$" ["a"-"z", "A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* >
   |
   < String: "\"" ( (~["\"","\\"]) | ("\\" ( ["n","t","b","r","f","\\","\""] ) ) )* "\"" >
   |
   < Id: ["a"-"z","A"-"Z", "_"] ( ["_", "a"-"z","A"-"Z","0"-"9"] )* >
   |
-  < LinNum: (["0"-"9"])+ "l" >
-  |
-  < Num: (["0"-"9"])+ >
+  < LinNum: (["0"-"9"])+ "l" > | < Num: (["0"-"9"])+ >
 }
 
 ASTNode Start():
@@ -328,12 +290,22 @@ ASTNode Match(ASTNode p) :
 }
 {
   (
-    (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let() { cases.put(l.image, new MatchCase(n.image, e1)); }
-          (<VERT> (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = Let()
+    (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = MatchExpr() { cases.put(l.image, new MatchCase(n.image, e1)); }
+          (<VERT> (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = MatchExpr()
             { if (cases.putIfAbsent(l.image, new MatchCase(n.image, e1)) != null) throw new ParseException("duplicate label");} )*
     <RBRA> { t = new ASTMatch(p, cases); }
   )
   { return t; }
+}
+
+ASTNode MatchExpr() :
+{ ASTNode t; }
+{
+  (
+    <NEVER> { t =  new ASTNever(); }
+  |
+    t = Let()
+  ) { return t; }
 }
 
 ASTType Type() : 

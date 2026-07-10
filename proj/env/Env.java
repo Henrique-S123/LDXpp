@@ -31,6 +31,10 @@ public class Env<E>{
         return anc;
     }
 
+    public Map<String, Binder<E>> getBindings() {
+        return bindings;
+    }
+
     public Env<E> copy() {
         Env<E> e = new Env<>((this.anc == null ? null : this.anc.copy()));
         e.bindings = new HashMap<>(bindings);

@@ -47,7 +47,11 @@ public final class ErrorMessages {
     }
 
     public static String missingTermAnnotation() {
-        return String.format("refl expects a term annotation");
+        return "refl expects a term annotation";
+    }
+
+    public static String contextNotInconsistent() {
+        return "The context is not inconsistent";
     }
 
     // Linearity errors
