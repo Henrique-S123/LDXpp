@@ -10,3 +10,9 @@ type: Nat, value: #succ(#zero(()))
 type: Nat, value: #zero(())
 
 
+type: Nat, value: #succ(#zero(()))
+
+
+type: Nat, value: #zero(())
+
+

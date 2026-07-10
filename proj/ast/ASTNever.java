@@ -15,9 +15,8 @@ public class ASTNever extends ASTNode  {
 
     public ASTNever() {}
 
-    public IValue eval(Env<IValue> e) {
-        // TODO
-        return new VUnit();
+    public IValue eval(Env<IValue> e) throws InterpreterError {
+        throw new InterpreterError(ErrorMessages.unreachableCode());
     }
 
     public void setFields(Env<ASTType> env, String l, ASTNode t) {
@@ -27,29 +26,28 @@ public class ASTNever extends ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        if (isInconsistent(e.getSigma(), e.getPhi(), e.getAlpha())) return target;
+        if (isInconsistent(e.getPhi(), e.getAlpha())) return target;
         throw new TypeCheckError(ErrorMessages.contextNotInconsistent());
     }
 
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        if (isInconsistent(sigma, phi, alpha)) return target;
+        if (isInconsistent(phi, alpha)) return target;
         throw new TypeCheckError(ErrorMessages.contextNotInconsistent());
     }
 
-    public boolean isInconsistent(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) throws TypeCheckError {
+    public boolean isInconsistent(Env<ASTType> phi, AlphaEnv alpha) throws TypeCheckError {
         Set<ASTNode> s = new HashSet<ASTNode>();
-        Env<ASTType> curr = searchEnv.endScope();
+        Env<ASTType> curr = searchEnv;
         while (curr != null) {
             for (Binder<ASTType> b : curr.getBindings().values()) {
                 DefEq eq = new DefEq(searchEnv);
-                if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm1(), curr, phi, alpha))
+                if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm1(), searchEnv, phi, alpha))
                     s.add(teq.getTerm2());
-                if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm2(), curr, phi, alpha))
+                if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm2(), searchEnv, phi, alpha))
                     s.add(teq.getTerm1());
             }
             curr = curr.endScope();
         }
-
         for (ASTNode eq : s) {
             if (eq instanceof ASTUnion u && !u.getLabel().equals(label)) return true;
             if (eq instanceof ASTLUnion lu && !lu.getLabel().equals(label)) return true; 

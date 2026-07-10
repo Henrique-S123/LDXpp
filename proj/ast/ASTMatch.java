@@ -119,6 +119,8 @@ public class ASTMatch extends ASTNode {
 			Env<ASTType> env = sigma.beginScope();
 			env.assoc(c.getId(), tlabel);
 			env.addEq(new ASTTEq(test, new ASTUnion(entry.getKey(), new ASTId(c.getId())), tt));
+
+			if (c.getExp() instanceof ASTNever never) never.setFields(sigma, entry.getKey(), test);
 			tcase = c.getExp().puretypecheck(env, phi, alpha, target);
 			
 			if (target == null) {

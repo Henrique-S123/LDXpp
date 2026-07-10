@@ -21,6 +21,10 @@ public final class ErrorMessages {
         return String.format("Unexpected operation %s", op);
     }
 
+    public static String unreachableCode() {
+        return "Unreachable code.";
+    }
+
     // Typechecking errors
     public static String alreadyDeclaredVariable(String id) {
         return String.format("Identifier '%s' already declared", id);
