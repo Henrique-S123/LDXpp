@@ -1,0 +1,68 @@
+type NODE = (int, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil(());
+let l1:LIST = #cons((1, l0));
+let l2:LIST = #cons((2, l1));
+let l3:LIST = #cons((3, l2));
+type neList = (xs:LIST, h:int, t:LIST, (xs = #cons((h, t)) : LIST));
+let list1:neList = (l1, 1, l0, refl); list1;;
+
+type NODE = (int, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil(());
+let l1:LIST = #cons((1, l0));
+let l2:LIST = #cons((2, l1));
+let l3:LIST = #cons((3, l2));
+type neList = (xs:LIST, h:int, t:LIST, (xs = #cons((h, t)) : LIST));
+let list1:neList = (l2, 2, l1, refl); list1;;
+
+type NODE = (int, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil(());
+let l1:LIST = #cons((1, l0));
+let l2:LIST = #cons((2, l1));
+let l3:LIST = #cons((3, l2));
+type neList = (xs:LIST, h:int, t:LIST, (xs = #cons((h, t)) : LIST));
+let list1:neList = (l2, 2, l0, refl); list1;;
+
+type NODE = (int, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil(());
+let l1:LIST = #cons((1, l0));
+let l2:LIST = #cons((2, l1));
+let l3:LIST = #cons((3, l2));
+type neList = (xs:LIST, h:int, t:LIST, (xs = #cons((h, t)) : LIST));
+let head:(l:neList)->int =
+    fn l:neList => {
+        let xs = fst(l);
+        let h = fst(snd(l));
+        let t = fst(snd(snd(l)));
+        leteq e = snd(snd(snd(l)));
+        match xs {
+            #nil(m) -> never
+            |
+            #cons(m) -> h
+        }
+    };
+head((l1, 1, l0, relf));;
+
+type NODE = (int, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil(());
+let l1:LIST = #cons((1, l0));
+let l2:LIST = #cons((2, l1));
+let l3:LIST = #cons((3, l2));
+type neList = (xs:LIST, h:int, t:LIST, (xs = #cons((h, t)) : LIST));
+let head:(l:neList)->int =
+    fn l:neList => {
+        let xs = fst(l);
+        let h = fst(snd(l));
+        let t = fst(snd(snd(l)));
+        leteq e = snd(snd(snd(l)));
+        match xs {
+            #nil(m) -> never
+            |
+            #cons(m) -> h
+        }
+    };
+head((l2, 2, l1, relf));;

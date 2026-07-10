@@ -53,9 +53,9 @@ let n2 = #succ(n1);
 type nzNat = (x:Nat, n:Nat, (x = #succ(n) : Nat));
 let pred:(l:nzNat)->Nat =
     fn l:nzNat => {
-        leteq e = snd(snd(l));
         let x = fst(l);
         let n = fst(snd(l));
+        leteq e = snd(snd(l));
         match x {
             #zero(m) -> never
             |
@@ -71,9 +71,9 @@ let n2 = #succ(n1);
 type nzNat = (x:Nat, n:Nat, (x = #succ(n) : Nat));
 let pred:(l:nzNat)->Nat =
     fn l:nzNat => {
-        leteq e = snd(snd(l));
         let x = fst(l);
         let n = fst(snd(l));
+        leteq e = snd(snd(l));
         match x {
             #zero(m) -> never
             |
