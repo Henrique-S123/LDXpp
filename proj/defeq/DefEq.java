@@ -10,16 +10,21 @@ import java.util.*;
 public final class DefEq {
     public record IdPair(String id1, String id2) {}
 
+    Env<ASTType> sigma;
 
-    public static final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
+    public DefEq(Env<ASTType> sig) {
+        sigma = sig;
+    }
+
+    public final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
         return termdefeq(l, sigma, r, sigma, alpha, phi, new TRefl());
     }
 
-    public static final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, Tactic t) {
+    public final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, Tactic t) {
         return termdefeq(l, sigma, r, sigma, alpha, phi, t);
     }
 
-    private static final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
+    private final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
         Debug.log(String.format("left: %s", l));
         Debug.log(String.format("right: %s", r));
 
@@ -127,30 +132,26 @@ public final class DefEq {
                 && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId(), rn.getId()), phi, t)) return true;
         
         if (l instanceof ASTTypeDef ln && r instanceof ASTTypeDef rn)
-            return ln.getLtd().equals(rn.getLtd())
-                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha, phi, t);
+            return ln.getLtd().equals(rn.getLtd()) && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha, phi, t);
         
         if (t instanceof THyp || t instanceof TEta) {
             Debug.log("Search Sigma environment for a proof");
-            ASTType proof = sl.findProof(l, r, sl, alpha, phi);
-            if (proof != null) {
-                Debug.log("Found proof: " + proof);
-                return true;
-            }
-            if (sl != sr) proof = sr.findProof(l, r, sr, alpha, phi);
+            ASTType proof = sigma.findProof(sigma, l, r, alpha, phi);
             if (proof != null) {
                 Debug.log("Found proof: " + proof);
                 return true;
             }
         }
 
-        if (t instanceof TEta te && l instanceof ASTId lid && te.getVar().equals(lid.getId())) {
-            Debug.log("η-expanding left side");
-            return termdefeq(lid.etaexpand(sl), sl, r, sr, alpha, phi, t);
-        }
-        if (t instanceof TEta te && r instanceof ASTId rid && te.getVar().equals(rid.getId())) {
-            Debug.log("η-expanding right side");
-            return termdefeq(l, sl, rid.etaexpand(sr), sr, alpha, phi, t);
+        if (t instanceof TEta te) {
+            if (l instanceof ASTId lid && te.getVar().equals(lid.getId())) {
+                Debug.log("η-expanding left side");
+                return termdefeq(lid.etaexpand(sl), sl, r, sr, alpha, phi, t);
+            }
+            if (r instanceof ASTId rid && te.getVar().equals(rid.getId())) {
+                Debug.log("η-expanding left side");
+                return termdefeq(l, sl, rid.etaexpand(sr), sr, alpha, phi, t);
+            }
         }
         
         Debug.log("Trying to solve the left side");
@@ -171,15 +172,15 @@ public final class DefEq {
         return false;
     }
 
-    public static final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> sigma, Env<ASTType> phi) {
+    public final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> sigma, Env<ASTType> phi) {
         return typedefeq(l, sigma, r, sigma, new AlphaEnv(), phi, new HashSet<IdPair>(), new TRefl());
     }
 
-    public static final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
+    public final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
         return typedefeq(l, sigma, r, sigma, alpha, phi, new HashSet<IdPair>(), new TRefl());
     }
 
-    private static final boolean typedefeq(ASTType l, Env<ASTType> sl, ASTType r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Set<IdPair> seen, Tactic t) {
+    private final boolean typedefeq(ASTType l, Env<ASTType> sl, ASTType r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Set<IdPair> seen, Tactic t) {
         if (l instanceof ASTTInt && r instanceof ASTTInt) return true;
         if (l instanceof ASTTLInt && r instanceof ASTTLInt) return true;
         if (l instanceof ASTTBool && r instanceof ASTTBool) return true;

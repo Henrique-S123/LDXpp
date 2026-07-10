@@ -110,17 +110,17 @@ public class Env<E>{
         return null;
     }
 
-    public E findProof(ASTNode t1, ASTNode t2, Env<ASTType> sigma, AlphaEnv alpha, Env<ASTType> phi) {
+    public E findProof(Env<ASTType> sigma, ASTNode t1, ASTNode t2, AlphaEnv alpha, Env<ASTType> phi) {
         Env<E> curr = this;
         while (curr != null) {
             for (Map.Entry<String, Binder<E>> entry : curr.bindings.entrySet())
                 if (entry.getValue().val instanceof ASTTEq teq) {
-                    if (teq.getTerm1() instanceof ASTId || teq.getTerm2() instanceof ASTId) continue;
                     Debug.log("Testing proof: " + entry.getValue());
                     Debug.open();
                     E res = null;
-                    if ((DefEq.termdefeq(t1, teq.getTerm1(), sigma, phi, alpha) && DefEq.termdefeq(t2, teq.getTerm2(), sigma, phi, alpha))
-                    || (DefEq.termdefeq(t1, teq.getTerm2(), sigma, phi, alpha) && DefEq.termdefeq(t2, teq.getTerm1(), sigma, phi, alpha)))
+                    DefEq e = new DefEq(sigma);
+                    if ((e.termdefeq(t1, teq.getTerm1(), sigma, phi, alpha) && e.termdefeq(t2, teq.getTerm2(), sigma, phi, alpha))
+                    || (e.termdefeq(t1, teq.getTerm2(), sigma, phi, alpha) && e.termdefeq(t2, teq.getTerm1(), sigma, phi, alpha)))
                         res = entry.getValue().val;
                     Debug.close();
                     Debug.nl();
