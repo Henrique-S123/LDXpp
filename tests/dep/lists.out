@@ -1,15 +1,3 @@
-type: Nat, value: #succ(#succ(#succ(#zero(()))))
-
-
-type: (z:Nat, z ≡ add(n2)(n1) : Nat), value: (#succ(#succ(#succ(#zero(())))), refl)
-
-
-class proj.errors.TypeCheckError: Terms n2 and add(n2)(n1) are not definitionally equal
-
-
-type: (z:Nat, z ≡ add(n1)(n1) : Nat), value: (#succ(#succ(#zero(()))), refl)
-
-
 type: (z:LIST, size(z) ≡ n2 : Nat), value: (#cons((#succ(#succ(#zero(()))), #cons((#succ(#zero(())), #nil(()))))), refl)
 
 
