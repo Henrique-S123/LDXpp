@@ -44,7 +44,7 @@ let head:(l:neList)->int =
             #cons(m) -> h
         }
     };
-head((l1, 1, l0, relf));;
+head((l1, 1, l0, refl));;
 
 type NODE = (int, LIST);
 type LIST = union { #nil: (), #cons: NODE };
@@ -65,4 +65,4 @@ let head:(l:neList)->int =
             #cons(m) -> h
         }
     };
-head((l2, 2, l1, relf));;
+head((l2, 2, l1, refl));;

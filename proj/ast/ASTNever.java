@@ -43,7 +43,7 @@ public class ASTNever extends ASTNode  {
                 DefEq eq = new DefEq(searchEnv);
                 if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm1(), searchEnv, phi, alpha))
                     s.add(teq.getTerm2());
-                if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm2(), searchEnv, phi, alpha))
+                else if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm2(), searchEnv, phi, alpha))
                     s.add(teq.getTerm1());
             }
             curr = curr.endScope();
