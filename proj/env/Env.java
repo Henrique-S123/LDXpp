@@ -6,8 +6,6 @@ import proj.defeq.DefEq;
 import proj.types.*;
 
 import java.util.*;
-import java.util.function.Predicate;
-import java.util.function.Function;
 
 public class Env<E>{
     Env<E> anc;
@@ -38,15 +36,6 @@ public class Env<E>{
     public Env<E> copy() {
         Env<E> e = new Env<>((this.anc == null ? null : this.anc.copy()));
         e.bindings = new HashMap<>(bindings);
-        return e;
-    }
-
-    public Env<E> copy(Function<E, E> copier) {
-        Env<E> e = new Env<>((this.anc == null ? null : this.anc.copy(copier)));
-        Map<String, Binder<E>> copiedBindings = new HashMap<String, Binder<E>>();
-        for (var entry : bindings.entrySet())
-            copiedBindings.put(entry.getKey(), new Binder<E>(copier.apply(entry.getValue().val)));
-        e.bindings = copiedBindings;
         return e;
     }
 
@@ -81,18 +70,6 @@ public class Env<E>{
             curr = curr.anc;
         }
         return null;
-    }
-
-    public Set<String> filterIds(Env<E> stop, Predicate<E> pred) {
-        Set<String> result = new HashSet<String>();
-        Env<E> curr = this;
-        while (curr != stop) {
-            curr.bindings.forEach((id, val) -> {
-                if (pred.test(val.val)) result.add(id);
-            });
-            curr = curr.anc;
-        }
-        return result;
     }
 
     public ASTNode findEq(String id) {
