@@ -51,3 +51,14 @@ let t = (x, x);
 let x = 99;
 let y = t;
 let e:(fst(t) = 1 : int) = refl; e;;
+
+let x = 5;
+let y:(z:int, (z=x:int)) = (x, refl);
+let p:(a:int, b:int, (a=b:int)) = (fst(y), x, refl);
+p;;
+
+let x = 5;
+let y:(z:int, (z=x:int)) = (x, refl);
+let x = 0;
+let p:(a:int, b:int, (a=b:int)) = (fst(y), x, refl);
+p;;

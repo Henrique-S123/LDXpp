@@ -25,3 +25,9 @@ class proj.errors.TypeCheckError: Terms fst fst p3 and 10 are not definitionally
 type: fst t ≡ 1 : int, value: refl
 
 
+type: (a:int, (b:int, a ≡ b : int)), value: (5, (5, refl))
+
+
+class proj.errors.TypeCheckError: Terms fst y and x are not definitionally equal
+
+

@@ -51,7 +51,7 @@ let splitlist:(n:Nat)->(a:LIST)->(b:LIST, c:LIST, (fst(concat(b)(c)) = a : LIST)
                         let rb = fst(res); let rc = fst(snd(res)); let eihl = snd(snd(res));
                         leteq e = eihl;
                         let nrb = #cons((val, rb));
-                        (nrb, rc, hyp)
+                        (nrb, rc, eta n)
                 }
         }
     };
