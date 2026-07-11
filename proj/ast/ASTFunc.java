@@ -66,7 +66,7 @@ public class ASTFunc extends ASTNode  {
         }
 
         ASTType targtype = e.unfold(argtype);
-        Env<LinearBinding> prevDelta = e.popDelta();
+        ResourceManager<ASTType> prevDelta = e.popDelta();
         e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(ENV.GAMMA);
 

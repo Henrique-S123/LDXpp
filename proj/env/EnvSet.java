@@ -7,12 +7,12 @@ import java.util.*;
 
 public class EnvSet {
     Env<ASTType> gamma, phi, sigma;
-    Env<LinearBinding> delta;
+    ResourceManager<ASTType> delta;
     AlphaEnv alpha;
 
     public EnvSet() {
         gamma = new Env<ASTType>();
-        delta = new Env<LinearBinding>();
+        delta = new ResourceManager<ASTType>();
         phi = new Env<ASTType>();
         sigma = new Env<ASTType>();
         alpha = new AlphaEnv();
@@ -20,7 +20,7 @@ public class EnvSet {
 
     public EnvSet(EnvSet o) {
         gamma = o.gamma.copy();
-        delta = o.delta.copy(lb -> new LinearBinding(lb.getType(), lb.isAvailable()));
+        delta = o.delta.copy();
         phi = o.phi.copy();
         sigma = o.sigma.copy();
         alpha = o.alpha.copy();
@@ -41,33 +41,33 @@ public class EnvSet {
         return alpha;
     }
 
-    public Env<LinearBinding> popDelta() {
-        Env<LinearBinding> tmp = this.delta;
-        this.delta = new Env<LinearBinding>();
+    public ResourceManager<ASTType> popDelta() {
+        ResourceManager<ASTType> tmp = this.delta;
+        this.delta = new ResourceManager<ASTType>();
         return tmp;
     }
 
-    public void pushDelta(Env<LinearBinding> d) {
+    public void pushDelta(ResourceManager<ASTType> d) {
         delta = d;
     }
 
     public Set<String> getUsedLinears() {
-        return delta.filterIds(null, id -> !id.isAvailable());
+        return delta.getUsedLinears();
     }
 
     public Set<String> getUnusedLinears() {
-        return delta.filterIds(null, id -> id.isAvailable());
+        return delta.getUnusedScopeLinears();
     }
 
     public Set<String> getUnusedScopeLinears() {
-        return delta.filterIds(delta.anc, id -> id.isAvailable());
+        return delta.getUnusedScopeLinears();
     }
 
     /* Open scopes */
     public void openEnvScope(ENV env) {
         switch (env) {
             case GAMMA -> this.gamma = this.gamma.beginScope();
-            case DELTA -> this.delta = this.delta.beginScope();
+            case DELTA -> this.delta.openScope();
             case PHI -> this.phi = this.phi.beginScope();
             case SIGMA -> this.sigma = this.sigma.beginScope();
         }
@@ -77,7 +77,7 @@ public class EnvSet {
     public void closeEnvScope(ENV env) {
         switch (env) {
             case GAMMA -> this.gamma = this.gamma.endScope();
-            case DELTA -> this.delta = this.delta.endScope();
+            case DELTA -> this.delta.closeScope();
             case PHI -> this.phi = this.phi.endScope();
             case SIGMA -> this.sigma = this.sigma.endScope();
         }
@@ -88,7 +88,7 @@ public class EnvSet {
         if (
             switch (env) {
                 case GAMMA -> gamma.find(id) != null;
-                case DELTA -> delta.find(id) != null;
+                case DELTA -> delta.contains(id);
                 case PHI -> phi.find(id) != null;
                 case SIGMA -> sigma.find(id) != null;
             }
@@ -98,7 +98,7 @@ public class EnvSet {
     public void bindToEnv(ENV env, String id, ASTType t) throws TypeCheckError {
         switch (env) {
             case GAMMA -> { checkAlreadyDeclared(ENV.DELTA, id); gamma.assoc(id, t); }
-            case DELTA -> { checkAlreadyDeclared(ENV.GAMMA, id); delta.assoc(id, new LinearBinding(t, true)); }
+            case DELTA -> { checkAlreadyDeclared(ENV.GAMMA, id); delta.register(id, t); }
             case PHI -> { checkAlreadyDeclared(ENV.PHI, id); phi.assoc(id, t); }
             case SIGMA -> sigma.assoc(id, t);
         }
@@ -107,7 +107,7 @@ public class EnvSet {
     public void bindToEnv(ENV env, String id, Binder<ASTType> b) throws TypeCheckError {
         switch (env) {
             case GAMMA -> { checkAlreadyDeclared(ENV.DELTA, id); gamma.assoc(id, b); }
-            case DELTA -> { checkAlreadyDeclared(ENV.GAMMA, id); delta.assoc(id, new Binder<LinearBinding>(new LinearBinding(b.val, true))); }
+            case DELTA -> { checkAlreadyDeclared(ENV.GAMMA, id); delta.register(id, b.val); }
             case PHI -> { checkAlreadyDeclared(ENV.PHI, id); phi.assoc(id, b); }
             case SIGMA -> sigma.assoc(id, b);
         }
@@ -125,11 +125,8 @@ public class EnvSet {
     public ASTType findVar(String id) throws TypeCheckError {
         ASTType ret = gamma.find(id);
         if (ret != null) return ret;
-        LinearBinding b = delta.find(id);
-        if (b != null) {
-            if (b.isAvailable()) { b.use(); return b.getType(); }
-            else throw new TypeCheckError(ErrorMessages.alreadyUsedLinear(id));
-        }
+        ret = delta.consume(id);
+        if (ret != null) return ret;
         throw new TypeCheckError(ErrorMessages.idNotFound(id));
     }
 
