@@ -16,7 +16,17 @@ let e:(fst(t) = 1 : int) = refl; e;;
 let x = 1;
 let t = (x, x);
 let x = 2;
+let e:(snd(t) = 1 : int) = refl; e;;
+
+let x = 1;
+let t = (x, x);
+let x = 2;
 let e:(fst(t) = 2 : int) = refl; e;;
+
+let x = 1;
+let t = (x, x);
+let x = 2;
+let e:(snd(t) = 2 : int) = refl; e;;
 
 let x = (1, 1);
 let f = fst(x);
@@ -24,9 +34,19 @@ let x = (2, 2);
 let e:(f = 1 : int) = refl; e;;
 
 let x = (1, 1);
+let s = snd(x);
+let x = (2, 2);
+let e:(s = 1 : int) = refl; e;;
+
+let x = (1, 1);
 let f = fst(x);
 let x = (2, 2);
 let e:(f = 2 : int) = refl; e;;
+
+let x = (1, 1);
+let s = snd(x);
+let x = (2, 2);
+let e:(s = 2 : int) = refl; e;;
 
 let x = 1;
 let y = 2;

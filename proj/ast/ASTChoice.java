@@ -56,10 +56,7 @@ public class ASTChoice extends ASTNode  {
 
     public ASTNode solve(Env<ASTType> sigma) {
         ASTNode npair = pair.solve(sigma);
-        if (npair == null) return null;
-        ASTNode res = new ASTChoice(npair, choice);
-        if (npair instanceof ASTPair p) res.setSig(p.getSig());
-        return res;
+        return (npair == null) ? null : new ASTChoice(npair, choice);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

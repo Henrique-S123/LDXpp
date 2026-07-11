@@ -92,11 +92,7 @@ public class ASTApp extends ASTNode  {
 
     public ASTNode solve(Env<ASTType> sigma) {
         ASTNode nfunc = func.solve(sigma);
-        if (nfunc == null) return null;
-        ASTNode res = new ASTApp(nfunc, arg);
-        if (nfunc instanceof ASTFunc f) res.setSig(f.getSig());
-        if (nfunc instanceof ASTLFunc lf) res.setSig(lf.getSig());
-        return res;
+        return (nfunc == null) ? null : new ASTApp(nfunc, arg);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

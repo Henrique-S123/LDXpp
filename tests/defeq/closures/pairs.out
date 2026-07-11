@@ -7,13 +7,25 @@ class proj.errors.TypeCheckError: Terms t and (2, 2) are not definitionally equa
 type: fst t ≡ 1 : int, value: refl
 
 
+type: snd t ≡ 1 : int, value: refl
+
+
 class proj.errors.TypeCheckError: Terms fst t and 2 are not definitionally equal
+
+
+class proj.errors.TypeCheckError: Terms snd t and 2 are not definitionally equal
 
 
 type: f ≡ 1 : int, value: refl
 
 
+type: s ≡ 1 : int, value: refl
+
+
 class proj.errors.TypeCheckError: Terms f and 2 are not definitionally equal
+
+
+class proj.errors.TypeCheckError: Terms s and 2 are not definitionally equal
 
 
 type: fst fst p3 ≡ 1 : int, value: refl
