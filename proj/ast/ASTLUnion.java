@@ -30,12 +30,14 @@ public class ASTLUnion extends ASTNode {
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
+		expr.setSig(e.getSigma());
 		ll.put(label, expr.typecheck(e, null));
 		return new ASTTLUnion(ll);
 	}
 
 	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
+		expr.setSig(sigma);
 		ll.put(label, expr.puretypecheck(sigma, phi, alpha, null));
 		return new ASTTLUnion(ll);
 	}

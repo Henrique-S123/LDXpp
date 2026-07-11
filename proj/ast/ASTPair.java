@@ -64,10 +64,12 @@ public class ASTPair extends ASTNode {
             else throw new TypeCheckError(ErrorMessages.typeMismatch("pair or tensor", target));
         }
 
+        first.setSig(sigma);
         ASTType t1 = first.puretypecheck(sigma, phi, alpha, targetfst);
         if (targetfst != null && !t1.isSubtypeOf(targetfst, sigma, phi, alpha))
             throw new TypeCheckError(ErrorMessages.notSubtype(t1, targetfst));
 
+        second.setSig(sigma);
         ASTType insttgt2 = (tgtid != null) ? targetsnd.inst(tgtid, first) : targetsnd;
         ASTType t2 = second.puretypecheck(sigma, phi, alpha, insttgt2);
         if (targetsnd != null && !t2.isSubtypeOf(insttgt2, sigma, phi, alpha))

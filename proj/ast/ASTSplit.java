@@ -106,10 +106,7 @@ public class ASTSplit extends ASTNode {
 
 	public ASTNode solve(Env<ASTType> sigma) {
         ASTNode npair = pair.solve(sigma);
-        if (npair == null) return null;
-        ASTNode res = new ASTSplit(npair, id1, id2, body);
-        if (npair instanceof ASTTensor t) res.setSig(t.getSig());
-        return res;
+		return (npair == null) ? null : new ASTSplit(npair, id1, id2, body);
     }
 
 	public ASTNode subs(String subsId, ASTNode node) {
