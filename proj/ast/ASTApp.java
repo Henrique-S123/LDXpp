@@ -49,6 +49,7 @@ public class ASTApp extends ASTNode  {
     }
     
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
+        this.setSig(e.getSigma());
         ASTType tf = func.typecheck(e, null);
         tf = e.unfold(tf);
         ASTType dom, codom;
@@ -63,6 +64,7 @@ public class ASTApp extends ASTNode  {
 	}
 
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
+        this.setSig(sigma);
         ASTType tf = func.puretypecheck(sigma, phi, alpha, null);
         tf = phi.unfold(tf);
         ASTType dom, codom;

@@ -47,6 +47,7 @@ public class ASTSplit extends ASTNode {
 		if (id1.equals(id2)) throw new TypeCheckError(ErrorMessages.splitIdsMustBeDifferent());
 		ASTType tt = pair.typecheck(e, null);
 		tt = e.unfold(tt);
+		this.setSig(e.getSigma());
 		if (!(tt instanceof ASTTTensor ttensor))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
 
@@ -79,6 +80,7 @@ public class ASTSplit extends ASTNode {
         if (id1.equals(id2)) throw new TypeCheckError(ErrorMessages.splitIdsMustBeDifferent());
 		ASTType tt = pair.puretypecheck(sigma, phi, alpha, null);
 		tt = phi.unfold(tt);
+		this.setSig(sigma);
 		if (!(tt instanceof ASTTTensor ttensor))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
 

@@ -34,6 +34,7 @@ public class ASTChoice extends ASTNode  {
     
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		ASTType tp = pair.typecheck(e, null);
+        this.setSig(e.getSigma());
         if (tp instanceof ASTTPair tpair)
             return choice ? tpair.getFirst() : tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, true).normalize(e.getSigma()));
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice ? "fst" : "snd", tp));
@@ -41,6 +42,7 @@ public class ASTChoice extends ASTNode  {
 
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
         ASTType tp = pair.puretypecheck(sigma, phi, alpha, null);
+        this.setSig(sigma);
         if (tp instanceof ASTTPair tpair)
             return choice ? tpair.getFirst() : tpair.getSecond().inst(tpair.getId(), new ASTChoice(pair, true).normalize(sigma));
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice ? "fst" : "snd", tp));

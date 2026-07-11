@@ -58,7 +58,6 @@ public class ASTLet extends ASTNode {
             if (!(exprType.isSubtypeOf(tt, e.getSigma(), e.getPhi(), e.getAlpha()))) throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
         }
 
-        expr.setSig(e.getSigma());
         e.addEq(new ASTTEq(new ASTId(id, b.getId()), expr, tt));
         e.bindToEnv(ENV.SIGMA, id, b);
 
