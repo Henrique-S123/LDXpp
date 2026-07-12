@@ -10,3 +10,9 @@ class proj.errors.TypeCheckError: Types (int, int)->(int, (bool | linint)) and (
 type: (), value: true
 
 
+class proj.errors.TypeCheckError: Types (x:int, (y:int, x ≡ y : int)) and (y:int, (x:int, x ≡ y : int)) are not definitionally equal
+
+
+type: (), value: true
+
+
