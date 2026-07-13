@@ -1,0 +1,4 @@
+let p2:(x:int, (x=2:int)) = (2, refl(2)); p2;;
+
+let p2:(x:int, (x=2:int)) = (5, refl(2)); p2;;
+
