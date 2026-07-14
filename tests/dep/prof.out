@@ -1,6 +1,0 @@
-type: (a:int, (b:int, a ≡ b : int)), value: (2, (2, refl))
-
-
-type: (a:int, (b:int, a ≡ b : int)), value: (2, (2, refl))
-
-

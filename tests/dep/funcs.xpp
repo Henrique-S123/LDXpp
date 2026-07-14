@@ -3,3 +3,12 @@ let f:(x:int)->(x=x:int) = fn x:int => {refl}; f(1);;
 let f:(x:int)->(x=2:int) = fn x:int => {refl}; f(1);;
 
 let f:(y:int)->(y=y:int) = fn x:int => {refl}; f(1);;
+
+let f:(x:int)->(y:int, (y=x:int))->(a:int, b:int, (a=b:int)) =
+    fn x:int, z:(y:int, (y=x:int)) => {leteq e = snd(z); (x, fst(z), refl)};
+f(2)((2, refl));;
+
+let f:(x:int)->(y:int, (y=x:int))->(a:int, b:int, (a=b:int)) =
+    fn x:int, z:(y:int, (y=x:int)) => {leteq e = snd(z); (x, fst(z), refl)};
+let q:(w:int, (w=2:int))->(a:int, b:int, (a=b:int)) = fn z:(w:int, (w=2:int)) => {f(2)(z)};
+q((2, refl));;
