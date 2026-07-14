@@ -117,6 +117,6 @@ public class ASTSplit extends ASTNode {
 
 	@Override
 	public String toString() {
-		return String.format("split %s {%s|%s -> %s}", pair, id1, id2, body);
+		return String.format("split (%s|%s) = %s; %s", id1, id2, pair, body);
 	}
 }

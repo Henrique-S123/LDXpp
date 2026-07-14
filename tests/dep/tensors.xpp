@@ -1,14 +1,14 @@
 let p:(x:linbool | (x=truel:linbool)) = (truel | refl); p;;
 
-let p:(x:linbool | (x=truel:linbool)) = (truel | refl); split p {x|y -> x};;
+let p:(x:linbool | (x=truel:linbool)) = (truel | refl); split (x|y) = p; x;;
 
-let p:(x:linbool | (x=truel:linbool)) = (truel | refl); split p {x|y -> y};;
+let p:(x:linbool | (x=truel:linbool)) = (truel | refl); split (x|y) = p; y;;
 
 let p = (truel | refl); p;;
 
-let p = (truel | refl); split p {x|y -> x};;
+let p = (truel | refl); split (x|y) = p; x;;
 
-let p = (truel | refl); split p {x|y -> y};;
+let p = (truel | refl); split (x|y) = p; y;;
 
 let p = (truel | refl(true)); p;;
 

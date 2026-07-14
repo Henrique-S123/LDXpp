@@ -64,10 +64,8 @@ public class ASTId extends ASTNode	{
 
     public ASTNode etaexpand(Env<ASTType> sig) {
         ASTType type = sig.find(id);
-        if (type instanceof ASTTPair) {
-            // TODO: add more cases
-            return new ASTPair(new ASTChoice(this, true), new ASTChoice(this, false));
-        }
+        // TODO: add more cases
+        if (type instanceof ASTTPair) return new ASTPair(new ASTChoice(this, true), new ASTChoice(this, false));
         return this;
     }
 

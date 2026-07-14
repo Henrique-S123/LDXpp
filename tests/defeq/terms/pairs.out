@@ -40,24 +40,24 @@ type: ((2 | 4) | (1 | 3)) ≡ ((2 | 4) | (1 | 3)) : ((int | int) | (int | int)),
 class proj.errors.TypeCheckError: Terms ((2 | 4), (1 | 3)) and ((2 | 4), (1 | 4)) are not definitionally equal
 
 
-type: split (1 | 2) {f|s -> f} ≡ split (1 | 3) {f|s -> f} : int, value: refl
+type: split (f|s) = (1 | 2); f ≡ split (f|s) = (1 | 3); f : int, value: refl
 
 
-type: split (1 | 2) {f|s -> f} ≡ 1 : int, value: refl
+type: split (f|s) = (1 | 2); f ≡ 1 : int, value: refl
 
 
-type: split (1 | 2) {f|s -> s} ≡ split (3 | 2) {f|s -> s} : int, value: refl
+type: split (f|s) = (1 | 2); s ≡ split (f|s) = (3 | 2); s : int, value: refl
 
 
-type: split (1 | 2) {f|s -> s} ≡ 2 : int, value: refl
+type: split (f|s) = (1 | 2); s ≡ 2 : int, value: refl
 
 
-type: split (1 | (2 | 3)) {f|s -> s} ≡ (2 | 3) : (int | int), value: refl
+type: split (f|s) = (1 | (2 | 3)); s ≡ (2 | 3) : (int | int), value: refl
 
 
-type: 1 ≡ split (split (1 | 2) {f|s -> f} | (2, 1)) {f|s -> f} : int, value: refl
+type: 1 ≡ split (f|s) = (split (f|s) = (1 | 2); f | (2, 1)); f : int, value: refl
 
 
-class proj.errors.TypeCheckError: Terms 1 and split (split (1 | 2) {f|s -> s} | (2, 1)) {f|s -> f} are not definitionally equal
+class proj.errors.TypeCheckError: Terms 1 and split (f|s) = (split (f|s) = (1 | 2); s | (2, 1)); f are not definitionally equal
 
 

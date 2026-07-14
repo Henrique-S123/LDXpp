@@ -1,0 +1,19 @@
+type NODE = (linint | LLIST);
+type LLIST = linunion { $nil: (), $cons: NODE };
+let l0:LLIST = $nil (());
+let l1:LLIST = $cons ((1l | l0));
+let l2:LLIST = $cons ((2l | l1));
+let copy:(l:LLIST)-o>(lr:LLIST | (l = lr : LLIST)) =
+    lfn l:LLIST =o> {
+        match l {
+            $nil(n) -> ($nil(n) | refl)
+            |
+            $cons(n) ->
+                split (val | rest) = n;
+                split (cr | eqcr) = copy(rest);
+                leteq e = eqcr;
+                let nl = $cons((val | cr));
+                (nl | eta n)
+        }
+    };
+copy(l2);;
