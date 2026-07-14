@@ -1,0 +1,217 @@
+type Nat = union { #zero: (), #succ: Nat };
+let n0 = #zero(());
+let n1 = #succ(n0);
+let n2 = #succ(n1);
+let n3 = #succ(n2);
+type NODE = (Nat, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (());
+let l1:LIST = #cons ((n1,l0));
+let l2:LIST = #cons ((n2,l1));
+let size:LIST->Nat =
+    fn l:LIST => {
+        match l {
+            #nil(m) -> m; n0
+            |
+            #cons(n) -> #succ(size(snd(n)))
+        }
+    };
+let p:(z:LIST, (size(z) = n2:Nat)) = (l2, refl); p;;
+
+type Nat = union { #zero: (), #succ: Nat };
+let n0 = #zero(());
+let n1 = #succ(n0);
+let n2 = #succ(n1);
+let n3 = #succ(n2);
+let add:Nat->Nat->Nat =
+    fn a:Nat, b:Nat => {
+        match a {
+            #zero(m) -> m; b
+            |
+            #succ(m) -> #succ(add(m)(b))
+        }
+    };
+type NODE = (Nat, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (());
+let l1:LIST = #cons ((n1,l0));
+let l2:LIST = #cons ((n2,l1));
+let size:LIST->Nat =
+    fn l:LIST => {
+        match l {
+            #nil(m) -> m; n0
+            |
+            #cons(n) -> #succ(size(snd(n)))
+        }
+    };
+let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) =
+    fn la:LIST, lb:LIST => {
+        match la {
+            #nil(m) -> m; (lb, refl)
+            |
+            #cons(n) ->
+                let res = concat(snd(n))(lb);
+                leteq e1 = snd(res);
+                (#cons((fst(n), fst(res))), refl)
+        }
+    };
+let p:(z:LIST, (size(z)=size(concat(l0)(l2)):Nat)) = (l2, refl); p;;
+
+type Nat = union { #zero: (), #succ: Nat };
+let n0 = #zero(());
+let n1 = #succ(n0);
+let n2 = #succ(n1);
+let n3 = #succ(n2);
+let add:Nat->Nat->Nat =
+    fn a:Nat, b:Nat => {
+        match a {
+            #zero(m) -> m; b
+            |
+            #succ(m) -> #succ(add(m)(b))
+        }
+    };
+type NODE = (Nat, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (());
+let l1:LIST = #cons ((n1,l0));
+let l2:LIST = #cons ((n2,l1));
+let size:LIST->Nat =
+    fn l:LIST => {
+        match l {
+            #nil(m) -> m; n0
+            |
+            #cons(n) -> #succ(size(snd(n)))
+        }
+    };
+let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) =
+    fn la:LIST, lb:LIST => {
+        match la {
+            #nil(m) -> m; (lb, refl)
+            |
+            #cons(n) ->
+                let res = concat(snd(n))(lb);
+                leteq e1 = snd(res);
+                (#cons((fst(n), fst(res))), hyp)
+        }
+    };
+let p:(z:LIST, (size(z)=size(fst(concat(l0)(l2))):Nat)) = (l2, refl); p;;
+
+type Nat = union { #zero: (), #succ: Nat };
+let n0 = #zero(());
+let n1 = #succ(n0);
+let n2 = #succ(n1);
+let n3 = #succ(n2);
+let add:Nat->Nat->Nat =
+    fn a:Nat, b:Nat => {
+        match a {
+            #zero(m) -> m; b
+            |
+            #succ(m) -> #succ(add(m)(b))
+        }
+    };
+type NODE = (Nat, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (());
+let l1:LIST = #cons ((n1,l0));
+let l2:LIST = #cons ((n2,l1));
+let size:LIST->Nat =
+    fn l:LIST => {
+        match l {
+            #nil(m) -> m; n0
+            |
+            #cons(n) -> #succ(size(snd(n)))
+        }
+    };
+let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) =
+    fn la:LIST, lb:LIST => {
+        match la {
+            #nil(m) -> m; (lb, refl)
+            |
+            #cons(n) ->
+                let res = concat(snd(n))(lb);
+                leteq e1 = snd(res);
+                let newpair = (fst(n), fst(res));
+                (#cons(newpair), refl)
+        }
+    };
+let p:(z:LIST, (size(z)=size(fst(concat(l0)(l2))):Nat)) = (l2, refl); p;;
+
+type Nat = union { #zero: (), #succ: Nat };
+let n0 = #zero(());
+let n1 = #succ(n0);
+let n2 = #succ(n1);
+let n3 = #succ(n2);
+let add:Nat->Nat->Nat =
+    fn a:Nat, b:Nat => {
+        match a {
+            #zero(m) -> m; b
+            |
+            #succ(m) -> #succ(add(m)(b))
+        }
+    };
+type NODE = (Nat, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (());
+let l1:LIST = #cons ((n1,l0));
+let l2:LIST = #cons ((n2,l1));
+let size:LIST->Nat =
+    fn l:LIST => {
+        match l {
+            #nil(m) -> m; n0
+            |
+            #cons(n) -> #succ(size(snd(n)))
+        }
+    };
+let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) =
+    fn la:LIST, lb:LIST => {
+        match la {
+            #nil(m) -> m; (lb, refl)
+            |
+            #cons(n) ->
+                let res = concat(snd(n))(lb);
+                leteq e1 = snd(res);
+                let newpair = (fst(n), fst(res));
+                (#cons(newpair), hyp)
+        }
+    };
+let p:(z:LIST, (size(z)=size(fst(concat(l0)(l2))):Nat)) = (l2, refl); p;;
+
+type Nat = union { #zero: (), #succ: Nat };
+let n0 = #zero(());
+let n1 = #succ(n0);
+let n2 = #succ(n1);
+let n3 = #succ(n2);
+let add:Nat->Nat->Nat =
+    fn a:Nat, b:Nat => {
+        match a {
+            #zero(m) -> m; b
+            |
+            #succ(m) -> #succ(add(m)(b))
+        }
+    };
+type NODE = (Nat, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (());
+let l1:LIST = #cons ((n1,l0));
+let l2:LIST = #cons ((n2,l1));
+let size:LIST->Nat =
+    fn l:LIST => {
+        match l {
+            #nil(m) -> m; n0
+            |
+            #cons(n) -> #succ(size(snd(n)))
+        }
+    };
+let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) =
+    fn la:LIST, lb:LIST => {
+        match la {
+            #nil(m) -> m; (lb, refl)
+            |
+            #cons(n) ->
+                let res = concat(snd(n))(lb);
+                leteq e1 = snd(res);
+                let newpair = (fst(n), fst(res));
+                (#cons(newpair), hyp)
+        }
+    };
+let p:(z:LIST, (size(z)=size(fst(concat(l0)(l2))):Nat)) = (l1, refl); p;;
