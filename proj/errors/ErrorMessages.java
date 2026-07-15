@@ -31,7 +31,7 @@ public final class ErrorMessages {
     }
     
     public static String idNotFound(String id) {
-        return String.format("Identifier '%s' not found", id);
+        return String.format("Identifier '%s' out of scope", id);
     }
 
     public static String illegalTypeToUnary(String op, ASTType t) {
