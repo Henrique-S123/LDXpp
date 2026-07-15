@@ -1,7 +1,7 @@
 type: linint, value: 3l
 
 
-class proj.errors.TypeCheckError: Identifier 'y' not found
+class proj.errors.TypeCheckError: Identifier 'y' out of scope
 
 
 class proj.errors.TypeCheckError: Linear value c must be used

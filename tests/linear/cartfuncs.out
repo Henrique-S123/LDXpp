@@ -8,10 +8,10 @@ type: int, value: 1
 type: linint, value: 3l
 
 
-class proj.errors.TypeCheckError: Identifier 'x' not found
+class proj.errors.TypeCheckError: Identifier 'x' out of scope
 
 
-class proj.errors.TypeCheckError: Identifier 'x' not found
+class proj.errors.TypeCheckError: Identifier 'x' out of scope
 
 
 type: linint, value: 10l

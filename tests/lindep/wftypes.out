@@ -25,6 +25,6 @@ class proj.errors.TypeCheckError: Type bool is not a subtype of int
 class proj.errors.TypeCheckError: Type int is not a subtype of bool
 
 
-class proj.errors.TypeCheckError: Identifier 'y' not found
+class proj.errors.TypeCheckError: Identifier 'y' out of scope
 
 
