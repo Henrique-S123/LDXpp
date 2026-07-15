@@ -50,7 +50,6 @@ public class Xppint {
 				System.out.print("# ");
 				exp = parser.Start();
 				if (exp==null) System.exit(0);
-				System.out.println(exp);
 				System.out.println(exp.typecheck(new EnvSet(), null));
 				System.out.println(exp.eval(new Env<IValue>()));
 			} catch (ParseException e) {

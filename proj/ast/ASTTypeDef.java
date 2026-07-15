@@ -62,6 +62,6 @@ public class ASTTypeDef extends ASTNode {
 
     @Override
 	public String toString() {
-		return String.format("typdef(%s, %s)", ltd, body);
+		return String.format("typedef(%s, %s)", ltd, body);
 	}
 }
