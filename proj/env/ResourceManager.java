@@ -44,6 +44,7 @@ public final class ResourceManager<E> {
     }
 
     public void register(String id, Binder<E> resource) {
+        // TODO: add guard
         scopes.peek().live.put(id, resource);
         scopes.peek().consumed.remove(id);
     }
