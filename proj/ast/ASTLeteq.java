@@ -63,8 +63,9 @@ public class ASTLeteq extends ASTNode {
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
         ASTNode normExpr = expr.weaknorm(sub);
-        if (!(normExpr instanceof ASTRefl))
-            return new ASTLeteq(id, normExpr, body.weaknorm(sub));
+        // TODO: mention proof irrelevance
+        // if (!(normExpr instanceof ASTRefl))
+        //    return new ASTLeteq(id, normExpr, body.weaknorm(sub));
         Env<ASTNode> esub = sub.beginScope();
         esub.assoc(id, normExpr);
         return body.weaknorm(esub);

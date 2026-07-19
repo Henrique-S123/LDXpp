@@ -1,0 +1,3 @@
+type: (b:LIST, (c:LIST, fst concat(b)(c) ≡ l2 : LIST)), value: (#cons((#succ(#succ(#zero(()))), #nil(()))), (#cons((#succ(#zero(())), #nil(()))), refl))
+
+
