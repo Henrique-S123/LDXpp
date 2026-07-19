@@ -107,7 +107,7 @@ public class EnvSet {
     public void bindToEnv(ENV env, String id, Binder<ASTType> b) throws TypeCheckError {
         switch (env) {
             case GAMMA -> { checkAlreadyDeclared(ENV.DELTA, id); gamma.assoc(id, b); }
-            case DELTA -> { checkAlreadyDeclared(ENV.GAMMA, id); delta.register(id, b.val); }
+            case DELTA -> { checkAlreadyDeclared(ENV.GAMMA, id); delta.register(id, b); }
             case PHI -> { checkAlreadyDeclared(ENV.PHI, id); phi.assoc(id, b); }
             case SIGMA -> sigma.assoc(id, b);
         }

@@ -35,8 +35,8 @@ public class ASTId extends ASTNode	{
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        ASTType ret = e.findVar(id);
         if (binderId == null) binderId = e.findBinderId(id);
+        ASTType ret = e.findVar(id);
         return ret;
     }
 

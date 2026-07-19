@@ -13,7 +13,7 @@ let copy:(l:LLIST)-o>(lr:LLIST | (l = lr : LLIST)) =
                 split (cr | eqcr) = copy(rest);
                 leteq e = eqcr;
                 let nl = $cons((val | cr));
-                (nl | eta n)
+                (nl | refl)
         }
     };
 copy(l2);;
