@@ -43,7 +43,7 @@ let rightId:(l:LIST)->(fst(concat(l)(#nil(()))) = l : LIST) =
             #cons(n) ->
                 let xs = snd(n);
                 leteq res = rightId(xs);
-                hyp
+                eta n
         }
     };
 rightId(l2);;
