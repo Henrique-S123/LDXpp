@@ -40,8 +40,7 @@ public class ASTOp extends ASTNode {
 				case "-u" -> -i2;
 				default -> throw new InterpreterError(ErrorMessages.unexpectedOperation(op));
 			};
-			boolean lin = (((VInt) v1).islin() || ((VInt) v2).islin());
-			return new VInt(res, lin);
+			return new VInt(res, vi1.islin() || vi2.islin());
 		} else if ((v1 instanceof VString || v1 instanceof VInt) && (v2 instanceof VInt || v2 instanceof VString) && op == "+") {
 			String s1 = v1 instanceof VString ? ((VString) v1).getval() : v1.toString();
 			String s2 = v2 instanceof VString ? ((VString) v2).getval() : v2.toString();
@@ -65,8 +64,7 @@ public class ASTOp extends ASTNode {
 				case "<=" -> i1 <= i2;
 				default -> throw new InterpreterError(ErrorMessages.unexpectedOperation(op));
 			};
-			boolean lin = (((VInt) v1).islin() || ((VInt) v2).islin());
-			return new VBool(res, lin);
+			return new VBool(res, vi1.islin() || vi2.islin());
 		} else throw new InterpreterError(ErrorMessages.wrongValueToBinary(op, v1, v2));
 	}
 
@@ -80,8 +78,7 @@ public class ASTOp extends ASTNode {
 				case "~" -> !i2;
 				default -> throw new InterpreterError(ErrorMessages.unexpectedOperation(op));
 			};
-			boolean lin = (((VBool) v1).islin() || ((VBool) v2).islin());
-			return new VBool(res, lin);
+			return new VBool(res, vb1.islin() || vb2.islin());
 		} else {
 			if (op == "~") throw new InterpreterError(ErrorMessages.wrongValueToUnary("~", v2));
 			else throw new InterpreterError(ErrorMessages.wrongValueToBinary(op, v1, v2));
@@ -177,22 +174,21 @@ public class ASTOp extends ASTNode {
 				case "<=" -> i1 <= i2;
 				default -> false; // unreachable code
 			};
-			return (ln instanceof ASTInt && rn instanceof ASTInt) ? new ASTBool(res) : new ASTLBool(res);
+			return new ASTBool(res, lni.isLinear() || rni.isLinear());
 		}
 		return new ASTOp(lhs.weaknorm(sub), rhs.weaknorm(sub), op);
 	}
 	
 	private ASTNode weaknormLogicOp(Env<ASTNode> sub, ASTNode ln, ASTNode rn) {
-		if ((ln instanceof ASTBool || ln instanceof ASTLBool) && (rn instanceof ASTBool || rn instanceof ASTLBool)) {
-			boolean i1 = (ln instanceof ASTBool) ? ((ASTBool) ln).getVal() : ((ASTLBool) ln).getVal();
-			boolean i2 = (rn instanceof ASTBool) ? ((ASTBool) rn).getVal() : ((ASTLBool) rn).getVal();
+		if (ln instanceof ASTBool lnb && rn instanceof ASTBool rnb) {
+			boolean i1 = lnb.getVal(); boolean i2 = rnb.getVal();
 			boolean res = switch (op) {
 				case "&&" -> i1 && i2;
 				case "||" -> i1 || i2;
 				case "~" -> !i2;
 				default -> false; // unreachable code
 			};
-			return (ln instanceof ASTBool && rn instanceof ASTBool) ? new ASTBool(res) : new ASTLBool(res);
+			return new ASTBool(res, lnb.isLinear() || rnb.isLinear());
 		}
 		return new ASTOp(lhs.weaknorm(sub), rhs.weaknorm(sub), op);
 	}

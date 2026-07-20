@@ -90,7 +90,6 @@ public class ASTIf extends ASTNode {
 		ASTNode tn = test.weaknorm(sub);
 		boolean val;
 		if (tn instanceof ASTBool b) val = b.getVal();
-		else if (tn instanceof ASTLBool lb) val = lb.getVal();
 		else return new ASTIf(tn, conseq.weaknorm(sub), alt.weaknorm(sub));
 
 		if (val) return conseq.weaknorm(sub);

@@ -30,6 +30,6 @@ public class ASTInt extends ASTNode  {
 
     @Override
     public String toString() {
-        return String.valueOf(v) + ((lin) ? "l" : "");
+        return String.valueOf(v) + (lin ? "l" : "");
     }
 }

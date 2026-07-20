@@ -468,11 +468,11 @@ public class Parser implements ParserConstants {
       break;
     case Bool:
       n = jj_consume_token(Bool);
-                 t = new ASTBool(Boolean.parseBoolean(n.image));
+                 t = new ASTBool(Boolean.parseBoolean(n.image), false);
       break;
     case LinBool:
       n = jj_consume_token(LinBool);
-                    t = new ASTLBool(Boolean.parseBoolean(n.image.substring(0, n.image.length()-1)));
+                    t = new ASTBool(Boolean.parseBoolean(n.image.substring(0, n.image.length()-1)), true);
       break;
     case Id:
       n = jj_consume_token(Id);
@@ -494,7 +494,7 @@ public class Parser implements ParserConstants {
     case NOT:
       jj_consume_token(NOT);
       t = Fact();
-                       t = new ASTOp(new ASTBool(true), t, "~");
+                       t = new ASTOp(new ASTBool(true, false), t, "~");
       break;
     case IF:
       jj_consume_token(IF);
