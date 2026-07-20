@@ -66,7 +66,7 @@ public class ASTSplit extends ASTNode {
         e.bindToEnv(lin2 ? ENV.DELTA : ENV.GAMMA, id2, b2);
 		e.bindToEnv(ENV.SIGMA, id1, b1);
 		e.bindToEnv(ENV.SIGMA, id2, b2);
-		e.addEq(new ASTTEq(new ASTTensor(new ASTId(id1, b1.getId()), new ASTId(id2, b2.getId())), pair, instttensor));
+		e.addEq(new ASTTEq(new ASTPair(new ASTId(id1, b1.getId()), new ASTId(id2, b2.getId()), true), pair, instttensor));
 
 		ASTType rt = body.typecheck(e, target);
 		if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
@@ -90,14 +90,14 @@ public class ASTSplit extends ASTNode {
 		Env<ASTType> env = sigma.beginScope();
 		env.assoc(id1, t1);
 		env.assoc(id2, t2);
-		env.addEq(new ASTTEq(new ASTTensor(new ASTId(id1), new ASTId(id2)), pair, tt));
+		env.addEq(new ASTTEq(new ASTPair(new ASTId(id1), new ASTId(id2), true), pair, tt));
 		return body.puretypecheck(env, phi, alpha, target);
     }
 
 	public ASTNode weaknorm(Env<ASTNode> sub) {
 		ASTNode pn = pair.weaknorm(sub);
 		ASTNode f, s;
-		if (pn instanceof ASTTensor t) { f = t.getFirst(); s = t.getSecond(); }
+		if (pn instanceof ASTPair t && t.isLinear()) { f = t.getFirst(); s = t.getSecond(); }
 		else return new ASTSplit(pn, id2, id1, body.weaknorm(sub));
 
 		ASTNode fn = f.weaknorm(sub), sn = s.weaknorm(sub);

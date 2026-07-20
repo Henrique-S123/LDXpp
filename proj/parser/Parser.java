@@ -685,12 +685,12 @@ public class Parser implements ParserConstants {
       case COMMA:
         jj_consume_token(COMMA);
         t2 = TermCommaList();
-                                            t = new ASTPair(t, t2);
+                                            t = new ASTPair(t, t2, false);
         break;
       case VERT:
         jj_consume_token(VERT);
         t2 = TermVertList();
-                                           t = new ASTTensor(t, t2);
+                                           t = new ASTPair(t, t2, true);
         break;
       default:
         jj_la1[19] = jj_gen;
@@ -713,7 +713,7 @@ public class Parser implements ParserConstants {
     case COMMA:
       jj_consume_token(COMMA);
       t2 = TermCommaList();
-                                            t = new ASTPair(t, t2);
+                                            t = new ASTPair(t, t2, false);
       break;
     default:
       jj_la1[21] = jj_gen;
@@ -730,7 +730,7 @@ public class Parser implements ParserConstants {
     case VERT:
       jj_consume_token(VERT);
       t2 = TermVertList();
-                                          t = new ASTTensor(t, t2);
+                                          t = new ASTPair(t, t2, true);
       break;
     default:
       jj_la1[22] = jj_gen;

@@ -70,14 +70,11 @@ public final class DefEq {
         }
         // TODO: add ASTRec case
         
-        if (l instanceof ASTPair ln && r instanceof ASTPair rn)
+        if (l instanceof ASTPair ln && r instanceof ASTPair rn && ln.isLinear() == rn.isLinear())
             return termdefeq(ln.getFirst(), sl, rn.getFirst(), sr, alpha, phi, t)
                 && termdefeq(ln.getSecond(), sl, rn.getSecond(), sr, alpha, phi, t);
         if (l instanceof ASTChoice ln && r instanceof ASTChoice rn && ln.getChoice() == rn.getChoice())
             if (termdefeq(ln.getPair(), sl, rn.getPair(), sr, alpha, phi, t)) return true;
-        if (l instanceof ASTTensor ln && r instanceof ASTTensor rn)
-            return termdefeq(ln.getFirst(), sl, rn.getFirst(), sr, alpha, phi, t)
-                && termdefeq(ln.getSecond(), sl, rn.getSecond(), sr, alpha, phi, t);
         if (l instanceof ASTSplit ln && r instanceof ASTSplit rn)
             if (termdefeq(ln.getPair(), sl, rn.getPair(), sr, alpha, phi, t)
                 && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId1(), rn.getId1()).extend(ln.getId2(), rn.getId2()), phi, t)) return true;

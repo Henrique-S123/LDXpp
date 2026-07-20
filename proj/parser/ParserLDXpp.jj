@@ -263,22 +263,22 @@ ASTNode Fact() :
 ASTNode TermList() :
 { ASTNode t, t2; }
 {
-  t = Let() (<COMMA> t2 = TermCommaList() { t = new ASTPair(t, t2); }
-            | <VERT> t2 = TermVertList() { t = new ASTTensor(t, t2); })?
+  t = Let() (<COMMA> t2 = TermCommaList() { t = new ASTPair(t, t2, false); }
+            | <VERT> t2 = TermVertList() { t = new ASTPair(t, t2, true); })?
   { return t; }
 }
 
 ASTNode TermCommaList() :
 { ASTNode t, t2; }
 {
-  t = Let() (<COMMA> t2 = TermCommaList() { t = new ASTPair(t, t2); })?
+  t = Let() (<COMMA> t2 = TermCommaList() { t = new ASTPair(t, t2, false); })?
   { return t; }
 }
 
 ASTNode TermVertList() :
 { ASTNode t, t2; }
 {
-  t = Let() (<VERT> t2 = TermVertList() { t = new ASTTensor(t, t2); })?
+  t = Let() (<VERT> t2 = TermVertList() { t = new ASTPair(t, t2, true); })?
   { return t; }
 }
 
