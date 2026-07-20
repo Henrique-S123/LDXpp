@@ -75,7 +75,7 @@ public class Env<E>{
     }
 
     public ASTNode findEq(String id) {
-        // TODO: review
+        // TODO: optimize
         Env<E> curr = this;
         while (curr != null) {
             for (Binder<E> b : curr.bindings.values())

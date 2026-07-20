@@ -52,20 +52,21 @@ public class ASTSplit extends ASTNode {
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
 
 		ASTType t1 = e.unfold(ttensor.getFirst());
-		ASTType t2 = e.unfold(ttensor.getSecond());
-		boolean lin1 = (t1 instanceof ASTLinType), lin2 = (t2 instanceof ASTLinType);
+		Binder<ASTType> b1 = new Binder<ASTType>(t1);
 
+		ASTTTensor instttensor = ttensor.inst(ttensor.getId(), new ASTId(id1, b1.getId()));
+		ASTType t2 = e.unfold(instttensor.getSecond());
+		Binder<ASTType> b2 = new Binder<ASTType>(t2);
+
+		boolean lin1 = (t1 instanceof ASTLinType), lin2 = (t2 instanceof ASTLinType);
 		if (lin1 || lin2) e.openEnvScope(ENV.DELTA);
 		if (!lin1 || !lin2) e.openEnvScope(ENV.GAMMA);
 		e.openEnvScope(ENV.SIGMA);
-
-		Binder<ASTType> b1 = new Binder<ASTType>(t1);
-		Binder<ASTType> b2 = new Binder<ASTType>(t2);
         e.bindToEnv(lin1 ? ENV.DELTA : ENV.GAMMA, id1, b1);
         e.bindToEnv(lin2 ? ENV.DELTA : ENV.GAMMA, id2, b2);
 		e.bindToEnv(ENV.SIGMA, id1, b1);
 		e.bindToEnv(ENV.SIGMA, id2, b2);
-		e.addEq(new ASTTEq(new ASTTensor(new ASTId(id1, b1.getId()), new ASTId(id2, b2.getId())), pair, tt));
+		e.addEq(new ASTTEq(new ASTTensor(new ASTId(id1, b1.getId()), new ASTId(id2, b2.getId())), pair, instttensor));
 
 		ASTType rt = body.typecheck(e, target);
 		if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
