@@ -93,7 +93,6 @@ public class ASTLet extends ASTNode {
         if (declType != null) {
             e = sub.beginScope();
             if (expr instanceof ASTFunc f && f.getNormEnv() == null) f.setNormEnv(e);
-            if (expr instanceof ASTLFunc lf && lf.getNormEnv() == null) lf.setNormEnv(e);
             e.assoc(id, expr);
         }
         ASTNode normExpr = expr.weaknorm(e);

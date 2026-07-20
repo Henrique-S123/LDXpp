@@ -58,9 +58,6 @@ public final class DefEq {
         if (l instanceof ASTFunc ln && r instanceof ASTFunc rn)
             return typedefeq(ln.getArgtype(), sl, rn.getArgtype(), sr, alpha, phi, new HashSet<IdPair>(), t)
                 && termdefeq(ln.getBody().weaknorm(), sl, rn.getBody().weaknorm(), sr, alpha.extend(ln.getId(), rn.getId()), phi, t);
-        if (l instanceof ASTLFunc ln && r instanceof ASTLFunc rn)
-            return typedefeq(ln.getArgtype(), sl, rn.getArgtype(), sr, alpha, phi, new HashSet<IdPair>(), t)
-                && termdefeq(ln.getBody().weaknorm(), sl, rn.getBody().weaknorm(), sr, alpha.extend(ln.getId(), rn.getId()), phi, t);
         if (l instanceof ASTApp ln && r instanceof ASTApp rn) {
             Debug.open();
             Debug.log("Checking if parts are equal");

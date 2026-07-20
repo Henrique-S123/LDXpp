@@ -39,7 +39,6 @@ public class ASTApp extends ASTNode  {
             String pid;
             ASTNode body;
             if (vr.getBody() instanceof ASTFunc f) { body = f.getBody(); pid = f.getId(); }
-            else if (vr.getBody() instanceof ASTLFunc lf) { body = lf.getBody(); pid = lf.getId(); }
             else throw new InterpreterError(ErrorMessages.wrongValueToUnary("app", vfunc));
             env.assoc(pid, varg);
             return body.eval(env);
@@ -84,7 +83,6 @@ public class ASTApp extends ASTNode  {
         Env<ASTNode> normEnv;
         String id;
         if (fn instanceof ASTFunc f) { body = f.getBody(); normEnv = f.getNormEnv(); id = f.getId(); }
-        else if (fn instanceof ASTLFunc lf) { body = lf.getBody(); normEnv = lf.getNormEnv(); id = lf.getId(); }
         else return new ASTApp(fn, argn);
 
         Env<ASTNode> env = normEnv.beginScope();
