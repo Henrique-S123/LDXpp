@@ -53,12 +53,12 @@ public class ASTSeq extends ASTNode {
         return new ASTSeq(nfirst, second.weaknorm(sub));
     }
 
-    public ASTNode solve(Env<ASTType> sigma) {
+    public ASTSeq solve(Env<ASTType> sigma) {
         ASTNode nfirst = first.solve(sigma);
         return nfirst == null ? null : new ASTSeq(nfirst, second);
     }
 
-    public ASTNode subs(String subsId, ASTNode node) {
+    public ASTSeq subs(String subsId, ASTNode node) {
         return new ASTSeq(first.subs(subsId, node), second.subs(subsId, node));
     }
 

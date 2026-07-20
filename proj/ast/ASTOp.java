@@ -201,7 +201,7 @@ public class ASTOp extends ASTNode {
 		return new ASTOp(lhs.weaknorm(sub), rhs.weaknorm(sub), op);
 	}
 	
-	public ASTNode solve(Env<ASTType> sigma) {
+	public ASTOp solve(Env<ASTType> sigma) {
 		ASTNode nlhs = lhs.solve(sigma);
         if (nlhs != null) return new ASTOp(nlhs, rhs, op);
         ASTNode nrhs = rhs.solve(sigma);
@@ -209,13 +209,14 @@ public class ASTOp extends ASTNode {
         return null;
     }
 
-	public ASTNode subs(String subsId, ASTNode node) {
+	public ASTOp subs(String subsId, ASTNode node) {
         return new ASTOp(lhs.subs(subsId, node), rhs.subs(subsId, node), op);
     }
 
 	@Override
 	public String toString() {
 		if (op == "-u") return String.format("-%s", rhs);
+		if (op == "~") return String.format("~%s", rhs);
 		return String.format("%s %s %s", lhs, op, rhs);
 	}
 }

@@ -162,12 +162,12 @@ public class ASTMatch extends ASTNode {
 		return body.weaknorm(env);
     }
 
-	public ASTNode solve(Env<ASTType> sigma) {
+	public ASTMatch solve(Env<ASTType> sigma) {
 		ASTNode ntest = test.solve(sigma);
 		return ntest == null ? null : new ASTMatch(ntest, cases);
     }
 
-	public ASTNode subs(String subsId, ASTNode node) {
+	public ASTMatch subs(String subsId, ASTNode node) {
 		for (String label : cases.keySet()) {
 			MatchCase c = cases.get(label);
 			ASTNode exps = c.getExp().subs(subsId, node);

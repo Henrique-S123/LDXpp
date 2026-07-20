@@ -107,12 +107,12 @@ public class ASTSplit extends ASTNode {
         return body.weaknorm(env);
     }
 
-	public ASTNode solve(Env<ASTType> sigma) {
+	public ASTSplit solve(Env<ASTType> sigma) {
         ASTNode npair = pair.solve(sigma);
 		return (npair == null) ? null : new ASTSplit(npair, id1, id2, body);
     }
 
-	public ASTNode subs(String subsId, ASTNode node) {
+	public ASTSplit subs(String subsId, ASTNode node) {
 		return new ASTSplit(pair.subs(subsId, node), id1, id2, body.subs(subsId, node));
 	}
 

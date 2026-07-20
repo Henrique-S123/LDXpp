@@ -56,12 +56,12 @@ public class ASTChoice extends ASTNode  {
         return choice ? first.weaknorm(sub) : second.weaknorm(sub);
     }
 
-    public ASTNode solve(Env<ASTType> sigma) {
+    public ASTChoice solve(Env<ASTType> sigma) {
         ASTNode npair = pair.solve(sigma);
         return (npair == null) ? null : new ASTChoice(npair, choice);
     }
 
-    public ASTNode subs(String subsId, ASTNode node) {
+    public ASTChoice subs(String subsId, ASTNode node) {
         return new ASTChoice(pair.subs(subsId, node), choice);
     }
 

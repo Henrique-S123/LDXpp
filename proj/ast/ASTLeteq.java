@@ -71,12 +71,12 @@ public class ASTLeteq extends ASTNode {
         return body.weaknorm(esub);
     }
 
-    public ASTNode solve(Env<ASTType> sigma) {
+    public ASTLeteq solve(Env<ASTType> sigma) {
         ASTNode nexpr = expr.solve(sigma);
         return nexpr == null ? null : new ASTLeteq(id, nexpr, body);
     }
 
-    public ASTNode subs(String subsId, ASTNode node) {
+    public ASTLeteq subs(String subsId, ASTNode node) {
 		return new ASTLeteq(id, expr.subs(subsId, node), body.subs(subsId, node));
 	}
 

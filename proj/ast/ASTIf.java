@@ -97,12 +97,12 @@ public class ASTIf extends ASTNode {
 		else return alt.weaknorm(sub);
     }
 
-	public ASTNode solve(Env<ASTType> sigma) {
+	public ASTIf solve(Env<ASTType> sigma) {
 		ASTNode ntest = test.solve(sigma);
 		return ntest == null ? null : new ASTIf(ntest, conseq, alt);
     }
 
-	public ASTNode subs(String subsId, ASTNode node) {
+	public ASTIf subs(String subsId, ASTNode node) {
         return new ASTIf(test.subs(subsId, node), conseq.subs(subsId, node), alt.subs(subsId, node));
     }
 

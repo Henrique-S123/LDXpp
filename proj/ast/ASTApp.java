@@ -92,12 +92,12 @@ public class ASTApp extends ASTNode  {
         return body.weaknorm(env);
     }
 
-    public ASTNode solve(Env<ASTType> sigma) {
+    public ASTApp solve(Env<ASTType> sigma) {
         ASTNode nfunc = func.solve(sigma);
         return (nfunc == null) ? null : new ASTApp(nfunc, arg);
     }
 
-    public ASTNode subs(String subsId, ASTNode node) {
+    public ASTApp subs(String subsId, ASTNode node) {
         return new ASTApp(func.subs(subsId, node), arg.subs(subsId, node));
     }
 
