@@ -44,7 +44,7 @@ public class ASTTUnion extends ASTType {
         return String.format("union {%s}", fill);
     }
 
-    public ASTType inst(String instId, ASTNode n) {
+    public ASTTUnion inst(String instId, ASTNode n) {
         ll.forEach((id, type) -> ll.put(id, type.inst(instId, n)));
         return this;
     }

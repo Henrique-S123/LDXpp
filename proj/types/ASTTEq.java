@@ -47,11 +47,11 @@ public class ASTTEq extends ASTType {
         return res;
     }
 
-    public ASTType inst(String instId, ASTNode n) {
+    public ASTTEq inst(String instId, ASTNode n) {
         ASTType instType = type.inst(instId, n);
         ASTNode instTerm1 = term1.subs(instId, n);
         ASTNode instTerm2 = term2.subs(instId, n);
-        ASTType neweq = new ASTTEq(instTerm1, instTerm2, instType);
+        ASTTEq neweq = new ASTTEq(instTerm1, instTerm2, instType);
         neweq.setSig(sig);
         return neweq;
     }

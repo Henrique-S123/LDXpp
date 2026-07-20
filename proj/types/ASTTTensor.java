@@ -46,7 +46,7 @@ public class ASTTTensor extends ASTLinType {
         return false;
     }
 
-    public ASTType inst(String instId, ASTNode n) {
+    public ASTTTensor inst(String instId, ASTNode n) {
         return new ASTTTensor(first.inst(instId, n), second.inst(instId, n), id);
     }
 

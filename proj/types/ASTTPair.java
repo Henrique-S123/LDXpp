@@ -49,7 +49,7 @@ public class ASTTPair extends ASTType {
         return second.isSubtypeOf(osecond, sigma, phi, alpha);
     }
 
-    public ASTType inst(String instId, ASTNode n) {
+    public ASTTPair inst(String instId, ASTNode n) {
         return new ASTTPair(first.inst(instId, n), second.inst(instId, n), id);
     }
 

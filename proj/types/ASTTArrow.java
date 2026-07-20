@@ -50,7 +50,7 @@ public class ASTTArrow extends ASTType {
         return codom.isSubtypeOf(ocodom, sigma, phi, alpha);
     }
 
-    public ASTType inst(String instId, ASTNode n) {
+    public ASTTArrow inst(String instId, ASTNode n) {
         return new ASTTArrow(dom.inst(instId, n), codom.inst(instId, n), id);
     }
 

@@ -49,7 +49,7 @@ public class ASTTLollipop extends ASTLinType {
         return codom.isSubtypeOf(ocodom, sigma, phi, alpha);
     }
 
-    public ASTType inst(String instId, ASTNode n) {
+    public ASTTLollipop inst(String instId, ASTNode n) {
         return new ASTTLollipop(dom.inst(instId, n), codom.inst(instId, n), id);
     }
 

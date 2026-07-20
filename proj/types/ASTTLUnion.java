@@ -43,7 +43,7 @@ public class ASTTLUnion extends ASTLinType {
         return String.format("linear union {%s}", fill);
     }
 
-    public ASTType inst(String instId, ASTNode n) {
+    public ASTTLUnion inst(String instId, ASTNode n) {
         ll.forEach((id, type) -> ll.put(id, type.inst(instId, n)));
         return this;
     }
