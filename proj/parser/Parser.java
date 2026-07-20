@@ -614,14 +614,14 @@ public class Parser implements ParserConstants {
       jj_consume_token(LPAR);
       t = Let();
       jj_consume_token(RPAR);
-                                             t = new ASTUnion(n.image, t);
+                                             t = new ASTUnion(n.image, t, false);
       break;
     case LLABEL:
       n = jj_consume_token(LLABEL);
       jj_consume_token(LPAR);
       t = Let();
       jj_consume_token(RPAR);
-                                              t = new ASTLUnion(n.image, t);
+                                              t = new ASTUnion(n.image, t, true);
       break;
     case LPAR:
       jj_consume_token(LPAR);

@@ -84,8 +84,6 @@ public final class DefEq {
         
         if (l instanceof ASTUnion ln && r instanceof ASTUnion rn && ln.getLabel().equals(rn.getLabel()))
             return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, t);
-        if (l instanceof ASTLUnion ln && r instanceof ASTLUnion rn && ln.getLabel().equals(rn.getLabel()))
-            return termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, t);
         if (l instanceof ASTMatch ln && r instanceof ASTMatch rn) {
             Debug.open();
             Debug.log("Checking if parts are equal");

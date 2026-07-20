@@ -50,7 +50,6 @@ public class ASTNever extends ASTNode  {
         }
         for (ASTNode eq : s) {
             if (eq instanceof ASTUnion u && !u.getLabel().equals(label)) return true;
-            if (eq instanceof ASTLUnion lu && !lu.getLabel().equals(label)) return true; 
         }
         return false;
     }

@@ -248,8 +248,8 @@ ASTNode Fact() :
     | <PRINTLN> t=Fact() { t = new ASTPrint(t, true); }
     | (n=<FST>|n=<SND>) <LPAR> t = Let() <RPAR> { t = new ASTChoice(t, n.image.equals("fst")); }
     | <MATCH> t2 = Let() <LBRA> t = Match(t2)
-    |  n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t); }
-    |  n = <LLABEL> <LPAR> t = Let() <RPAR> { t = new ASTLUnion(n.image, t); }
+    |  n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t, false); }
+    |  n = <LLABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t, true); }
     | <LPAR> t = TermList() <RPAR>
     | <QUESTION> <LPAR> t = Let() <COMMA> t2 = Let() <RPAR> { t = new ASTCheck(t, t2); }
     | <QUESTIONTYPES> <LPAR> type = Type() <COMMA> type2 = Type() <RPAR> { t = new ASTCheckTypes(type, type2); }

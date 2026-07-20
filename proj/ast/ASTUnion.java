@@ -10,46 +10,45 @@ import java.util.HashMap;
 public class ASTUnion extends ASTNode {
 	private final String label;
 	private final ASTNode expr;
+	private final boolean lin;
 
-	public ASTUnion(String l, ASTNode e) {
-		label = l;
-		expr = e;
+	public ASTUnion(String l, ASTNode e, boolean li) {
+		label = l; expr = e; lin = li;
     }
 
-	public String getLabel() {
-		return label;
-	}
+	public String getLabel() { return label; }
 
-	public ASTNode getExpr() {
-		return expr;
-	}
+	public ASTNode getExpr() { return expr; }
+
+	public boolean isLinear() { return lin; }
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
-		return new VUnion(label, expr.eval(e), false);
+		return new VUnion(label, expr.eval(e), lin);
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
-		ResourceManager<ASTType> prevDelta = e.popDelta();
 		expr.setSig(e.getSigma());
+		ResourceManager<ASTType> prevDelta = null;
+		if (!lin) prevDelta = e.popDelta();
 		ll.put(label, expr.typecheck(e, null));
-		e.pushDelta(prevDelta);
-		return new ASTTUnion(ll);
+		if (!lin) e.pushDelta(prevDelta);
+		return (lin) ? new ASTTLUnion(ll) : new ASTTUnion(ll);
 	}
 
 	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
 		expr.setSig(sigma);
 		ll.put(label, expr.puretypecheck(sigma, phi, alpha, null));
-		return new ASTTUnion(ll);
+		return (lin) ? new ASTTLUnion(ll) : new ASTTUnion(ll);
 	}
 
 	public ASTNode weaknorm(Env<ASTNode> sub) {
-		return new ASTUnion(label, expr.weaknorm(sub));
+		return new ASTUnion(label, expr.weaknorm(sub), lin);
     }
 
 	public ASTNode subs(String subsId, ASTNode node) {
-		return new ASTUnion(label, expr.subs(subsId, node));
+		return new ASTUnion(label, expr.subs(subsId, node), lin);
 	}
 
 	@Override
