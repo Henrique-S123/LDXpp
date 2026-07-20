@@ -42,6 +42,7 @@ public class ASTRec extends ASTNode  {
             else if (tt instanceof ASTTLollipop lolli) { targetcodom = lolli.getCodom(); }
             else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
         }
+
         ASTType tfunctype = e.unfold(functype);
         if (!(tfunctype instanceof ASTTArrow || tfunctype instanceof ASTTLollipop))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("rec", tfunctype));
@@ -53,7 +54,7 @@ public class ASTRec extends ASTNode  {
         e.bindToEnv(ENV.SIGMA, fid, b);
         
         ResourceManager<ASTType> prevDelta = e.popDelta();
-        ASTType tb = body.typecheck(e, targetcodom);
+        ASTType tb = body.typecheck(e, tfunctype);
         if (targetcodom != null && !tb.isSubtypeOf(targetcodom, e.getSigma(), e.getPhi(), e.getAlpha()))
             throw new TypeCheckError(ErrorMessages.notSubtype(tb, targetcodom));
 

@@ -1,0 +1,3 @@
+type: (lr:LLIST | l2 ≡ lr : LLIST), value: ($cons((2l | $cons((1l | $nil(()))))) | refl)
+
+
