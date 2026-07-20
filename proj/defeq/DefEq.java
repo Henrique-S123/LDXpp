@@ -48,13 +48,7 @@ public final class DefEq {
                 && termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, t)
                 && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getId(), rn.getId()), phi, t);
         
-        if (l instanceof ASTArithOp ln && r instanceof ASTArithOp rn && ln.getOp().equals(rn.getOp()))
-            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi, t)
-                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi, t);
-        if (l instanceof ASTCmpOp ln && r instanceof ASTCmpOp rn && ln.getOp().equals(rn.getOp()))
-            return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi, t)
-                && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi, t);
-        if (l instanceof ASTLogicOp ln && r instanceof ASTLogicOp rn && ln.getOp().equals(rn.getOp()))
+        if (l instanceof ASTOp ln && r instanceof ASTOp rn && ln.getOp().equals(rn.getOp()))
             return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi, t)
                 && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi, t);
         

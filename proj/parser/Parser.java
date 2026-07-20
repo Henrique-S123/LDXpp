@@ -272,7 +272,7 @@ public class Parser implements ParserConstants {
       }
       op = jj_consume_token(OR);
       t2 = BM();
-     t1 = new ASTLogicOp(t1, t2, "||");
+     t1 = new ASTOp(t1, t2, "||");
     }
        {if (true) return t1;}
     throw new Error("Missing return statement in function");
@@ -294,7 +294,7 @@ public class Parser implements ParserConstants {
       }
       op = jj_consume_token(AND);
       t2 = Rel();
-                 t1 = new ASTLogicOp(t1, t2, "&&");
+                 t1 = new ASTOp(t1, t2, "&&");
     }
        {if (true) return t1;}
     throw new Error("Missing return statement in function");
@@ -336,7 +336,7 @@ public class Parser implements ParserConstants {
         throw new ParseException();
       }
       t2 = Exp();
-      t1 = new ASTCmpOp(t1, t2, op.image);
+      t1 = new ASTOp(t1, t2, op.image);
       break;
     default:
       jj_la1[8] = jj_gen;
@@ -374,7 +374,7 @@ public class Parser implements ParserConstants {
         throw new ParseException();
       }
       t2 = Term();
-                  t1 = new ASTArithOp(t1,t2,op.image);
+                  t1 = new ASTOp(t1,t2,op.image);
     }
        {if (true) return t1;}
     throw new Error("Missing return statement in function");
@@ -398,12 +398,12 @@ public class Parser implements ParserConstants {
       case STAR:
         jj_consume_token(STAR);
         t2 = App();
-                           t1 = new ASTArithOp(t1,t2,"*");
+                           t1 = new ASTOp(t1,t2,"*");
         break;
       case DIV:
         jj_consume_token(DIV);
         t2 = App();
-                                     t1 = new ASTArithOp(t1,t2,"/");
+                                     t1 = new ASTOp(t1,t2,"/");
         break;
       default:
         jj_la1[12] = jj_gen;
@@ -489,12 +489,12 @@ public class Parser implements ParserConstants {
     case MINUS:
       jj_consume_token(MINUS);
       t = Fact();
-                         t = new ASTArithOp(new ASTInt(0), t, "-u");
+                         t = new ASTOp(new ASTInt(0), t, "-u");
       break;
     case NOT:
       jj_consume_token(NOT);
       t = Fact();
-                       t = new ASTLogicOp(new ASTBool(true), t, "~");
+                       t = new ASTOp(new ASTBool(true), t, "~");
       break;
     case IF:
       jj_consume_token(IF);

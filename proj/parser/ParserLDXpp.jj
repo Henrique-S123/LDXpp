@@ -149,7 +149,7 @@ ASTNode BA() :
 {
      t1 = BM() ( ( op=<OR> ) t2 = BM() 
  		 {
-     t1 = new ASTLogicOp(t1, t2, "||");
+     t1 = new ASTOp(t1, t2, "||");
 		 } 
 		)*
      { return t1; } 
@@ -161,7 +161,7 @@ ASTNode BM() :
 {
      t1 = Rel() ( ( op=<AND> ) t2 = Rel() 
  		 {
-		 t1 = new ASTLogicOp(t1, t2, "&&");
+		 t1 = new ASTOp(t1, t2, "&&");
  		 } 
 		)*
      { return t1; } 
@@ -174,7 +174,7 @@ ASTNode Rel() :
 {
      t1 = Exp() ( ( op=<EQ> | op=<GT> | op=<LT> | op=<GTEQ> | op=<LTEQ> | op=<DIF>) t2 = Exp() 
      {
-      t1 = new ASTCmpOp(t1, t2, op.image);
+      t1 = new ASTOp(t1, t2, op.image);
 		 } 
 		)?
      { return t1; } 
@@ -187,7 +187,7 @@ ASTNode Exp() :
 {
      t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term() 
                  { 
-                  t1 = new ASTArithOp(t1,t2,op.image);
+                  t1 = new ASTOp(t1,t2,op.image);
                  } 
                ) *
      { return t1; } 
@@ -198,9 +198,9 @@ ASTNode Term() :
 {
      t1 = App()
     (
-     <STAR> t2 = App()   { t1 = new ASTArithOp(t1,t2,"*"); }
+     <STAR> t2 = App()   { t1 = new ASTOp(t1,t2,"*"); }
 		 |
-		 <DIV> t2 = App()  { t1 = new ASTArithOp(t1,t2,"/"); }
+		 <DIV> t2 = App()  { t1 = new ASTOp(t1,t2,"/"); }
     )*
      { return t1; }
 }
@@ -234,8 +234,8 @@ ASTNode Fact() :
     | n = <Id> { t = new ASTId(n.image); }
     | n=<String> { t = new ASTString(n.image.substring(1, n.image.length()-1)); }
     | <LRPAR> { t = new ASTUnit(); }
-    | <MINUS> t=Fact() { t = new ASTArithOp(new ASTInt(0), t, "-u"); }
-    | <NOT> t=Fact() { t = new ASTLogicOp(new ASTBool(true), t, "~"); }
+    | <MINUS> t=Fact() { t = new ASTOp(new ASTInt(0), t, "-u"); }
+    | <NOT> t=Fact() { t = new ASTOp(new ASTBool(true), t, "~"); }
     | <IF> t=BA() <LBRA> e1=Let() <RBRA> <ELSE> <LBRA> e2=Let() <RBRA> { t = new ASTIf(t, e1, e2); }
     | <REC> n=<Id> <COLON> type = Type() <LBRA> t = Let() <RBRA> { t = new ASTRec(n.image, t, type); }
     | <FN> n=<Id> <COLON> type = Type() { tf = new ASTFunc(n.image, null, type); tc = tf; }
