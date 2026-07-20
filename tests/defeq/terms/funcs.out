@@ -7,7 +7,7 @@ type: let(f, fn x:int => {x}, f(1)) ≡ 1 : int, value: true
 type: f(1) ≡ 1 : int, value: true
 
 
-type: let(f, lfn x:int => {x}, f(1)) ≡ 1 : int, value: true
+type: let(f, lfn x:int =o> {x}, f(1)) ≡ 1 : int, value: true
 
 
 type: fn x:int => {x} ≡ fn y:int => {y} : (x:int)->int, value: true
@@ -25,19 +25,19 @@ type: fn y:int => {fn x:int => {y}} ≡ fn x:int => {fn y:int => {x}} : (y:int)-
 class proj.errors.TypeCheckError: Terms fn x:int => {fn y:int => {x}} and fn y:int => {fn y:int => {y}} are not definitionally equal
 
 
-type: lfn x:int => {x} ≡ lfn y:int => {y} : (x:int)-o>int, value: true
+type: lfn x:int =o> {x} ≡ lfn y:int =o> {y} : (x:int)-o>int, value: true
 
 
-type: lfn x:int => {lfn y:int => {x}} ≡ lfn a:int => {lfn b:int => {a}} : (x:int)-o>(y:int)-o>int, value: true
+type: lfn x:int =o> {lfn y:int =o> {x}} ≡ lfn a:int =o> {lfn b:int =o> {a}} : (x:int)-o>(y:int)-o>int, value: true
 
 
-class proj.errors.TypeCheckError: Terms lfn x:int => {lfn y:int => {x}} and lfn x:int => {lfn y:int => {y}} are not definitionally equal
+class proj.errors.TypeCheckError: Terms lfn x:int =o> {lfn y:int =o> {x}} and lfn x:int =o> {lfn y:int =o> {y}} are not definitionally equal
 
 
-type: lfn y:int => {lfn x:int => {y}} ≡ lfn x:int => {lfn y:int => {x}} : (y:int)-o>(x:int)-o>int, value: true
+type: lfn y:int =o> {lfn x:int =o> {y}} ≡ lfn x:int =o> {lfn y:int =o> {x}} : (y:int)-o>(x:int)-o>int, value: true
 
 
-class proj.errors.TypeCheckError: Terms lfn x:int => {lfn y:int => {x}} and lfn y:int => {lfn y:int => {y}} are not definitionally equal
+class proj.errors.TypeCheckError: Terms lfn x:int =o> {lfn y:int =o> {x}} and lfn y:int =o> {lfn y:int =o> {y}} are not definitionally equal
 
 
 type: let(x, 0, let(f, fn y:int => {x}, let(x, 1, f(5)))) ≡ 0 : int, value: true
