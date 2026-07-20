@@ -28,8 +28,7 @@ public final class DefEq {
         Debug.log(String.format("left: %s", l));
         Debug.log(String.format("right: %s", r));
 
-        if (l instanceof ASTInt ln && r instanceof ASTInt rn) return ln.getVal() == rn.getVal();
-        if (l instanceof ASTLInt ln && r instanceof ASTLInt rn) return ln.getVal() == rn.getVal();
+        if (l instanceof ASTInt ln && r instanceof ASTInt rn) return ln.getVal() == rn.getVal() && ln.isLinear() == rn.isLinear();
         if (l instanceof ASTBool ln && r instanceof ASTBool rn) return ln.getVal() == rn.getVal();
         if (l instanceof ASTLBool ln && r instanceof ASTLBool rn) return ln.getVal() == rn.getVal();
         if (l instanceof ASTString ln && r instanceof ASTString rn) return ln.getVal().equals(rn.getVal());

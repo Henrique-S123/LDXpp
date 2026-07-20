@@ -460,11 +460,11 @@ public class Parser implements ParserConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case Num:
       n = jj_consume_token(Num);
-                t = new ASTInt(Integer.parseInt(n.image));
+                t = new ASTInt(Integer.parseInt(n.image), false);
       break;
     case LinNum:
       n = jj_consume_token(LinNum);
-                   t = new ASTLInt(Integer.parseInt(n.image.substring(0, n.image.length()-1)));
+                   t = new ASTInt(Integer.parseInt(n.image.substring(0, n.image.length()-1)), true);
       break;
     case Bool:
       n = jj_consume_token(Bool);
@@ -489,7 +489,7 @@ public class Parser implements ParserConstants {
     case MINUS:
       jj_consume_token(MINUS);
       t = Fact();
-                         t = new ASTOp(new ASTInt(0), t, "-u");
+                         t = new ASTOp(new ASTInt(0, false), t, "-u");
       break;
     case NOT:
       jj_consume_token(NOT);

@@ -227,14 +227,14 @@ ASTNode Fact() :
 }
 {
    (
-      n=<Num> { t = new ASTInt(Integer.parseInt(n.image)); }
-    | n=<LinNum> { t = new ASTLInt(Integer.parseInt(n.image.substring(0, n.image.length()-1))); }
+      n=<Num> { t = new ASTInt(Integer.parseInt(n.image), false); }
+    | n=<LinNum> { t = new ASTInt(Integer.parseInt(n.image.substring(0, n.image.length()-1)), true); }
     | n=<Bool> { t = new ASTBool(Boolean.parseBoolean(n.image)); }
     | n=<LinBool> { t = new ASTLBool(Boolean.parseBoolean(n.image.substring(0, n.image.length()-1))); }
     | n = <Id> { t = new ASTId(n.image); }
     | n=<String> { t = new ASTString(n.image.substring(1, n.image.length()-1)); }
     | <LRPAR> { t = new ASTUnit(); }
-    | <MINUS> t=Fact() { t = new ASTOp(new ASTInt(0), t, "-u"); }
+    | <MINUS> t=Fact() { t = new ASTOp(new ASTInt(0, false), t, "-u"); }
     | <NOT> t=Fact() { t = new ASTOp(new ASTBool(true), t, "~"); }
     | <IF> t=BA() <LBRA> e1=Let() <RBRA> <ELSE> <LBRA> e2=Let() <RBRA> { t = new ASTIf(t, e1, e2); }
     | <REC> n=<Id> <COLON> type = Type() <LBRA> t = Let() <RBRA> { t = new ASTRec(n.image, t, type); }
