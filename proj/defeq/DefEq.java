@@ -8,7 +8,7 @@ import proj.debug.Debug;
 import java.util.*;
 
 public final class DefEq {
-    public record IdPair(String id1, String id2) {}
+    record IdPair(String id1, String id2) {}
 
     Env<ASTType> sigma;
 
