@@ -362,9 +362,9 @@ ASTType TypeInsidePar() :
       t = Type()
     )
   (
-    <COMMA> t2 = PairType() { t = new ASTTPair(t, t2, n == null ? null : n.image); }
+    <COMMA> t2 = PairType() { t = new ASTTPair(t, t2, n == null ? null : n.image, false); }
     |
-    <VERT> t2 = TensorType() { t = new ASTTTensor(t, t2, n == null ? null : n.image); }
+    <VERT> t2 = TensorType() { t = new ASTTPair(t, t2, n == null ? null : n.image, true); }
   )?
   { return t; }
 }
@@ -373,7 +373,7 @@ ASTType PairType() :
 { ASTType t, t2;
   Token n; }
 {
-  n = IdAnnotation() t = Type() (<COMMA> t2 = PairType() { t = new ASTTPair(t, t2, n == null ? null : n.image); })?
+  n = IdAnnotation() t = Type() (<COMMA> t2 = PairType() { t = new ASTTPair(t, t2, n == null ? null : n.image, false); })?
   { return t; }
 }
 
@@ -381,7 +381,7 @@ ASTType TensorType() :
 { ASTType t, t2;
   Token n; }
 {
-  n = IdAnnotation() t = Type() (<VERT> t2 = TensorType() { t = new ASTTTensor(t, t2, n == null ? null : n.image); })?
+  n = IdAnnotation() t = Type() (<VERT> t2 = TensorType() { t = new ASTTPair(t, t2, n == null ? null : n.image, true); })?
   { return t; }
 }
 

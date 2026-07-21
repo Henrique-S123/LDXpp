@@ -1000,12 +1000,12 @@ public class Parser implements ParserConstants {
       case COMMA:
         jj_consume_token(COMMA);
         t2 = PairType();
-                              t = new ASTTPair(t, t2, n == null ? null : n.image);
+                              t = new ASTTPair(t, t2, n == null ? null : n.image, false);
         break;
       case VERT:
         jj_consume_token(VERT);
         t2 = TensorType();
-                               t = new ASTTTensor(t, t2, n == null ? null : n.image);
+                               t = new ASTTPair(t, t2, n == null ? null : n.image, true);
         break;
       default:
         jj_la1[32] = jj_gen;
@@ -1030,7 +1030,7 @@ public class Parser implements ParserConstants {
     case COMMA:
       jj_consume_token(COMMA);
       t2 = PairType();
-                                                           t = new ASTTPair(t, t2, n == null ? null : n.image);
+                                                           t = new ASTTPair(t, t2, n == null ? null : n.image, false);
       break;
     default:
       jj_la1[34] = jj_gen;
@@ -1049,7 +1049,7 @@ public class Parser implements ParserConstants {
     case VERT:
       jj_consume_token(VERT);
       t2 = TensorType();
-                                                            t = new ASTTTensor(t, t2, n == null ? null : n.image);
+                                                            t = new ASTTPair(t, t2, n == null ? null : n.image, true);
       break;
     default:
       jj_la1[35] = jj_gen;

@@ -210,9 +210,6 @@ public final class DefEq {
         if (l instanceof ASTTPair lt && r instanceof ASTTPair rt)
             return typedefeq(lt.getFirst(), sl, rt.getFirst(), sr, alpha, phi, seen, t)
                 && typedefeq(lt.getSecond(), sl, rt.getSecond(), sr, alpha.extend(lt.getId(), rt.getId()), phi, seen, t);
-        if (l instanceof ASTTTensor lt && r instanceof ASTTTensor rt)
-            return typedefeq(lt.getFirst(), sl, rt.getFirst(), sr, alpha, phi, seen, t)
-                && typedefeq(lt.getSecond(), sl, rt.getSecond(), sr, alpha.extend(lt.getId(), rt.getId()), phi, seen, t);
         
         if (l instanceof ASTTUnion lt && r instanceof ASTTUnion rt && lt.isLinear() == rt.isLinear()) {
             Map<String, ASTType> left = lt.getMap();

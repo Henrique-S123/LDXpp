@@ -48,13 +48,13 @@ public class ASTSplit extends ASTNode {
 		ASTType tt = pair.typecheck(e, null);
 		tt = e.unfold(tt);
 		this.setSig(e.getSigma());
-		if (!(tt instanceof ASTTTensor ttensor))
+		if (!(tt instanceof ASTTPair ttensor && ttensor.isLinear()))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
 
 		ASTType t1 = e.unfold(ttensor.getFirst());
 		Binder<ASTType> b1 = new Binder<ASTType>(t1);
 
-		ASTTTensor instttensor = ttensor.inst(ttensor.getId(), new ASTId(id1, b1.getId()));
+		ASTTPair instttensor = ttensor.inst(ttensor.getId(), new ASTId(id1, b1.getId()));
 		ASTType t2 = e.unfold(instttensor.getSecond());
 		Binder<ASTType> b2 = new Binder<ASTType>(t2);
 
@@ -82,7 +82,7 @@ public class ASTSplit extends ASTNode {
 		ASTType tt = pair.puretypecheck(sigma, phi, alpha, null);
 		tt = phi.unfold(tt);
 		this.setSig(sigma);
-		if (!(tt instanceof ASTTTensor ttensor))
+		if (!(tt instanceof ASTTPair ttensor && ttensor.isLinear()))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
 
 		ASTType t1 = phi.unfold(ttensor.getFirst());

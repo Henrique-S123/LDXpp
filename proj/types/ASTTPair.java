@@ -8,24 +8,15 @@ public class ASTTPair extends ASTType {
     ASTType first, second;
     String id;
 
-    public ASTTPair(ASTType f, ASTType s, String i) {
-        first = f;
-        second = s;
-        id = i;
-        lin = false;
+    public ASTTPair(ASTType f, ASTType s, String i, boolean l) {
+        first = f; second = s; id = i; lin = l;
     }
 
-    public ASTType getFirst() {
-        return first;
-    }
+    public ASTType getFirst() { return first; }
     
-    public ASTType getSecond() {
-        return second;
-    }
+    public ASTType getSecond() { return second; }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
 
     public void setSig(Env<ASTType> s) {
         sig = s;
@@ -34,15 +25,14 @@ public class ASTTPair extends ASTType {
     }
 
     public String toString() {
-        return String.format("(%s%s, %s)", id != null ? id+":" : "", first, second);
+        return String.format("(%s%s%s %s)", id != null ? id+":" : "", first, lin ? " |" : ",", second);
     }
 
     public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
         if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
         ASTType ofirst, osecond;
         String oid;
-        if (o instanceof ASTTPair opair) { ofirst = opair.getFirst(); osecond = opair.getSecond(); oid = opair.getId(); }
-        else if (o instanceof ASTTTensor otensor) { ofirst = otensor.getFirst(); osecond = otensor.getSecond(); oid = otensor.getId(); }
+        if (o instanceof ASTTPair ot && (!lin || ot.isLinear())) { ofirst = ot.getFirst(); osecond = ot.getSecond(); oid = ot.getId(); }
         else return false;
 
         if (!first.isSubtypeOf(ofirst, sigma, phi, alpha)) return false;
@@ -51,7 +41,7 @@ public class ASTTPair extends ASTType {
     }
 
     public ASTTPair inst(String instId, ASTNode n) {
-        return new ASTTPair(first.inst(instId, n), second.inst(instId, n), id);
+        return new ASTTPair(first.inst(instId, n), second.inst(instId, n), id, lin);
     }
 
     public ASTType check(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) throws TypeCheckError {
