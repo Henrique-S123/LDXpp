@@ -106,22 +106,19 @@ public class ASTOp extends ASTNode {
 	}
 
 	private ASTType typecheckArithOp(ASTType tl, ASTType tr) throws TypeCheckError {
-		if (tl instanceof ASTTInt && tr instanceof ASTTInt) return new ASTTInt();
-		else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt)) return new ASTTLInt();
+		if (tl instanceof ASTTInt tli && tr instanceof ASTTInt tri) return new ASTTInt(tli.isLinear() || tri.isLinear());
 		else if ((tl instanceof ASTTInt || tl instanceof ASTTString) && (tr instanceof ASTTInt || tr instanceof ASTTString) && op == "+") return new ASTTString();
 		else if (op == "-u") throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("unary -", tr)); 
 		else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
 	}
 
 	private ASTType typecheckCmpOp(ASTType tl, ASTType tr) throws TypeCheckError {
-		if (tl instanceof ASTTInt && tr instanceof ASTTInt) return new ASTTBool();
-		else if ((tl instanceof ASTTInt || tl instanceof ASTTLInt) && (tr instanceof ASTTInt || tr instanceof ASTTLInt)) return new ASTTLBool();
+		if (tl instanceof ASTTInt tli && tr instanceof ASTTInt tri) return new ASTTBool(tli.isLinear() || tri.isLinear());
 		else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
 	}
 
 	private ASTType typecheckLogicOp(ASTType tl, ASTType tr) throws TypeCheckError {
-		if (tl instanceof ASTTBool && tr instanceof ASTTBool) return new ASTTBool();
-		else if ((tl instanceof ASTTBool || tl instanceof ASTTLBool) && (tr instanceof ASTTBool || tr instanceof ASTTLBool)) return new ASTTLBool();
+		if (tl instanceof ASTTBool tlb && tr instanceof ASTTBool trb) return new ASTTBool(tlb.isLinear() || trb.isLinear());
 		else if (op == "~") throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("unary ~", tr));
 		else throw new TypeCheckError(ErrorMessages.illegalTypeToBinary(op, tl, tr));
 	}

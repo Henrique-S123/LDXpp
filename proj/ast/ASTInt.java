@@ -21,11 +21,11 @@ public class ASTInt extends ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) {
-        return (lin) ? new ASTTLInt() : new ASTTInt();
+        return new ASTTInt(lin);
     }
 
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) {
-        return (lin) ? new ASTTLInt() : new ASTTInt();
+        return new ASTTInt(lin);
     }
 
     @Override

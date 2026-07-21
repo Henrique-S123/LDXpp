@@ -189,10 +189,8 @@ public final class DefEq {
     }
 
     private boolean typecongruence(ASTType l, Env<ASTType> sl, ASTType r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Set<IdPair> seen, Tactic t) {
-        if (l instanceof ASTTInt && r instanceof ASTTInt) return true;
-        if (l instanceof ASTTLInt && r instanceof ASTTLInt) return true;
-        if (l instanceof ASTTBool && r instanceof ASTTBool) return true;
-        if (l instanceof ASTTLBool && r instanceof ASTTLBool) return true;
+        if (l instanceof ASTTInt li && r instanceof ASTTInt ri) return li.isLinear() == ri.isLinear();
+        if (l instanceof ASTTBool lb && r instanceof ASTTBool rb) return lb.isLinear() == rb.isLinear();
         if (l instanceof ASTTString && r instanceof ASTTString) return true;
         if (l instanceof ASTTUnit && r instanceof ASTTUnit) return true;
 

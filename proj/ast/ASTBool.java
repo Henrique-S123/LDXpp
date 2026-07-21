@@ -21,11 +21,11 @@ public class ASTBool extends ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) {
-        return (lin) ? new ASTTLBool() : new ASTTBool();
+        return new ASTTBool(lin);
     }
 
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) {
-        return (lin) ? new ASTTLBool() : new ASTTBool();
+        return new ASTTBool(lin);
     }
 
     @Override

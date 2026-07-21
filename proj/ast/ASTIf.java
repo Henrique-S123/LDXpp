@@ -40,7 +40,7 @@ public class ASTIf extends ASTNode {
 
 	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		ASTType tt = test.typecheck(e, null);
-		if (!(tt instanceof ASTTBool || tt instanceof ASTTLBool))
+		if (!(tt instanceof ASTTBool))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("if", tt));
 
 		EnvSet e2 = new EnvSet(e);
@@ -67,7 +67,7 @@ public class ASTIf extends ASTNode {
 
 	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
 		ASTType tt = test.puretypecheck(sigma, phi, alpha, null);
-		if (!(tt instanceof ASTTBool || tt instanceof ASTTLBool))
+		if (!(tt instanceof ASTTBool))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("if", tt));
 
 		ASTType tconseq = conseq.puretypecheck(sigma, phi, alpha, target);

@@ -907,11 +907,11 @@ public class Parser implements ParserConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case TINT:
       jj_consume_token(TINT);
-                   t = new ASTTInt();
+                   t = new ASTTInt(false);
       break;
     case TLINT:
       jj_consume_token(TLINT);
-                    t = new ASTTLInt();
+                    t = new ASTTInt(true);
       break;
     case Id:
       n = jj_consume_token(Id);
@@ -919,11 +919,11 @@ public class Parser implements ParserConstants {
       break;
     case TBOOL:
       jj_consume_token(TBOOL);
-                    t = new ASTTBool();
+                    t = new ASTTBool(false);
       break;
     case TLBOOL:
       jj_consume_token(TLBOOL);
-                     t = new ASTTLBool();
+                     t = new ASTTBool(true);
       break;
     case LRPAR:
       jj_consume_token(LRPAR);

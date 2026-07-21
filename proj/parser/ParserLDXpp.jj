@@ -335,11 +335,11 @@ ASTType TypeF() :
 }
 {
     (
-          <TINT> { t = new ASTTInt(); }
-        | <TLINT> { t = new ASTTLInt(); }
+          <TINT> { t = new ASTTInt(false); }
+        | <TLINT> { t = new ASTTInt(true); }
         | n=<Id> { t = new ASTTId(n.image); }
-        | <TBOOL> { t = new ASTTBool(); }
-        | <TLBOOL> { t = new ASTTLBool(); }
+        | <TBOOL> { t = new ASTTBool(false); }
+        | <TLBOOL> { t = new ASTTBool(true); }
         | <LRPAR> { t = new ASTTUnit(); }
         | <TSTRING> { t = new ASTTString(); }
         | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll); }
