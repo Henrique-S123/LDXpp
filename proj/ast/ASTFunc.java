@@ -53,7 +53,7 @@ public class ASTFunc extends ASTNode  {
         if (!lin) prevDelta = e.popDelta();
 
         ASTType targtype = e.unfold(argtype);
-        ENV env = (lin && targtype instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
+        ENV env = (lin && targtype.isLinear()) ? ENV.DELTA : ENV.GAMMA;
         e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(env);
 

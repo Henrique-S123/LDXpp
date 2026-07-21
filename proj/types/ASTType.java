@@ -6,9 +6,14 @@ import proj.ast.ASTNode;
 
 public class ASTType  {
     protected Env<ASTType> sig;
+    protected boolean lin;
 
     public Env<ASTType> getSig() {
         return sig;
+    }
+
+    public boolean isLinear() {
+        return lin;
     }
 
     public void setSig(Env<ASTType> s) {

@@ -58,7 +58,7 @@ public class ASTSplit extends ASTNode {
 		ASTType t2 = e.unfold(instttensor.getSecond());
 		Binder<ASTType> b2 = new Binder<ASTType>(t2);
 
-		boolean lin1 = (t1 instanceof ASTLinType), lin2 = (t2 instanceof ASTLinType);
+		boolean lin1 = t1.isLinear(), lin2 = t2.isLinear();
 		if (lin1 || lin2) e.openEnvScope(ENV.DELTA);
 		if (!lin1 || !lin2) e.openEnvScope(ENV.GAMMA);
 		e.openEnvScope(ENV.SIGMA);

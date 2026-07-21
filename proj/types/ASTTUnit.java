@@ -4,6 +4,10 @@ import proj.env.*;
 
 public class ASTTUnit extends ASTType {
 
+    public ASTTUnit() {
+        lin = false;
+    }
+
     public String toString() {
         return "()";
     }

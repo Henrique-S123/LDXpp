@@ -2,7 +2,11 @@ package proj.types;
 
 import proj.env.*;
 
-public class ASTTLInt extends ASTLinType {
+public class ASTTLInt extends ASTType {
+
+    public ASTTLInt() {
+        lin = true;
+    }
     
     public String toString() {
         return "linint";

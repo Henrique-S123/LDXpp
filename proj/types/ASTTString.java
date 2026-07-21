@@ -4,6 +4,10 @@ import proj.env.*;
 
 public class ASTTString extends ASTType {
 
+    public ASTTString() {
+        lin = false;
+    }
+
     public String toString() {
         return "string";
     }

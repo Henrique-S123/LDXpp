@@ -2,7 +2,11 @@ package proj.types;
 
 import proj.env.*;
 
-public class ASTTLBool extends ASTLinType {
+public class ASTTLBool extends ASTType {
+
+    public ASTTLBool() {
+        lin = true;
+    }
 
     public String toString() {
         return "linbool";

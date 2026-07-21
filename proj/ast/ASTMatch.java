@@ -64,7 +64,7 @@ public class ASTMatch extends ASTNode {
 			env = (matchUsedLinears == null ? e : new EnvSet(en));
 			ASTType tlabel = e.unfold(entry.getValue());
 
-			ENV envChoice = (tlabel instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
+			ENV envChoice = tlabel.isLinear() ? ENV.DELTA : ENV.GAMMA;
 			env.openEnvScope(envChoice);
 			env.openEnvScope(ENV.SIGMA);
 			Binder<ASTType> b = new Binder<ASTType>(tlabel);
@@ -83,7 +83,7 @@ public class ASTMatch extends ASTNode {
 			}
 
 			HashSet<String> caseUsedLineares = new HashSet<String>(env.getUsedLinears());
-			if ((entry.getValue() instanceof ASTLinType) && !caseUsedLineares.contains(c.getId()))
+			if (entry.getValue().isLinear() && !caseUsedLineares.contains(c.getId()))
 				throw new TypeCheckError(ErrorMessages.unusedLinearValues(c.getId()));
 			caseUsedLineares.remove(c.getId());
 			if (!caseUsedLineares.equals(matchUsedLinears))

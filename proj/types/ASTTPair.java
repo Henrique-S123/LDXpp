@@ -12,6 +12,7 @@ public class ASTTPair extends ASTType {
         first = f;
         second = s;
         id = i;
+        lin = false;
     }
 
     public ASTType getFirst() {

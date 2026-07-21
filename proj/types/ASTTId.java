@@ -7,6 +7,7 @@ public	class ASTTId extends ASTType	{
     
     public ASTTId(String id) {
         this.id = id;
+        lin = false;
     }
 
     public String getId() {

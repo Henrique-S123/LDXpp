@@ -12,6 +12,7 @@ public class ASTTArrow extends ASTType {
         dom = d;
         codom = co;
         id = i;
+        lin = false;
     }
 
     public ASTType getDom() {

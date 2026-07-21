@@ -4,7 +4,7 @@ import proj.ast.ASTNode;
 import proj.env.*;
 import proj.errors.*;
 
-public class ASTTLollipop extends ASTLinType {
+public class ASTTLollipop extends ASTType {
     ASTType dom, codom;
     String id;
 
@@ -12,6 +12,7 @@ public class ASTTLollipop extends ASTLinType {
         dom = d;
         codom = co;
         id = i;
+        lin = true;
     }
 
     public ASTType getDom() {

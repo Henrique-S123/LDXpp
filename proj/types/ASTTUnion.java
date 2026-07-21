@@ -12,6 +12,7 @@ public class ASTTUnion extends ASTType {
 
     public ASTTUnion(Map<String, ASTType> llp) {
         ll = llp;
+        lin = false;
     }
 
     public Map<String, ASTType> getMap() {

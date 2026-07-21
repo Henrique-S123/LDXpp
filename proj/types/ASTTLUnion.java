@@ -6,12 +6,13 @@ import proj.errors.*;
 
 import java.util.Map;
 
-public class ASTTLUnion extends ASTLinType {
+public class ASTTLUnion extends ASTType {
 
     Map<String, ASTType> ll;
 
     public ASTTLUnion(Map<String, ASTType> llp) {
         ll = llp;
+        lin = true;
     }
 
     public Map<String, ASTType> getMap() {

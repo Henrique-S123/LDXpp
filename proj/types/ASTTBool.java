@@ -4,6 +4,10 @@ import proj.env.*;
 
 public class ASTTBool extends ASTType {
 
+    public ASTTBool() {
+        lin = false;
+    }
+
     public String toString() {
         return "bool";
     }

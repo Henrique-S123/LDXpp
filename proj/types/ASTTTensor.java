@@ -4,7 +4,7 @@ import proj.ast.ASTNode;
 import proj.env.*;
 import proj.errors.*;
 
-public class ASTTTensor extends ASTLinType {
+public class ASTTTensor extends ASTType {
     ASTType first, second;
     String id;
 
@@ -12,6 +12,7 @@ public class ASTTTensor extends ASTLinType {
         first = f;
         second = s;
         id = i;
+        lin = true;
     }
 
     public ASTType getFirst() {

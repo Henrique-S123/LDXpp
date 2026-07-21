@@ -46,7 +46,7 @@ public class ASTLet extends ASTNode {
         ASTType tt = (declType != null) ? declType : expr.typecheck(e, null);
         tt = e.unfold(tt);
 
-        ENV env = (tt instanceof ASTLinType) ? ENV.DELTA : ENV.GAMMA;
+        ENV env = tt.isLinear() ? ENV.DELTA : ENV.GAMMA;
         e.openEnvScope(env);
         e.openEnvScope(ENV.SIGMA);
 

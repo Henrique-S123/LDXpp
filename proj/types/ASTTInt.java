@@ -3,6 +3,10 @@ package proj.types;
 import proj.env.*;
 
 public class ASTTInt extends ASTType {
+
+    public ASTTInt() {
+        lin = false;
+    }
     
     public String toString() {
         return "int";

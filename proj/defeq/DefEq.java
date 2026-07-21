@@ -12,9 +12,7 @@ public final class DefEq {
 
     Env<ASTType> sigma;
 
-    public DefEq(Env<ASTType> sig) {
-        sigma = sig;
-    }
+    public DefEq(Env<ASTType> sig) { sigma = sig; }
 
     public final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> sig, Env<ASTType> phi, AlphaEnv alpha) {
         return termdefeq(l, sig, r, sig, alpha, phi, new TRefl());
