@@ -34,7 +34,7 @@ TOKEN :
   |
   < QUESTION : "?"> | < QUESTIONTYPES : "?T" >
   |
-  < REFL: "refl" > | < HYP: "hyp" > | < ETA: "eta" >
+  < REFL: "refl" > | < HYP: "hyp" >
   |
   < LETEQ: "leteq" > | < NEVER: "never" >
   |
@@ -254,7 +254,6 @@ ASTNode Fact() :
     | <QUESTIONTYPES> <LPAR> type = Type() <COMMA> type2 = Type() <RPAR> { t = new ASTCheckTypes(type, type2); }
     | <REFL> (LOOKAHEAD(2) <LPAR> t = Fact() <RPAR>)? { t = new ASTRefl(t, new TRefl()); }
     | <HYP> { t = new ASTRefl(null, new THyp()); }
-    | <ETA> n=<Id> { t = new ASTRefl(null, new TEta(n.image)); }
     )
    { return t; }
 }

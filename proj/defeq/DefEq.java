@@ -118,7 +118,7 @@ public final class DefEq {
         if (l instanceof ASTTypeDef ln && r instanceof ASTTypeDef rn)
             return ln.getLtd().equals(rn.getLtd()) && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha, phi, t);
         
-        if (t instanceof THyp || t instanceof TEta) {
+        if (t instanceof THyp) {
             Debug.log("Search Sigma environment for a proof");
             ASTType proof = sigma.findProof(sigma, l, r, alpha, phi);
             if (proof != null) {
@@ -127,15 +127,15 @@ public final class DefEq {
             }
         }
 
-        if (t instanceof TEta te) {
-            if (l instanceof ASTId lid && te.getVar().equals(lid.getId())) {
-                Debug.log("η-expanding left side");
-                return termdefeq(lid.etaexpand(sl), sl, r, sr, alpha, phi, t);
-            }
-            if (r instanceof ASTId rid && te.getVar().equals(rid.getId())) {
-                Debug.log("η-expanding right side");
-                return termdefeq(l, sl, rid.etaexpand(sr), sr, alpha, phi, t);
-            }
+        if (l instanceof ASTId lid && !(r instanceof ASTId)) {
+            Debug.log("η-expanding left side");
+            ASTNode le = lid.etaexpand(sl);
+            if (le != null) return termdefeq(le, sl, r, sr, alpha, phi, t);
+        }
+        if (r instanceof ASTId rid && !(l instanceof ASTId)) {
+            Debug.log("η-expanding right side");
+            ASTNode re = rid.etaexpand(sl);
+            if (re != null) return termdefeq(l, sl, re, sr, alpha, phi, t);
         }
         
         Debug.log("Trying to solve one side");
