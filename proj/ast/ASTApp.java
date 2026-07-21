@@ -54,7 +54,6 @@ public class ASTApp extends ASTNode  {
         ASTType dom, codom;
         String id;
         if (tf instanceof ASTTArrow fun) { dom = fun.getDom(); codom = fun.getCodom(); id = fun.getId(); }
-        else if (tf instanceof ASTTLollipop fun) { dom = fun.getDom(); codom = fun.getCodom(); id = fun.getId(); }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("app", tf));
 
         ASTType targ = arg.typecheck(e, dom);
@@ -69,7 +68,6 @@ public class ASTApp extends ASTNode  {
         ASTType dom, codom;
         String id;
         if (tf instanceof ASTTArrow fun) { dom = fun.getDom(); codom = fun.getCodom(); id = fun.getId(); }
-        else if (tf instanceof ASTTLollipop fun) { dom = fun.getDom(); codom = fun.getCodom(); id = fun.getId(); }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("app", tf));
 
         ASTType targ = arg.puretypecheck(sigma, phi, alpha, dom);

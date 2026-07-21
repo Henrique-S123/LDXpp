@@ -39,12 +39,11 @@ public class ASTRec extends ASTNode  {
         if (target != null) {
             ASTType tt = e.unfold(target);
             if (tt instanceof ASTTArrow arrow) { targetcodom = arrow.getCodom(); }
-            else if (tt instanceof ASTTLollipop lolli) { targetcodom = lolli.getCodom(); }
             else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
         }
 
         ASTType tfunctype = e.unfold(functype);
-        if (!(tfunctype instanceof ASTTArrow || tfunctype instanceof ASTTLollipop))
+        if (!(tfunctype instanceof ASTTArrow))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("rec", tfunctype));
 
         e.openEnvScope(ENV.SIGMA);
@@ -70,11 +69,10 @@ public class ASTRec extends ASTNode  {
         if (target != null) {
             ASTType tt = phi.unfold(target);
             if (tt instanceof ASTTArrow arrow) { targetcodom = arrow.getCodom(); }
-            else if (tt instanceof ASTTLollipop lolli) { targetcodom = lolli.getCodom(); }
             else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
         }
         ASTType tfunctype = phi.unfold(functype);
-        if (!(tfunctype instanceof ASTTArrow || tfunctype instanceof ASTTLollipop))
+        if (!(tfunctype instanceof ASTTArrow))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("rec", tfunctype));
 
         Env<ASTType> env = sigma.beginScope();

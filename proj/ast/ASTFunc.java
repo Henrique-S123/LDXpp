@@ -43,8 +43,7 @@ public class ASTFunc extends ASTNode  {
         String tid = null;
         if (target != null) {
             ASTType tt = e.unfold(target);
-            if (tt instanceof ASTTArrow arrow && !lin) { targetdom = arrow.getDom(); targetcodom = arrow.getCodom(); tid = arrow.getId(); }
-            else if (tt instanceof ASTTLollipop lolli) { targetdom = lolli.getDom(); targetcodom = lolli.getCodom(); tid = lolli.getId(); }
+            if (tt instanceof ASTTArrow arrow && (!lin || arrow.isLinear())) { targetdom = arrow.getDom(); targetcodom = arrow.getCodom(); tid = arrow.getId(); }
             else if (lin) throw new TypeCheckError(ErrorMessages.typeMismatch("lollipop", target));
             else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
         }
@@ -73,7 +72,7 @@ public class ASTFunc extends ASTNode  {
             throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
-        return (lin) ? new ASTTLollipop(targtype, tb, id) : new ASTTArrow(targtype, tb, id);
+        return new ASTTArrow(targtype, tb, id, lin);
     }
 
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
@@ -82,8 +81,7 @@ public class ASTFunc extends ASTNode  {
         String tid = null;
         if (target != null) {
             ASTType tt = phi.unfold(target);
-            if (tt instanceof ASTTArrow arrow && !lin) { targetdom = arrow.getDom(); targetcodom = arrow.getCodom(); tid = arrow.getId(); }
-            else if (tt instanceof ASTTLollipop lolli) { targetdom = lolli.getDom(); targetcodom = lolli.getCodom(); tid = lolli.getId(); }
+            if (tt instanceof ASTTArrow arrow && (!lin || arrow.isLinear())) { targetdom = arrow.getDom(); targetcodom = arrow.getCodom(); tid = arrow.getId(); }
             else if (lin) throw new TypeCheckError(ErrorMessages.typeMismatch("lollipop", target));
             else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
         }
@@ -97,7 +95,7 @@ public class ASTFunc extends ASTNode  {
         if (tid != null) alpha.extend(id, tid);
 
         ASTType tb = body.puretypecheck(env, phi, alpha, targetcodom);
-        return (lin) ? new ASTTLollipop(targtype, tb, id) : new ASTTArrow(targtype, tb, id);
+        return new ASTTArrow(targtype, tb, id, lin);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {

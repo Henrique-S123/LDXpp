@@ -878,12 +878,12 @@ public class Parser implements ParserConstants {
       case SLIMARROW:
         jj_consume_token(SLIMARROW);
         t2 = Type();
-                                  t1 = new ASTTArrow(t1, t2, n != null ? n.image : null);
+                                  t1 = new ASTTArrow(t1, t2, n != null ? n.image : null, false);
         break;
       case LOLLIPOP:
         jj_consume_token(LOLLIPOP);
         t2 = Type();
-                                 t1 = new ASTTLollipop(t1, t2, n != null ? n.image : null);
+                                 t1 = new ASTTArrow(t1, t2, n != null ? n.image : null, true);
         break;
       default:
         jj_la1[28] = jj_gen;

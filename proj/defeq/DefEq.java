@@ -206,9 +206,6 @@ public final class DefEq {
         if (l instanceof ASTTArrow lt && r instanceof ASTTArrow rt)
             return typedefeq(lt.getDom(), sl, rt.getDom(), sr, alpha, phi, seen, t)
                 && typedefeq(lt.getCodom(), sl, rt.getCodom(), sr, alpha.extend(lt.getId(), rt.getId()), phi, seen, t);
-        if (l instanceof ASTTLollipop lt && r instanceof ASTTLollipop rt)
-            return typedefeq(lt.getDom(), sl, rt.getDom(), sr, alpha, phi, seen, t)
-                && typedefeq(lt.getCodom(), sl, rt.getCodom(), sr, alpha.extend(lt.getId(), rt.getId()), phi, seen, t);
         
         if (l instanceof ASTTPair lt && r instanceof ASTTPair rt)
             return typedefeq(lt.getFirst(), sl, rt.getFirst(), sr, alpha, phi, seen, t)
