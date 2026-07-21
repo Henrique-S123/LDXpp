@@ -28,6 +28,20 @@ public final class DefEq {
         Debug.log(String.format("left: %s", l));
         Debug.log(String.format("right: %s", r));
 
+        if (congruence(l, sl, r, sr, alpha, phi, t)) return true;
+
+        if (t instanceof THyp && useHyp(l, r, alpha, phi)) return true;
+
+        if (etaExpand(l, sl, r, sr, alpha, phi, t)) return true;
+        
+        if (doSolve(l, sl, r, sr, alpha, phi, t)) return true;
+
+        Debug.log("Failed to prove equality");
+        Debug.nl();
+        return false;
+    }
+
+    private final boolean congruence(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
         if (l instanceof ASTInt ln && r instanceof ASTInt rn) return ln.getVal() == rn.getVal() && ln.isLinear() == rn.isLinear();
         if (l instanceof ASTBool ln && r instanceof ASTBool rn) return ln.getVal() == rn.getVal() && ln.isLinear() == rn.isLinear();
         if (l instanceof ASTString ln && r instanceof ASTString rn) return ln.getVal().equals(rn.getVal());
@@ -117,16 +131,21 @@ public final class DefEq {
         
         if (l instanceof ASTTypeDef ln && r instanceof ASTTypeDef rn)
             return ln.getLtd().equals(rn.getLtd()) && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha, phi, t);
-        
-        if (t instanceof THyp) {
-            Debug.log("Search Sigma environment for a proof");
+
+        return false;
+    }
+
+    private final boolean useHyp(ASTNode l, ASTNode r, AlphaEnv alpha, Env<ASTType> phi) {
+        Debug.log("Search Sigma environment for a proof");
             ASTType proof = sigma.findProof(sigma, l, r, alpha, phi);
             if (proof != null) {
                 Debug.log("Found proof: " + proof);
                 return true;
             }
-        }
-
+        return false;
+    }
+    
+    private final boolean etaExpand(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
         if (l instanceof ASTId lid && !(r instanceof ASTId)) {
             Debug.log("η-expanding left side");
             ASTNode le = lid.etaexpand(sl);
@@ -137,7 +156,10 @@ public final class DefEq {
             ASTNode re = rid.etaexpand(sl);
             if (re != null) return termdefeq(l, sl, re, sr, alpha, phi, t);
         }
-        
+        return false;
+    }
+    
+    private final boolean doSolve(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
         Debug.log("Trying to solve one side");
         ASTNode s = l.solve(l.getSig() != null ? l.getSig() : sl);
         if (s != null) {
@@ -149,12 +171,9 @@ public final class DefEq {
             Debug.log("Solved right side");
             return termdefeq(l, sl, s.weaknorm(), (s.getSig() != null) ? s.getSig() : sr, alpha, phi, t);
         }
-
-        Debug.log("Failed to prove equality");
-        Debug.nl();
         return false;
     }
-
+    
     public final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> sigma, Env<ASTType> phi) {
         return typedefeq(l, sigma, r, sigma, new AlphaEnv(), phi, new HashSet<IdPair>(), new TRefl());
     }
