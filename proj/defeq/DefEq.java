@@ -183,6 +183,14 @@ public final class DefEq {
     }
 
     private final boolean typedefeq(ASTType l, Env<ASTType> sl, ASTType r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Set<IdPair> seen, Tactic t) {
+        if (typecongruence(l, sl, r, sr, alpha, phi, seen, t)) return true;
+
+        if (unfold(l, sl, r, sr, alpha, phi, seen, t)) return true;
+
+        return false;
+    }
+
+    private boolean typecongruence(ASTType l, Env<ASTType> sl, ASTType r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Set<IdPair> seen, Tactic t) {
         if (l instanceof ASTTInt && r instanceof ASTTInt) return true;
         if (l instanceof ASTTLInt && r instanceof ASTTLInt) return true;
         if (l instanceof ASTTBool && r instanceof ASTTBool) return true;
@@ -241,6 +249,10 @@ public final class DefEq {
                 && termdefeq(lt.getTerm2(), sl, rt.getTerm2(), sr, alpha, phi, t)
                 && typedefeq(lt.getType(), sl, rt.getType(), sr, alpha, phi, seen, t);
 
+        return false;
+    }
+
+    private boolean unfold(ASTType l, Env<ASTType> sl, ASTType r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Set<IdPair> seen, Tactic t) {
         if (l instanceof ASTTId lt) {
             ASTType newl = phi.unfold(lt);
             return typedefeq(newl, newl.getSig(), r, sr, alpha, phi, seen, t);
@@ -249,8 +261,7 @@ public final class DefEq {
             ASTType newr = phi.unfold(rt);
             return typedefeq(l, sl, newr, newr.getSig(), alpha, phi, seen, t);
         }
-        
+
         return false;
     }
-
 }
