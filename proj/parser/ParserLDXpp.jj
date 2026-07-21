@@ -342,8 +342,8 @@ ASTType TypeF() :
         | <TLBOOL> { t = new ASTTBool(true); }
         | <LRPAR> { t = new ASTTUnit(); }
         | <TSTRING> { t = new ASTTString(); }
-        | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll); }
-        | <TLUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTLUnion(ll); }
+        | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll, false); }
+        | <TLUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll, true); }
         | <LPAR> t = TypeInsidePar() <RPAR>
     )
     { return t; }

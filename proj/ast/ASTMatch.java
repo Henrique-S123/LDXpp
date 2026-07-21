@@ -42,17 +42,15 @@ public class ASTMatch extends ASTNode {
     }
 
 	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-		boolean lincase = false;
 		Env<ASTType> prevEnv = e.getSigma();
 		ASTType tt = test.typecheck(e, null), rettype = null, tcase;
 		HashSet<String> matchUsedLinears = null;
 		tt = e.unfold(tt);
 		this.setSig(e.getSigma());
-		if (!(tt instanceof ASTTUnion || tt instanceof ASTTLUnion))
+		if (!(tt instanceof ASTTUnion))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("match", tt));
-		if (tt instanceof ASTTLUnion) lincase = true;
 		EnvSet en = new EnvSet(e), env;
-		Set<Map.Entry<String, ASTType>> entries = (lincase) ? ((ASTTLUnion) tt).getMap().entrySet() : ((ASTTUnion) tt).getMap().entrySet();
+		Set<Map.Entry<String, ASTType>> entries = ((ASTTUnion) tt).getMap().entrySet();
 		for (Map.Entry<String, ASTType> entry : entries) {
 			Debug.log("##################################");
 			Debug.log("TYPECHECKING BRANCH " + entry.getKey());
@@ -71,7 +69,7 @@ public class ASTMatch extends ASTNode {
 			env.bindToEnv(envChoice, c.getId(), b);
 			env.bindToEnv(ENV.SIGMA, c.getId(), b);
 
-			ASTUnion eqterm = new ASTUnion(entry.getKey(), new ASTId(c.getId(), b.getId()), lincase);
+			ASTUnion eqterm = new ASTUnion(entry.getKey(), new ASTId(c.getId(), b.getId()), tt.isLinear());
 			env.addEq(new ASTTEq(test, eqterm, tt));
 
 			if (c.getExp() instanceof ASTNever never) never.setFields(prevEnv, entry.getKey(), test);
@@ -107,16 +105,12 @@ public class ASTMatch extends ASTNode {
 	}
 
 	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-		boolean lincase = false;
 		ASTType tt = test.puretypecheck(sigma, phi, alpha, null), rettype = null, tcase;
 		tt = phi.unfold(tt);
 		this.setSig(sigma);
-		if (!(tt instanceof ASTTUnion || tt instanceof ASTTLUnion))
+		if (!(tt instanceof ASTTUnion))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("match", tt));
-		if (tt instanceof ASTTLUnion) lincase = true;
-		Set<Map.Entry<String, ASTType>> entries = tt instanceof ASTTUnion ?
-			((ASTTUnion) tt).getMap().entrySet() :
-			((ASTTLUnion) tt).getMap().entrySet();
+		Set<Map.Entry<String, ASTType>> entries = ((ASTTUnion) tt).getMap().entrySet();
 		for (Map.Entry<String, ASTType> entry : entries) {
 			MatchCase c = cases.get(entry.getKey());
 			if (c == null)
@@ -126,7 +120,7 @@ public class ASTMatch extends ASTNode {
 			Env<ASTType> env = sigma.beginScope();
 			env.assoc(c.getId(), tlabel);
 
-			ASTUnion eqterm = new ASTUnion(entry.getKey(), new ASTId(c.getId(), c.getId()), lincase);
+			ASTUnion eqterm = new ASTUnion(entry.getKey(), new ASTId(c.getId(), c.getId()), tt.isLinear());
 			env.addEq(new ASTTEq(test, eqterm, tt));
 
 			if (c.getExp() instanceof ASTNever never) never.setFields(sigma, entry.getKey(), test);

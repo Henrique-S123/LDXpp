@@ -10,14 +10,11 @@ public class ASTTUnion extends ASTType {
 
     Map<String, ASTType> ll;
 
-    public ASTTUnion(Map<String, ASTType> llp) {
-        ll = llp;
-        lin = false;
+    public ASTTUnion(Map<String, ASTType> llp, boolean l) {
+        ll = llp; lin = l;
     }
 
-    public Map<String, ASTType> getMap() {
-        return ll;
-    }
+    public Map<String, ASTType> getMap() { return ll; }
 
     public void setSig(Env<ASTType> s) {
         sig = s;
@@ -28,8 +25,7 @@ public class ASTTUnion extends ASTType {
     public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
         if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
         Map<String, ASTType> mb;
-        if (o instanceof ASTTUnion ounion) mb = ounion.getMap();
-        else if (o instanceof ASTTLUnion olunion) mb = olunion.getMap();
+        if (o instanceof ASTTUnion ot && (!lin || ot.isLinear())) mb = ot.getMap();
         else return false;
 
         for (String s : ll.keySet())
@@ -42,7 +38,7 @@ public class ASTTUnion extends ASTType {
         for (String k : ll.keySet()) fill += String.format("%s: %s; ", k, ll.get(k));
         if (ll.size() > 0) fill = fill.substring(0, fill.length()-2);
 
-        return String.format("union {%s}", fill);
+        return String.format("%sunion {%s}", lin ? "linear " : "", fill);
     }
 
     public ASTTUnion inst(String instId, ASTNode n) {

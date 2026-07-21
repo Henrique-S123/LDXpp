@@ -217,18 +217,7 @@ public final class DefEq {
             return typedefeq(lt.getFirst(), sl, rt.getFirst(), sr, alpha, phi, seen, t)
                 && typedefeq(lt.getSecond(), sl, rt.getSecond(), sr, alpha.extend(lt.getId(), rt.getId()), phi, seen, t);
         
-        if (l instanceof ASTTUnion lt && r instanceof ASTTUnion rt) {
-            Map<String, ASTType> left = lt.getMap();
-            Map<String, ASTType> right = rt.getMap();
-            if (left.size() != right.size()) return false;
-            for (String label : left.keySet()) {
-                ASTType leftType = left.get(label);
-                ASTType rightType = right.get(label);
-                if (rightType == null || !typedefeq(leftType, sl, rightType, sr, alpha, phi, seen, t)) return false;
-            }
-            return true;
-        }
-        if (l instanceof ASTTLUnion lt && r instanceof ASTTLUnion rt) {
+        if (l instanceof ASTTUnion lt && r instanceof ASTTUnion rt && lt.isLinear() == rt.isLinear()) {
             Map<String, ASTType> left = lt.getMap();
             Map<String, ASTType> right = rt.getMap();
             if (left.size() != right.size()) return false;

@@ -33,14 +33,14 @@ public class ASTUnion extends ASTNode {
 		if (!lin) prevDelta = e.popDelta();
 		ll.put(label, expr.typecheck(e, null));
 		if (!lin) e.pushDelta(prevDelta);
-		return (lin) ? new ASTTLUnion(ll) : new ASTTUnion(ll);
+		return new ASTTUnion(ll, lin);
 	}
 
 	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
 		expr.setSig(sigma);
 		ll.put(label, expr.puretypecheck(sigma, phi, alpha, null));
-		return (lin) ? new ASTTLUnion(ll) : new ASTTUnion(ll);
+		return new ASTTUnion(ll, lin);
 	}
 
 	public ASTNode weaknorm(Env<ASTNode> sub) {

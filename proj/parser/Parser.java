@@ -938,14 +938,14 @@ public class Parser implements ParserConstants {
       jj_consume_token(LBRA);
       ll = LabelList();
       jj_consume_token(RBRA);
-                                                    t = new ASTTUnion(ll);
+                                                    t = new ASTTUnion(ll, false);
       break;
     case TLUNION:
       jj_consume_token(TLUNION);
       jj_consume_token(LBRA);
       ll = LabelList();
       jj_consume_token(RBRA);
-                                                     t = new ASTTLUnion(ll);
+                                                     t = new ASTTUnion(ll, true);
       break;
     case LPAR:
       jj_consume_token(LPAR);
