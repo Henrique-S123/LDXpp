@@ -16,8 +16,4 @@ public class ASTTUnit extends ASTType {
         if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
         return o instanceof ASTTUnit;
     }
-
-    public boolean defequals(Env<ASTType> sl, ASTType o, Env<ASTType> sr, AlphaEnv alpha) {
-        return o instanceof ASTTUnit;
-    }
 }
