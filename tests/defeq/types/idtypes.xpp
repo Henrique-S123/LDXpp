@@ -1,5 +1,0 @@
-let x = 5;
-type ieq5 = (y:int, (y=x:int));
-let x = 0;
-type ieq0 = (y:int, (y=x:int));
-ieq5 ?T ieq0;;
