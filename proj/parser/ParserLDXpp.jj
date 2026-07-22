@@ -154,9 +154,6 @@ ASTNode Check() :
     LOOKAHEAD(Type() <QUESTIONTYPES>)
     tt1 = Type() <QUESTIONTYPES> tt2 = Type() { t1 = new ASTCheckTypes(tt1, tt2); }
   |
-    LOOKAHEAD(Seq() <QUESTION>)
-    t1 = Seq() <QUESTION> t2 = Seq() { t1 = new ASTCheck(t1, t2); }
-  |
     t1 = Seq()
   ) { return t1;}
 }
@@ -290,7 +287,6 @@ ASTNode Fact() :
     |  n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t, false); }
     |  n = <LLABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t, true); }
     | <LPAR> t = TermList() <RPAR>
-    | <QUESTION> <LPAR> t = Let() <COMMA> t2 = Let() <RPAR> { t = new ASTCheck(t, t2); }
     | <QUESTIONTYPES> <LPAR> type = Type() <COMMA> type2 = Type() <RPAR> { t = new ASTCheckTypes(type, type2); }
     | <REFL> (LOOKAHEAD(2) <LPAR> t = Fact() <RPAR>)? { t = new ASTRefl(t, new TRefl()); }
     | <HYP> { t = new ASTRefl(null, new THyp()); }
