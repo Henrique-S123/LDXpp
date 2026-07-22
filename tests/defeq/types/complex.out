@@ -1,18 +1,18 @@
-class proj.errors.TypeCheckError: Types (int, int)->(int, (bool | linint)) and (int, linint)->(int, (bool | linint)) are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types (int, int)->(int, (bool | linint)) and (int, int)->(int, (linbool | linint)) are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types (int, int)->(int, (bool | linint)) and (int, int)->(linint, (bool | linint)) are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 
-class proj.errors.TypeCheckError: Types (x:int, (y:int, x ≡ y : int)) and (y:int, (x:int, x ≡ y : int)) are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 

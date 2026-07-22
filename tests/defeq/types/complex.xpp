@@ -1,11 +1,11 @@
-(int, int) -> (int, (bool | linint)) ?T (int, linint) -> (int, (bool | linint));;
+:te (int, int) -> (int, (bool | linint)) ? (int, linint) -> (int, (bool | linint));;
 
-(int, int) -> (int, (bool | linint)) ?T (int, int) -> (int, (linbool | linint));;
+:te (int, int) -> (int, (bool | linint)) ? (int, int) -> (int, (linbool | linint));;
 
-(int, int) -> (int, (bool | linint)) ?T (int, int) -> (linint, (bool | linint));;
+:te (int, int) -> (int, (bool | linint)) ? (int, int) -> (linint, (bool | linint));;
 
-(int, int) -> (int, (bool | linint)) ?T (int, int) -> (int, (bool | linint));;
+:te (int, int) -> (int, (bool | linint)) ? (int, int) -> (int, (bool | linint));;
 
-(x:int, y:int, (x=y:int)) ?T (y:int, x:int, (x=y:int));;
+:te (x:int, y:int, (x=y:int)) ? (y:int, x:int, (x=y:int));;
 
-(x:int, y:int, (x=y:int)) ?T (y:int, x:int, (y=x:int));;
+:te (x:int, y:int, (x=y:int)) ? (y:int, x:int, (y=x:int));;

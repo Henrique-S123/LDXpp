@@ -1,51 +1,51 @@
-int->bool ?T int->int;;
+:te int->bool ? int->int;;
 
-int->bool ?T int->linbool;;
+:te int->bool ? int->linbool;;
 
-int->bool ?T int->bool;;
+:te int->bool ? int->bool;;
 
-int->linint ?T int->int;;
+:te int->linint ? int->int;;
 
-int->linint ?T int->linint;;
+:te int->linint ? int->linint;;
 
-string->int ?T string->int;;
+:te string->int ? string->int;;
 
-string->int ?T string->linint;;
+:te string->int ? string->linint;;
 
-int-o>bool ?T int-o>int;;
+:te int-o>bool ? int-o>int;;
 
-int-o>bool ?T int-o>linbool;;
+:te int-o>bool ? int-o>linbool;;
 
-int-o>bool ?T int-o>bool;;
+:te int-o>bool ? int-o>bool;;
 
-int-o>linint ?T int-o>int;;
+:te int-o>linint ? int-o>int;;
 
-int-o>linint ?T int-o>linint;;
+:te int-o>linint ? int-o>linint;;
 
-string-o>int ?T string-o>int;;
+:te string-o>int ? string-o>int;;
 
-string-o>int ?T string-o>linint;;
+:te string-o>int ? string-o>linint;;
 
-(x:int)->(x=x:int) ?T (x:int)->(x=x:int);;
+:te (x:int)->(x=x:int) ? (x:int)->(x=x:int);;
 
-(x:int)->(x=x:int) ?T (y:int)->(y=y:int);;
+:te (x:int)->(x=x:int) ? (y:int)->(y=y:int);;
 
-(x:int)->(y:int)->(x=y:int) ?T (y:int)->(x:int)->(y=x:int);;
+:te (x:int)->(y:int)->(x=y:int) ? (y:int)->(x:int)->(y=x:int);;
 
-(x:int)->(y:int)->(x=y:int) ?T (x:int)->(y:int)->(x=x:int);;
+:te (x:int)->(y:int)->(x=y:int) ? (x:int)->(y:int)->(x=x:int);;
 
-(x:int)->(y:int)->(x=y:int) ?T (y:int)->(x:int)->(x=x:int);;
+:te (x:int)->(y:int)->(x=y:int) ? (y:int)->(x:int)->(x=x:int);;
 
-(x:int)->(y:int)->(x=y:int) ?T (y:int)->(x:int)->(y=y:int);;
+:te (x:int)->(y:int)->(x=y:int) ? (y:int)->(x:int)->(y=y:int);;
 
-(x:linint)-o>(x=x:linint) ?T (x:linint)-o>(x=x:linint);;
+:te (x:linint)-o>(x=x:linint) ? (x:linint)-o>(x=x:linint);;
 
-(x:linint)-o>(x=x:linint) ?T (y:linint)-o>(y=y:linint);;
+:te (x:linint)-o>(x=x:linint) ? (y:linint)-o>(y=y:linint);;
 
-(x:linint)-o>(y:linint)-o>(x=y:linint) ?T (y:linint)-o>(x:linint)-o>(y=x:linint);;
+:te (x:linint)-o>(y:linint)-o>(x=y:linint) ? (y:linint)-o>(x:linint)-o>(y=x:linint);;
 
-(x:linint)-o>(y:linint)-o>(x=y:linint) ?T (x:linint)-o>(y:linint)-o>(x=x:linint);;
+:te (x:linint)-o>(y:linint)-o>(x=y:linint) ? (x:linint)-o>(y:linint)-o>(x=x:linint);;
 
-(x:linint)-o>(y:linint)-o>(x=y:linint) ?T (y:linint)-o>(x:linint)-o>(x=x:linint);;
+:te (x:linint)-o>(y:linint)-o>(x=y:linint) ? (y:linint)-o>(x:linint)-o>(x=x:linint);;
 
-(x:linint)-o>(y:linint)-o>(x=y:linint) ?T (y:linint)-o>(x:linint)-o>(y=y:linint);;
+:te (x:linint)-o>(y:linint)-o>(x=y:linint) ? (y:linint)-o>(x:linint)-o>(y=y:linint);;

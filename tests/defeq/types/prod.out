@@ -1,78 +1,78 @@
-class proj.errors.TypeCheckError: Types (int, bool) and (int, int) are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types (int, bool) and (int, linbool) are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 
-class proj.errors.TypeCheckError: Types (int, linint) and (int, int) are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 
-type: (), value: true
+TRUE
 
 
-class proj.errors.TypeCheckError: Types (string, int) and (string, linint) are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types (int | bool) and (int | int) are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types (int | bool) and (int | linbool) are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 
-class proj.errors.TypeCheckError: Types (int | linint) and (int | int) are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 
-type: (), value: true
+TRUE
 
 
-class proj.errors.TypeCheckError: Types (string | int) and (string | linint) are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 
-type: (), value: true
+TRUE
 
 
-type: (), value: true
+TRUE
 
 
-class proj.errors.TypeCheckError: Types (x:int, (y:int, x ≡ y : int)) and (x:int, (y:int, x ≡ x : int)) are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types (x:int, (y:int, x ≡ y : int)) and (y:int, (x:int, x ≡ x : int)) are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types (x:int, (y:int, x ≡ y : int)) and (y:int, (x:int, y ≡ y : int)) are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 
-type: (), value: true
+TRUE
 
 
-type: (), value: true
+TRUE
 
 
-class proj.errors.TypeCheckError: Types (x:linint | (y:linint | x ≡ y : linint)) and (x:linint | (y:linint | x ≡ x : linint)) are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types (x:linint | (y:linint | x ≡ y : linint)) and (y:linint | (x:linint | x ≡ x : linint)) are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types (x:linint | (y:linint | x ≡ y : linint)) and (y:linint | (x:linint | y ≡ y : linint)) are not definitionally equal
+FALSE
 
 

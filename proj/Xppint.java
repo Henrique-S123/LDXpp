@@ -3,11 +3,7 @@ package proj;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import proj.ast.*;
-import proj.values.*;
 import proj.parser.*;
-import proj.types.*;
-import proj.env.*;
 import proj.commands.*;
 
 public class Xppint {
@@ -19,16 +15,14 @@ public class Xppint {
     }
 
 	private static void runFile(String filename) {
-		ASTNode exp;
+		Command exp;
 		try {
 			parser = new Parser(new FileInputStream(filename));
 			while (true) {
 				try {
-					exp = parser.Program();
+					exp = parser.Start();
 					if (exp == null) System.exit(0);
-					ASTType t = exp.typecheck(new EnvSet(), null);
-					IValue v = exp.eval(new Env<IValue>());
-					System.out.println("type: " + t + ", value: " + v);
+					exp.executeCommand();
 				} catch (Exception e) {
 					System.out.println(e.getClass() + ": " + e.getMessage());
 				} finally {

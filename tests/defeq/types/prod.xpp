@@ -1,51 +1,51 @@
-(int, bool) ?T (int, int);;
+:te (int, bool) ? (int, int);;
 
-(int, bool) ?T (int, linbool);;
+:te (int, bool) ? (int, linbool);;
 
-(int, bool) ?T (int, bool);;
+:te (int, bool) ? (int, bool);;
 
-(int, linint) ?T (int, int);;
+:te (int, linint) ? (int, int);;
 
-(int, linint) ?T (int, linint);;
+:te (int, linint) ? (int, linint);;
 
-(string, int) ?T (string, int);;
+:te (string, int) ? (string, int);;
 
-(string, int) ?T (string, linint);;
+:te (string, int) ? (string, linint);;
 
-(int | bool) ?T (int | int);;
+:te (int | bool) ? (int | int);;
 
-(int | bool) ?T (int | linbool);;
+:te (int | bool) ? (int | linbool);;
 
-(int | bool) ?T (int | bool);;
+:te (int | bool) ? (int | bool);;
 
-(int | linint) ?T (int | int);;
+:te (int | linint) ? (int | int);;
 
-(int | linint) ?T (int | linint);;
+:te (int | linint) ? (int | linint);;
 
-(string | int) ?T (string | int);;
+:te (string | int) ? (string | int);;
 
-(string | int) ?T (string | linint);;
+:te (string | int) ? (string | linint);;
 
-(x:int, (x=x:int)) ?T (x:int, (x=x:int));;
+:te (x:int, (x=x:int)) ? (x:int, (x=x:int));;
 
-(x:int, (x=x:int)) ?T (y:int, (y=y:int));;
+:te (x:int, (x=x:int)) ? (y:int, (y=y:int));;
 
-(x:int, y:int, (x=y:int)) ?T (y:int, x:int, (y=x:int));;
+:te (x:int, y:int, (x=y:int)) ? (y:int, x:int, (y=x:int));;
 
-(x:int, y:int, (x=y:int)) ?T (x:int, y:int, (x=x:int));;
+:te (x:int, y:int, (x=y:int)) ? (x:int, y:int, (x=x:int));;
 
-(x:int, y:int, (x=y:int)) ?T (y:int, x:int, (x=x:int));;
+:te (x:int, y:int, (x=y:int)) ? (y:int, x:int, (x=x:int));;
 
-(x:int, y:int, (x=y:int)) ?T (y:int, x:int, (y=y:int));;
+:te (x:int, y:int, (x=y:int)) ? (y:int, x:int, (y=y:int));;
 
-(x:linint | (x=x:linint)) ?T (x:linint | (x=x:linint));;
+:te (x:linint | (x=x:linint)) ? (x:linint | (x=x:linint));;
 
-(x:linint | (x=x:linint)) ?T (y:linint | (y=y:linint));;
+:te (x:linint | (x=x:linint)) ? (y:linint | (y=y:linint));;
 
-(x:linint | y:linint | (x=y:linint)) ?T (y:linint | x:linint | (y=x:linint));;
+:te (x:linint | y:linint | (x=y:linint)) ? (y:linint | x:linint | (y=x:linint));;
 
-(x:linint | y:linint | (x=y:linint)) ?T (x:linint | y:linint | (x=x:linint));;
+:te (x:linint | y:linint | (x=y:linint)) ? (x:linint | y:linint | (x=x:linint));;
 
-(x:linint | y:linint | (x=y:linint)) ?T (y:linint | x:linint | (x=x:linint));;
+:te (x:linint | y:linint | (x=y:linint)) ? (y:linint | x:linint | (x=x:linint));;
 
-(x:linint | y:linint | (x=y:linint)) ?T (y:linint | x:linint | (y=y:linint));;
+:te (x:linint | y:linint | (x=y:linint)) ? (y:linint | x:linint | (y=y:linint));;

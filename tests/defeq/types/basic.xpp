@@ -1,23 +1,23 @@
-int ?T int;;
+:te int ? int;;
 
-int ?T bool;;
+:te int ? bool;;
 
-int ?T linint;;
+:te int ? linint;;
 
-linint ?T int;;
+:te linint ? int;;
 
-bool ?T bool;;
+:te bool ? bool;;
 
-bool ?T linbool;;
+:te bool ? linbool;;
 
-linbool ?T linbool;;
+:te linbool ? linbool;;
 
-string ?T int;;
+:te string ? int;;
 
-string ?T bool;;
+:te string ? bool;;
 
-string ?T string;;
+:te string ? string;;
 
-() ?T int;;
+:te () ? int;;
 
-() ?T ();;
+:te () ? ();;

@@ -1,21 +1,21 @@
-class proj.errors.TypeCheckError: Types union {#a: int} and union {#b: int} are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types union {#a: int} and union {#a: linint} are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 
-class proj.errors.TypeCheckError: Types union {#a: int; #b: bool} and union {#a: int} are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types union {#a: int; #b: bool} and union {#c: bool; #a: int} are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 
-type: (), value: true
+TRUE
 
 

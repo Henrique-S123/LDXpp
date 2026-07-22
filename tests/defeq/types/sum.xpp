@@ -1,13 +1,13 @@
-union{#a : int} ?T union{#b : int};;
+:te union{#a : int} ? union{#b : int};;
 
-union{#a : int} ?T union{#a : linint};;
+:te union{#a : int} ? union{#a : linint};;
 
-union{#a : int} ?T union{#a : int};;
+:te union{#a : int} ? union{#a : int};;
 
-union{#a : int, #b : bool} ?T union{#a : int};;
+:te union{#a : int, #b : bool} ? union{#a : int};;
 
-union{#a : int, #b : bool} ?T union{#a : int, #c : bool};;
+:te union{#a : int, #b : bool} ? union{#a : int, #c : bool};;
 
-union{#a : int, #b : bool} ?T union{#a : int, #b : bool};;
+:te union{#a : int, #b : bool} ? union{#a : int, #b : bool};;
 
-union{#a : int, #b : bool} ?T union{#b : bool, #a : int};;
+:te union{#a : int, #b : bool} ? union{#b : bool, #a : int};;

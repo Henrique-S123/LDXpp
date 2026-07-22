@@ -13,7 +13,6 @@ public class RunCommand implements Command {
     }
 
     public void executeCommand() throws TypeCheckError, InterpreterError {
-        System.out.println("type: " + program.typecheck(new EnvSet(), null));
-		System.out.println("value: " + program.eval(new Env<IValue>()));
+        System.out.println("type: " + program.typecheck(new EnvSet(), null) + ", value: " + program.eval(new Env<IValue>()));
     }
 }

@@ -1345,14 +1345,14 @@ public class Parser implements ParserConstants {
     return false;
   }
 
-  private boolean jj_3R_18() {
-    if (jj_3R_15()) return true;
-    return false;
-  }
-
   private boolean jj_3_2() {
     if (jj_3R_12()) return true;
     if (jj_scan_token(QUESTIONTYPES)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_18() {
+    if (jj_3R_15()) return true;
     return false;
   }
 
@@ -1361,6 +1361,11 @@ public class Parser implements ParserConstants {
     if (jj_3R_14()) return true;
     if (jj_3R_15()) return true;
     if (jj_scan_token(RPAR)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_71() {
+    if (jj_3R_77()) return true;
     return false;
   }
 
@@ -1373,11 +1378,6 @@ public class Parser implements ParserConstants {
     }
     xsp = jj_scanpos;
     if (jj_3R_19()) jj_scanpos = xsp;
-    return false;
-  }
-
-  private boolean jj_3R_71() {
-    if (jj_3R_77()) return true;
     return false;
   }
 

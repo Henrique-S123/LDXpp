@@ -1,36 +1,36 @@
-type: (), value: true
+TRUE
 
 
-class proj.errors.TypeCheckError: Types int and bool are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types int and linint are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types linint and int are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 
-class proj.errors.TypeCheckError: Types bool and linbool are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 
-class proj.errors.TypeCheckError: Types string and int are not definitionally equal
+FALSE
 
 
-class proj.errors.TypeCheckError: Types string and bool are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 
-class proj.errors.TypeCheckError: Types () and int are not definitionally equal
+FALSE
 
 
-type: (), value: true
+TRUE
 
 
