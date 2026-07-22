@@ -1,0 +1,12 @@
+type: Nat, value: #succ(#succ(#succ(#zero(()))))
+
+
+type: (z:Nat, z ≡ add(n2)(n1) : Nat), value: (#succ(#succ(#succ(#zero(())))), refl)
+
+
+class proj.src.errors.TypeCheckError: Terms n2 and add(n2)(n1) are not definitionally equal
+
+
+type: (z:Nat, z ≡ add(n1)(n1) : Nat), value: (#succ(#succ(#zero(()))), refl)
+
+

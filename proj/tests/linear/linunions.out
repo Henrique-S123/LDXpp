@@ -1,0 +1,18 @@
+class proj.src.errors.TypeCheckError: Linear value of 'x' has already been consumed and cannot be used again
+
+
+type: linbool, value: truel
+
+
+type: linbool, value: falsel
+
+
+class proj.src.errors.TypeCheckError: Branches are using different linear values: [u, x, y] and [u, y]
+
+
+type: linbool, value: truel
+
+
+class proj.src.errors.TypeCheckError: Linear value n must be used
+
+

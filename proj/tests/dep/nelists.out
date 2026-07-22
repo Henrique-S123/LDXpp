@@ -1,0 +1,15 @@
+type: (xs:LIST, (h:int, (t:LIST, xs ≡ #cons((h, t)) : LIST))), value: (#cons((1, #nil(()))), (1, (#nil(()), refl)))
+
+
+type: (xs:LIST, (h:int, (t:LIST, xs ≡ #cons((h, t)) : LIST))), value: (#cons((2, #cons((1, #nil(()))))), (2, (#cons((1, #nil(()))), refl)))
+
+
+class proj.src.errors.TypeCheckError: Terms l2 and #cons((2, l0)) are not definitionally equal
+
+
+type: int, value: 1
+
+
+type: int, value: 2
+
+

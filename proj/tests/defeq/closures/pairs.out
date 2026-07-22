@@ -1,0 +1,45 @@
+type: t ≡ (1, 1) : (int, int), value: refl
+
+
+class proj.src.errors.TypeCheckError: Terms t and (2, 2) are not definitionally equal
+
+
+type: fst t ≡ 1 : int, value: refl
+
+
+type: snd t ≡ 1 : int, value: refl
+
+
+class proj.src.errors.TypeCheckError: Terms fst t and 2 are not definitionally equal
+
+
+class proj.src.errors.TypeCheckError: Terms snd t and 2 are not definitionally equal
+
+
+type: f ≡ 1 : int, value: refl
+
+
+type: s ≡ 1 : int, value: refl
+
+
+class proj.src.errors.TypeCheckError: Terms f and 2 are not definitionally equal
+
+
+class proj.src.errors.TypeCheckError: Terms s and 2 are not definitionally equal
+
+
+type: fst fst p3 ≡ 1 : int, value: refl
+
+
+class proj.src.errors.TypeCheckError: Terms fst fst p3 and 10 are not definitionally equal
+
+
+type: fst t ≡ 1 : int, value: refl
+
+
+type: (a:int, (b:int, a ≡ b : int)), value: (5, (5, refl))
+
+
+class proj.src.errors.TypeCheckError: Terms fst y and x are not definitionally equal
+
+

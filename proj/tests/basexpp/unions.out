@@ -1,0 +1,78 @@
+type: int, value: 3
+
+
+class proj.src.errors.TypeCheckError: Missing match case for label #a
+
+
+class proj.src.errors.TypeCheckError: Branches have different types: string and int
+
+
+class proj.src.errors.TypeCheckError: Branches have different types: bool and int
+
+
+type: int, value: 7
+
+
+type: int, value: 2
+
+
+type: int, value: 3
+
+
+class proj.src.errors.TypeCheckError: Missing match case for label #val
+
+
+type: int, value: 3
+
+
+type: union {#some: int; #none: ()}, value: #none(())
+
+
+type: union {#some: int; #none: ()}, value: #some(2)
+
+
+type: int, value: 1
+
+
+type: int, value: 42
+
+
+type: int, value: 42
+
+
+class proj.src.errors.TypeCheckError: Illegal types to &&: int and bool
+
+
+class proj.src.errors.TypeCheckError: Branches have different types: int and bool
+
+
+class proj.src.errors.TypeCheckError: Missing match case for label #some
+
+
+class proj.src.errors.TypeCheckError: Missing match case for label #none
+
+
+type: int, value: 200
+
+
+type: int, value: 200
+
+
+type: int, value: 200
+
+
+type: int, value: 200
+
+
+class proj.src.errors.TypeCheckError: Argument type union {#circle: Circle; #rect: Rectangle} is not a subtype of parameter type union {#circle: Circle}
+
+
+class proj.src.errors.TypeCheckError: Argument type union {#circle: Circle; #rect: Rectangle} is not a subtype of parameter type union {#rect: Rectangle}
+
+
+type: int, value: 200
+
+
+type: int, value: 18
+
+

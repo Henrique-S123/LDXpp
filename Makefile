@@ -1,6 +1,7 @@
-TEST_DIR ?= tests
+TEST_DIR ?= proj/tests
 TESTS := $(shell find $(TEST_DIR) -type f -name '*.xpp')
 DEBUG ?= false
+SRC_DIR := proj/src/
 
 ifeq ($(DEBUG),true)
     FLAGS := -Ddebug=true -cp
@@ -9,10 +10,12 @@ else
 endif
 
 all:
-	javacc -STATIC=false -OUTPUT_DIRECTORY=proj/parser/ proj/parser/ParserLDXpp.jj
-	javac -d proj/out/ -Xlint:unchecked proj/values/*.java proj/parser/*.java proj/ast/*.java proj/*.java proj/types/*.java
+	javacc -STATIC=false -OUTPUT_DIRECTORY=$(SRC_DIR)parser/ $(SRC_DIR)parser/ParserLDXpp.jj
+	javac -d proj/out/ -Xlint:unchecked \
+		$(SRC_DIR)values/*.java $(SRC_DIR)parser/*.java $(SRC_DIR)ast/*.java $(SRC_DIR)*.java $(SRC_DIR)types/*.java \
+		$(SRC_DIR)commands/*.java $(SRC_DIR)debug/*.java $(SRC_DIR)defeq/*.java $(SRC_DIR)env/*.java
 	echo '#!/bin/bash' > x++
-	echo 'java $(FLAGS) proj/out/ proj.Xppint "$$@"' >> x++
+	echo 'java $(FLAGS) proj/out/ proj.src.Xppint "$$@"' >> x++
 	chmod +x x++
 
 clean:

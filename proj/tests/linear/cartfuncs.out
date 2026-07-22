@@ -1,0 +1,31 @@
+type: int, value: 3
+
+
+1
+type: int, value: 1
+
+
+type: linint, value: 3l
+
+
+class proj.src.errors.TypeCheckError: Identifier 'x' out of scope
+
+
+class proj.src.errors.TypeCheckError: Identifier 'x' out of scope
+
+
+type: linint, value: 10l
+
+
+class proj.src.errors.TypeCheckError: There are unused linear values: [x]
+
+
+class proj.src.errors.TypeCheckError: There are unused linear values: [x]
+
+
+type: linint, value: 11l
+
+
+class proj.src.errors.TypeCheckError: Argument type linint is not a subtype of parameter type int
+
+

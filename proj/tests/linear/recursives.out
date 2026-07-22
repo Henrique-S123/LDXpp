@@ -1,0 +1,12 @@
+type: int, value: 6
+
+
+class proj.src.errors.TypeCheckError: Illegal type to rec: int
+
+
+class proj.src.errors.TypeCheckError: Linear value of 'fact' has already been consumed and cannot be used again
+
+
+type: NatL, value: $succ($succ($succ($zero(()))))
+
+

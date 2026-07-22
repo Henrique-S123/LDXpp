@@ -1,0 +1,69 @@
+type: (x:bool, x ≡ true : bool), value: (true, refl)
+
+
+type: bool, value: true
+
+
+type: true ≡ true : bool, value: refl
+
+
+class proj.src.errors.TypeCheckError: refl expects a term annotation
+
+
+class proj.src.errors.TypeCheckError: refl expects a term annotation
+
+
+class proj.src.errors.TypeCheckError: refl expects a term annotation
+
+
+type: (bool, true ≡ true : bool), value: (true, refl)
+
+
+type: (x:int, x ≡ 2 : int), value: (2, refl)
+
+
+class proj.src.errors.TypeCheckError: Terms 3 and 2 are not definitionally equal
+
+
+type: (x:int, (y:int, x ≡ y : int)), value: (2, (2, refl))
+
+
+class proj.src.errors.TypeCheckError: Terms 2 and 3 are not definitionally equal
+
+
+type: (x:int, (y:int, (z:int, (x ≡ y : int, y ≡ z : int)))), value: (2, (2, (2, (refl, refl))))
+
+
+class proj.src.errors.TypeCheckError: Terms 2 and 3 are not definitionally equal
+
+
+class proj.src.errors.TypeCheckError: Terms 2 and 3 are not definitionally equal
+
+
+class proj.src.errors.TypeCheckError: Terms 3 and 2 are not definitionally equal
+
+
+type: (x:bool, x ≡ true : bool), value: (true, refl)
+
+
+class proj.src.errors.TypeCheckError: Terms false and true are not definitionally equal
+
+
+type: (x:bool, x ≡ false : bool), value: (false, refl)
+
+
+type: (x:bool, x ≡ true : bool), value: (true, refl)
+
+
+type: (x:bool, x ≡ true : bool), value: (true, refl)
+
+
+class proj.src.errors.TypeCheckError: Terms z and true are not definitionally equal
+
+
+type: (x:bool, x ≡ true : bool), value: (true, refl)
+
+
+type: (x:bool, x ≡ true : bool), value: (true, refl)
+
+

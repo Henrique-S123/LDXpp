@@ -1,0 +1,30 @@
+class proj.src.errors.TypeCheckError: Type int is not a subtype of bool
+
+
+class proj.src.errors.TypeCheckError: Type linint is not a subtype of bool
+
+
+class proj.src.errors.TypeCheckError: Type linint is not a subtype of int
+
+
+class proj.src.errors.TypeCheckError: Terms 1 and 1l are not definitionally equal
+
+
+class proj.src.errors.TypeCheckError: Type bool is not a subtype of int
+
+
+class proj.src.errors.TypeCheckError: Type int is not a subtype of bool
+
+
+class proj.src.errors.TypeCheckError: Type bool is not a subtype of int
+
+
+class proj.src.errors.TypeCheckError: Type bool is not a subtype of int
+
+
+class proj.src.errors.TypeCheckError: Type int is not a subtype of bool
+
+
+class proj.src.errors.TypeCheckError: Identifier 'y' out of scope
+
+

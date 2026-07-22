@@ -1,9 +1,0 @@
-type: (x:int, x * 2 ≡ x + x : int), value: (2, refl)
-
-
-type: (x:linint | x * 2 ≡ x + x : linint), value: (2l | refl)
-
-
-class proj.errors.TypeCheckError: Linear value of 'y' has already been consumed and cannot be used again
-
-

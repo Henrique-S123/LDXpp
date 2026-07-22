@@ -1,0 +1,15 @@
+type: (y:int, y ≡ x : int), value: (5, refl)
+
+
+type: (y:int, y ≡ x : int), value: (5, refl)
+
+
+type: (y:int, y ≡ x : int), value: (5, refl)
+
+
+type: (y:int, (z:int, (y ≡ x : int, z ≡ x : int))), value: (5, (5, (refl, refl)))
+
+
+class proj.src.errors.TypeCheckError: Terms fn x:ieq5 => {1} and fn x:ieq0 => {1} are not definitionally equal
+
+
