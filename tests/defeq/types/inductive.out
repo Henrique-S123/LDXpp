@@ -1,7 +1,7 @@
-type: (), value: true
+type: fn x:NODE => {1} ≡ fn x:NODE => {1} : NODE->int, value: refl
 
 
-type: (), value: true
+type: fn x:EL => {1} ≡ fn x:NODE => {1} : NODE->int, value: refl
 
 
 type: (), value: true
