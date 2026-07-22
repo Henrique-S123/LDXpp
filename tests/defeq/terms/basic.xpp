@@ -4,6 +4,8 @@ let x:(1=1:int) = refl; x;;
 
 let x:(1l=1:int) = refl; x;;
 
+let x:(1l=1:linint) = refl; x;;
+
 let x:(1l=2l:linint) = refl; x;;
 
 let x:(1l=1l:linint) = refl; x;;

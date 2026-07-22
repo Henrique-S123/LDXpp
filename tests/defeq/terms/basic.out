@@ -7,6 +7,9 @@ type: 1 ≡ 1 : int, value: refl
 class proj.errors.TypeCheckError: Type linint is not a subtype of int
 
 
+proj.errors.TypeCheckError: Terms 1l and 1 are not definitionally equal
+
+
 class proj.errors.TypeCheckError: Terms 1l and 2l are not definitionally equal
 
 
