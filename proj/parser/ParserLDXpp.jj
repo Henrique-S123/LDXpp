@@ -18,8 +18,6 @@ SKIP : { " " | "\t" | "\r" | "\n" }
 
 TOKEN :
 {
-  <EVALC : ":v"> | <TYPEC : ":t"> | <NORMC : ":n"> | <EQC : ":e"> | <TEQC : ":te">
-  |
   < LET : "let" >
   |
   < Bool : ("true"|"false") > | < LinBool : ("truel"|"falsel") >
@@ -78,18 +76,44 @@ TOKEN :
 }
 
 Command Start():
-{ Command c;
+{ Command c = null;
   ASTNode t, t2;
   ASTType ty, ty2;
+  Token n;
 }
 {
-    <EVALC> t = Program() { return (t == null) ? null : new EvalCommand(t); }
-  | <TYPEC> t = Program() { return (t == null) ? null : new TypeCommand(t); }
-  | <NORMC> t = Program() { return (t == null) ? null : new NormCommand(t); }
-  | <EQC> t = Program() <QUESTION> t2 = Program() { return (t == null || t2 == null) ? null : new EqCommand(t, t2); }
-  | <TEQC> ty = Type() <QUESTION> ty2 = Type() { return (ty == null || ty2 == null) ? null : new TEqCommand(ty, ty2); }
-  | t = Program() { return (t == null) ? null : new RunCommand(t); }
+  (
+    <COLON> n = <Id>
+    {
+      if (n.image.equals("v")) { c = EvalCmd(); }
+      else if (n.image.equals("t")) { c = TypeCmd(); }
+      else if (n.image.equals("n")) { c = NormCmd(); }
+      else if (n.image.equals("e")) { c = EqCmd(); }
+      else if (n.image.equals("te")) { c = TEqCmd(); }
+      else throw new ParseException("invalid command");
+    }
+  |
+    t = Program() {if (t != null) c = new RunCommand(t); }
+  )
+  { return c; }
 }
+
+EvalCommand EvalCmd():
+{ ASTNode t; }{ t = Program() { return (t == null) ? null : new EvalCommand(t); } }
+
+TypeCommand TypeCmd():
+{ ASTNode t; }{ t = Program() { return (t == null) ? null : new TypeCommand(t); } }
+
+NormCommand NormCmd():
+{ ASTNode t; }{ t = Program() { return (t == null) ? null : new NormCommand(t); } }
+
+EqCommand EqCmd():
+{ ASTNode t1, t2; }{ t1 = Term() <QUESTION> t2 = Term() <TERM> { return new EqCommand(t1, t2); } }
+
+TEqCommand TEqCmd():
+{ ASTType t1, t2; }{ t1 = Type() <QUESTION> t2 = Type() <TERM> { return new TEqCommand(t1, t2); } }
+
+
 
 ASTNode Program():
 { ASTNode t; }

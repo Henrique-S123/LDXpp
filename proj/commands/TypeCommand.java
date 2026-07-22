@@ -11,7 +11,7 @@ public class TypeCommand implements Command {
         program = p;
     }
 
-    public void executeCommand() throws TypeCheckError, InterpreterError {
+    public void executeCommand() throws TypeCheckError {
 		System.out.println(program.typecheck(new EnvSet(), null));
     }
 }

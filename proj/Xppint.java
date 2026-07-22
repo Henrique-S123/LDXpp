@@ -29,8 +29,6 @@ public class Xppint {
 					ASTType t = exp.typecheck(new EnvSet(), null);
 					IValue v = exp.eval(new Env<IValue>());
 					System.out.println("type: " + t + ", value: " + v);
-				} catch (ParseException e) {
-					System.err.println("Syntax Error.");
 				} catch (Exception e) {
 					System.out.println(e.getClass() + ": " + e.getMessage());
 				} finally {
@@ -52,9 +50,6 @@ public class Xppint {
 				exp = parser.Start();
 				if (exp==null) System.exit(0);
 				exp.executeCommand();
-			} catch (ParseException e) {
-				System.out.println("Syntax Error.");
-				parser.ReInit(System.in);
 			} catch (Exception e) {
 				e.printStackTrace();
 				parser.ReInit(System.in);

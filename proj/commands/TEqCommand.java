@@ -2,7 +2,6 @@ package proj.commands;
 
 import proj.defeq.*;
 import proj.env.*;
-import proj.errors.*;
 import proj.types.ASTType;
 
 public class TEqCommand implements Command {
@@ -13,10 +12,9 @@ public class TEqCommand implements Command {
         right = r;
     }
 
-    public void executeCommand() throws TypeCheckError, InterpreterError {
+    public void executeCommand() {
         EnvSet e = new EnvSet();
         DefEq eq = new DefEq(e.getSigma());
-        if (eq.typedefeq(left, right, e.getSigma(), e.getPhi())) System.out.println("TRUE");
-        else throw new TypeCheckError(ErrorMessages.typesNotDefeq(left, right));
+        System.out.println(eq.typedefeq(left, right, e.getSigma(), e.getPhi()) ? "TRUE" : "FALSE");
     }
 }

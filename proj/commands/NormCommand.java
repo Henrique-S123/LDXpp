@@ -1,7 +1,6 @@
 package proj.commands;
 
 import proj.ast.ASTNode;
-import proj.errors.*;
 
 public class NormCommand implements Command {
     private ASTNode program;
@@ -10,7 +9,7 @@ public class NormCommand implements Command {
         program = p;
     }
 
-    public void executeCommand() throws TypeCheckError, InterpreterError {
+    public void executeCommand() {
         System.out.println(program.weaknorm());
     }
 }

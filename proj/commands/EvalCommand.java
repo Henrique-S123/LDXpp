@@ -12,7 +12,7 @@ public class EvalCommand implements Command {
         program = p;
     }
 
-    public void executeCommand() throws TypeCheckError, InterpreterError {
+    public void executeCommand() throws InterpreterError {
 		System.out.println(program.eval(new Env<IValue>()));
     }
 }
