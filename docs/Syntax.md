@@ -16,4 +16,4 @@
 | Dep. Linear Pairs	            | (a \| b)	      | (x:A \| B)               |
 | Unrestricted Union	        | #label(M)	      | union {#l1:A, #l2: B}    |
 | Linear Union	                | $label(M)	      | linunion {$l1:A, $l2: B} |
-| Equality Types                | refl/hyp        | (M = N : A)              |
+| Equality Types                |                 | (M = N : A)              |

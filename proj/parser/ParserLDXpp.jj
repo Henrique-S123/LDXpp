@@ -6,6 +6,7 @@ import proj.ast.*;
 import proj.types.*;
 import proj.env.*;
 import proj.defeq.*;
+import proj.commands.*;
 import java.util.*;
 
 public class Parser {
@@ -17,7 +18,8 @@ SKIP : { " " | "\t" | "\r" | "\n" }
 
 TOKEN :
 {
-
+  <EVALC : ":v"> | <TYPEC : ":t"> | <NORMC : ":n"> | <EQC : ":e"> | <TEQC : ":te">
+  |
   < LET : "let" >
   |
   < Bool : ("true"|"false") > | < LinBool : ("truel"|"falsel") >
@@ -75,7 +77,21 @@ TOKEN :
   < LinNum: (["0"-"9"])+ "l" > | < Num: (["0"-"9"])+ >
 }
 
-ASTNode Start():
+Command Start():
+{ Command c;
+  ASTNode t, t2;
+  ASTType ty, ty2;
+}
+{
+    <EVALC> t = Program() { return (t == null) ? null : new EvalCommand(t); }
+  | <TYPEC> t = Program() { return (t == null) ? null : new TypeCommand(t); }
+  | <NORMC> t = Program() { return (t == null) ? null : new NormCommand(t); }
+  | <EQC> t = Program() <QUESTION> t2 = Program() { return (t == null || t2 == null) ? null : new EqCommand(t, t2); }
+  | <TEQC> ty = Type() <QUESTION> ty2 = Type() { return (ty == null || ty2 == null) ? null : new TEqCommand(ty, ty2); }
+  | t = Program() { return (t == null) ? null : new RunCommand(t); }
+}
+
+ASTNode Program():
 { ASTNode t; }
 {
     <EOF> {return null;}
