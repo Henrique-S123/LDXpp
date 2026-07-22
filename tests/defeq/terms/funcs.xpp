@@ -1,57 +1,65 @@
-let f = fn x:int => {x}; f(1) ? 1;;
+let f = fn x:int => {x}; 
+let e:(f(1) = 1 : int) = refl; f(1);;
 
-(let f = fn x:int => {x}; f(1)) ? 1;;
+let e:((let f = fn x:int => {x}; f(1)) = 1 : int) = refl; e;;
 
-let f = lfn x:int =o> {x}; f(1) ? 1;;
+let f = lfn x:int =o> {x};
+let e:(f(1) = 1 : int) = refl; f(1);;
 
-(let f = lfn x:int =o> {x}; f(1)) ? 1;;
+let e:((let f = lfn x:int =o> {x}; f(1)) = 1 : int) = refl; e;;
 
-fn x:int => {x} ? fn y:int => {y};;
+let e:(fn x:int => {x} = fn y:int => {y} : int->int) = refl; e;;
 
-fn x:int => {fn y:int => {x}} ? fn a:int => {fn b:int => {a}};;
+let e:(fn x:int => {fn y:int => {x}} = fn a:int => {fn b:int => {a}} : int->int->int) = refl; e;;
 
-fn x:int => {fn y:int => {x}} ? fn x:int => {fn y:int => {y}};;
+let e:(fn x:int => {fn y:int => {x}} = fn x:int => {fn y:int => {y}} : int->int->int) = refl; e;;
 
-fn y:int => {fn x:int => {y}} ? fn x:int => {fn y:int => {x}};;
+let e:(fn y:int => {fn x:int => {y}} = fn x:int => {fn y:int => {x}} : int->int->int) = refl; e;;
 
-fn x:int => {fn y:int => {x}} ? fn y:int => {fn y:int => {y}};;
+let e:(fn x:int => {fn y:int => {x}} = fn y:int => {fn y:int => {y}} : int->int->int) = refl; e;;
 
-lfn x:int =o> {x} ? lfn y:int =o> {y};;
+let e:(lfn x:int =o> {x} = lfn y:int =o> {y} : int-o>int) = refl; e;;
 
-lfn x:int =o> {lfn y:int =o> {x}} ? lfn a:int =o> {lfn b:int =o> {a}};;
+let e:(lfn x:int =o> {lfn y:int =o> {x}} = lfn a:int =o> {lfn b:int =o> {a}} : int-o>int-o>int) = refl; e;;
 
-lfn x:int =o> {lfn y:int =o> {x}} ? lfn x:int =o> {lfn y:int =o> {y}};;
+let e:(lfn x:int =o> {lfn y:int =o> {x}} = lfn x:int =o> {lfn y:int =o> {y}} : int-o>int-o>int) = refl; e;;
 
-lfn y:int =o> {lfn x:int =o> {y}} ? lfn x:int =o> {lfn y:int =o> {x}};;
+let e:(lfn y:int =o> {lfn x:int =o> {y}} = lfn x:int =o> {lfn y:int =o> {x}} : int-o>int-o>int) = refl; e;;
 
-lfn x:int =o> {lfn y:int =o> {x}} ? lfn y:int =o> {lfn y:int =o> {y}};;
+let e:(lfn x:int =o> {lfn y:int =o> {x}} = lfn y:int =o> {lfn y:int =o> {y}} : int-o>int-o>int) = refl; es;;
 
-(let x = 0; let f = fn y:int => {x}; let x = 1; f(5)) ? 0;;
+let e:((let x = 0; let f = fn y:int => {x}; let x = 1; f(5)) = 0 : int) = refl; e;;
 
-(let x = 0; let f = fn y:int => {x}; let x = 1; f(5)) ? 1;;
+let e:((let x = 0; let f = fn y:int => {x}; let x = 1; f(5)) = 1 : int) = refl; e;;
 
-let x = 0; let f = fn y:int => {x}; let x = 1; f(5) ? 0;;
+let x = 0; let f = fn y:int => {x}; let x = 1;
+let e:(f(5) = 0 : int) = refl; e;;
 
-let x = 0; let f = fn y:int => {x}; let x = 1; f(5) ? 1;;
+let x = 0; let f = fn y:int => {x}; let x = 1;
+let e:(f(5) = 1 : int) = refl; e;;
 
-let x = 0; let f = fn y:int => {x}; let x = 1; 0 ? f(5);;
+let x = 0; let f = fn y:int => {x}; let x = 1;
+let e:(0 = f(5) : int) = refl; e;;
 
-let x = 0; let f = fn y:int => {x}; let x = 1; 1 ? f(5);;
+let x = 0; let f = fn y:int => {x}; let x = 1;
+let e:(1 = f(5) : int) = refl; e;;
 
-(fn y:int => {(fn f:int->int => {f(0)})(fn x:int =>{y})})(1) ? 1;;
+let e:((fn y:int => {(fn f:int->int => {f(0)})(fn x:int =>{y})})(1) = 1 : int) = refl; e;;
 
 let a = 1;
 let f = fn y:int => {(fn f2:int->int => {f2(0)})(fn x:int =>{y})};
-f(a) ? 1;;
+let e:(f(a) = 1 : int) = refl; e;;
 
-let x = 0; fn y:int => {x} ? fn y:int => {if (true) {0} else {1}};;
+let x = 0;
+let e:(fn y:int => {x} = fn y:int => {if (true) {0} else {1}} : int->int) = refl; e;;
 
-let x = 0; fn y:int => {fn z:int => {x}} ? fn y:int => {fn z:int => {if (true) {0} else {1}}};;
+let x = 0;
+let e:(fn y:int => {fn z:int => {x}} = fn y:int => {fn z:int => {if (true) {0} else {1}}} : int->int->int) = refl; e;;
 
 let x = 0;
 let f = fn y:int => {x};
 let f2 = fn y:int => {if (true) {0} else {1}};
-(f, 1) ? (f2, 1);;
+let e:((f, 1) = (f2, 1) : (int->int, int)) = refl; e;;
 
 let f = fn x:int => {2};
-f(5) ? f(3);;
+let e:(f(5) = f(3) : int) = refl; e;;
