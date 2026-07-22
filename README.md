@@ -5,4 +5,4 @@ To build the executable, run `makeit.sh`. To run all tests, run `run_tests.sh`.
 
 ## Documentation
 
-- [Language Syntax](docs/ConcreteSyntax.md)
+- [Language Syntax](docs/Syntax.md)
