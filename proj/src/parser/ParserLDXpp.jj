@@ -147,20 +147,12 @@ ASTNode Seq() :
 {Token op;
   ASTNode t1, t2;}
 {
-     t1 = SeqExp() ( ( op=<SEMIC> ) t2 = SeqExp() 
+     t1 = BA() ( ( op=<SEMIC> ) t2 = BA() 
  		 {
 		 t1 = new ASTSeq(t1, t2);
      } 
 		)*
      { return t1; }  
-}
-
-ASTNode SeqExp() :
-{Token op;
-  ASTNode t1, t2, t;}
-{
-     t1 = BA()
-     { return t1; }
 }
 
 ASTNode BA() :
