@@ -1,5 +1,6 @@
 package proj.src.types;
 
+import proj.src.defeq.DefEq;
 import proj.src.env.*;
 
 public	class ASTTId extends ASTType	{	
@@ -19,7 +20,8 @@ public	class ASTTId extends ASTType	{
     }
 
     public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return id.equals(((ASTTId) o).getId());
-        return phi.unfold(this).isSubtypeOf(o, sigma, phi, alpha);
+        if (!(o instanceof ASTTId)) return phi.unfold(this).isSubtypeOf(o, sigma, phi, alpha);
+        DefEq eq = new DefEq(sigma);
+        return eq.typedefeq(this, o, sigma, phi, alpha);
     }
 }	

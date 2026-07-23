@@ -11,10 +11,10 @@ type NODE = (int, LIST);
 type LIST = union { #nil: (), #cons: NODE };
 type EL = (int, SEQ);
 type SEQ = union { #nil: (), #cons: EL };
-NODE ?T EL;;
+let e:(fn x:NODE => {1} = fn x:EL => {1} : NODE->int) = refl; e;;
 
 type NODE = (int, LIST);
 type LIST = union { #nil: (), #cons: NODE };
 type EL = (int, SEQ);
 type SEQ = union { #nil: (), #cons: EL };
-LIST ?T SEQ;;
+let e:(fn x:LIST => {1} = fn x:SEQ => {1} : LIST->int) = refl; e;;
