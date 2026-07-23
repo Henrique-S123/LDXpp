@@ -8,26 +8,18 @@ import proj.src.errors.*;
 
 public class ASTRec extends ASTNode  {
     private final String fid;
-    private ASTNode body;
     private final ASTType functype;
+    private ASTNode body;
 
-    public ASTRec(String f, ASTNode b, ASTType t) {
-        fid = f;
-        body = b;
-        functype = t;
+    public ASTRec(String f, ASTType t, ASTNode b) {
+        fid = f; functype = t; body = b;
     }
 
-    public String getFid() {
-        return fid;
-    }
+    public String getFid() { return fid; }
 
-    public ASTNode getBody() {
-        return body;
-    }
+    public ASTNode getBody() { return body; }
 
-    public void setBody(ASTNode b) {
-        body = b;
-    }
+    public void setBody(ASTNode b) { body = b; }
 
     public IValue eval(Env<IValue> e) {
         return new VRec(e, fid, body, false);
@@ -85,11 +77,11 @@ public class ASTRec extends ASTNode  {
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
-        return new ASTRec(fid, body, functype);
+        return new ASTRec(fid, functype, body);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-        return new ASTRec(fid, body.subs(subsId, node), functype);
+        return new ASTRec(fid, functype, body.subs(subsId, node));
     }
 
     @Override

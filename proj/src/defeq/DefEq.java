@@ -215,11 +215,8 @@ public final class DefEq {
             Map<String, ASTType> left = lt.getMap();
             Map<String, ASTType> right = rt.getMap();
             if (left.size() != right.size()) return false;
-            for (String label : left.keySet()) {
-                ASTType leftType = left.get(label);
-                ASTType rightType = right.get(label);
-                if (rightType == null || !typedefeq(leftType, sl, rightType, sr, alpha, phi, seen, t)) return false;
-            }
+            for (String label : left.keySet())
+                if (right.get(label) == null || !typedefeq(left.get(label), sl, right.get(label), sr, alpha, phi, seen, t)) return false;
             return true;
         }
 
