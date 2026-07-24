@@ -117,12 +117,10 @@ let c2 = comp (inc) (dup);
 c2 (99)
 ;;
 
-let fact:int->int =
-    fn n:int => {
-        if (n==0) { 1 }
-        else { n * (fact (n-1))}
-    };
-fact (5);;
+let k = -1;
+let om: (int -> int)->int = fn f:int->int => { f (k)};
+om (fn k:int => {k*k})
+;;
 
 let fact:int->int = (
     let one = 1;
@@ -131,41 +129,3 @@ let fact:int->int = (
         else { n * (fact (n-1))}
     });
 fact (5);;
-
-let reduce: (int -> int -> int) -> int -> int -> int = 
-fn g:int->int->int, b:int, k:int => {
-    if (k == 0) { b }
-    else {
-         g (k) (reduce (g) (b) (k-1) )
-      }
-  };
-let fact = reduce (fn n:int, p:int => { n*p }) (1) ;
-fact (10)
-;;
-
-let reduce: (int -> int -> int) -> int -> int -> int = 
-fn g:int->int->int, b:int, k:int  => {
-    if (k == 0) { b }
-    else {
-         g (k) (reduce (g) (b) (k-1) )
-      }
-  };
-let tri = reduce (fn n:int, p:int => { n+p }) (1) ;
-tri (100)
-;;
-
-let reduce: (int -> int -> int) -> int -> int -> int = 
-fn g:int->int->int, b:int, k:int  => {
-    if (k == 0) { b }
-    else {
-         g (k) (reduce (g) (b) (k-1) )
-      }
-  };
-let tri = reduce (fn n:int, p:int => { println (n+p); n+p }) (1) ;
-tri (20)
-;;
-
-let k = -1;
-let om: (int -> int)->int = fn f:int->int => { f (k)};
-om (fn k:int => {k*k})
-;;

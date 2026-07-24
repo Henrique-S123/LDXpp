@@ -14,8 +14,8 @@ type LIST = union {
 let l0:LIST = #nil (()) ;
 let l1:LIST = #cons ( (2,l0) ) ;
 let l2:LIST = #cons ( (3,l1) ) ;
-let plist:LIST->() = fn
-    l:LIST => { 
+letrec plist:LIST->() {
+    fn l:LIST => { 
         match l {
             #nil(_) -> println (-1000); ()
         |   #cons(n) -> 
@@ -23,7 +23,7 @@ let plist:LIST->() = fn
                 plist (snd(n))
         }
     }
-;
+};
 plist (l2);;
 
 
@@ -35,23 +35,25 @@ type LIST = union {
 let cons: int -> LIST -> LIST =
     fn v:int, l:LIST =>
         {#cons ( (v,l) )};
-let concat:LIST->LIST->LIST =
+letrec concat:LIST->LIST->LIST {
     fn a:LIST, b:LIST => { 
         match a {
             #nil(_) -> b
         |   #cons(n) -> 
                 cons (fst(n)) (concat (snd(n)) (b))
         }
-    };
-let genlist: int -> LIST =
+    }
+};
+letrec genlist: int -> LIST {
     fn n:int => {
         if (n==0) { #nil(()) }
         else {
             cons (n) (genlist (n-1))
         }
-    };
-let print_list:LIST->() = fn
-    l:LIST => { 
+    }
+};
+letrec print_list:LIST->() {
+    fn l:LIST => { 
         match l {
             #nil(_) -> ()
         |   #cons(n) -> 
@@ -59,7 +61,7 @@ let print_list:LIST->() = fn
                 print_list (snd(n))
         }
     }
-;
+};
 let l0 = genlist (20);
 let la = concat (l0) (l0);
 print_list (la);;
@@ -69,12 +71,12 @@ type LIST = union { #nil: (), #cons: NODE };
 let l0:LIST = #nil (()) ;
 let l1:LIST = #cons ( (2,l0) ) ;
 let l2:LIST = #cons ( (3,l1) ) ;
-let size:LIST->int = fn
-    l:LIST => {
+letrec size:LIST->int {
+    fn l:LIST => {
         match l {
             #nil(_) -> 0
             |
             #cons(n) -> 1 + size(snd(n))
         }
     }
-; size(l0) + size(l1) + size(l2);;
+}; size(l0) + size(l1) + size(l2);;
