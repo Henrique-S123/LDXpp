@@ -468,10 +468,9 @@ public class Parser implements ParserConstants {
   }
 
   final public ASTNode Fact() throws ParseException {
-  Token n, n2;
-  ASTNode t = null, e1, e2, t2;
-  ASTNode body, alt;
-  ASTType type, type2;
+  Token n;
+  ASTNode t = null, e1, e2, t2;;
+  ASTType type;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case Num:
       n = jj_consume_token(Num);
@@ -529,9 +528,9 @@ public class Parser implements ParserConstants {
       jj_consume_token(COLON);
       type = Type();
       jj_consume_token(LBRA);
-      t = Let();
+      t = Funct();
       jj_consume_token(RBRA);
-                                                                   t = new ASTRec(n.image, type, t);
+                                                                     t = new ASTRec(n.image, type, t);
       break;
     case FN:
     case LFN:
@@ -617,8 +616,8 @@ public class Parser implements ParserConstants {
 
   final public ASTNode Funct() throws ParseException {
   Token n;
-  ASTNode t = null, e2;
-  ASTFunc tf, tc, tn, ltf, ltc, ltn;
+  ASTNode t, t2;
+  ASTFunc tf, tc, tn;
   ASTType type;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case FN:
@@ -645,16 +644,16 @@ public class Parser implements ParserConstants {
       }
       jj_consume_token(ARROW);
       jj_consume_token(LBRA);
-      e2 = Let();
+      t2 = Let();
       jj_consume_token(RBRA);
-                                               tc.setBody(e2); t = tf;
+                                               tc.setBody(t2); t = tf;
       break;
     case LFN:
       jj_consume_token(LFN);
       n = jj_consume_token(Id);
       jj_consume_token(COLON);
       type = Type();
-                                         ltf = new ASTFunc(n.image, null, type, true); ltc = ltf;
+                                         tf = new ASTFunc(n.image, null, type, true); tc = tf;
       label_9:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -669,13 +668,13 @@ public class Parser implements ParserConstants {
         n = jj_consume_token(Id);
         jj_consume_token(COLON);
         type = Type();
-                                                    ltn = new ASTFunc(n.image, null, type, true); ltc.setBody(ltn); ltc = ltn;
+                                                    tn = new ASTFunc(n.image, null, type, true); tc.setBody(tn); tc = tn;
       }
       jj_consume_token(DLOLLIPOP);
       jj_consume_token(LBRA);
-      e2 = Let();
+      t2 = Let();
       jj_consume_token(RBRA);
-                                                   ltc.setBody(e2); t = ltf;
+                                                   tc.setBody(t2); t = tf;
       break;
     default:
       jj_la1[19] = jj_gen;
@@ -1229,11 +1228,6 @@ public class Parser implements ParserConstants {
     return false;
   }
 
-  private boolean jj_3R_38() {
-    if (jj_scan_token(TINT)) return true;
-    return false;
-  }
-
   private boolean jj_3R_67() {
     if (jj_3R_75()) return true;
     Token xsp;
@@ -1247,6 +1241,11 @@ public class Parser implements ParserConstants {
   private boolean jj_3R_68() {
     if (jj_scan_token(OR)) return true;
     if (jj_3R_67()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_38() {
+    if (jj_scan_token(TINT)) return true;
     return false;
   }
 
@@ -1330,11 +1329,6 @@ public class Parser implements ParserConstants {
     return false;
   }
 
-  private boolean jj_3R_73() {
-    if (jj_3R_14()) return true;
-    return false;
-  }
-
   private boolean jj_3R_56() {
     if (jj_3R_58()) return true;
     Token xsp;
@@ -1348,6 +1342,11 @@ public class Parser implements ParserConstants {
   private boolean jj_3R_57() {
     if (jj_scan_token(COLON)) return true;
     if (jj_3R_66()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_73() {
+    if (jj_3R_14()) return true;
     return false;
   }
 
@@ -1438,6 +1437,11 @@ public class Parser implements ParserConstants {
     return false;
   }
 
+  private boolean jj_3R_48() {
+    if (jj_3R_56()) return true;
+    return false;
+  }
+
   private boolean jj_3R_96() {
     Token xsp;
     xsp = jj_scanpos;
@@ -1445,11 +1449,6 @@ public class Parser implements ParserConstants {
     jj_scanpos = xsp;
     if (jj_3R_102()) return true;
     }
-    return false;
-  }
-
-  private boolean jj_3R_48() {
-    if (jj_3R_56()) return true;
     return false;
   }
 
@@ -1713,7 +1712,7 @@ public class Parser implements ParserConstants {
     if (jj_scan_token(COLON)) return true;
     if (jj_3R_66()) return true;
     if (jj_scan_token(LBRA)) return true;
-    if (jj_3R_15()) return true;
+    if (jj_3R_53()) return true;
     if (jj_scan_token(RBRA)) return true;
     return false;
   }
@@ -1966,15 +1965,6 @@ public class Parser implements ParserConstants {
     return false;
   }
 
-  private boolean jj_3R_78() {
-    if (jj_3R_13()) return true;
-    if (jj_3R_66()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_84()) jj_scanpos = xsp;
-    return false;
-  }
-
   private boolean jj_3R_86() {
     Token xsp;
     xsp = jj_scanpos;
@@ -1983,6 +1973,15 @@ public class Parser implements ParserConstants {
     if (jj_scan_token(9)) return true;
     }
     if (jj_3R_85()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_78() {
+    if (jj_3R_13()) return true;
+    if (jj_3R_66()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_84()) jj_scanpos = xsp;
     return false;
   }
 
