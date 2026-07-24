@@ -1,26 +1,26 @@
-let fact = rec f:int-o>int {
+letrec fact:int-o>int {
     lfn x:int =o> {
         if (x==0) {1}
-        else {x * f(x-1)}
+        else {x * fact(x-1)}
     }
 }; fact(3);;
 
-let fact = rec f:int-o>int {
+letrec fact:int-o>int {
     lfn x:int =o> {
         if (x==0) {1}
-        else {x * f(x-1)}
+        else {x * fact(x-1)}
     }
 }; fact(3) + fact(2);;
 
 type NatL = linunion {$zero:(), $succ:NatL};
 let nl1 = $succ($zero(()));
 let nl2 = $succ($succ($zero(())));
-let ladd = rec f:NatL-o>NatL-o>NatL {
+letrec ladd:NatL-o>NatL-o>NatL {
     lfn a:NatL, b:NatL =o> {
         match a {
             $zero(m) -> m; b
             |
-            $succ(m) -> $succ(f(m)(b))
+            $succ(m) -> $succ(ladd(m)(b))
         }
     }
 };

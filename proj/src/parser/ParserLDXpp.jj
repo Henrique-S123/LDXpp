@@ -46,7 +46,7 @@ TOKEN :
   |
   < PRINT : "print" > | < PRINTLN : "println" >
   |
-  < FN : "fn" > | < LFN : "lfn" > | < REC : "rec" >
+  < FN : "fn" > | < LFN : "lfn" > | < LETREC : "letrec" >
   |
   < ARROW : "=>" > | < DLOLLIPOP : "=o>" > | < SLIMARROW : "->" > | < LOLLIPOP : "-o>" >
   |
@@ -133,8 +133,10 @@ ASTNode Let() :
     |
       ( <LETEQ>  n=<Id> <EQUAL> e1 = BA() <SEMIC> e2 = Let() { t = new ASTLeteq(n.image, e1, e2); } )
     |
-      ( <SPLIT> <LPAR> n=<Id> <VERT> n2=<Id> <RPAR> <EQUAL> e1 = BA() <SEMIC> e2 = Let() { t = new ASTSplit(e1, n.image, n2.image, e2); })
-    | 
+      ( <SPLIT> <LPAR> n=<Id> <VERT> n2=<Id> <RPAR> <EQUAL> e1 = BA() <SEMIC> e2 = Let() { t = new ASTSplit(e1, n.image, n2.image, e2); } )
+    |
+      ( <LETREC> n=<Id> <COLON> t1 = Type() <LBRA> t = Funct() <RBRA> <SEMIC> e2 = Let() { t = new ASTRec(n.image, t1, t, e2); } )
+    |
       {  HashMap<String,ASTType> lbl = new HashMap<String,ASTType>(); }
       ( (LOOKAHEAD(2) <TYPE>  n=<Id>  <EQUAL> t1 = Type()  <SEMIC>
         { if (lbl.containsKey(n.image)) { throw new ParseException("duplicate id"); } else { lbl.put(n.image, t1); } } )+
@@ -246,7 +248,6 @@ ASTNode Fact() :
     | <MINUS> t=Fact() { t = new ASTOp(new ASTInt(0, false), t, "-u"); }
     | <NOT> t=Fact() { t = new ASTOp(new ASTBool(true, false), t, "~"); }
     | <IF> t=BA() <LBRA> e1=Let() <RBRA> <ELSE> <LBRA> e2=Let() <RBRA> { t = new ASTIf(t, e1, e2); }
-    | <REC> n=<Id> <COLON> type = Type() <LBRA> t = Funct() <RBRA> { t = new ASTRec(n.image, type, t); }
     | t = Funct()
     | <PRINT> t=Fact() { t = new ASTPrint(t, false); }
     | <PRINTLN> t=Fact() { t = new ASTPrint(t, true); }

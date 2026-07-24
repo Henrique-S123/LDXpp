@@ -89,7 +89,7 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int LFN = 43;
   /** RegularExpression Id. */
-  int REC = 44;
+  int LETREC = 44;
   /** RegularExpression Id. */
   int ARROW = 45;
   /** RegularExpression Id. */
@@ -184,7 +184,7 @@ public interface ParserConstants {
     "\"println\"",
     "\"fn\"",
     "\"lfn\"",
-    "\"rec\"",
+    "\"letrec\"",
     "\"=>\"",
     "\"=o>\"",
     "\"->\"",
