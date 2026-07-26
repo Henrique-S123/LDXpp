@@ -77,7 +77,11 @@ public final class DefEq {
             Debug.close();
             if (res) return true;
         }
-        // TODO: add ASTRec case
+        if (l instanceof ASTRec ln && r instanceof ASTRec rn) {
+            return typedefeq(ln.getFunctype(), sl, rn.getFunctype(), sr, alpha, phi, new HashSet<IdPair>(), t)
+                && termdefeq(ln.getFuncbody(), sl, rn.getFuncbody(), sr, alpha, phi, t)
+                && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getFuncid(), rn.getFuncid()), phi, t);
+        }
         
         if (l instanceof ASTPair ln && r instanceof ASTPair rn && ln.isLinear() == rn.isLinear())
             return termdefeq(ln.getFirst(), sl, rn.getFirst(), sr, alpha, phi, t)
