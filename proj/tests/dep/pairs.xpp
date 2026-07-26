@@ -58,3 +58,9 @@ f((true, refl));;
 let f = fn p:(x:bool, (x=true:bool)) => {p};
 let x = false;
 f((true, refl));;
+
+let p:(c:bool, x:int, (x=(if c {2} else {3}):int)) = (true, 2, refl); p;;
+
+let p:(c:bool, x:int, (x=(if c {2} else {3}):int)) = (true, 3, refl); p;;
+
+let p:(c:bool, x:int, (x=(if c {2} else {3}):int)) = (false, 3, refl); p;;

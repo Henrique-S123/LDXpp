@@ -67,3 +67,12 @@ type: (x:bool, x ≡ true : bool), value: (true, refl)
 type: (x:bool, x ≡ true : bool), value: (true, refl)
 
 
+type: (c:bool, (x:int, x ≡ if(c, 2, 3) : int)), value: (true, (2, refl))
+
+
+class proj.src.errors.TypeCheckError: Terms 3 and if(true, 2, 3) are not definitionally equal
+
+
+type: (c:bool, (x:int, x ≡ if(c, 2, 3) : int)), value: (false, (3, refl))
+
+
