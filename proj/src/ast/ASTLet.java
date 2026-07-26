@@ -75,9 +75,10 @@ public class ASTLet extends ASTNode {
         ASTType tt = (declType != null) ? declType : expr.puretypecheck(sigma, phi, alpha, null);
         tt = phi.unfold(tt);
 
+        Binder<ASTType> b = new Binder<ASTType>(tt);
         Env<ASTType> env = sigma.beginScope();
-        sigma.addEq(new ASTTEq(new ASTId(id), expr, tt));
-        env.assoc(id, tt);
+        env.assoc(id, b);
+        env.addEq(new ASTTEq(new ASTId(id, b.getId()), expr, tt));
 
         if (declType != null) {
             ASTType exprType = expr.puretypecheck(env, phi, alpha, tt);

@@ -63,9 +63,10 @@ public class ASTRec extends ASTNode  {
         if (!(tfunctype instanceof ASTTArrow))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("rec", tfunctype));
 
+        Binder<ASTType> b = new Binder<ASTType>(tfunctype);
         Env<ASTType> env = sigma.beginScope();
-        env.assoc(fid, tfunctype);
-        env.addEq(new ASTTEq(new ASTId(fid), funcbody, tfunctype));
+        env.assoc(fid, b);
+        env.addEq(new ASTTEq(new ASTId(fid, b.getId()), funcbody, tfunctype));
         
         ASTType tfb = funcbody.puretypecheck(env, phi, alpha, tfunctype);
         if (!tfb.isSubtypeOf(tfunctype, sigma, phi, alpha))
