@@ -1,22 +1,29 @@
-let fact:int->int = fn x:int => {
-    if (x==0) {1}
-    else {x * fact(x-1)}
+letrec fact:int->int {
+    fn x:int => {
+        if (x==0) { 1 } 
+        else { x * (fact(x-1)) } 
+    }
 };
 let e:(fact(3) = 6 : int) = refl; e;;
 
-let e:((let fact:int->int = fn x:int => {
-    if (x==0) {1}
-    else {x * fact(x-1)}
+let e:((letrec fact:int->int {
+    fn x:int => {
+        if (x==0) {1}
+        else {x * fact(x-1)}
+    }
 }; fact(3)) = 6 : int) = refl; e;;
 
-let fact:int->int = fn x:int => {
-    if (x==0) {1}
-    else {x * fact(x-1)}
+letrec fact:int->int {
+    fn x:int => {
+        if (x==0) { 1 } 
+        else { x * (fact(x-1)) } 
+    }
 };
 let e:(fact(3) = 7 : int) = refl; e;;
 
-let e:((let fact:int->int = fn x:int => {
-    if (x==0) {1}
-    else {x * fact(x-1)}
-};
-fact(3)) = 7 : int) = refl; e;;
+let e:((letrec fact:int->int {
+    fn x:int => {
+        if (x==0) {1}
+        else {x * fact(x-1)}
+    }
+}; fact(3)) = 7 : int) = refl; e;;

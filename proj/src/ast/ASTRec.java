@@ -15,7 +15,7 @@ public class ASTRec extends ASTNode  {
         fid = f; functype = t; funcbody = fb; body = b;
     }
 
-    public String getFid() { return fid; }
+    public String getFuncid() { return fid; }
 
     public ASTType getFunctype() { return functype; }
 
@@ -41,6 +41,7 @@ public class ASTRec extends ASTNode  {
         Binder<ASTType> b = new Binder<ASTType>(tfunctype);
         e.bindToEnv(ENV.GAMMA, fid, b);
         e.bindToEnv(ENV.SIGMA, fid, b);
+        e.addEq(new ASTTEq(new ASTId(fid, b.getId()), funcbody, tfunctype));
         ResourceManager<ASTType> prevDelta = e.popDelta();
         ASTType tfb = funcbody.typecheck(e, tfunctype);
         if (!tfb.isSubtypeOf(tfunctype, e.getSigma(), e.getPhi(), e.getAlpha()))
@@ -64,17 +65,21 @@ public class ASTRec extends ASTNode  {
 
         Env<ASTType> env = sigma.beginScope();
         env.assoc(fid, tfunctype);
+        env.addEq(new ASTTEq(new ASTId(fid), funcbody, tfunctype));
         
         ASTType tfb = funcbody.puretypecheck(env, phi, alpha, tfunctype);
         if (!tfb.isSubtypeOf(tfunctype, sigma, phi, alpha))
             throw new TypeCheckError(ErrorMessages.notSubtype(tfb, tfunctype));
 
-        ASTType tb = body.puretypecheck(sigma, phi, alpha, target);
+        ASTType tb = body.puretypecheck(env, phi, alpha, target);
         return tb;
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
-        return new ASTRec(fid, functype, funcbody, body);
+        Env<ASTNode> env = sub.beginScope();
+        if (funcbody instanceof ASTFunc f && f.getNormEnv() == null) f.setNormEnv(env);
+        env.assoc(fid, funcbody);
+        return body.weaknorm(env);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
@@ -83,6 +88,6 @@ public class ASTRec extends ASTNode  {
 
     @Override
     public String toString() {
-        return String.format("rec $s:%s => {%s}", fid, functype, funcbody);
+        return String.format("letrec %s:%s {%s}; %s", fid, functype, funcbody, body);
 	}
 }
