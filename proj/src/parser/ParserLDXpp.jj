@@ -16,6 +16,11 @@ PARSER_END(Parser)
 
 SKIP : { " " | "\t" | "\r" | "\n" }
 
+SKIP :
+{
+    < "//" (~["\n", "\r"])* ("\r\n" | "\n" | "\r")? >
+}
+
 TOKEN :
 {
   < LET : "let" >
