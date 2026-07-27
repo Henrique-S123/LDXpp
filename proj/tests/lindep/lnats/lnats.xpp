@@ -1,0 +1,58 @@
+type NatL = linunion {$zero:(), $succ:NatL};
+let nl1 = $succ($zero(()));
+let nl2 = $succ($succ($zero(())));
+letrec ladd:NatL-o>NatL-o>NatL {
+    lfn a:NatL, b:NatL =o> {
+        match a {
+            $zero(m) -> m; b
+            |
+            $succ(m) -> $succ(ladd(m)(b))
+        }
+    }
+};
+ladd(nl2)(nl1);;
+
+type NatL = linunion {$zero:(), $succ:NatL};
+let nl1 = $succ($zero(()));
+let nl2 = $succ($succ($zero(())));
+let nl3 = $succ($succ($succ($zero(()))));
+letrec ladd:NatL-o>NatL-o>NatL {
+    lfn a:NatL, b:NatL =o> {
+        match a {
+            $zero(m) -> m; b
+            |
+            $succ(m) -> $succ(ladd(m)(b))
+        }
+    }
+};
+let p:(z:NatL | sum:NatL | (z=sum:NatL)) = (nl3 | ladd(nl2)(nl1) | refl); p;;
+
+type NatL = linunion {$zero:(), $succ:NatL};
+let nl1 = $succ($zero(()));
+let nl2 = $succ($succ($zero(())));
+let nl3 = $succ($succ($succ($zero(()))));
+letrec ladd:NatL-o>NatL-o>NatL {
+    lfn a:NatL, b:NatL =o> {
+        match a {
+            $zero(m) -> m; b
+            |
+            $succ(m) -> $succ(ladd(m)(b))
+        }
+    }
+};
+let p:(z:NatL | sum:NatL | (z=sum:NatL)) = (nl2 | ladd(nl3)(nl1) | refl); p;;
+
+type NatL = linunion {$zero:(), $succ:NatL};
+let nl1 = $succ($zero(()));
+let nl1x2 = $succ($zero(()));
+let nl2 = $succ($succ($zero(())));
+letrec ladd:NatL-o>NatL-o>NatL {
+    lfn a:NatL, b:NatL =o> {
+        match a {
+            $zero(m) -> m; b
+            |
+            $succ(m) -> $succ(ladd(m)(b))
+        }
+    }
+};
+let p:(z:NatL | sum:NatL | (z=sum:NatL)) = (nl2 | ladd(nl1)(nl1x2) | refl); p;;

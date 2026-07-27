@@ -1,0 +1,12 @@
+type: NatL, value: $succ($succ($succ($zero(()))))
+
+
+type: (z:NatL | (sum:NatL | z ≡ sum : NatL)), value: ($succ($succ($succ($zero(())))) | ($succ($succ($succ($zero(())))) | refl))
+
+
+class proj.src.errors.TypeCheckError: Terms nl2 and ladd(nl3)(nl1) are not definitionally equal
+
+
+type: (z:NatL | (sum:NatL | z ≡ sum : NatL)), value: ($succ($succ($zero(()))) | ($succ($succ($zero(()))) | refl))
+
+
