@@ -7,7 +7,7 @@ let l2:LLIST = $cons ((7l | l1));
 letrec sizecount:LLIST-o>(linint | NatL) {
     lfn l:LLIST =o> {
         match l {
-            $nil(m) -> m; (0l | $zero(()))
+            $nil(m) -> (0l | $zero(m))
             |
             $cons(m) ->
                 split (val | rest) = m;
@@ -26,7 +26,7 @@ let l1:LLIST = $cons ((4l | l0));
 letrec sizecount:LLIST-o>(linint | NatL) {
     lfn l:LLIST =o> {
         match l {
-            $nil(m) -> m; (0l | $zero(()))
+            $nil(m) -> (0l | $zero(m))
             |
             $cons(m) ->
                 split (val | rest) = m;
@@ -44,7 +44,7 @@ let l0:LLIST = $nil (());
 letrec sizecount:LLIST-o>(linint | NatL) {
     lfn l:LLIST =o> {
         match l {
-            $nil(m) -> m; (0l | $zero(()))
+            $nil(m) -> (0l | $zero(m))
             |
             $cons(m) ->
                 split (val | rest) = m;
@@ -54,3 +54,28 @@ letrec sizecount:LLIST-o>(linint | NatL) {
     }
 };
 sizecount(l0);;
+
+
+
+type NatL = linunion {$zero:(), $succ:NatL};
+type NODE = (linint | LLIST);
+type LLIST = linunion { $nil: (), $cons: NODE };
+let l0:LLIST = $nil (());
+let l1:LLIST = $cons ((4l | l0));
+let l2:LLIST = $cons ((7l | l1));
+letrec sizecopy:(l:LLIST)-o>(NatL | cl:LLIST | (l = cl : LLIST)) {
+    lfn l:LLIST =o> {
+        match l {
+            $nil(m) -> ($zero(()) | $nil(m) | refl)
+            |
+            $cons(m) ->
+                split (val | rest) = m;
+                split (sn | rest) = sizecopy(rest);
+                split (rl | eqrl) = rest;
+                leteq e = eqrl;
+                let nl = $cons((val | rl));
+                ($succ(sn) | nl | refl)
+        }
+    }
+};
+sizecopy(l2);;
