@@ -36,8 +36,8 @@ public class ASTRec extends ASTNode  {
         if (!(tfunctype instanceof ASTTArrow))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("rec", tfunctype));
 
-        e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(ENV.GAMMA);
+        e.openEnvScope(ENV.SIGMA);
         Binder<ASTType> b = new Binder<ASTType>(tfunctype);
         e.bindToEnv(ENV.GAMMA, fid, b);
         e.bindToEnv(ENV.SIGMA, fid, b);
@@ -51,7 +51,6 @@ public class ASTRec extends ASTNode  {
 
         ENV env = tfunctype.isLinear() ? ENV.DELTA : ENV.GAMMA;
         e.openEnvScope(env);
-        b = new Binder<ASTType>(tfunctype);
         e.bindToEnv(env, fid, b);
         ASTType tb = body.typecheck(e, target);
         return tb;
