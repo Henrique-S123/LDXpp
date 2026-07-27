@@ -108,7 +108,7 @@ public class Env<E>{
         while (curr != null) {
             for (Map.Entry<String, Binder<E>> entry : curr.bindings.entrySet())
                 if (entry.getValue().val instanceof ASTTEq teq) {
-                    // TODO: try to use this optimization
+                    // TODO: try to optimize by not using trivial equalities
                     // if (teq.getTerm1() instanceof ASTId || teq.getTerm2() instanceof ASTId) continue;
                     Debug.log("Testing proof: " + entry.getValue());
                     Debug.open();
