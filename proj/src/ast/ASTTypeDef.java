@@ -54,7 +54,7 @@ public class ASTTypeDef extends ASTNode {
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
-        return new ASTTypeDef(ltd, body.weaknorm(sub));
+        return body.weaknorm(sub);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

@@ -141,20 +141,21 @@ public class ASTMatch extends ASTNode {
 	}
 
 	public ASTNode weaknorm(Env<ASTNode> sub) {
-		ASTNode exp, tn = test.weaknorm(sub);
-		Map<String, MatchCase> newcases = new HashMap<String, MatchCase>();
-		cases.forEach((label, c) -> newcases.put(label, new MatchCase(c.getId(), c.getExp().weaknorm(sub))));
-		String label;
-		if (tn instanceof ASTUnion un) { exp = un.getExpr(); label = un.getLabel(); }
-		else return new ASTMatch(tn, newcases);
-
-		MatchCase c = cases.get(label);
-		String id = c.getId();
-		ASTNode body = c.getExp(), expn = exp.weaknorm(sub);
-
-		Env<ASTNode> env = sub.beginScope();
-		env.assoc(id, expn);
-		return body.weaknorm(env);
+		ASTNode tn = test.weaknorm(sub);
+		if (tn instanceof ASTUnion un) {
+			String label = un.getLabel();
+			ASTNode exp = un.getExpr();
+			MatchCase c = cases.get(label);
+			String id = c.getId();
+			ASTNode body = c.getExp(), expn = exp.weaknorm(sub);
+			Env<ASTNode> env = sub.beginScope();
+			env.assoc(id, expn);
+			return body.weaknorm(env);
+		} else {
+			Map<String, MatchCase> newcases = new HashMap<String, MatchCase>();
+			cases.forEach((label, c) -> newcases.put(label, new MatchCase(c.getId(), c.getExp().weaknorm(sub))));
+			return new ASTMatch(tn, newcases);
+		}
     }
 
 	public ASTMatch solve(Env<ASTType> sigma) {
