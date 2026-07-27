@@ -1,0 +1,9 @@
+type: (linint | NatL), value: (11l | $succ($succ($zero(()))))
+
+
+type: (linint | NatL), value: (4l | $succ($zero(())))
+
+
+type: (linint | NatL), value: (0l | $zero(()))
+
+

@@ -10,6 +10,6 @@ class proj.src.errors.TypeCheckError: Terms size(l1) and 2 are not definitionall
 type: (l:LIST, size(l) ≡ 2 : int), value: (#cons((4, #cons((2, #nil(()))))), refl)
 
 
-type: fst concat(l2)(#nil(())) ≡ l2 : LIST, value: refl
+type: (z:LIST, size(z) ≡ n2 : Nat), value: (#cons((#succ(#succ(#zero(()))), #cons((#succ(#zero(())), #nil(()))))), refl)
 
 

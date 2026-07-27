@@ -3,29 +3,6 @@ let n0 = #zero(());
 let n1 = #succ(n0);
 let n2 = #succ(n1);
 let n3 = #succ(n2);
-type NODE = (Nat, LIST);
-type LIST = union { #nil: (), #cons: NODE };
-let l0:LIST = #nil (());
-let l1:LIST = #cons ((n1,l0));
-let l2:LIST = #cons ((n2,l1));
-letrec size:LIST->Nat {
-    fn l:LIST => {
-        match l {
-            #nil(m) -> m; n0
-            |
-            #cons(n) -> #succ(size(snd(n)))
-        }
-    }
-};
-let p:(z:LIST, (size(z) = n2:Nat)) = (l2, refl); p;;
-
-
-
-type Nat = union { #zero: (), #succ: Nat };
-let n0 = #zero(());
-let n1 = #succ(n0);
-let n2 = #succ(n1);
-let n3 = #succ(n2);
 letrec add:Nat->Nat->Nat {
     fn a:Nat, b:Nat => {
         match a {

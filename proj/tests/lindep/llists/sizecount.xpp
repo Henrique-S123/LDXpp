@@ -1,0 +1,56 @@
+type NatL = linunion {$zero:(), $succ:NatL};
+type NODE = (linint | LLIST);
+type LLIST = linunion { $nil: (), $cons: NODE };
+let l0:LLIST = $nil (());
+let l1:LLIST = $cons ((4l | l0));
+let l2:LLIST = $cons ((7l | l1));
+letrec sizecount:LLIST-o>(linint | NatL) {
+    lfn l:LLIST =o> {
+        match l {
+            $nil(m) -> m; (0l | $zero(()))
+            |
+            $cons(m) ->
+                split (val | rest) = m;
+                split (rc | rs) = sizecount(rest);
+                (val + rc | $succ(rs))
+        }
+    }
+};
+sizecount(l2);;
+
+type NatL = linunion {$zero:(), $succ:NatL};
+type NODE = (linint | LLIST);
+type LLIST = linunion { $nil: (), $cons: NODE };
+let l0:LLIST = $nil (());
+let l1:LLIST = $cons ((4l | l0));
+letrec sizecount:LLIST-o>(linint | NatL) {
+    lfn l:LLIST =o> {
+        match l {
+            $nil(m) -> m; (0l | $zero(()))
+            |
+            $cons(m) ->
+                split (val | rest) = m;
+                split (rc | rs) = sizecount(rest);
+                (val + rc | $succ(rs))
+        }
+    }
+};
+sizecount(l1);;
+
+type NatL = linunion {$zero:(), $succ:NatL};
+type NODE = (linint | LLIST);
+type LLIST = linunion { $nil: (), $cons: NODE };
+let l0:LLIST = $nil (());
+letrec sizecount:LLIST-o>(linint | NatL) {
+    lfn l:LLIST =o> {
+        match l {
+            $nil(m) -> m; (0l | $zero(()))
+            |
+            $cons(m) ->
+                split (val | rest) = m;
+                split (rc | rs) = sizecount(rest);
+                (val + rc | $succ(rs))
+        }
+    }
+};
+sizecount(l0);;
