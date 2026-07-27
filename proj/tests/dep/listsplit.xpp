@@ -26,7 +26,7 @@ letrec size:LIST->Nat {
         }
     }
 };
-let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) =
+letrec concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) {
     fn la:LIST, lb:LIST => {
         match la {
             #nil(m) -> m; (lb, refl)
@@ -37,8 +37,9 @@ let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) :
                 let newpair = (fst(n), fst(res));
                 (#cons(newpair), hyp)
         }
-    };
-let splitlist:(n:Nat)->(a:LIST)->(b:LIST, c:LIST, (fst(concat(b)(c)) = a : LIST)) =
+    }
+};
+letrec splitlist:(n:Nat)->(a:LIST)->(b:LIST, c:LIST, (fst(concat(b)(c)) = a : LIST)) {
     fn n:Nat, a:LIST => {
         match n {
             #zero(m) -> m; (#nil(()), a, refl)
@@ -56,5 +57,6 @@ let splitlist:(n:Nat)->(a:LIST)->(b:LIST, c:LIST, (fst(concat(b)(c)) = a : LIST)
                         (nrb, rc, hyp)
                 }
         }
-    };
+    }
+};
 splitlist(n1)(l2);;

@@ -14,6 +14,8 @@ letrec size:LIST->int {
 };
 let p:(l:LIST, (size(l)=2:int)) = (l2, refl); p;;
 
+
+
 type NODE = (int,LIST);
 type LIST = union { #nil: (), #cons: NODE };
 let l0:LIST = #nil (());
@@ -30,6 +32,8 @@ letrec size:LIST->int {
 };
 type LIST2 = (l:LIST, (size(l)=2:int));
 let p:LIST2 = (l2, refl); p;;
+
+
 
 type NODE = (int,LIST);
 type LIST = union { #nil: (), #cons: NODE };
@@ -48,6 +52,8 @@ letrec size:LIST->int {
 type LIST2 = (l:LIST, (size(l)=2:int));
 let p:LIST2 = (l1, refl); p;;
 
+
+
 type NODE = (int,LIST);
 type LIST = union { #nil: (), #cons: NODE };
 let l0:LIST = #nil (());
@@ -64,6 +70,8 @@ letrec size:LIST->int {
 };
 type LIST2 = (l:LIST, (size(l)=2:int));
 let p:LIST2 = (#cons((4, l1)), refl); p;;
+
+
 
 type Nat = union { #zero: (), #succ: Nat };
 let n0 = #zero(());
@@ -93,7 +101,7 @@ letrec size:LIST->Nat {
         }
     }
 };
-let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) =
+letrec concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) {
     fn la:LIST, lb:LIST => {
         match la {
             #nil(m) -> m; (lb, refl)
@@ -103,8 +111,9 @@ let concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) :
                 leteq e1 = snd(res);
                 (#cons((fst(n), fst(res))), hyp)
         }
-    };
-let rightId:(l:LIST)->(fst(concat(l)(#nil(()))) = l : LIST) = 
+    }
+};
+letrec rightId:(l:LIST)->(fst(concat(l)(#nil(()))) = l : LIST) {
     fn l:LIST => {
         match l {
             #nil(m) -> m; refl
@@ -114,5 +123,6 @@ let rightId:(l:LIST)->(fst(concat(l)(#nil(()))) = l : LIST) =
                 leteq res = rightId(xs);
                 hyp
         }
-    };
+    }
+};
 rightId(l2);;

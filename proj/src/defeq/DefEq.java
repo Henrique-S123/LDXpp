@@ -28,11 +28,11 @@ public final class DefEq {
 
         if (congruence(l, sl, r, sr, alpha, phi, t)) return true;
 
-        if (t instanceof THyp && useHyp(l, r, alpha, phi)) return true;
-
         if (etaExpand(l, sl, r, sr, alpha, phi, t)) return true;
         
         if (doSolve(l, sl, r, sr, alpha, phi, t)) return true;
+
+        if (t instanceof THyp && useHyp(l, r, alpha, phi)) return true;
 
         Debug.log("Failed to prove equality");
         Debug.nl();
