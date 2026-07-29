@@ -42,6 +42,7 @@ public class ASTRec extends ASTNode  {
         e.bindToEnv(ENV.GAMMA, fid, b);
         e.bindToEnv(ENV.SIGMA, fid, b);
         ResourceManager<ASTType> prevDelta = e.popDelta();
+        funcbody.setSig(e.getSigma());
         ASTType tfb = funcbody.typecheck(e, tfunctype);
         if (!tfb.isSubtypeOf(tfunctype, e.getSigma(), e.getPhi(), e.getAlpha()))
             throw new TypeCheckError(ErrorMessages.notSubtype(tfb, tfunctype));
@@ -65,12 +66,13 @@ public class ASTRec extends ASTNode  {
         Binder<ASTType> b = new Binder<ASTType>(tfunctype);
         Env<ASTType> env = sigma.beginScope();
         env.assoc(fid, b);
-        env.addEq(new ASTTEq(new ASTId(fid, b.getId()), funcbody, tfunctype));
+        funcbody.setSig(sigma);
         
         ASTType tfb = funcbody.puretypecheck(env, phi, alpha, tfunctype);
         if (!tfb.isSubtypeOf(tfunctype, sigma, phi, alpha))
             throw new TypeCheckError(ErrorMessages.notSubtype(tfb, tfunctype));
 
+        env.addEq(new ASTTEq(new ASTId(fid, b.getId()), funcbody, tfunctype));
         ASTType tb = body.puretypecheck(env, phi, alpha, target);
         return tb;
     }

@@ -43,17 +43,5 @@ public abstract class ASTNode {
     public ASTNode subs(String subsId, ASTNode node) {
         return this;
     }
-
-    public ASTNode normalize(Env<ASTType> sigma) {
-        ASTNode ln = this;
-        Env<ASTType> sig = sigma;
-        while (true) {
-            ln = ln.weaknorm();
-            ASTNode sln = ln.solve(sig);
-            if (sln == null) return ln;
-            ln = sln;
-            sig = (sln.getSig() != null) ? sln.getSig() : sig;
-        }
-    }
 }
 
