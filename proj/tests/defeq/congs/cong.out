@@ -1,0 +1,6 @@
+type: () ≡ () : (), value: refl
+
+
+type: (2, 3) ≡ (fst (2, 3), snd (2, 3)) : (int, int), value: refl
+
+
