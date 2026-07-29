@@ -2,8 +2,8 @@ let congUnit:(x:())->(x = () : ()) =
     fn x:() => { x; refl };
 congUnit(());;
 
-let congNonlinPair:(x:(int, int))->(p:(int, int), (x = p : (int, int))) =
-    fn x:(int, int) => {
-        let y = fst(x); let z = snd(x); ((y, z), refl)
+let congNonlinPair:(n:(int, int))->(n = (fst(n), snd(n)) : (int, int)) =
+    fn n:(int, int) => {
+        split (x, y) = n; refl
     };
 congNonlinPair((2, 3));;
