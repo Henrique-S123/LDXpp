@@ -43,23 +43,19 @@ public class ASTLet extends ASTNode {
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         if (declType != null) declType.check(e.getSigma(), e.getPhi(), e.getAlpha());
 
-        ASTType tt = (declType != null) ? declType : expr.typecheck(e, null);
-        tt = e.unfold(tt);
+        ASTType texp = expr.typecheck(e, declType);
+        texp = e.unfold(texp);
+        if (declType != null && !texp.isSubtypeOf(declType, e.getSigma(), e.getPhi(), e.getAlpha()))
+            throw new TypeCheckError(ErrorMessages.notSubtype(texp, declType));
+        ASTType tt = (declType != null) ? e.unfold(declType) : texp;
 
         ENV env = tt.isLinear() ? ENV.DELTA : ENV.GAMMA;
         e.openEnvScope(env);
         e.openEnvScope(ENV.SIGMA);
-
         Binder<ASTType> b = new Binder<ASTType>(tt);
         e.bindToEnv(env, id, b);
-
-        if (declType != null) {
-            ASTType exprType = expr.typecheck(e, tt);
-            if (!(exprType.isSubtypeOf(tt, e.getSigma(), e.getPhi(), e.getAlpha()))) throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
-        }
-
-        e.bindToEnv(ENV.SIGMA, e.getFreshId(), new ASTTEq(new ASTId(id, b.getId()), expr, tt));
         e.bindToEnv(ENV.SIGMA, id, b);
+        e.bindToEnv(ENV.SIGMA, e.getFreshId(), new ASTTEq(new ASTId(id, b.getId()), expr, tt));
 
         ASTType rt = body.typecheck(e, target);
         if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
@@ -72,20 +68,16 @@ public class ASTLet extends ASTNode {
     public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
         if (declType != null) declType.check(sigma, phi, alpha);
 
-        ASTType tt = (declType != null) ? declType : expr.puretypecheck(sigma, phi, alpha, null);
-        tt = phi.unfold(tt);
+        ASTType texp = expr.puretypecheck(sigma, phi, alpha, declType);
+        texp = phi.unfold(texp);
+        if (declType != null && !texp.isSubtypeOf(declType, sigma, phi, alpha))
+            throw new TypeCheckError(ErrorMessages.notSubtype(texp, declType));
+        ASTType tt = (declType != null) ? phi.unfold(declType) : texp;
 
         Binder<ASTType> b = new Binder<ASTType>(tt);
         Env<ASTType> env = sigma.beginScope();
         env.assoc(id, b);
         env.assoc(env.getFreshId(), new ASTTEq(new ASTId(id, b.getId()), expr, tt));
-
-        if (declType != null) {
-            ASTType exprType = expr.puretypecheck(env, phi, alpha, tt);
-            if (!(exprType.isSubtypeOf(tt, env, phi, alpha)))
-                throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
-        }
-
         return body.puretypecheck(env, phi, alpha, target);
     }
 
