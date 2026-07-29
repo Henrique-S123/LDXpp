@@ -25,21 +25,20 @@ public final class DefEq {
     private final boolean termdefeq(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
         Debug.log(String.format("left: %s", l));
         Debug.log(String.format("right: %s", r));
+        Debug.nl();
 
-        if (congruence(l, sl, r, sr, alpha, phi, t)) return true;
+        if (congruent(l, sl, r, sr, alpha, phi, t)) return true;
 
         if (t instanceof THyp && useHyp(l, r, alpha, phi)) return true;
 
-        if (etaExpand(l, sl, r, sr, alpha, phi, t)) return true;
-
-        if (doSolve(l, sl, r, sr, alpha, phi, t)) return true;
+        if (solveLeft(l, sl, r, sr, alpha, phi, t)) return true;
+        if (solveRight(l, sl, r, sr, alpha, phi, t)) return true;
 
         Debug.log("Failed to prove equality");
-        Debug.nl();
         return false;
     }
 
-    private final boolean congruence(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
+    private final boolean congruent(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
         if (l instanceof ASTInt ln && r instanceof ASTInt rn) return ln.getVal() == rn.getVal() && ln.isLinear() == rn.isLinear();
         if (l instanceof ASTBool ln && r instanceof ASTBool rn) return ln.getVal() == rn.getVal() && ln.isLinear() == rn.isLinear();
         if (l instanceof ASTString ln && r instanceof ASTString rn) return ln.getVal().equals(rn.getVal());
@@ -161,19 +160,18 @@ public final class DefEq {
         return false;
     }
     
-    private final boolean doSolve(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
-        Debug.log("Trying to solve one side");
+    private final boolean solveLeft(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
         ASTNode s = l.solve(l.getSig() != null ? l.getSig() : sl);
-        if (s != null) {
-            Debug.log("Solved left side");
-            return termdefeq(s.weaknorm(), (s.getSig() != null) ? s.getSig() : sl, r, sr, alpha, phi, t);
-        }
-        s = r.solve(r.getSig() != null ? r.getSig() : sr);
-        if (s != null) {
-            Debug.log("Solved right side");
-            return termdefeq(l, sl, s.weaknorm(), (s.getSig() != null) ? s.getSig() : sr, alpha, phi, t);
-        }
-        return false;
+        if (s == null) return false;
+        Debug.log("Solved left side");
+        return termdefeq(s.weaknorm(), (s.getSig() != null) ? s.getSig() : sl, r, sr, alpha, phi, t);
+    }
+
+    private final boolean solveRight(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
+        ASTNode s = r.solve(r.getSig() != null ? r.getSig() : sr);
+        if (s == null) return false;
+        Debug.log("Solved right side");
+        return termdefeq(l, sl, s.weaknorm(), (s.getSig() != null) ? s.getSig() : sr, alpha, phi, t);
     }
     
     public final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> sigma, Env<ASTType> phi) {
