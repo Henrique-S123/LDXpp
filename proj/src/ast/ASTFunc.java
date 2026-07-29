@@ -29,6 +29,8 @@ public class ASTFunc extends ASTNode  {
 
     public Env<ASTNode> getNormEnv() { return normEnv; }
 
+    public boolean isLinear() { return lin; }
+
     public void setBody(ASTNode b) { body = b; }
 
     public void setNormEnv(Env<ASTNode> e) { normEnv = e; }

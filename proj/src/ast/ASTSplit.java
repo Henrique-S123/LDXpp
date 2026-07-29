@@ -98,7 +98,7 @@ public class ASTSplit extends ASTNode {
 		ASTNode pn = pair.weaknorm(sub);
 		ASTNode f, s;
 		if (pn instanceof ASTPair t && t.isLinear()) { f = t.getFirst(); s = t.getSecond(); }
-		else return new ASTSplit(pn, id2, id1, body.weaknorm(sub));
+		else return new ASTSplit(pn, id1, id2, body.weaknorm(sub));
 
 		ASTNode fn = f.weaknorm(sub), sn = s.weaknorm(sub);
 		Env<ASTNode> env = sub.beginScope();
