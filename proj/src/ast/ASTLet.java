@@ -58,7 +58,7 @@ public class ASTLet extends ASTNode {
             if (!(exprType.isSubtypeOf(tt, e.getSigma(), e.getPhi(), e.getAlpha()))) throw new TypeCheckError(ErrorMessages.notSubtype(exprType, tt));
         }
 
-        e.addEq(new ASTTEq(new ASTId(id, b.getId()), expr, tt));
+        e.bindToEnv(ENV.SIGMA, e.getFreshId(), new ASTTEq(new ASTId(id, b.getId()), expr, tt));
         e.bindToEnv(ENV.SIGMA, id, b);
 
         ASTType rt = body.typecheck(e, target);
@@ -78,7 +78,7 @@ public class ASTLet extends ASTNode {
         Binder<ASTType> b = new Binder<ASTType>(tt);
         Env<ASTType> env = sigma.beginScope();
         env.assoc(id, b);
-        env.addEq(new ASTTEq(new ASTId(id, b.getId()), expr, tt));
+        env.assoc(env.getFreshId(), new ASTTEq(new ASTId(id, b.getId()), expr, tt));
 
         if (declType != null) {
             ASTType exprType = expr.puretypecheck(env, phi, alpha, tt);

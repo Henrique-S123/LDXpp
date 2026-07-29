@@ -10,7 +10,6 @@ import java.util.*;
 public class Env<E>{
     Env<E> anc;
     Map<String, Binder<E>> bindings;
-    ASTTEq lastUsedEq;
 
     public Env(){
         anc = null;
@@ -49,9 +48,8 @@ public class Env<E>{
         bindings.put(id, binder);
     }
 
-    public void addEq(E t) {
-        String e = UUID.randomUUID().toString();
-        bindings.put(e, new Binder<E>(t));
+    public String getFreshId() {
+        return UUID.randomUUID().toString();
     }
 
     public E find(String id) {
@@ -79,25 +77,16 @@ public class Env<E>{
         Env<E> curr = this;
         while (curr != null) {
             for (Binder<E> b : curr.bindings.values())
-                if (b.val instanceof ASTTEq teq && teq.getTerm1() instanceof ASTId nid && id.equals(nid.getId())) {
-                    if (teq.getTerm1() instanceof ASTId && teq.getTerm2() instanceof ASTId) {
-                        if (teq != lastUsedEq) lastUsedEq = teq;
-                        else continue;
-                    }
+                if (b.val instanceof ASTTEq teq && teq.getTerm1() instanceof ASTId nid && id.equals(nid.getId()))
                     return teq.getTerm2();
-                }
             curr = curr.anc;
         }
         curr = this;
         while (curr != null) {
             for (Binder<E> b : curr.bindings.values())
-                if (b.val instanceof ASTTEq teq && teq.getTerm2() instanceof ASTId nid && id.equals(nid.getId())) {
-                    if (teq.getTerm1() instanceof ASTId && teq.getTerm2() instanceof ASTId) {
-                        if (teq != lastUsedEq) lastUsedEq = teq;
-                        else continue;
-                    }
+                if (b.val instanceof ASTTEq teq && teq.getTerm2() instanceof ASTId nid && id.equals(nid.getId()))
                     return teq.getTerm1();
-                }
+
             curr = curr.anc;
         }
         return null;

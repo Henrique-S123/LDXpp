@@ -113,8 +113,8 @@ public class EnvSet {
         }
     }
 
-    public void addEq(ASTTEq t) {
-        this.sigma.addEq(t);
+    public String getFreshId() {
+        return UUID.randomUUID().toString();
     }
 
     public void extendAlpha(String id1, String id2) {

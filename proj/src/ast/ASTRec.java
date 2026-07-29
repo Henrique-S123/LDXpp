@@ -52,7 +52,7 @@ public class ASTRec extends ASTNode  {
         ENV env = tfunctype.isLinear() ? ENV.DELTA : ENV.GAMMA;
         e.openEnvScope(env);
         e.bindToEnv(env, fid, b);
-        e.addEq(new ASTTEq(new ASTId(fid, b.getId()), funcbody, tfunctype));
+        e.bindToEnv(ENV.SIGMA, e.getFreshId(), new ASTTEq(new ASTId(fid, b.getId()), funcbody, tfunctype));
         ASTType tb = body.typecheck(e, target);
         return tb;
     }
@@ -72,7 +72,7 @@ public class ASTRec extends ASTNode  {
         if (!tfb.isSubtypeOf(tfunctype, sigma, phi, alpha))
             throw new TypeCheckError(ErrorMessages.notSubtype(tfb, tfunctype));
 
-        env.addEq(new ASTTEq(new ASTId(fid, b.getId()), funcbody, tfunctype));
+        env.assoc(env.getFreshId(), new ASTTEq(new ASTId(fid, b.getId()), funcbody, tfunctype));
         ASTType tb = body.puretypecheck(env, phi, alpha, target);
         return tb;
     }

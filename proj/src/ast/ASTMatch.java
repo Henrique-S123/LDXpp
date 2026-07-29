@@ -70,7 +70,7 @@ public class ASTMatch extends ASTNode {
 			env.bindToEnv(ENV.SIGMA, c.getId(), b);
 
 			ASTUnion eqterm = new ASTUnion(entry.getKey(), new ASTId(c.getId(), b.getId()), tt.isLinear());
-			env.addEq(new ASTTEq(test, eqterm, tt));
+			env.bindToEnv(ENV.SIGMA, env.getFreshId(), new ASTTEq(test, eqterm, tt));
 
 			if (c.getExp() instanceof ASTNever never) never.setFields(prevEnv, entry.getKey(), test);
 			tcase = c.getExp().typecheck(env, target);
@@ -121,7 +121,7 @@ public class ASTMatch extends ASTNode {
 			env.assoc(c.getId(), tlabel);
 
 			ASTUnion eqterm = new ASTUnion(entry.getKey(), new ASTId(c.getId(), c.getId()), tt.isLinear());
-			env.addEq(new ASTTEq(test, eqterm, tt));
+			env.assoc(env.getFreshId(), new ASTTEq(test, eqterm, tt));
 
 			if (c.getExp() instanceof ASTNever never) never.setFields(sigma, entry.getKey(), test);
 			tcase = c.getExp().puretypecheck(env, phi, alpha, target);

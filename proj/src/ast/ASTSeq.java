@@ -31,7 +31,7 @@ public class ASTSeq extends ASTNode {
         ASTType tf = first.typecheck(e, null);
         if (tf instanceof ASTTUnit) {
             e.openEnvScope(ENV.SIGMA);
-            e.addEq(new ASTTEq(first, new ASTUnit(), tf));
+            e.bindToEnv(ENV.SIGMA, e.getFreshId(), new ASTTEq(first, new ASTUnit(), tf));
             return second.typecheck(e, target);
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
@@ -41,7 +41,7 @@ public class ASTSeq extends ASTNode {
         ASTType tf = first.puretypecheck(sigma, phi, alpha, null);
         if (tf instanceof ASTTUnit) {
             Env<ASTType> env = sigma.beginScope();
-            env.addEq(new ASTTEq(first, new ASTUnit(), tf));
+            env.assoc(env.getFreshId(), new ASTTEq(first, new ASTUnit(), tf));
             return second.puretypecheck(env, phi, alpha, target);
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
