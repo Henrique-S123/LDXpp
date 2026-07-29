@@ -93,11 +93,6 @@ public final class ErrorMessages {
         return String.format("Types %s and %s are not definitionally equal", t1, t2);
     }
 
-    // Split errors
-    public static String splitIdsMustBeDifferent() {
-        return String.format("The two ids for a split must be different");
-    }
-
     // Match errors
     public static String missingMatchCase(String label) {
         return String.format("Missing match case for label %s", label);

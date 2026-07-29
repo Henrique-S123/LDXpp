@@ -126,7 +126,7 @@ ASTNode Program():
 }
 
 ASTNode Let() :
-{ Token n, n2;
+{ Token n, n2, sep;
   ASTNode t, e1, e2;
   ASTType t1 = null;
 }
@@ -138,7 +138,9 @@ ASTNode Let() :
     |
       ( <LETEQ>  n=<Id> <EQUAL> e1 = BA() <SEMIC> e2 = Let() { t = new ASTLeteq(n.image, e1, e2); } )
     |
-      ( <SPLIT> <LPAR> n=<Id> <VERT> n2=<Id> <RPAR> <EQUAL> e1 = BA() <SEMIC> e2 = Let() { t = new ASTSplit(e1, n.image, n2.image, e2); } )
+      ( <SPLIT> <LPAR> n=<Id> (sep=<VERT>|sep=<COMMA>) n2=<Id> <RPAR> <EQUAL> e1 = BA() <SEMIC> e2 = Let()
+        { if (n.image.equals(n2.image)) throw new ParseException("duplicate id");
+          t = new ASTSplit(e1, n.image, n2.image, e2, sep.image.equals("|")); } )
     |
       ( <LETREC> n=<Id> <COLON> t1 = Type() <LBRA> t = Funct() <RBRA> <SEMIC> e2 = Let() { t = new ASTRec(n.image, t1, t, e2); } )
     |

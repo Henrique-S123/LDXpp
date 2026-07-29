@@ -9,12 +9,14 @@ import proj.src.errors.*;
 public class ASTSplit extends ASTNode {
     private final ASTNode pair, body;
 	private final String id1, id2;
+	private final boolean linpair;
 
-	public ASTSplit(ASTNode p, String i1, String i2, ASTNode b) {
+	public ASTSplit(ASTNode p, String i1, String i2, ASTNode b, boolean l) {
 		pair = p;
 		id1 = i1;
 		id2 = i2;
 		body = b;
+		linpair = l;
     }
 
 	public String getId1() {
@@ -44,17 +46,16 @@ public class ASTSplit extends ASTNode {
     }
 
 	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-		if (id1.equals(id2)) throw new TypeCheckError(ErrorMessages.splitIdsMustBeDifferent());
 		ASTType tt = pair.typecheck(e, null);
 		tt = e.unfold(tt);
 		this.setSig(e.getSigma());
-		if (!(tt instanceof ASTTPair ttensor && ttensor.isLinear()))
+		if (!(tt instanceof ASTTPair tpair && tpair.isLinear() == linpair))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
 
-		ASTType t1 = e.unfold(ttensor.getFirst());
+		ASTType t1 = e.unfold(tpair.getFirst());
 		Binder<ASTType> b1 = new Binder<ASTType>(t1);
 
-		ASTTPair instttensor = ttensor.inst(ttensor.getId(), new ASTId(id1, b1.getId()));
+		ASTTPair instttensor = tpair.inst(tpair.getId(), new ASTId(id1, b1.getId()));
 		ASTType t2 = e.unfold(instttensor.getSecond());
 		Binder<ASTType> b2 = new Binder<ASTType>(t2);
 
@@ -66,7 +67,7 @@ public class ASTSplit extends ASTNode {
         e.bindToEnv(lin2 ? ENV.DELTA : ENV.GAMMA, id2, b2);
 		e.bindToEnv(ENV.SIGMA, id1, b1);
 		e.bindToEnv(ENV.SIGMA, id2, b2);
-		e.addEq(new ASTTEq(new ASTPair(new ASTId(id1, b1.getId()), new ASTId(id2, b2.getId()), true), pair, instttensor));
+		e.addEq(new ASTTEq(new ASTPair(new ASTId(id1, b1.getId()), new ASTId(id2, b2.getId()), tpair.isLinear()), pair, instttensor));
 
 		ASTType rt = body.typecheck(e, target);
 		if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
@@ -78,19 +79,18 @@ public class ASTSplit extends ASTNode {
 	}
 
 	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        if (id1.equals(id2)) throw new TypeCheckError(ErrorMessages.splitIdsMustBeDifferent());
 		ASTType tt = pair.puretypecheck(sigma, phi, alpha, null);
 		tt = phi.unfold(tt);
 		this.setSig(sigma);
-		if (!(tt instanceof ASTTPair ttensor && ttensor.isLinear()))
+		if (!(tt instanceof ASTTPair tpair && tpair.isLinear() == linpair))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
 
-		ASTType t1 = phi.unfold(ttensor.getFirst());
-		ASTType t2 = phi.unfold(ttensor.getSecond());
+		ASTType t1 = phi.unfold(tpair.getFirst());
+		ASTType t2 = phi.unfold(tpair.getSecond());
 		Env<ASTType> env = sigma.beginScope();
 		env.assoc(id1, t1);
 		env.assoc(id2, t2);
-		env.addEq(new ASTTEq(new ASTPair(new ASTId(id1), new ASTId(id2), true), pair, tt));
+		env.addEq(new ASTTEq(new ASTPair(new ASTId(id1), new ASTId(id2), linpair), pair, tt));
 		return body.puretypecheck(env, phi, alpha, target);
     }
 
@@ -98,7 +98,7 @@ public class ASTSplit extends ASTNode {
 		ASTNode pn = pair.weaknorm(sub);
 		ASTNode f, s;
 		if (pn instanceof ASTPair t && t.isLinear()) { f = t.getFirst(); s = t.getSecond(); }
-		else return new ASTSplit(pn, id1, id2, body.weaknorm(sub));
+		else return new ASTSplit(pn, id1, id2, body.weaknorm(sub), linpair);
 
 		ASTNode fn = f.weaknorm(sub), sn = s.weaknorm(sub);
 		Env<ASTNode> env = sub.beginScope();
@@ -109,11 +109,11 @@ public class ASTSplit extends ASTNode {
 
 	public ASTSplit solve(Env<ASTType> sigma) {
         ASTNode npair = pair.solve(sigma);
-		return (npair == null) ? null : new ASTSplit(npair, id1, id2, body);
+		return (npair == null) ? null : new ASTSplit(npair, id1, id2, body, linpair);
     }
 
 	public ASTSplit subs(String subsId, ASTNode node) {
-		return new ASTSplit(pair.subs(subsId, node), id1, id2, body.subs(subsId, node));
+		return new ASTSplit(pair.subs(subsId, node), id1, id2, body.subs(subsId, node), linpair);
 	}
 
 	@Override
