@@ -10,3 +10,10 @@ type: (linint | NatL), value: (0l | $zero(()))
 type: (NatL | (cl:LLIST | l2 ≡ cl : LLIST)), value: ($succ($succ($zero(()))) | ($cons((7l | $cons((4l | $nil(()))))) | refl))
 
 
+type: NatL, value: $succ($succ($zero(())))
+
+
+type: NatL, value: $succ($succ($succ($zero(()))))
+
+
+
