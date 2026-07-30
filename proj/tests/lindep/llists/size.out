@@ -16,4 +16,3 @@ type: NatL, value: $succ($succ($zero(())))
 type: NatL, value: $succ($succ($succ($zero(()))))
 
 
-

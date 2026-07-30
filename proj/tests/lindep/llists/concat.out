@@ -1,3 +1,9 @@
 type: LLIST, value: $cons((7l | $cons((4l | $nil(())))))
 
 
+class proj.src.errors.TypeCheckError: Terms sizel(nl) and ladd(sizel(a))(sizel(b)) are not definitionally equal
+
+
+type: NatL, value: $succ($succ($succ($zero(()))))
+
+
