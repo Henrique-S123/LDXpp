@@ -31,8 +31,13 @@ public final class DefEq {
 
         if (t instanceof THyp h && useHyp(l, r, alpha, phi, h.getHyp())) return true;
 
-        if (solveLeft(l, sl, r, sr, alpha, phi, t)) return true;
-        if (solveRight(l, sl, r, sr, alpha, phi, t)) return true;
+        if (r instanceof ASTId) {
+            if (solveRight(l, sl, r, sr, alpha, phi, t)) return true;
+            if (solveLeft(l, sl, r, sr, alpha, phi, t)) return true;
+        } else {
+            if (solveLeft(l, sl, r, sr, alpha, phi, t)) return true;
+            if (solveRight(l, sl, r, sr, alpha, phi, t)) return true;
+        }
 
         Debug.log("Failed to prove equality");
         return false;

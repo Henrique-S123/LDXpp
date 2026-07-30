@@ -1,0 +1,59 @@
+type NODE = (linint | LLIST);
+type LLIST = linunion { $nil: (), $cons: NODE };
+let l2:LLIST = $cons ((7l | $nil (())));
+letrec concat:LLIST-o>LLIST-o>LLIST {
+    lfn a:LLIST, b:LLIST =o> {
+        match a {
+            $nil(m) -> m; b
+            |
+            $cons(m) ->
+                split (val | rest) = m;
+                $cons((val | concat(rest)(b)))
+        }
+    }
+};
+letrec rightId:(l:LLIST)-o>(cl:LLIST | (concat(cl)($nil(())) = cl : LLIST)) {
+    lfn l:LLIST =o> {
+        match l {
+            $nil(m) -> m; ($nil(m) | refl)
+            |
+            $cons(m) ->
+                split (val | rest) = m;
+                split (rl | eqrl) = rightId(rest);
+                leteq e = eqrl;
+                let nl = $cons((val | rl));
+                (nl | refl)
+        }
+    }
+};
+rightId(l2);;
+
+type NODE = (linint | LLIST);
+type LLIST = linunion { $nil: (), $cons: NODE };
+let l2:LLIST = $cons ((7l | $nil (())));
+letrec concat:LLIST-o>LLIST-o>LLIST {
+    lfn a:LLIST, b:LLIST =o> {
+        match a {
+            $nil(m) -> m; b
+            |
+            $cons(m) ->
+                split (val | rest) = m;
+                $cons((val | concat(rest)(b)))
+        }
+    }
+};
+letrec rightId:(l:LLIST)-o>(cl:LLIST | (concat(cl)($nil(())) = cl : LLIST)) {
+    lfn l:LLIST =o> {
+        match l {
+            $nil(m) -> m; ($nil(m) | refl)
+            |
+            $cons(m) ->
+                split (val | rest) = m;
+                split (rl | eqrl) = rightId(rest);
+                leteq e = eqrl;
+                let nl = $cons((val | rl));
+                (nl | hyp)
+        }
+    }
+};
+rightId(l2);;
