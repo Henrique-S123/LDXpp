@@ -7,3 +7,15 @@ let congNonlinPair:(n:(int, int))->(n = (fst(n), snd(n)) : (int, int)) =
         split (x, y) = n; refl
     };
 congNonlinPair((2, 3));;
+
+let congNonlinPair:(n:(int, int))->(n = (fst(n), snd(n)) : (int, int)) =
+    fn n:(int, int) => {
+        leteq e = cong n; refl
+    };
+congNonlinPair((2, 3));;
+
+let congNonlinPair:(n:(linint, string))->(n = (fst(n), snd(n)) : (linint, string)) =
+    fn n:(linint, string) => {
+        leteq e = cong n; refl
+    };
+congNonlinPair((2l, "a"));;

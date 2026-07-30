@@ -4,3 +4,9 @@ type: () ≡ () : (), value: refl
 type: (2, 3) ≡ (fst (2, 3), snd (2, 3)) : (int, int), value: refl
 
 
+type: (2, 3) ≡ (fst (2, 3), snd (2, 3)) : (int, int), value: refl
+
+
+type: (2l, a) ≡ (fst (2l, a), snd (2l, a)) : (linint, string), value: refl
+
+
