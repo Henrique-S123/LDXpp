@@ -4,6 +4,9 @@ class proj.src.errors.TypeCheckError: Terms size(#cons((fst n, fst res))) and ad
 type: (z:LIST, size(z) ≡ size(fst concat(l0)(l2)) : Nat), value: (#cons((#succ(#succ(#zero(()))), #cons((#succ(#zero(())), #nil(()))))), refl)
 
 
+type: (z:LIST, size(z) ≡ size(fst concat(l0)(l2)) : Nat), value: (#cons((#succ(#succ(#zero(()))), #cons((#succ(#zero(())), #nil(()))))), refl)
+
+
 class proj.src.errors.TypeCheckError: Terms size(#cons(newpair)) and add(size(la))(size(lb)) are not definitionally equal
 
 

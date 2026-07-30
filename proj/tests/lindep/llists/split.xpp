@@ -1,0 +1,40 @@
+type Nat = union { #zero: (), #succ: Nat };
+let n0:Nat = #zero(());
+let n1:Nat = #succ(n0);
+type NODE = (linint | LLIST);
+type LLIST = linunion { $nil: (), $cons: NODE };
+let l1:LLIST = $cons ((4l | $nil (())));
+let l2:LLIST = $cons ((7l | $nil (())));
+letrec concat:LLIST-o>LLIST-o>LLIST {
+    lfn a:LLIST, b:LLIST =o> {
+        match a {
+            $nil(m) -> m; b
+            |
+            $cons(m) ->
+                split (val | rest) = m;
+                $cons((val | concat(rest)(b)))
+        }
+    }
+};
+let lc = concat(l2)(l1);
+letrec splitlist:(n:Nat)-o>(a:LLIST)-o>(b:LLIST | c:LLIST | (concat(b)(c) = a : LLIST)) {
+    lfn n:Nat, a:LLIST =o> {
+        match n {
+            #zero(z) -> z; ($nil(()) | a | refl)
+            |
+            #succ(ns) ->
+                match a {
+                    $nil(elt) -> elt; ($nil(()) | $nil(()) | refl)
+                    |
+                    $cons(elt) ->
+                        split (val | rest) = elt;
+                        split (rb | rest) = splitlist(ns)(rest);
+                        split (rc | eihl) = rest;
+                        leteq eih = eihl;
+                        let nrb = $cons((val | rb));
+                        (nrb | rc | refl)
+                }
+        }
+    }
+};
+splitlist(n1)(lc);;
