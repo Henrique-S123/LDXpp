@@ -37,7 +37,7 @@ TOKEN :
   |
   < LBRA : "{" > | < RBRA : "}" >
   |
-  < REFL: "refl" > | < HYP: "hyp" >
+  < REFL: "refl" > | < HYP: "hyp" > | < CONG: "cong" >
   |
   < LETEQ: "leteq" > | < NEVER: "never" >
   |
@@ -265,6 +265,7 @@ ASTNode Fact() :
     | <LPAR> t = TermList() <RPAR>
     | <REFL> (LOOKAHEAD(2) <LPAR> t = Fact() <RPAR>)? { t = new ASTRefl(t, new TRefl()); }
     | <HYP> (n=<Id>)? { t = new ASTRefl(null, new THyp(n == null ? null : n.image)); }
+    | <CONG> n=<Id> { t = new ASTCong(n.image); }
     )
    { return t; }
 }

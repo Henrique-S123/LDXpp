@@ -53,6 +53,6 @@ public class ASTRefl extends ASTNode  {
 
     @Override
     public String toString() {
-        return "refl";
+        return String.format("refl%s", term == null ? "" : "(" + term + ")");
     }
 }
