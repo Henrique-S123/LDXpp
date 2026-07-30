@@ -51,7 +51,6 @@ public final class DefEq {
             Debug.log("RIGHT BINDER ID: " + bid2);
             if (bid1 != null && bid1.equals(bid2)) return true;
         }
-
         if (l instanceof ASTLet ln && r instanceof ASTLet rn)
             return typedefeq(ln.getDeclType(), sl, rn.getDeclType(), sr, alpha, phi, new HashSet<IdPair>(), t)
                 && termdefeq(ln.getExpr(), sl, rn.getExpr(), sr, alpha, phi, t)
@@ -60,7 +59,6 @@ public final class DefEq {
         if (l instanceof ASTOp ln && r instanceof ASTOp rn && ln.getOp().equals(rn.getOp()))
             return termdefeq(ln.getLhs(), sl, rn.getLhs(), sr, alpha, phi, t)
                 && termdefeq(ln.getRhs(), sl, rn.getRhs(), sr, alpha, phi, t);
-        
         if (l instanceof ASTIf ln && r instanceof ASTIf rn)
             if (termdefeq(ln.getTest(), sl, rn.getTest(), sr, alpha, phi, t)
                 && termdefeq(ln.getConseq(), sl, rn.getConseq(), sr, alpha, phi, t)
@@ -76,11 +74,10 @@ public final class DefEq {
             Debug.close();
             if (res) return true;
         }
-        if (l instanceof ASTRec ln && r instanceof ASTRec rn) {
+        if (l instanceof ASTRec ln && r instanceof ASTRec rn)
             return typedefeq(ln.getFunctype(), sl, rn.getFunctype(), sr, alpha, phi, new HashSet<IdPair>(), t)
                 && termdefeq(ln.getFuncbody(), sl, rn.getFuncbody(), sr, alpha, phi, t)
                 && termdefeq(ln.getBody(), sl, rn.getBody(), sr, alpha.extend(ln.getFuncid(), rn.getFuncid()), phi, t);
-        }
         
         if (l instanceof ASTPair ln && r instanceof ASTPair rn && ln.isLinear() == rn.isLinear())
             return termdefeq(ln.getFirst(), sl, rn.getFirst(), sr, alpha, phi, t)
@@ -146,34 +143,26 @@ public final class DefEq {
         return false;
     }
     
-    private final boolean etaExpand(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
-        if (l instanceof ASTId lid && !(r instanceof ASTId)) {
-            Debug.log("η-expanding left side");
-            ASTNode le = lid.etaexpand(sl);
-            if (le != null) return termdefeq(le, sl, r, sr, alpha, phi, t);
-        }
-        if (r instanceof ASTId rid && !(l instanceof ASTId)) {
-            Debug.log("η-expanding right side");
-            ASTNode re = rid.etaexpand(sl);
-            if (re != null) return termdefeq(l, sl, re, sr, alpha, phi, t);
-        }
-        return false;
-    }
-    
     private final boolean solveLeft(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
         ASTNode s = l.solve(l.getSig() != null ? l.getSig() : sl);
         if (s == null) return false;
+        Env<ASTType> nsl = (s.getSig() != null) ? s.getSig() : sl;
+        s = s.weaknorm();
+        if (StructEq.termEqStruct(l, s, alpha)) return false;
         Debug.log("Solved left side");
-        return termdefeq(s.weaknorm(), (s.getSig() != null) ? s.getSig() : sl, r, sr, alpha, phi, t);
+        return termdefeq(s, nsl, r, sr, alpha, phi, t);
     }
 
     private final boolean solveRight(ASTNode l, Env<ASTType> sl, ASTNode r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Tactic t) {
         ASTNode s = r.solve(r.getSig() != null ? r.getSig() : sr);
         if (s == null) return false;
+        Env<ASTType> nsr = (s.getSig() != null) ? s.getSig() : sr;
+        s = s.weaknorm();
+        if (StructEq.termEqStruct(r, s, alpha)) return false;
         Debug.log("Solved right side");
-        return termdefeq(l, sl, s.weaknorm(), (s.getSig() != null) ? s.getSig() : sr, alpha, phi, t);
+        return termdefeq(l, sl, s, nsr, alpha, phi, t);
     }
-    
+
     public final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> sigma, Env<ASTType> phi) {
         return typedefeq(l, sigma, r, sigma, new AlphaEnv(), phi, new HashSet<IdPair>(), new TRefl());
     }

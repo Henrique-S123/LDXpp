@@ -1,3 +1,9 @@
+class proj.src.errors.TypeCheckError: Terms fst concat(l)(#nil(())) and l are not definitionally equal
+
+
+class proj.src.errors.TypeCheckError: Terms fst concat(l)(#nil(())) and l are not definitionally equal
+
+
 type: fst concat(l2)(#nil(())) ≡ l2 : LIST, value: refl
 
 
