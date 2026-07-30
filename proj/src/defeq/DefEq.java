@@ -29,7 +29,7 @@ public final class DefEq {
 
         if (congruent(l, sl, r, sr, alpha, phi, t)) return true;
 
-        if (t instanceof THyp && useHyp(l, r, alpha, phi)) return true;
+        if (t instanceof THyp h && useHyp(l, r, alpha, phi, h.getHyp())) return true;
 
         if (solveLeft(l, sl, r, sr, alpha, phi, t)) return true;
         if (solveRight(l, sl, r, sr, alpha, phi, t)) return true;
@@ -133,13 +133,21 @@ public final class DefEq {
         return false;
     }
 
-    private final boolean useHyp(ASTNode l, ASTNode r, AlphaEnv alpha, Env<ASTType> phi) {
-        Debug.log("Search Sigma environment for a proof");
+    private final boolean useHyp(ASTNode l, ASTNode r, AlphaEnv alpha, Env<ASTType> phi, String name) {
+        if (name != null) {
+            Debug.log(String.format("Checking if %s is a correct proof", name));
+            boolean res = sigma.checkProof(name, sigma, l, r, alpha, phi);
+            Debug.log(name + (res ? " is a proof!" : " is not a proof!"));
+            return res;
+        } else {
+            Debug.log("Search Sigma environment for a proof");
             ASTType proof = sigma.findProof(sigma, l, r, alpha, phi);
             if (proof != null) {
                 Debug.log("Found proof: " + proof);
                 return true;
             }
+            Debug.log("Found no proof.");
+        }
         return false;
     }
     

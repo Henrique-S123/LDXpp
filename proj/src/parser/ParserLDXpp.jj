@@ -239,7 +239,7 @@ ASTNode App() :
 }
 
 ASTNode Fact() :
-{ Token n; 
+{ Token n = null; 
   ASTNode t = null, e1, e2, t2;;
   ASTType type;
 }
@@ -264,7 +264,7 @@ ASTNode Fact() :
     |  n = <LLABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t, true); }
     | <LPAR> t = TermList() <RPAR>
     | <REFL> (LOOKAHEAD(2) <LPAR> t = Fact() <RPAR>)? { t = new ASTRefl(t, new TRefl()); }
-    | <HYP> { t = new ASTRefl(null, new THyp()); }
+    | <HYP> (n=<Id>)? { t = new ASTRefl(null, new THyp(n == null ? null : n.image)); }
     )
    { return t; }
 }

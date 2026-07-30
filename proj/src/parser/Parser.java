@@ -491,7 +491,7 @@ public class Parser implements ParserConstants {
   }
 
   final public ASTNode Fact() throws ParseException {
-  Token n;
+  Token n = null;
   ASTNode t = null, e1, e2, t2;;
   ASTType type;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -616,10 +616,18 @@ public class Parser implements ParserConstants {
       break;
     case HYP:
       jj_consume_token(HYP);
-              t = new ASTRefl(null, new THyp());
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case Id:
+        n = jj_consume_token(Id);
+        break;
+      default:
+        jj_la1[17] = jj_gen;
+        ;
+      }
+                        t = new ASTRefl(null, new THyp(n == null ? null : n.image));
       break;
     default:
-      jj_la1[17] = jj_gen;
+      jj_la1[18] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -646,7 +654,7 @@ public class Parser implements ParserConstants {
           ;
           break;
         default:
-          jj_la1[18] = jj_gen;
+          jj_la1[19] = jj_gen;
           break label_8;
         }
         jj_consume_token(COMMA);
@@ -674,7 +682,7 @@ public class Parser implements ParserConstants {
           ;
           break;
         default:
-          jj_la1[19] = jj_gen;
+          jj_la1[20] = jj_gen;
           break label_9;
         }
         jj_consume_token(COMMA);
@@ -690,7 +698,7 @@ public class Parser implements ParserConstants {
                                                    tc.setBody(t2); t = tf;
       break;
     default:
-      jj_la1[20] = jj_gen;
+      jj_la1[21] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -716,13 +724,13 @@ public class Parser implements ParserConstants {
                                            t = new ASTPair(t, t2, true);
         break;
       default:
-        jj_la1[21] = jj_gen;
+        jj_la1[22] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
       break;
     default:
-      jj_la1[22] = jj_gen;
+      jj_la1[23] = jj_gen;
       ;
     }
     {if (true) return t;}
@@ -739,7 +747,7 @@ public class Parser implements ParserConstants {
                                             t = new ASTPair(t, t2, false);
       break;
     default:
-      jj_la1[23] = jj_gen;
+      jj_la1[24] = jj_gen;
       ;
     }
     {if (true) return t;}
@@ -756,7 +764,7 @@ public class Parser implements ParserConstants {
                                           t = new ASTPair(t, t2, true);
       break;
     default:
-      jj_la1[24] = jj_gen;
+      jj_la1[25] = jj_gen;
       ;
     }
     {if (true) return t;}
@@ -775,7 +783,7 @@ public class Parser implements ParserConstants {
       l = jj_consume_token(LLABEL);
       break;
     default:
-      jj_la1[25] = jj_gen;
+      jj_la1[26] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -792,7 +800,7 @@ public class Parser implements ParserConstants {
         ;
         break;
       default:
-        jj_la1[26] = jj_gen;
+        jj_la1[27] = jj_gen;
         break label_10;
       }
       jj_consume_token(VERT);
@@ -804,7 +812,7 @@ public class Parser implements ParserConstants {
         l = jj_consume_token(LLABEL);
         break;
       default:
-        jj_la1[27] = jj_gen;
+        jj_la1[28] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -858,7 +866,7 @@ public class Parser implements ParserConstants {
       t = Let();
       break;
     default:
-      jj_la1[28] = jj_gen;
+      jj_la1[29] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -889,7 +897,7 @@ public class Parser implements ParserConstants {
         t1 = TypeF();
         break;
       default:
-        jj_la1[29] = jj_gen;
+        jj_la1[30] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -909,13 +917,13 @@ public class Parser implements ParserConstants {
                                  t1 = new ASTTArrow(t1, t2, n != null ? n.image : null, true);
         break;
       default:
-        jj_la1[30] = jj_gen;
+        jj_la1[31] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
       break;
     default:
-      jj_la1[31] = jj_gen;
+      jj_la1[32] = jj_gen;
       ;
     }
       {if (true) return t1;}
@@ -976,7 +984,7 @@ public class Parser implements ParserConstants {
       jj_consume_token(RPAR);
       break;
     default:
-      jj_la1[32] = jj_gen;
+      jj_la1[33] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1011,7 +1019,7 @@ public class Parser implements ParserConstants {
         t = Type();
         break;
       default:
-        jj_la1[33] = jj_gen;
+        jj_la1[34] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1031,13 +1039,13 @@ public class Parser implements ParserConstants {
                                t = new ASTTPair(t, t2, n == null ? null : n.image, true);
         break;
       default:
-        jj_la1[34] = jj_gen;
+        jj_la1[35] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
       break;
     default:
-      jj_la1[35] = jj_gen;
+      jj_la1[36] = jj_gen;
       ;
     }
     {if (true) return t;}
@@ -1056,7 +1064,7 @@ public class Parser implements ParserConstants {
                                                            t = new ASTTPair(t, t2, n == null ? null : n.image, false);
       break;
     default:
-      jj_la1[36] = jj_gen;
+      jj_la1[37] = jj_gen;
       ;
     }
     {if (true) return t;}
@@ -1075,7 +1083,7 @@ public class Parser implements ParserConstants {
                                                             t = new ASTTPair(t, t2, n == null ? null : n.image, true);
       break;
     default:
-      jj_la1[37] = jj_gen;
+      jj_la1[38] = jj_gen;
       ;
     }
     {if (true) return t;}
@@ -1110,7 +1118,7 @@ public class Parser implements ParserConstants {
         n = jj_consume_token(LLABEL);
         break;
       default:
-        jj_la1[38] = jj_gen;
+        jj_la1[39] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1124,7 +1132,7 @@ public class Parser implements ParserConstants {
           ;
           break;
         default:
-          jj_la1[39] = jj_gen;
+          jj_la1[40] = jj_gen;
           break label_11;
         }
         jj_consume_token(COMMA);
@@ -1136,7 +1144,7 @@ public class Parser implements ParserConstants {
           n = jj_consume_token(LLABEL);
           break;
         default:
-          jj_la1[40] = jj_gen;
+          jj_la1[41] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -1146,7 +1154,7 @@ public class Parser implements ParserConstants {
       }
       break;
     default:
-      jj_la1[41] = jj_gen;
+      jj_la1[42] = jj_gen;
       ;
     }
       {if (true) return ll;}
@@ -1625,6 +1633,9 @@ public class Parser implements ParserConstants {
 
   private boolean jj_3R_35() {
     if (jj_scan_token(HYP)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(65)) jj_scanpos = xsp;
     return false;
   }
 
@@ -2137,7 +2148,7 @@ public class Parser implements ParserConstants {
   private Token jj_scanpos, jj_lastpos;
   private int jj_la;
   private int jj_gen;
-  final private int[] jj_la1 = new int[42];
+  final private int[] jj_la1 = new int[43];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -2147,13 +2158,13 @@ public class Parser implements ParserConstants {
       jj_la1_init_2();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x396005c1,0x396005c1,0x0,0x0,0x396005c0,0x0,0x100000,0x80000,0x7e000,0x7e000,0x600,0x600,0x1800,0x1800,0x1400000,0x1400000,0x0,0x19600580,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x796005c0,0x1400000,0x0,0x0,0x1400000,0x1400000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x396005c1,0x396005c1,0x0,0x0,0x396005c0,0x0,0x100000,0x80000,0x7e000,0x7e000,0x600,0x600,0x1800,0x1800,0x1400000,0x1400000,0x0,0x0,0x19600580,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x796005c0,0x1400000,0x0,0x0,0x1400000,0x1400000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0xc07c3e84,0xc07c3e80,0x4,0x21,0xc07c3e80,0x8,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xc0000,0xc01c1e80,0x20,0x20,0x1800,0x21,0x21,0x20,0x1,0xc0000000,0x1,0xc0000000,0xc07c3e80,0x3f800000,0x30000,0x30000,0x3f800000,0x3f800000,0x21,0x21,0x20,0x1,0xc0000000,0x20,0xc0000000,0xc0000000,};
+      jj_la1_1 = new int[] {0xc07c3e84,0xc07c3e80,0x4,0x21,0xc07c3e80,0x8,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xc0000,0x0,0xc01c1e80,0x20,0x20,0x1800,0x21,0x21,0x20,0x1,0xc0000000,0x1,0xc0000000,0xc07c3e80,0x3f800000,0x30000,0x30000,0x3f800000,0x3f800000,0x21,0x21,0x20,0x1,0xc0000000,0x20,0xc0000000,0xc0000000,};
    }
    private static void jj_la1_init_2() {
-      jj_la1_2 = new int[] {0xf,0xf,0x0,0x0,0xf,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xf,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xf,0x2,0x0,0x0,0x2,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_2 = new int[] {0xf,0xf,0x0,0x0,0xf,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0xf,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xf,0x2,0x0,0x0,0x2,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[5];
   private boolean jj_rescan = false;
@@ -2170,7 +2181,7 @@ public class Parser implements ParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 42; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 43; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2185,7 +2196,7 @@ public class Parser implements ParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 42; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 43; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2196,7 +2207,7 @@ public class Parser implements ParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 42; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 43; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2207,7 +2218,7 @@ public class Parser implements ParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 42; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 43; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2217,7 +2228,7 @@ public class Parser implements ParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 42; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 43; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2227,7 +2238,7 @@ public class Parser implements ParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 42; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 43; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2347,7 +2358,7 @@ public class Parser implements ParserConstants {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 42; i++) {
+    for (int i = 0; i < 43; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

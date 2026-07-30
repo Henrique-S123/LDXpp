@@ -115,6 +115,17 @@ public class Env<E>{
         return null;
     }
 
+    public boolean checkProof(String name, Env<ASTType> sigma, ASTNode t1, ASTNode t2, AlphaEnv alpha, Env<ASTType> phi) {
+        ASTType r = sigma.find(name);
+        if (r != null && r instanceof ASTTEq teq) {
+            DefEq e = new DefEq(sigma);
+            if ((e.termdefeq(t1, teq.getTerm1(), sigma, phi, alpha) && e.termdefeq(t2, teq.getTerm2(), sigma, phi, alpha))
+            || (e.termdefeq(t1, teq.getTerm2(), sigma, phi, alpha) && e.termdefeq(t2, teq.getTerm1(), sigma, phi, alpha)))
+                return true;
+        }
+        return false;
+    }
+
     public ASTType unfold(ASTType t) {
         return (t instanceof ASTTId tid) ? unfold((ASTType) find(tid.getId())) : t;
     }
