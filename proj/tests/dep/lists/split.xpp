@@ -60,3 +60,143 @@ letrec splitlist:(n:Nat)->(a:LIST)->(b:LIST, c:LIST, (fst(concat(b)(c)) = a : LI
     }
 };
 splitlist(n1)(l2);;
+
+
+
+type Nat = union { #zero: (), #succ: Nat };
+let n0 = #zero(());
+let n1 = #succ(n0);
+let n2 = #succ(n1);
+let n3 = #succ(n2);
+letrec add:Nat->Nat->Nat {
+    fn a:Nat, b:Nat => {
+        match a {
+            #zero(m) -> m; b
+            |
+            #succ(m) -> #succ(add(m)(b))
+        }
+    }
+};
+type NODE = (Nat, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (());
+let l1:LIST = #cons ((n1,l0));
+let l2:LIST = #cons ((n2,l1));
+let congNonlinPair:(n:(Nat, LIST))->(n = (fst(n), snd(n)) : (Nat, LIST)) =
+    fn n:(Nat, LIST) => {
+        split (x, y) = n; refl
+    };
+letrec size:LIST->Nat {
+    fn l:LIST => {
+        match l {
+            #nil(m) -> m; n0
+            |
+            #cons(n) -> #succ(size(snd(n)))
+        }
+    }
+};
+letrec concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) {
+    fn la:LIST, lb:LIST => {
+        match la {
+            #nil(m) -> m; (lb, refl)
+            |
+            #cons(n) ->
+                let res = concat(snd(n))(lb);
+                leteq e1 = snd(res);
+                let newpair = (fst(n), fst(res));
+                (#cons(newpair), hyp)
+        }
+    }
+};
+letrec splitlist:(n:Nat)->(a:LIST)->(b:LIST, c:LIST, (fst(concat(b)(c)) = a : LIST)) {
+    fn n:Nat, a:LIST => {
+        match n {
+            #zero(m) -> m; (#nil(()), a, refl)
+            |
+            #succ(ns) ->
+                match a {
+                    #nil(m) -> m; (#nil(()), #nil(()), refl)
+                    |
+                    #cons(n) ->
+                        let val = fst(n); let rest = snd(n);
+                        let res = splitlist(ns)(rest);
+                        let rb = fst(res); let rc = fst(snd(res)); let eihl = snd(snd(res));
+                        leteq e = eihl;
+                        leteq e2 = congNonlinPair(n);
+                        let nrb = #cons((val, rb));
+                        (nrb, rc, refl)
+                }
+        }
+    }
+};
+splitlist(n1)(l2);;
+
+
+
+type Nat = union { #zero: (), #succ: Nat };
+let n0 = #zero(());
+let n1 = #succ(n0);
+let n2 = #succ(n1);
+let n3 = #succ(n2);
+letrec add:Nat->Nat->Nat {
+    fn a:Nat, b:Nat => {
+        match a {
+            #zero(m) -> m; b
+            |
+            #succ(m) -> #succ(add(m)(b))
+        }
+    }
+};
+type NODE = (Nat, LIST);
+type LIST = union { #nil: (), #cons: NODE };
+let l0:LIST = #nil (());
+let l1:LIST = #cons ((n1,l0));
+let l2:LIST = #cons ((n2,l1));
+let congNonlinPair:(n:(Nat, LIST))->(n = (fst(n), snd(n)) : (Nat, LIST)) =
+    fn n:(Nat, LIST) => {
+        split (x, y) = n; refl
+    };
+letrec size:LIST->Nat {
+    fn l:LIST => {
+        match l {
+            #nil(m) -> m; n0
+            |
+            #cons(n) -> #succ(size(snd(n)))
+        }
+    }
+};
+letrec concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)) : Nat)) {
+    fn la:LIST, lb:LIST => {
+        match la {
+            #nil(m) -> m; (lb, refl)
+            |
+            #cons(n) ->
+                let res = concat(snd(n))(lb);
+                leteq e1 = snd(res);
+                let newpair = (fst(n), fst(res));
+                (#cons(newpair), hyp)
+        }
+    }
+};
+letrec splitlist:(n:Nat)->(a:LIST)->(b:LIST, c:LIST, (fst(concat(b)(c)) = a : LIST)) {
+    fn n:Nat, a:LIST => {
+        match n {
+            #zero(m) -> m; (#nil(()), a, refl)
+            |
+            #succ(ns) ->
+                match a {
+                    #nil(m) -> m; (#nil(()), #nil(()), refl)
+                    |
+                    #cons(n) ->
+                        let val = fst(n); let rest = snd(n);
+                        let res = splitlist(ns)(rest);
+                        let rb = fst(res); let rc = fst(snd(res)); let eihl = snd(snd(res));
+                        leteq e = eihl;
+                        leteq e2 = congNonlinPair(n);
+                        let nrb = #cons((val, rb));
+                        (nrb, rc, hyp)
+                }
+        }
+    }
+};
+splitlist(n1)(l2);;

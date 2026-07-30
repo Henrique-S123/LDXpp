@@ -1,3 +1,9 @@
+class proj.src.errors.TypeCheckError: Terms fst concat(nrb)(rc) and a are not definitionally equal
+
+
+class proj.src.errors.TypeCheckError: Terms fst concat(nrb)(rc) and a are not definitionally equal
+
+
 type: (b:LIST, (c:LIST, fst concat(b)(c) ≡ l2 : LIST)), value: (#cons((#succ(#succ(#zero(()))), #nil(()))), (#cons((#succ(#zero(())), #nil(()))), refl))
 
 
