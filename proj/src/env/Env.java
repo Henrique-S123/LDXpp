@@ -40,7 +40,6 @@ public class Env<E>{
     }
 
     public void assoc(String id, E val) {
-        // TODO: add guard
         bindings.put(id, new Binder<E>(val));
     }
     

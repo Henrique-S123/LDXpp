@@ -45,12 +45,13 @@ public class ASTTypeDef extends ASTNode {
     }
 
     public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
-        // TODO check if equal to typecheck
         pe.openEnvScope(PENV.PHI);
+        for (String s : ltd.keySet())
+            pe.bindToEnv(PENV.PHI, s, ltd.get(s));
         for (String s : ltd.keySet()) {
             ASTType t = ltd.get(s);
+            t.check(pe);
             t.setSig(pe.getSigma());
-            pe.bindToEnv(PENV.PHI, s, t);
         }
         return body.puretypecheck(pe, target);
     }
