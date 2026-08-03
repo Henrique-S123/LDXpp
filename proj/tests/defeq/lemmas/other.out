@@ -1,6 +1,9 @@
 type: int, value: 1
 
 
+class proj.src.errors.TypeCheckError: Terms f(x) and f(y) are not definitionally equal
+
+
 type: int, value: 1
 
 

@@ -256,8 +256,7 @@ ASTNode Fact() :
     | <NOT> t=Fact() { t = new ASTOp(new ASTBool(true, false), t, "~"); }
     | <IF> t=BA() <LBRA> e1=Let() <RBRA> <ELSE> <LBRA> e2=Let() <RBRA> { t = new ASTIf(t, e1, e2); }
     | t = Funct()
-    | <PRINT> t=Fact() { t = new ASTPrint(t, false); }
-    | <PRINTLN> t=Fact() { t = new ASTPrint(t, true); }
+    | (n=<PRINT>|n=<PRINTLN>) t=Fact() { t = new ASTPrint(t, n.image.equals("println")); }
     | (n=<FST>|n=<SND>) <LPAR> t = Let() <RPAR> { t = new ASTChoice(t, n.image.equals("fst")); }
     | <MATCH> t2 = Let() <LBRA> t = Match(t2)
     |  n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t, false); }
@@ -300,15 +299,13 @@ ASTNode TermList() :
 ASTNode TermCommaList() :
 { ASTNode t, t2; }
 {
-  t = Let() (<COMMA> t2 = TermCommaList() { t = new ASTPair(t, t2, false); })?
-  { return t; }
+  t = Let() (<COMMA> t2 = TermCommaList() { t = new ASTPair(t, t2, false); })? { return t; }
 }
 
 ASTNode TermVertList() :
 { ASTNode t, t2; }
 {
-  t = Let() (<VERT> t2 = TermVertList() { t = new ASTPair(t, t2, true); })?
-  { return t; }
+  t = Let() (<VERT> t2 = TermVertList() { t = new ASTPair(t, t2, true); })? { return t; }
 }
 
 ASTNode Match(ASTNode p) :

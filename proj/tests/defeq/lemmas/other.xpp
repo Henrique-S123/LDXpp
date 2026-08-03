@@ -2,6 +2,10 @@ let appLemma1:(f:int->int)->(f(1)=f(1):int) =
     fn f:int->int => { refl };
 1;;
 
-let appLemma2:(x:int)->(y:int)->(x=y:int)->(f:int->int)->(f(x)=f(y):int) =
+let appLemma2:(x:int)->(y:int)->(f:int->int)->(f(x)=f(y):int) =
+    fn x:int, y:int, f:int->int => { refl };
+1;;
+
+let appLemma3:(x:int)->(y:int)->(x=y:int)->(f:int->int)->(f(x)=f(y):int) =
     fn x:int, y:int, e:(x=y:int), f:int->int => { refl };
 1;;

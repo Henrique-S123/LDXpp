@@ -110,7 +110,6 @@ public class ASTFunc extends ASTNode  {
 
     @Override
     public String toString() {
-        // TODO: fix 4th element
         return String.format("%sfn %s:%s =%s> {%s}", lin ? "l" : "", id, argtype, lin ? "o" : "", body);
 	}
 }
