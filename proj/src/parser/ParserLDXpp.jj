@@ -343,8 +343,8 @@ ASTType Type() :
   Token n = null;
 }
 {   (
-      LOOKAHEAD(<LPAR> IdAnnotation() TypeF() <RPAR>)
-      <LPAR> n = IdAnnotation() t1 = TypeF() <RPAR>
+      LOOKAHEAD(<LPAR> IdAnnotation() Type() <RPAR>)
+      <LPAR> n = IdAnnotation() t1 = Type() <RPAR>
     |
       t1 = TypeF()
     )
