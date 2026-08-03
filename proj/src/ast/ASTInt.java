@@ -24,7 +24,7 @@ public class ASTInt extends ASTNode  {
         return new ASTTInt(lin);
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) {
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) {
         return new ASTTInt(lin);
     }
 

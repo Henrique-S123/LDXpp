@@ -57,6 +57,10 @@ public final class ErrorMessages {
         return "The context is not inconsistent";
     }
 
+    public static String nullId() {
+        return "Null id!";
+    }
+
     // Linearity errors
     public static String unusedLinearValues(Set<String> env) {
         return String.format("There are unused linear values: %s", env);

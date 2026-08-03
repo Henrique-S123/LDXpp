@@ -4,6 +4,7 @@ import proj.src.values.*;
 import proj.src.types.*;
 import proj.src.env.*;
 import proj.src.env.EnvSet.ENV;
+import proj.src.env.PureEnvSet.PENV;
 import proj.src.errors.*;
 
 public class ASTFunc extends ASTNode  {
@@ -40,7 +41,7 @@ public class ASTFunc extends ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        argtype.check(e.getSigma(), e.getPhi(), e.getAlpha());
+        argtype.check(new PureEnvSet(e));
         ASTType targetdom = null, targetcodom = null;
         String tid = null;
         if (target != null) {
@@ -58,7 +59,7 @@ public class ASTFunc extends ASTNode  {
         e.openEnvScope(ENV.SIGMA);
         e.openEnvScope(env);
 
-        if (targetdom != null && !targetdom.isSubtypeOf(targtype, e.getSigma(), e.getPhi(), e.getAlpha()))
+        if (targetdom != null && !targetdom.isSubtypeOf(targtype, new PureEnvSet(e)))
             throw new TypeCheckError(ErrorMessages.notSubtypeFunc(targetdom, targtype));
 
         Binder<ASTType> b = new Binder<ASTType>(targtype);
@@ -77,26 +78,26 @@ public class ASTFunc extends ASTNode  {
         return new ASTTArrow(targtype, tb, id, lin);
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        argtype.check(sigma, phi, alpha);
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+        argtype.check(pe);
         ASTType targetdom = null, targetcodom = null;
         String tid = null;
         if (target != null) {
-            ASTType tt = phi.unfold(target);
+            ASTType tt = pe.unfold(target);
             if (tt instanceof ASTTArrow arrow && (!lin || arrow.isLinear())) { targetdom = arrow.getDom(); targetcodom = arrow.getCodom(); tid = arrow.getId(); }
             else if (lin) throw new TypeCheckError(ErrorMessages.typeMismatch("lollipop", target));
             else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
         }
 
-        ASTType targtype = phi.unfold(argtype);
-        Env<ASTType> env = sigma.beginScope();
-        if (targetdom != null && !targetdom.isSubtypeOf(targtype, sigma, phi, alpha))
+        ASTType targtype = pe.unfold(argtype);
+        pe.openEnvScope(PENV.SIGMA);
+        if (targetdom != null && !targetdom.isSubtypeOf(targtype, pe))
             throw new TypeCheckError(ErrorMessages.notSubtypeFunc(targetdom, targtype));
-        env.assoc(id, targtype);
-        body.setSig(env);
-        if (tid != null) alpha.extend(id, tid);
+        pe.bindToEnv(PENV.SIGMA, id, targtype);
+        body.setSig(pe.getSigma());
+        if (tid != null) pe.extendAlpha(tid, tid);
 
-        ASTType tb = body.puretypecheck(env, phi, alpha, targetcodom);
+        ASTType tb = body.puretypecheck(pe, targetcodom);
         return new ASTTArrow(targtype, tb, id, lin);
     }
 

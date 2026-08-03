@@ -94,9 +94,9 @@ public class ASTOp extends ASTNode {
 		throw new TypeCheckError(ErrorMessages.unexpectedOperation(op));
 	}
 
-	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-		ASTType tl = lhs.puretypecheck(sigma, phi, alpha, null);
-		ASTType tr = rhs.puretypecheck(sigma, phi, alpha, null);
+	public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+		ASTType tl = lhs.puretypecheck(pe, null);
+		ASTType tr = rhs.puretypecheck(pe, null);
 		if (op.equals("+") || op.equals("-") || op.equals("*") || op.equals("/") || op.equals("-u")) return typecheckArithOp(tl, tr);
 		if (op.equals("==") || op.equals("!=") || op.equals(">") || op.equals(">=") || op.equals("<") || op.equals("<=")) return typecheckCmpOp(tl, tr);
 		if (op.equals("&&") || op.equals("||") || op.equals("~")) return typecheckLogicOp(tl, tr);

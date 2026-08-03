@@ -4,6 +4,7 @@ import proj.src.values.*;
 import proj.src.types.*;
 import proj.src.env.*;
 import proj.src.env.EnvSet.ENV;
+import proj.src.env.PureEnvSet.PENV;
 import proj.src.errors.*;
 
 public class ASTLeteq extends ASTNode {
@@ -51,14 +52,14 @@ public class ASTLeteq extends ASTNode {
         return rt;
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        this.setSig(sigma);
-        ASTType t = expr.puretypecheck(sigma, phi, alpha, null);
-        t = phi.unfold(t);
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+        this.setSig(pe.getSigma());
+        ASTType t = expr.puretypecheck(pe, null);
+        t = pe.unfold(t);
         if (!(t instanceof ASTTEq)) throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("leteq", t));
-        Env<ASTType> env = sigma.beginScope();
-        env.assoc(id, t);
-        return body.puretypecheck(env, phi, alpha, target);
+        pe.openEnvScope(PENV.SIGMA);
+        pe.bindToEnv(PENV.SIGMA, id, t);
+        return body.puretypecheck(pe, target);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {

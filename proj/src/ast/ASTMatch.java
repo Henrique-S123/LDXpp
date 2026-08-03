@@ -5,6 +5,7 @@ import proj.src.types.*;
 import proj.src.debug.Debug;
 import proj.src.env.*;
 import proj.src.env.EnvSet.ENV;
+import proj.src.env.PureEnvSet.PENV;
 import proj.src.errors.*;
 
 import java.util.*;
@@ -88,13 +89,13 @@ public class ASTMatch extends ASTNode {
 				throw new TypeCheckError(ErrorMessages.branchesDifferentLinears(caseUsedLineares, matchUsedLinears));
 			
 			if (target == null) {
-				if (rettype == null || rettype.isSubtypeOf(tcase, env.getSigma(), env.getPhi(), e.getAlpha()))
+				if (rettype == null || rettype.isSubtypeOf(tcase, new PureEnvSet(env)))
 					rettype = tcase;
-				else if (!tcase.isSubtypeOf(rettype, env.getSigma(), env.getPhi(), e.getAlpha()))
+				else if (!tcase.isSubtypeOf(rettype, new PureEnvSet(env)))
 					throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tcase, rettype));
 			} else {
 				rettype = target;
-				if (!tcase.isSubtypeOf(target, env.getSigma(), env.getPhi(), e.getAlpha()))
+				if (!tcase.isSubtypeOf(target, new PureEnvSet(env)))
 					throw new TypeCheckError(ErrorMessages.notSubtype(tcase, target));
 			}
 
@@ -104,10 +105,10 @@ public class ASTMatch extends ASTNode {
 		return rettype;
 	}
 
-	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-		ASTType tt = test.puretypecheck(sigma, phi, alpha, null), rettype = null, tcase;
-		tt = phi.unfold(tt);
-		this.setSig(sigma);
+	public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+		ASTType tt = test.puretypecheck(pe, null), rettype = null, tcase;
+		tt = pe.unfold(tt);
+		this.setSig(pe.getSigma());
 		if (!(tt instanceof ASTTUnion))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("match", tt));
 		Set<Map.Entry<String, ASTType>> entries = ((ASTTUnion) tt).getMap().entrySet();
@@ -116,24 +117,24 @@ public class ASTMatch extends ASTNode {
 			if (c == null)
 				throw new TypeCheckError(ErrorMessages.missingMatchCase(entry.getKey()));
 
-			ASTType tlabel = phi.unfold(entry.getValue());
-			Env<ASTType> env = sigma.beginScope();
-			env.assoc(c.getId(), tlabel);
+			ASTType tlabel = pe.unfold(entry.getValue());
+			pe.openEnvScope(PENV.SIGMA);
+			pe.bindToEnv(PENV.SIGMA, c.getId(), tlabel);
 
 			ASTUnion eqterm = new ASTUnion(entry.getKey(), new ASTId(c.getId(), c.getId()), tt.isLinear());
-			env.assoc(env.getFreshId(), new ASTTEq(test, eqterm, tt));
+			pe.bindToEnv(PENV.SIGMA, pe.getFreshId(), new ASTTEq(test, eqterm, tt));
 
-			if (c.getExp() instanceof ASTNever never) never.setFields(sigma, entry.getKey(), test);
-			tcase = c.getExp().puretypecheck(env, phi, alpha, target);
+			if (c.getExp() instanceof ASTNever never) never.setFields(pe.getSigma(), entry.getKey(), test);
+			tcase = c.getExp().puretypecheck(pe, target);
 			
 			if (target == null) {
-				if (rettype == null || rettype.isSubtypeOf(tcase, env, phi, alpha))
+				if (rettype == null || rettype.isSubtypeOf(tcase, pe))
 					rettype = tcase;
-				else if (!tcase.isSubtypeOf(rettype, env, phi, alpha))
+				else if (!tcase.isSubtypeOf(rettype,pe))
 					throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tcase, rettype));
 			} else {
 				rettype = target;
-				if (!tcase.isSubtypeOf(target, env, phi, alpha))
+				if (!tcase.isSubtypeOf(target, pe))
 					throw new TypeCheckError(ErrorMessages.notSubtype(tcase, target));
 			}
 		}

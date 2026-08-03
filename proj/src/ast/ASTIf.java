@@ -53,35 +53,35 @@ public class ASTIf extends ASTNode {
 			throw new TypeCheckError(ErrorMessages.branchesDifferentLinears(conseqLs, altLs));
 
 		if (target != null) {
-			if (!tconseq.isSubtypeOf(target, e.getSigma(), e.getPhi(), e.getAlpha()))
+			if (!tconseq.isSubtypeOf(target, new PureEnvSet(e)))
 				throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tconseq, target));
-			if (!talt.isSubtypeOf(target, e.getSigma(), e.getPhi(), e.getAlpha()))
+			if (!talt.isSubtypeOf(target, new PureEnvSet(e)))
 				throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(talt, target));
 			return target;
 		} else {
-			if (tconseq.isSubtypeOf(talt, e.getSigma(), e.getPhi(), e.getAlpha())) return talt;
-			else if (talt.isSubtypeOf(tconseq, e.getSigma(), e.getPhi(), e.getAlpha())) return tconseq;
+			if (tconseq.isSubtypeOf(talt, new PureEnvSet(e))) return talt;
+			else if (talt.isSubtypeOf(tconseq, new PureEnvSet(e))) return tconseq;
 			else throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tconseq, talt));
 		}
 	}
 
-	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-		ASTType tt = test.puretypecheck(sigma, phi, alpha, null);
+	public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+		ASTType tt = test.puretypecheck(pe, null);
 		if (!(tt instanceof ASTTBool))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("if", tt));
 
-		ASTType tconseq = conseq.puretypecheck(sigma, phi, alpha, target);
-		ASTType talt = alt.puretypecheck(sigma, phi, alpha, target);
+		ASTType tconseq = conseq.puretypecheck(pe, target);
+		ASTType talt = alt.puretypecheck(pe, target);
 
 		if (target != null) {
-			if (!tconseq.isSubtypeOf(target, sigma, phi, alpha))
+			if (!tconseq.isSubtypeOf(target, pe))
 				throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tconseq, target));
-			if (!talt.isSubtypeOf(target, sigma, phi, alpha))
+			if (!talt.isSubtypeOf(target, pe))
 				throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(talt, target));
 			return target;
 		} else {
-			if (tconseq.isSubtypeOf(talt, sigma, phi, alpha)) return talt;
-			else if (talt.isSubtypeOf(tconseq, sigma, phi, alpha)) return tconseq;
+			if (tconseq.isSubtypeOf(talt, pe)) return talt;
+			else if (talt.isSubtypeOf(tconseq, pe)) return tconseq;
 			else throw new TypeCheckError(ErrorMessages.branchesDifferentTypes(tconseq, talt));
 		}
 	}

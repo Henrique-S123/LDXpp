@@ -37,13 +37,13 @@ public class ASTTEq extends ASTType {
         return String.format("%s ≡ %s : %s", term1, term2, type);
     }
 
-    public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
+        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe);
         Debug.off();
-        DefEq e = new DefEq(sigma);
-        boolean res = o instanceof ASTTEq eq && e.typedefeq(type, eq.getType(), sigma, phi, alpha)
-            && e.termdefeq(term1.weaknorm(), eq.getTerm1().weaknorm(), sigma, phi, alpha)
-            && e.termdefeq(term2.weaknorm(), eq.getTerm2().weaknorm(), sigma, phi, alpha);
+        DefEq e = new DefEq(pe.getSigma());
+        boolean res = o instanceof ASTTEq eq && e.typedefeq(type, eq.getType(), pe.getSigma(), pe.getPhi(), pe.getAlpha())
+            && e.termdefeq(term1.weaknorm(), eq.getTerm1().weaknorm(), pe.getSigma(), pe.getPhi(), pe.getAlpha())
+            && e.termdefeq(term2.weaknorm(), eq.getTerm2().weaknorm(), pe.getSigma(), pe.getPhi(), pe.getAlpha());
         Debug.on();
         return res;
     }
@@ -57,15 +57,15 @@ public class ASTTEq extends ASTType {
         return neweq;
     }
 
-    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) throws TypeCheckError {
-        type.check(sigma, phi, alpha);
-        ASTType type1 = term1.puretypecheck(sigma, phi, alpha, type);
+    public ASTType check(PureEnvSet pe) throws TypeCheckError {
+        type.check(pe);
+        ASTType type1 = term1.puretypecheck(pe, type);
         Debug.log("LEFT TERM TYPE: " + type1);
-        if (!type1.isSubtypeOf(type, sigma, phi, alpha))
+        if (!type1.isSubtypeOf(type, pe))
             throw new TypeCheckError(ErrorMessages.notSubtype(type1, type));
-        ASTType type2 = term2.puretypecheck(sigma, phi, alpha, type);
+        ASTType type2 = term2.puretypecheck(pe, type);
         Debug.log("RIGHT TERM TYPE: " + type2);
-        if (!type2.isSubtypeOf(type, sigma, phi, alpha))
+        if (!type2.isSubtypeOf(type, pe))
             throw new TypeCheckError(ErrorMessages.notSubtype(type2, type));
         return this;
     }

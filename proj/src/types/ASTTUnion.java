@@ -22,14 +22,14 @@ public class ASTTUnion extends ASTType {
             ll.get(id).setSig(s);
     }
 
-    public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
+        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe);
         Map<String, ASTType> mb;
         if (o instanceof ASTTUnion ot && (!lin || ot.isLinear())) mb = ot.getMap();
         else return false;
 
         for (String s : ll.keySet())
-            if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), sigma, phi, alpha))) return false;
+            if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), pe))) return false;
         return true;
     }
 
@@ -46,8 +46,8 @@ public class ASTTUnion extends ASTType {
         return this;
     }
 
-    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) throws TypeCheckError {
-        for (ASTType t : ll.values()) t.check(sigma, phi, alpha);
+    public ASTType check(PureEnvSet pe) throws TypeCheckError {
+        for (ASTType t : ll.values()) t.check(pe);
         return this;
     }
 }

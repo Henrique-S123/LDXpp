@@ -20,14 +20,14 @@ public	class ASTTId extends ASTType	{
         return id;
     }
 
-    public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
-        if (!(o instanceof ASTTId)) return phi.unfold(this).isSubtypeOf(o, sigma, phi, alpha);
-        DefEq eq = new DefEq(sigma);
-        return eq.typedefeq(this, o, sigma, phi, alpha);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
+        if (!(o instanceof ASTTId)) return pe.unfold(this).isSubtypeOf(o, pe);
+        DefEq eq = new DefEq(pe.getSigma());
+        return eq.typedefeq(this, o, pe.getSigma(), pe.getPhi(), pe.getAlpha());
     }
 
-    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) throws TypeCheckError {
-        if (phi.find(id) == null) throw new TypeCheckError(ErrorMessages.idNotFound(id));
+    public ASTType check(PureEnvSet pe) throws TypeCheckError {
+        if (pe.findAlias(id) == null) throw new TypeCheckError(ErrorMessages.idNotFound(id));
         return this;
     }
 }	

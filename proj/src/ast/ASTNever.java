@@ -30,8 +30,8 @@ public class ASTNever extends ASTNode  {
         throw new TypeCheckError(ErrorMessages.contextNotInconsistent());
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        if (isInconsistent(phi, alpha)) return target;
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+        if (isInconsistent(pe.getPhi(), pe.getAlpha())) return target;
         throw new TypeCheckError(ErrorMessages.contextNotInconsistent());
     }
 

@@ -4,6 +4,7 @@ import proj.src.values.*;
 import proj.src.types.*;
 import proj.src.env.*;
 import proj.src.env.EnvSet.ENV;
+import proj.src.env.PureEnvSet.PENV;
 import proj.src.errors.*;
 
 public class ASTLet extends ASTNode {
@@ -41,11 +42,11 @@ public class ASTLet extends ASTNode {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        if (declType != null) declType.check(e.getSigma(), e.getPhi(), e.getAlpha());
+        if (declType != null) declType.check(new PureEnvSet(e));
 
         ASTType texp = expr.typecheck(e, declType);
         texp = e.unfold(texp);
-        if (declType != null && !texp.isSubtypeOf(declType, e.getSigma(), e.getPhi(), e.getAlpha()))
+        if (declType != null && !texp.isSubtypeOf(declType, new PureEnvSet(e)))
             throw new TypeCheckError(ErrorMessages.notSubtype(texp, declType));
         ASTType tt = (declType != null) ? e.unfold(declType) : texp;
 
@@ -65,20 +66,20 @@ public class ASTLet extends ASTNode {
         return rt;
 	}
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        if (declType != null) declType.check(sigma, phi, alpha);
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+        if (declType != null) declType.check(pe);
 
-        ASTType texp = expr.puretypecheck(sigma, phi, alpha, declType);
-        texp = phi.unfold(texp);
-        if (declType != null && !texp.isSubtypeOf(declType, sigma, phi, alpha))
+        ASTType texp = expr.puretypecheck(pe, declType);
+        texp = pe.unfold(texp);
+        if (declType != null && !texp.isSubtypeOf(declType, pe))
             throw new TypeCheckError(ErrorMessages.notSubtype(texp, declType));
-        ASTType tt = (declType != null) ? phi.unfold(declType) : texp;
+        ASTType tt = (declType != null) ? pe.unfold(declType) : texp;
 
         Binder<ASTType> b = new Binder<ASTType>(tt);
-        Env<ASTType> env = sigma.beginScope();
-        env.assoc(id, b);
-        env.assoc(env.getFreshId(), new ASTTEq(new ASTId(id, b.getId()), expr, tt));
-        return body.puretypecheck(env, phi, alpha, target);
+        pe.openEnvScope(PENV.SIGMA);
+        pe.bindToEnv(PENV.SIGMA, id, b);
+        pe.bindToEnv(PENV.SIGMA, pe.getFreshId(), new ASTTEq(new ASTId(id, b.getId()), expr, tt));
+        return body.puretypecheck(pe, target);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {

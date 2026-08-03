@@ -1,9 +1,7 @@
 package proj.src.env;
 
 import java.util.*;
-
-import proj.src.errors.ErrorMessages;
-import proj.src.errors.TypeCheckError;
+import proj.src.errors.*;
 
 public final class ResourceManager<E> {
     private final class Scope {
@@ -44,7 +42,6 @@ public final class ResourceManager<E> {
     }
 
     public void register(String id, Binder<E> resource) {
-        // TODO: add guard
         scopes.peek().live.put(id, resource);
         scopes.peek().consumed.remove(id);
     }

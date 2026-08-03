@@ -40,10 +40,10 @@ public class ASTId extends ASTNode	{
         return ret;
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        ASTType ret = sigma.find(id);
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+        ASTType ret = pe.findVar(id);
         if (ret == null) throw new TypeCheckError(ErrorMessages.idNotFound(id));
-        if (binderId == null) binderId = sigma.findBinderId(id);
+        if (binderId == null) binderId = pe.findBinderId(id);
         return ret;
     }
 

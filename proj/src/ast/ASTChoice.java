@@ -44,13 +44,13 @@ public class ASTChoice extends ASTNode  {
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice ? "fst" : "snd", tp));
 	}
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        ASTType tp = pair.puretypecheck(sigma, phi, alpha, null);
-        this.setSig(sigma);
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+        ASTType tp = pair.puretypecheck(pe, null);
+        this.setSig(pe.getSigma());
         if (tp instanceof ASTTPair tpair && !tpair.isLinear()) {
             if (choice) return tpair.getFirst();
             ASTNode s = pair, finalpair = pair;
-            while ((s = s.solve(sigma)) != null) finalpair = s;
+            while ((s = s.solve(pe.getSigma())) != null) finalpair = s;
             return tpair.getSecond().inst(tpair.getId(), new ASTChoice(finalpair, true).weaknorm());
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice ? "fst" : "snd", tp));

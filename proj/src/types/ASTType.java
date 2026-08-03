@@ -20,7 +20,7 @@ public class ASTType  {
         sig = s;
     }
 
-    public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
         return false;
     }
 
@@ -28,7 +28,7 @@ public class ASTType  {
         return this;
     }
 
-    public ASTType check(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) throws TypeCheckError {
+    public ASTType check(PureEnvSet pe) throws TypeCheckError {
         return this;
     }
 }

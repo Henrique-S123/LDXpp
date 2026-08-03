@@ -4,6 +4,7 @@ import proj.src.values.*;
 import proj.src.types.*;
 import proj.src.env.*;
 import proj.src.env.EnvSet.ENV;
+import proj.src.env.PureEnvSet.PENV;
 import proj.src.errors.*;
 
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class ASTTypeDef extends ASTNode {
             e.bindToEnv(ENV.PHI, s, ltd.get(s));
         for (String s : ltd.keySet()) {
             ASTType t = ltd.get(s);
-            t.check(e.getSigma(), e.getPhi(), e.getAlpha());
+            t.check(new PureEnvSet(e));
             t.setSig(e.getSigma());
         }
         ASTType ret = this.body.typecheck(e, target);
@@ -43,14 +44,15 @@ public class ASTTypeDef extends ASTNode {
         return ret;
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        Env<ASTType> env = phi.beginScope();
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+        // TODO check if equal to typecheck
+        pe.openEnvScope(PENV.PHI);
         for (String s : ltd.keySet()) {
             ASTType t = ltd.get(s);
-            t.setSig(sigma);
-            env.assoc(s, t);
+            t.setSig(pe.getSigma());
+            pe.bindToEnv(PENV.PHI, s, t);
         }
-        return body.puretypecheck(sigma, env, alpha, target);
+        return body.puretypecheck(pe, target);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {

@@ -12,8 +12,8 @@ public class ASTTString extends ASTType {
         return "string";
     }
 
-    public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
+        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe);
         return o instanceof ASTTString;
     }
 }

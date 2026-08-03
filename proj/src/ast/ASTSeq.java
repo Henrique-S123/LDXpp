@@ -4,6 +4,7 @@ import proj.src.values.*;
 import proj.src.types.*;
 import proj.src.env.*;
 import proj.src.env.EnvSet.ENV;
+import proj.src.env.PureEnvSet.PENV;
 import proj.src.errors.*;
 
 public class ASTSeq extends ASTNode {
@@ -37,12 +38,12 @@ public class ASTSeq extends ASTNode {
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
 	}
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        ASTType tf = first.puretypecheck(sigma, phi, alpha, null);
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+        ASTType tf = first.puretypecheck(pe, null);
         if (tf instanceof ASTTUnit) {
-            Env<ASTType> env = sigma.beginScope();
-            env.assoc(env.getFreshId(), new ASTTEq(first, new ASTUnit(), tf));
-            return second.puretypecheck(env, phi, alpha, target);
+            pe.openEnvScope(PENV.SIGMA);
+            pe.bindToEnv(PENV.SIGMA, pe.getFreshId(), new ASTTEq(first, new ASTUnit(), tf));
+            return second.puretypecheck(pe, target);
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
     }

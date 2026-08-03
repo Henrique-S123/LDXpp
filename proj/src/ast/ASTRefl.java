@@ -35,19 +35,19 @@ public class ASTRefl extends ASTNode  {
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
         if (target == null) {
             if (term == null) throw new TypeCheckError(ErrorMessages.missingTermAnnotation());
-            return new ASTTEq(term, term, term.puretypecheck(sigma, phi, alpha, null));
+            return new ASTTEq(term, term, term.puretypecheck(pe, null));
         }
 
         if (!(target instanceof ASTTEq tt))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));
 
-        Env<ASTType> sig = (tt.getSig() != null) ? tt.getSig() : sigma;
+        Env<ASTType> sig = (tt.getSig() != null) ? tt.getSig() : pe.getSigma();
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
-        DefEq eq = new DefEq(sigma);
-        if (eq.termdefeq(left.weaknorm(), right.weaknorm(), sig, phi, alpha, tactic)) return target;
+        DefEq eq = new DefEq(pe.getSigma());
+        if (eq.termdefeq(left.weaknorm(), right.weaknorm(), sig, pe.getPhi(), pe.getAlpha(), tactic)) return target;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 

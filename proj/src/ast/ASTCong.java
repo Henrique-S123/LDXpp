@@ -20,8 +20,8 @@ public class ASTCong extends ASTNode {
         return expandVar(e.getSigma());
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        return expandVar(sigma);
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+        return expandVar(pe.getSigma());
     }
 
     private ASTTEq expandVar(Env<ASTType> sigma) throws TypeCheckError {

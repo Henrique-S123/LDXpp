@@ -96,6 +96,7 @@ public class EnvSet {
     }
 
     public void bindToEnv(ENV env, String id, ASTType t) throws TypeCheckError {
+        if (id == null) throw new TypeCheckError(ErrorMessages.nullId());
         switch (env) {
             case GAMMA -> { checkAlreadyDeclared(ENV.DELTA, id); gamma.assoc(id, t); }
             case DELTA -> { checkAlreadyDeclared(ENV.GAMMA, id); delta.register(id, t); }
@@ -105,6 +106,7 @@ public class EnvSet {
     }
 
     public void bindToEnv(ENV env, String id, Binder<ASTType> b) throws TypeCheckError {
+        if (id == null) throw new TypeCheckError(ErrorMessages.nullId());
         switch (env) {
             case GAMMA -> { checkAlreadyDeclared(ENV.DELTA, id); gamma.assoc(id, b); }
             case DELTA -> { checkAlreadyDeclared(ENV.GAMMA, id); delta.register(id, b); }

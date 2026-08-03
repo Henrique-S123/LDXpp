@@ -22,7 +22,7 @@ public class ASTString extends ASTNode  {
         return new ASTTString();
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) {
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) {
         return new ASTTString();
     }
 

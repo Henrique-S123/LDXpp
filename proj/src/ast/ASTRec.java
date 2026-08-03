@@ -4,6 +4,7 @@ import proj.src.values.*;
 import proj.src.types.*;
 import proj.src.env.*;
 import proj.src.env.EnvSet.ENV;
+import proj.src.env.PureEnvSet.PENV;
 import proj.src.errors.*;
 
 public class ASTRec extends ASTNode  {
@@ -31,7 +32,7 @@ public class ASTRec extends ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        functype.check(e.getSigma(), e.getPhi(), e.getAlpha());
+        functype.check(new PureEnvSet(e));
         ASTType tfunctype = e.unfold(functype);
         if (!(tfunctype instanceof ASTTArrow))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("rec", tfunctype));
@@ -44,7 +45,7 @@ public class ASTRec extends ASTNode  {
         ResourceManager<ASTType> prevDelta = e.popDelta();
         funcbody.setSig(e.getSigma());
         ASTType tfb = funcbody.typecheck(e, tfunctype);
-        if (!tfb.isSubtypeOf(tfunctype, e.getSigma(), e.getPhi(), e.getAlpha()))
+        if (!tfb.isSubtypeOf(tfunctype, new PureEnvSet(e)))
             throw new TypeCheckError(ErrorMessages.notSubtype(tfb, tfunctype));
         e.pushDelta(prevDelta);
         e.closeEnvScope(ENV.GAMMA);
@@ -57,23 +58,23 @@ public class ASTRec extends ASTNode  {
         return tb;
     }
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        functype.check(sigma, phi, alpha);
-        ASTType tfunctype = phi.unfold(functype);
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+        functype.check(pe);
+        ASTType tfunctype = pe.unfold(functype);
         if (!(tfunctype instanceof ASTTArrow))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("rec", tfunctype));
 
         Binder<ASTType> b = new Binder<ASTType>(tfunctype);
-        Env<ASTType> env = sigma.beginScope();
-        env.assoc(fid, b);
-        funcbody.setSig(sigma);
+        pe.openEnvScope(PENV.SIGMA);
+        pe.bindToEnv(PENV.SIGMA, fid, b);
+        funcbody.setSig(pe.getSigma());
         
-        ASTType tfb = funcbody.puretypecheck(env, phi, alpha, tfunctype);
-        if (!tfb.isSubtypeOf(tfunctype, sigma, phi, alpha))
+        ASTType tfb = funcbody.puretypecheck(pe, tfunctype);
+        if (!tfb.isSubtypeOf(tfunctype, pe))
             throw new TypeCheckError(ErrorMessages.notSubtype(tfb, tfunctype));
 
-        env.assoc(env.getFreshId(), new ASTTEq(new ASTId(fid, b.getId()), funcbody, tfunctype));
-        ASTType tb = body.puretypecheck(env, phi, alpha, target);
+        pe.bindToEnv(PENV.SIGMA, pe.getFreshId(), new ASTTEq(new ASTId(fid, b.getId()), funcbody, tfunctype));
+        ASTType tb = body.puretypecheck(pe, target);
         return tb;
     }
 

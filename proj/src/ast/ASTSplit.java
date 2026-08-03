@@ -4,6 +4,7 @@ import proj.src.values.*;
 import proj.src.types.*;
 import proj.src.env.*;
 import proj.src.env.EnvSet.ENV;
+import proj.src.env.PureEnvSet.PENV;
 import proj.src.errors.*;
 
 public class ASTSplit extends ASTNode {
@@ -78,20 +79,22 @@ public class ASTSplit extends ASTNode {
 		return rt;
 	}
 
-	public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-		ASTType tt = pair.puretypecheck(sigma, phi, alpha, null);
-		tt = phi.unfold(tt);
-		this.setSig(sigma);
+	public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+		ASTType tt = pair.puretypecheck(pe, null);
+		tt = pe.unfold(tt);
+		this.setSig(pe.getSigma());
 		if (!(tt instanceof ASTTPair tpair && tpair.isLinear() == linpair))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
 
-		ASTType t1 = phi.unfold(tpair.getFirst());
-		ASTType t2 = phi.unfold(tpair.getSecond());
-		Env<ASTType> env = sigma.beginScope();
-		env.assoc(id1, t1);
-		env.assoc(id2, t2);
-		env.assoc(env.getFreshId(), new ASTTEq(new ASTPair(new ASTId(id1), new ASTId(id2), linpair), pair, tt));
-		return body.puretypecheck(env, phi, alpha, target);
+		ASTType t1 = pe.unfold(tpair.getFirst());
+		ASTType t2 = pe.unfold(tpair.getSecond());
+
+		pe.openEnvScope(PENV.SIGMA);
+		pe.bindToEnv(PENV.SIGMA, id1, t1);
+		pe.bindToEnv(PENV.SIGMA, id2, t2);
+		ASTTEq newterm = new ASTTEq(new ASTPair(new ASTId(id1), new ASTId(id2), linpair), pair, tt);
+		pe.bindToEnv(PENV.SIGMA, pe.getFreshId(), newterm);
+		return body.puretypecheck(pe, target);
     }
 
 	public ASTNode weaknorm(Env<ASTNode> sub) {

@@ -12,8 +12,8 @@ public class ASTTInt extends ASTType {
         return String.format("%sint", lin ? "lin" : "");
     }
 
-    public boolean isSubtypeOf(ASTType o, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(phi.unfold(o), sigma, phi, alpha);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
+        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe);
         return (o instanceof ASTTInt ot && (!lin || ot.isLinear()));
     }
 }

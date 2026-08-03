@@ -57,21 +57,21 @@ public class ASTApp extends ASTNode  {
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("app", tf));
 
         ASTType targ = arg.typecheck(e, dom);
-        if (targ instanceof ASTTUnit || targ.isSubtypeOf(dom, e.getSigma(), e.getPhi(), e.getAlpha())) return codom.inst(id, arg);
+        if (targ instanceof ASTTUnit || targ.isSubtypeOf(dom, new PureEnvSet(e))) return codom.inst(id, arg);
         else throw new TypeCheckError(ErrorMessages.notSubtypeApp(targ, dom));
 	}
 
-    public ASTType puretypecheck(Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha, ASTType target) throws TypeCheckError {
-        this.setSig(sigma);
-        ASTType tf = func.puretypecheck(sigma, phi, alpha, null);
-        tf = phi.unfold(tf);
+    public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+        this.setSig(pe.getSigma());
+        ASTType tf = func.puretypecheck(pe, null);
+        tf = pe.unfold(tf);
         ASTType dom, codom;
         String id;
         if (tf instanceof ASTTArrow fun) { dom = fun.getDom(); codom = fun.getCodom(); id = fun.getId(); }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("app", tf));
 
-        ASTType targ = arg.puretypecheck(sigma, phi, alpha, dom);
-        if (targ instanceof ASTTUnit || targ.isSubtypeOf(dom, sigma, phi, alpha)) return codom.inst(id, arg);
+        ASTType targ = arg.puretypecheck(pe, dom);
+        if (targ instanceof ASTTUnit || targ.isSubtypeOf(dom, pe)) return codom.inst(id, arg);
         else throw new TypeCheckError(ErrorMessages.notSubtypeApp(targ, dom));
 	}
 
