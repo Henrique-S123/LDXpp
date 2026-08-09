@@ -1,0 +1,11 @@
+let p:(x:int, (x=2:int), (x:int, (x=3:int))) = (2, refl, (3, refl));
+p;;
+
+let p:(x:int, (x=2:int), (x:int, (x=3:int))) = (2, refl, (3, refl));
+snd(p);;
+
+let p:(x:int, (x=2:int), (x:int, (x=3:int))) = (2, refl, (3, refl));
+snd(snd(p));;
+
+let p:(x:int, (x=2:int), (x:int, (x=3:int))) = (2, refl, (3, refl));
+snd(snd(snd(p)));;

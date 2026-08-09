@@ -1,0 +1,12 @@
+type: (x:int, (x ≡ 2 : int, (x:int, x ≡ 3 : int))), value: (2, (refl, (3, refl)))
+
+
+type: (2 ≡ 2 : int, (x:int, x ≡ 3 : int)), value: (refl, (3, refl))
+
+
+type: (x:int, x ≡ 3 : int), value: (3, refl)
+
+
+type: 3 ≡ 3 : int, value: refl
+
+
