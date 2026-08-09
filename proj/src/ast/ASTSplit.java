@@ -56,7 +56,7 @@ public class ASTSplit extends ASTNode {
 		ASTType t1 = e.unfold(tpair.getFirst());
 		Binder<ASTType> b1 = new Binder<ASTType>(t1);
 
-		ASTTPair instttensor = tpair.inst(tpair.getId(), new ASTId(id1, b1.getId()));
+		ASTTPair instttensor = (tpair.getBid() != null) ? tpair.inst(tpair.getBid(), new ASTId(id1, b1.getId())) : tpair;
 		ASTType t2 = e.unfold(instttensor.getSecond());
 		Binder<ASTType> b2 = new Binder<ASTType>(t2);
 

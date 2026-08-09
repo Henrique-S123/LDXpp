@@ -347,9 +347,9 @@ ASTType Type() :
     )
 
       (
-        <SLIMARROW> t2 = Type() { t1 = new ASTTArrow(t1, t2, n != null ? n.image : null, false); }
+        <SLIMARROW> t2 = Type() { t1 = new ASTTArrow(t1, t2, n != null ? n.image : null, null, false); }
       |
-        <LOLLIPOP> t2 = Type() { t1 = new ASTTArrow(t1, t2, n != null ? n.image : null, true); }
+        <LOLLIPOP> t2 = Type() { t1 = new ASTTArrow(t1, t2, n != null ? n.image : null, null, true); }
       )?
     { return t1; }
 }
@@ -390,9 +390,9 @@ ASTType TypeInsidePar() :
       t = Type()
     )
   (
-    <COMMA> t2 = PairType() { t = new ASTTPair(t, t2, n == null ? null : n.image, false); }
+    <COMMA> t2 = PairType() { t = new ASTTPair(t, t2, n == null ? null : n.image, null, false); }
     |
-    <VERT> t2 = TensorType() { t = new ASTTPair(t, t2, n == null ? null : n.image, true); }
+    <VERT> t2 = TensorType() { t = new ASTTPair(t, t2, n == null ? null : n.image, null, true); }
   )?
   { return t; }
 }
@@ -401,7 +401,7 @@ ASTType PairType() :
 { ASTType t, t2;
   Token n; }
 {
-  n = IdAnnotation() t = Type() (<COMMA> t2 = PairType() { t = new ASTTPair(t, t2, n == null ? null : n.image, false); })?
+  n = IdAnnotation() t = Type() (<COMMA> t2 = PairType() { t = new ASTTPair(t, t2, n == null ? null : n.image, null, false); })?
   { return t; }
 }
 
@@ -409,7 +409,7 @@ ASTType TensorType() :
 { ASTType t, t2;
   Token n; }
 {
-  n = IdAnnotation() t = Type() (<VERT> t2 = TensorType() { t = new ASTTPair(t, t2, n == null ? null : n.image, true); })?
+  n = IdAnnotation() t = Type() (<VERT> t2 = TensorType() { t = new ASTTPair(t, t2, n == null ? null : n.image, null, true); })?
   { return t; }
 }
 

@@ -925,12 +925,12 @@ public class Parser implements ParserConstants {
       case SLIMARROW:
         jj_consume_token(SLIMARROW);
         t2 = Type();
-                                  t1 = new ASTTArrow(t1, t2, n != null ? n.image : null, false);
+                                  t1 = new ASTTArrow(t1, t2, n != null ? n.image : null, null, false);
         break;
       case LOLLIPOP:
         jj_consume_token(LOLLIPOP);
         t2 = Type();
-                                 t1 = new ASTTArrow(t1, t2, n != null ? n.image : null, true);
+                                 t1 = new ASTTArrow(t1, t2, n != null ? n.image : null, null, true);
         break;
       default:
         jj_la1[32] = jj_gen;
@@ -1047,12 +1047,12 @@ public class Parser implements ParserConstants {
       case COMMA:
         jj_consume_token(COMMA);
         t2 = PairType();
-                              t = new ASTTPair(t, t2, n == null ? null : n.image, false);
+                              t = new ASTTPair(t, t2, n == null ? null : n.image, null, false);
         break;
       case VERT:
         jj_consume_token(VERT);
         t2 = TensorType();
-                               t = new ASTTPair(t, t2, n == null ? null : n.image, true);
+                               t = new ASTTPair(t, t2, n == null ? null : n.image, null, true);
         break;
       default:
         jj_la1[36] = jj_gen;
@@ -1077,7 +1077,7 @@ public class Parser implements ParserConstants {
     case COMMA:
       jj_consume_token(COMMA);
       t2 = PairType();
-                                                           t = new ASTTPair(t, t2, n == null ? null : n.image, false);
+                                                           t = new ASTTPair(t, t2, n == null ? null : n.image, null, false);
       break;
     default:
       jj_la1[38] = jj_gen;
@@ -1096,7 +1096,7 @@ public class Parser implements ParserConstants {
     case VERT:
       jj_consume_token(VERT);
       t2 = TensorType();
-                                                            t = new ASTTPair(t, t2, n == null ? null : n.image, true);
+                                                            t = new ASTTPair(t, t2, n == null ? null : n.image, null, true);
       break;
     default:
       jj_la1[39] = jj_gen;

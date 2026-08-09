@@ -75,7 +75,7 @@ public class ASTFunc extends ASTNode  {
             throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
-        return new ASTTArrow(targtype, tb, id, lin);
+        return new ASTTArrow(targtype, tb, id, null, lin);
     }
 
     public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
@@ -98,7 +98,7 @@ public class ASTFunc extends ASTNode  {
         if (tid != null) pe.extendAlpha(tid, tid);
 
         ASTType tb = body.puretypecheck(pe, targetcodom);
-        return new ASTTArrow(targtype, tb, id, lin);
+        return new ASTTArrow(targtype, tb, id, null, lin);
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {

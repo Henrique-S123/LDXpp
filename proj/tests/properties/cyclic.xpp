@@ -1,0 +1,2 @@
+let x = 1; let y = x; let x = y;
+let e:(y = 1 : int) = refl; e;;

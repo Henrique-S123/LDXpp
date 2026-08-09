@@ -86,7 +86,7 @@ public class ASTRec extends ASTNode  {
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-        return new ASTRec(fid, functype, funcbody.subs(subsId, node), body.subs(subsId, node));
+        return new ASTRec(fid, functype, funcbody, body.subs(subsId, node));
     }
 
     @Override

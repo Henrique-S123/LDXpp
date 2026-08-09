@@ -39,7 +39,7 @@ public class ASTChoice extends ASTNode  {
             if (choice) return tpair.getFirst();
             ASTNode s = pair, finalpair = pair;
             while ((s = s.solve(e.getSigma())) != null) finalpair = s;
-            return tpair.getSecond().inst(tpair.getId(), new ASTChoice(finalpair, true).weaknorm());
+            return tpair.getSecond().inst(tpair.getBid(), new ASTChoice(finalpair, true).weaknorm());
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice ? "fst" : "snd", tp));
 	}
@@ -51,7 +51,7 @@ public class ASTChoice extends ASTNode  {
             if (choice) return tpair.getFirst();
             ASTNode s = pair, finalpair = pair;
             while ((s = s.solve(pe.getSigma())) != null) finalpair = s;
-            return tpair.getSecond().inst(tpair.getId(), new ASTChoice(finalpair, true).weaknorm());
+            return tpair.getSecond().inst(tpair.getBid(), new ASTChoice(finalpair, true).weaknorm());
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice ? "fst" : "snd", tp));
     }

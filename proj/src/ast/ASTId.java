@@ -58,7 +58,7 @@ public class ASTId extends ASTNode	{
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-        if (id.equals(subsId)) return node;
+        if (binderId.equals(subsId)) return node;
         return this;
     }
 

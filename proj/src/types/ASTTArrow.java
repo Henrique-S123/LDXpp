@@ -7,10 +7,10 @@ import proj.src.errors.*;
 
 public class ASTTArrow extends ASTType {
     ASTType dom, codom;
-    String id;
+    String id, bid;
 
-    public ASTTArrow(ASTType d, ASTType co, String i, boolean l) {
-        dom = d; codom = co; id = i; lin = l;
+    public ASTTArrow(ASTType d, ASTType co, String i, String bi, boolean l) {
+        dom = d; codom = co; id = i; bid = bi; lin = l;
     }
 
     public ASTType getDom() { return dom; }
@@ -18,6 +18,8 @@ public class ASTTArrow extends ASTType {
     public ASTType getCodom() { return codom; }
 
     public String getId() { return id; }
+
+    public String getBid() { return bid; }
 
     public void setSig(Env<ASTType> s) {
         sig = s;
@@ -43,14 +45,16 @@ public class ASTTArrow extends ASTType {
     }
 
     public ASTTArrow inst(String instId, ASTNode n) {
-        return new ASTTArrow(dom.inst(instId, n), codom.inst(instId, n), id, lin);
+        return new ASTTArrow(dom.inst(instId, n), codom.inst(instId, n), id, bid, lin);
     }
 
     public ASTType check(PureEnvSet pe) throws TypeCheckError {
         dom.check(pe);
         if (id != null) {
+            Binder<ASTType> b = new Binder<ASTType>(dom);
+            bid = b.getId();
             pe.openEnvScope(PENV.SIGMA);
-            pe.bindToEnv(PENV.SIGMA, id, dom);
+            pe.bindToEnv(PENV.SIGMA, id, b);
         }
         codom.check(pe);
         return this;
