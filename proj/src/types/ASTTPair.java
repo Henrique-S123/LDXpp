@@ -21,12 +21,6 @@ public class ASTTPair extends ASTType {
 
     public String getBid() { return bid; }
 
-    public void setSig(Env<ASTType> s) {
-        sig = s;
-        first.setSig(s);
-        second.setSig(s);
-    }
-
     public String toString() {
         return String.format("(%s%s%s %s)", id != null ? id+":" : "", first, lin ? " |" : ",", second);
     }

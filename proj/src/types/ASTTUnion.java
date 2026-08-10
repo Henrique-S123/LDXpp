@@ -16,12 +16,6 @@ public class ASTTUnion extends ASTType {
 
     public Map<String, ASTType> getMap() { return ll; }
 
-    public void setSig(Env<ASTType> s) {
-        sig = s;
-        for (String id : ll.keySet())
-            ll.get(id).setSig(s);
-    }
-
     public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
         if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe);
         Map<String, ASTType> mb;

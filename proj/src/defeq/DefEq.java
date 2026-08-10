@@ -204,7 +204,7 @@ public final class DefEq {
             seen.add(new IdPair(lt.getId(), rt.getId()));
             ASTType newl = phi.unfold(lt);
             ASTType newr = phi.unfold(rt);
-            return typedefeq(newl, newl.getSig(), newr, newr.getSig(), alpha, phi, seen, t);
+            return typedefeq(newl, sl, newr, sr, alpha, phi, seen, t);
         }
         
         if (l instanceof ASTTArrow lt && r instanceof ASTTArrow rt)
@@ -235,11 +235,11 @@ public final class DefEq {
     private boolean unfold(ASTType l, Env<ASTType> sl, ASTType r, Env<ASTType> sr, AlphaEnv alpha, Env<ASTType> phi, Set<IdPair> seen, Tactic t) {
         if (l instanceof ASTTId lt) {
             ASTType newl = phi.unfold(lt);
-            return typedefeq(newl, newl.getSig(), r, sr, alpha, phi, seen, t);
+            return typedefeq(newl, sl, r, sr, alpha, phi, seen, t);
         }
         if (r instanceof ASTTId rt) {
             ASTType newr = phi.unfold(rt);
-            return typedefeq(l, sl, newr, newr.getSig(), alpha, phi, seen, t);
+            return typedefeq(l, sl, newr, sr, alpha, phi, seen, t);
         }
 
         return false;

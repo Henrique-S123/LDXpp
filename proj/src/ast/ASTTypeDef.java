@@ -37,7 +37,6 @@ public class ASTTypeDef extends ASTNode {
         for (String s : ltd.keySet()) {
             ASTType t = ltd.get(s);
             t.check(new PureEnvSet(e));
-            t.setSig(e.getSigma());
         }
         ASTType ret = this.body.typecheck(e, target);
         e.closeEnvScope(ENV.PHI);
@@ -51,7 +50,6 @@ public class ASTTypeDef extends ASTNode {
         for (String s : ltd.keySet()) {
             ASTType t = ltd.get(s);
             t.check(pe);
-            t.setSig(pe.getSigma());
         }
         return body.puretypecheck(pe, target);
     }

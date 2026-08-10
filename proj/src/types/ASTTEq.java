@@ -29,10 +29,6 @@ public class ASTTEq extends ASTType {
         return type;
     }
 
-    public void setSig(Env<ASTType> s) {
-        sig = s;
-    }
-
     public String toString() {
         return String.format("%s ≡ %s : %s", term1, term2, type);
     }
@@ -52,9 +48,7 @@ public class ASTTEq extends ASTType {
         ASTType instType = type.inst(instId, n);
         ASTNode instTerm1 = term1.subs(instId, n);
         ASTNode instTerm2 = term2.subs(instId, n);
-        ASTTEq neweq = new ASTTEq(instTerm1, instTerm2, instType);
-        neweq.setSig(sig);
-        return neweq;
+        return new ASTTEq(instTerm1, instTerm2, instType);
     }
 
     public ASTType check(PureEnvSet pe) throws TypeCheckError {

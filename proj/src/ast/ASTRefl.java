@@ -28,10 +28,9 @@ public class ASTRefl extends ASTNode  {
         if (!(target instanceof ASTTEq tt))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));
 
-        Env<ASTType> sig = (tt.getSig() != null) ? tt.getSig() : e.getSigma();
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
         DefEq eq = new DefEq(e.getSigma());
-        if (eq.termdefeq(left.weaknorm(), right.weaknorm(), sig, e.getPhi(), e.getAlpha(), tactic)) return target;
+        if (eq.termdefeq(left.weaknorm(), right.weaknorm(), e.getSigma(), e.getPhi(), e.getAlpha(), tactic)) return target;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
@@ -44,10 +43,9 @@ public class ASTRefl extends ASTNode  {
         if (!(target instanceof ASTTEq tt))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));
 
-        Env<ASTType> sig = (tt.getSig() != null) ? tt.getSig() : pe.getSigma();
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
         DefEq eq = new DefEq(pe.getSigma());
-        if (eq.termdefeq(left.weaknorm(), right.weaknorm(), sig, pe.getPhi(), pe.getAlpha(), tactic)) return target;
+        if (eq.termdefeq(left.weaknorm(), right.weaknorm(), pe.getSigma(), pe.getPhi(), pe.getAlpha(), tactic)) return target;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
