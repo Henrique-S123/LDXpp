@@ -156,36 +156,24 @@ ASTNode Seq() :
 {Token op;
   ASTNode t1, t2;}
 {
-     t1 = BA() ( ( op=<SEMIC> ) t2 = BA() 
- 		 {
-		 t1 = new ASTSeq(t1, t2);
-     } 
-		)*
-     { return t1; }  
+  t1 = BA() (op=<SEMIC> t2 = BA() { t1 = new ASTSeq(t1, t2); })*
+  { return t1; }  
 }
 
 ASTNode BA() :
 {Token op;
   ASTNode t1, t2;}
 {
-     t1 = BM() ( ( op=<OR> ) t2 = BM() 
- 		 {
-     t1 = new ASTOp(t1, t2, "||");
-		 } 
-		)*
-     { return t1; } 
+  t1 = BM() (op=<OR> t2 = BM() { t1 = new ASTOp(t1, t2, "||"); })*
+  { return t1; } 
 }
 
 ASTNode BM() :
 {Token op;
   ASTNode t1, t2;}
 {
-     t1 = Rel() ( ( op=<AND> ) t2 = Rel() 
- 		 {
-		 t1 = new ASTOp(t1, t2, "&&");
- 		 } 
-		)*
-     { return t1; } 
+  t1 = Rel() (op=<AND> t2 = Rel() { t1 = new ASTOp(t1, t2, "&&"); })*
+  { return t1; } 
 }
 
 
@@ -193,12 +181,9 @@ ASTNode Rel() :
 {Token op;
   ASTNode t1, t2;}
 {
-     t1 = Exp() ( ( op=<EQ> | op=<GT> | op=<LT> | op=<GTEQ> | op=<LTEQ> | op=<DIF>) t2 = Exp() 
-     {
-      t1 = new ASTOp(t1, t2, op.image);
-		 } 
-		)?
-     { return t1; } 
+  t1 = Exp() ( (op=<EQ> | op=<GT> | op=<LT> | op=<GTEQ> | op=<LTEQ> | op=<DIF>) t2 = Exp() 
+  { t1 = new ASTOp(t1, t2, op.image); })?
+  { return t1; } 
 }
 
 
@@ -206,24 +191,18 @@ ASTNode Exp() :
 { Token op;
   ASTNode t1, t2; }
 {
-     t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term() 
-                 { 
-                  t1 = new ASTOp(t1,t2,op.image);
-                 } 
-               ) *
-     { return t1; } 
+  t1=Term() ( (op=<PLUS> | op=<MINUS>) t2=Term() 
+  { t1 = new ASTOp(t1,t2,op.image); })*
+  { return t1; } 
 }
 
 ASTNode Term() :
-{ ASTNode t1, t2; }
+{ Token op;
+  ASTNode t1, t2; }
 {
-     t1 = App()
-    (
-     <STAR> t2 = App()   { t1 = new ASTOp(t1,t2,"*"); }
-		 |
-		 <DIV> t2 = App()  { t1 = new ASTOp(t1,t2,"/"); }
-    )*
-     { return t1; }
+  t1 = App() ( (op=<STAR> | op=<DIV>) t2 = App()
+  { t1 = new ASTOp(t1, t2, op.image); })*
+  { return t1; }
 }
 
 ASTNode App() :
@@ -289,7 +268,8 @@ ASTNode Funct() :
 }
 
 ASTNode TermList() :
-{ ASTNode t, t2; }
+{ ASTNode t, t2;
+  Token n; }
 {
   t = Let() (<COMMA> t2 = TermCommaList() { t = new ASTPair(t, t2, false); }
             | <VERT> t2 = TermVertList() { t = new ASTPair(t, t2, true); })?

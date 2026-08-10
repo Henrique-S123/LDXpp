@@ -68,7 +68,8 @@ public class ASTSplit extends ASTNode {
         e.bindToEnv(lin2 ? ENV.DELTA : ENV.GAMMA, id2, b2);
 		e.bindToEnv(ENV.SIGMA, id1, b1);
 		e.bindToEnv(ENV.SIGMA, id2, b2);
-		e.bindToEnv(ENV.SIGMA, e.getFreshId(), new ASTTEq(new ASTPair(new ASTId(id1, b1.getId()), new ASTId(id2, b2.getId()), tpair.isLinear()), pair, instttensor));
+		ASTTEq newterm = new ASTTEq(new ASTPair(new ASTId(id1, b1.getId()), new ASTId(id2, b2.getId()), tpair.isLinear()), pair, instttensor);
+		e.bindToEnv(ENV.SIGMA, e.getFreshId(), newterm);
 
 		ASTType rt = body.typecheck(e, target);
 		if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
