@@ -53,7 +53,7 @@ public class ASTId extends ASTNode	{
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode n = sigma.findEq(id);
+        ASTNode n = sigma.findEq(binderId);
         return n;
     }
 

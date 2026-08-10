@@ -71,19 +71,19 @@ public class Env<E>{
         return null;
     }
 
-    public ASTNode findEq(String id) {
+    public ASTNode findEq(String bid) {
         // TODO: optimize
         Env<E> curr = this;
         while (curr != null) {
             for (Binder<E> b : curr.bindings.values())
-                if (b.val instanceof ASTTEq teq && teq.getTerm1() instanceof ASTId nid && id.equals(nid.getId()))
+                if (b.val instanceof ASTTEq teq && teq.getTerm1() instanceof ASTId nid && bid.equals(nid.getBinderId()))
                     return teq.getTerm2();
             curr = curr.anc;
         }
         curr = this;
         while (curr != null) {
             for (Binder<E> b : curr.bindings.values())
-                if (b.val instanceof ASTTEq teq && teq.getTerm2() instanceof ASTId nid && id.equals(nid.getId()))
+                if (b.val instanceof ASTTEq teq && teq.getTerm2() instanceof ASTId nid && bid.equals(nid.getBinderId()))
                     return teq.getTerm1();
 
             curr = curr.anc;

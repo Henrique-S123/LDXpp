@@ -43,10 +43,11 @@ public class ASTFunc extends ASTNode  {
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         argtype.check(new PureEnvSet(e));
         ASTType targetdom = null, targetcodom = null;
-        String tid = null;
+        String tid = null, bid = null;
         if (target != null) {
             ASTType tt = e.unfold(target);
-            if (tt instanceof ASTTArrow arrow && (!lin || arrow.isLinear())) { targetdom = arrow.getDom(); targetcodom = arrow.getCodom(); tid = arrow.getId(); }
+            if (tt instanceof ASTTArrow arrow && (!lin || arrow.isLinear())) { targetdom = arrow.getDom(); targetcodom = arrow.getCodom();
+                    tid = arrow.getId(); bid = arrow.getBid(); }
             else if (lin) throw new TypeCheckError(ErrorMessages.typeMismatch("lollipop", target));
             else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
         }
@@ -68,6 +69,7 @@ public class ASTFunc extends ASTNode  {
         body.setSig(e.getSigma());
         if (tid != null) e.extendAlpha(id, tid);
 
+        if (targetcodom != null) targetcodom = targetcodom.inst(bid, new ASTId(id, b.getId()));
         ASTType tb = body.typecheck(e, targetcodom);
 
         if (!lin) e.pushDelta(prevDelta);
