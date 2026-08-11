@@ -1,6 +1,9 @@
 type: NatL, value: $succ($succ($succ($zero(()))))
 
 
+class proj.src.errors.TypeCheckError: Linear value of 'ladd' has already been consumed and cannot be used again
+
+
 type: (z:NatL | (sum:NatL | z ≡ sum : NatL)), value: ($succ($succ($succ($zero(())))) | ($succ($succ($succ($zero(())))) | refl))
 
 

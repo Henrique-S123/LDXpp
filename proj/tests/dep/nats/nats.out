@@ -1,6 +1,9 @@
 type: Nat, value: #succ(#succ(#succ(#zero(()))))
 
 
+type: Nat, value: #succ(#succ(#succ(#succ(#succ(#zero(()))))))
+
+
 type: (z:Nat, z ≡ add(n2)(n1) : Nat), value: (#succ(#succ(#succ(#zero(())))), refl)
 
 
