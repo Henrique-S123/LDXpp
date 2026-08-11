@@ -66,7 +66,6 @@ public class ASTFunc extends ASTNode  {
         Binder<ASTType> b = new Binder<ASTType>(targtype);
         e.bindToEnv(env, id, b);
         e.bindToEnv(ENV.SIGMA, id, b);
-        body.setSig(e.getSigma());
         if (tid != null) e.extendAlpha(id, tid);
 
         if (targetcodom != null) targetcodom = targetcodom.inst(bid, new ASTId(id, b.getId()));
@@ -96,7 +95,6 @@ public class ASTFunc extends ASTNode  {
         if (targetdom != null && !targetdom.isSubtypeOf(targtype, pe))
             throw new TypeCheckError(ErrorMessages.notSubtypeFunc(targetdom, targtype));
         pe.bindToEnv(PENV.SIGMA, id, targtype);
-        body.setSig(pe.getSigma());
         if (tid != null) pe.extendAlpha(tid, tid);
 
         ASTType tb = body.puretypecheck(pe, targetcodom);

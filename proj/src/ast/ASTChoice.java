@@ -34,7 +34,6 @@ public class ASTChoice extends ASTNode  {
     
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		ASTType tp = pair.typecheck(e, null);
-        this.setSig(e.getSigma());
         if (tp instanceof ASTTPair tpair && !tpair.isLinear()) {
             if (choice) return tpair.getFirst();
             ASTNode s = pair, finalpair = pair;
@@ -46,7 +45,6 @@ public class ASTChoice extends ASTNode  {
 
     public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
         ASTType tp = pair.puretypecheck(pe, null);
-        this.setSig(pe.getSigma());
         if (tp instanceof ASTTPair tpair && !tpair.isLinear()) {
             if (choice) return tpair.getFirst();
             ASTNode s = pair, finalpair = pair;

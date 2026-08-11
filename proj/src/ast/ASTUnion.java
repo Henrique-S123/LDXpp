@@ -28,7 +28,6 @@ public class ASTUnion extends ASTNode {
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
-		expr.setSig(e.getSigma());
 		ResourceManager<ASTType> prevDelta = null;
 		if (!lin) prevDelta = e.popDelta();
 		ll.put(label, expr.typecheck(e, null));
@@ -38,7 +37,6 @@ public class ASTUnion extends ASTNode {
 
 	public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
 		HashMap<String, ASTType> ll = new HashMap<String, ASTType>();
-		expr.setSig(pe.getSigma());
 		ll.put(label, expr.puretypecheck(pe, null));
 		return new ASTTUnion(ll, lin);
 	}

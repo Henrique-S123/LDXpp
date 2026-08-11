@@ -38,7 +38,6 @@ public class ASTLeteq extends ASTNode {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        this.setSig(e.getSigma());
         ASTType t = expr.typecheck(e, null);
         t = e.unfold(t);
 
@@ -53,7 +52,6 @@ public class ASTLeteq extends ASTNode {
     }
 
     public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
-        this.setSig(pe.getSigma());
         ASTType t = expr.puretypecheck(pe, null);
         t = pe.unfold(t);
         if (!(t instanceof ASTTEq)) throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("leteq", t));

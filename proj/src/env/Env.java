@@ -72,7 +72,7 @@ public class Env<E>{
     }
 
     public ASTNode findEq(String bid) {
-        // TODO: optimize
+        // heuristic: the term to solve is usually on the left side.
         Env<E> curr = this;
         while (curr != null) {
             for (Binder<E> b : curr.bindings.values())

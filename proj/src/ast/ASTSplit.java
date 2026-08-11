@@ -49,7 +49,6 @@ public class ASTSplit extends ASTNode {
 	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		ASTType tt = pair.typecheck(e, null);
 		tt = e.unfold(tt);
-		this.setSig(e.getSigma());
 		if (!(tt instanceof ASTTPair tpair && tpair.isLinear() == linpair))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
 
@@ -83,7 +82,6 @@ public class ASTSplit extends ASTNode {
 	public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
 		ASTType tt = pair.puretypecheck(pe, null);
 		tt = pe.unfold(tt);
-		this.setSig(pe.getSigma());
 		if (!(tt instanceof ASTTPair tpair && tpair.isLinear() == linpair))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
 

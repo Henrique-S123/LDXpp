@@ -39,12 +39,10 @@ public class ASTPair extends ASTNode {
         ResourceManager<ASTType> prevDelta = null;
         if (!lin) prevDelta = e.popDelta();
 
-        first.setSig(e.getSigma());
         ASTType t1 = first.typecheck(e, targetfst);
         if (targetfst != null && !t1.isSubtypeOf(targetfst, new PureEnvSet(e)))
             throw new TypeCheckError(ErrorMessages.notSubtype(t1, targetfst));
 
-        second.setSig(e.getSigma());
         ASTType insttgt2 = (tgtbid != null) ? targetsnd.inst(tgtbid, first) : targetsnd;
         ASTType t2 = second.typecheck(e, insttgt2);
         if (targetsnd != null && !t2.isSubtypeOf(insttgt2, new PureEnvSet(e)))
@@ -68,12 +66,10 @@ public class ASTPair extends ASTNode {
             else throw new TypeCheckError(ErrorMessages.typeMismatch("pair or tensor", target));
         }
 
-        first.setSig(pe.getSigma());
         ASTType t1 = first.puretypecheck(pe, targetfst);
         if (targetfst != null && !t1.isSubtypeOf(targetfst, pe))
             throw new TypeCheckError(ErrorMessages.notSubtype(t1, targetfst));
 
-        second.setSig(pe.getSigma());
         ASTType insttgt2 = (tgtbid != null) ? targetsnd.inst(tgtbid, first) : targetsnd;
         ASTType t2 = second.puretypecheck(pe, insttgt2);
         if (targetsnd != null && !t2.isSubtypeOf(insttgt2, pe))

@@ -47,7 +47,6 @@ public class ASTMatch extends ASTNode {
 		ASTType tt = test.typecheck(e, null), rettype = null, tcase;
 		HashSet<String> matchUsedLinears = null;
 		tt = e.unfold(tt);
-		this.setSig(e.getSigma());
 		if (!(tt instanceof ASTTUnion))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("match", tt));
 		EnvSet en = new EnvSet(e), env;
@@ -108,7 +107,6 @@ public class ASTMatch extends ASTNode {
 	public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
 		ASTType tt = test.puretypecheck(pe, null), rettype = null, tcase;
 		tt = pe.unfold(tt);
-		this.setSig(pe.getSigma());
 		if (!(tt instanceof ASTTUnion))
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("match", tt));
 		Set<Map.Entry<String, ASTType>> entries = ((ASTTUnion) tt).getMap().entrySet();

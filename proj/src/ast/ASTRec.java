@@ -43,7 +43,6 @@ public class ASTRec extends ASTNode  {
         e.bindToEnv(ENV.GAMMA, fid, b);
         e.bindToEnv(ENV.SIGMA, fid, b);
         ResourceManager<ASTType> prevDelta = e.popDelta();
-        funcbody.setSig(e.getSigma());
         ASTType tfb = funcbody.typecheck(e, tfunctype);
         if (!tfb.isSubtypeOf(tfunctype, new PureEnvSet(e)))
             throw new TypeCheckError(ErrorMessages.notSubtype(tfb, tfunctype));
@@ -67,7 +66,6 @@ public class ASTRec extends ASTNode  {
         Binder<ASTType> b = new Binder<ASTType>(tfunctype);
         pe.openEnvScope(PENV.SIGMA);
         pe.bindToEnv(PENV.SIGMA, fid, b);
-        funcbody.setSig(pe.getSigma());
         
         ASTType tfb = funcbody.puretypecheck(pe, tfunctype);
         if (!tfb.isSubtypeOf(tfunctype, pe))

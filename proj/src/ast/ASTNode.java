@@ -12,10 +12,6 @@ public abstract class ASTNode {
         return sig;
     }
 
-    public void setSig(Env<ASTType> s) {
-        sig = s;
-    }
-
     public IValue eval(Env<IValue> e) throws InterpreterError {
         return new VUnit();
     }
