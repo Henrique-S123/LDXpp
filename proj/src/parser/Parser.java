@@ -12,8 +12,7 @@ public class Parser implements ParserConstants {
 
   final public Command Start() throws ParseException {
   Command c = null;
-  ASTNode t, t2;
-  ASTType ty, ty2;
+  ASTNode t;
   Token n;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case COLON:

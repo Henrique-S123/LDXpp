@@ -6,12 +6,6 @@ import proj.src.env.*;
 import proj.src.errors.*;
 
 public abstract class ASTNode {
-    protected Env<ASTType> sig;
-
-    public Env<ASTType> getSig() {
-        return sig;
-    }
-
     public IValue eval(Env<IValue> e) throws InterpreterError {
         return new VUnit();
     }

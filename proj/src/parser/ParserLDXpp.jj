@@ -80,8 +80,7 @@ TOKEN :
 
 Command Start():
 { Command c = null;
-  ASTNode t, t2;
-  ASTType ty, ty2;
+  ASTNode t;
   Token n;
 }
 {
