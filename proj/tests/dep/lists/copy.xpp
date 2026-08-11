@@ -56,7 +56,7 @@ letrec copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) {
             #cons(n) ->
                 let res = copy(snd(n));
                 leteq e1 = snd(res);
-                leteq e2 = cong n;
+                leteq e2 = eta n;
                 let newpair = (fst(n), fst(res));
                 (#cons(newpair), refl)
         }
@@ -124,7 +124,7 @@ letrec copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) {
             #cons(n) ->
                 let res = copy(snd(n));
                 leteq e1 = snd(res);
-                leteq e2 = cong n;
+                leteq e2 = eta n;
                 let newpair = (fst(n), fst(res));
                 (#cons(newpair), hyp)
         }

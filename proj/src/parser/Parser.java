@@ -35,7 +35,7 @@ public class Parser implements ParserConstants {
     case LRPAR:
     case REFL:
     case HYP:
-    case CONG:
+    case ETA:
     case LETEQ:
     case IF:
     case PRINT:
@@ -123,7 +123,7 @@ public class Parser implements ParserConstants {
     case LRPAR:
     case REFL:
     case HYP:
-    case CONG:
+    case ETA:
     case LETEQ:
     case IF:
     case PRINT:
@@ -167,7 +167,7 @@ public class Parser implements ParserConstants {
     case LRPAR:
     case REFL:
     case HYP:
-    case CONG:
+    case ETA:
     case IF:
     case PRINT:
     case PRINTLN:
@@ -634,10 +634,10 @@ public class Parser implements ParserConstants {
       }
                         t = new ASTRefl(null, new THyp(n == null ? null : n.image));
       break;
-    case CONG:
-      jj_consume_token(CONG);
+    case ETA:
+      jj_consume_token(ETA);
       n = jj_consume_token(Id);
-                      t = new ASTCong(n.image);
+                     t = new ASTEta(n.image);
       break;
     default:
       jj_la1[19] = jj_gen;
@@ -859,7 +859,7 @@ public class Parser implements ParserConstants {
     case LRPAR:
     case REFL:
     case HYP:
-    case CONG:
+    case ETA:
     case LETEQ:
     case IF:
     case PRINT:
@@ -1753,7 +1753,7 @@ public class Parser implements ParserConstants {
   }
 
   private boolean jj_3R_35() {
-    if (jj_scan_token(CONG)) return true;
+    if (jj_scan_token(ETA)) return true;
     if (jj_scan_token(Id)) return true;
     return false;
   }

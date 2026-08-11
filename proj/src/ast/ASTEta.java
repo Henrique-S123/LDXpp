@@ -5,10 +5,10 @@ import proj.src.types.*;
 import proj.src.env.*;
 import proj.src.errors.*;
 
-public class ASTCong extends ASTNode {
+public class ASTEta extends ASTNode {
     private final String var;
 
-    public ASTCong(String v) {
+    public ASTEta(String v) {
         var = v;
     }
 

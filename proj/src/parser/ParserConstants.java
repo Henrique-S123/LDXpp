@@ -57,7 +57,7 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int HYP = 28;
   /** RegularExpression Id. */
-  int CONG = 29;
+  int ETA = 29;
   /** RegularExpression Id. */
   int LETEQ = 30;
   /** RegularExpression Id. */
@@ -171,7 +171,7 @@ public interface ParserConstants {
     "\"}\"",
     "\"refl\"",
     "\"hyp\"",
-    "\"cong\"",
+    "\"eta\"",
     "\"leteq\"",
     "\"never\"",
     "\"=\"",
