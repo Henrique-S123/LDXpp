@@ -41,9 +41,9 @@ public class ASTNever extends ASTNode  {
         while (curr != null) {
             for (Binder<ASTType> b : curr.getBindings().values()) {
                 DefEq eq = new DefEq(searchEnv);
-                if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm1(), searchEnv, phi, alpha))
+                if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm1(), phi, alpha))
                     s.add(teq.getTerm2());
-                else if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm2(), searchEnv, phi, alpha))
+                else if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm2(), phi, alpha))
                     s.add(teq.getTerm1());
             }
             curr = curr.endScope();

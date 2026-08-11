@@ -102,8 +102,8 @@ public class Env<E>{
                     Debug.open();
                     E res = null;
                     DefEq e = new DefEq(sigma);
-                    if ((e.termdefeq(t1, teq.getTerm1(), sigma, phi, alpha) && e.termdefeq(t2, teq.getTerm2(), sigma, phi, alpha))
-                    || (e.termdefeq(t1, teq.getTerm2(), sigma, phi, alpha) && e.termdefeq(t2, teq.getTerm1(), sigma, phi, alpha)))
+                    if ((e.termdefeq(t1, teq.getTerm1(), phi, alpha) && e.termdefeq(t2, teq.getTerm2(), phi, alpha))
+                    || (e.termdefeq(t1, teq.getTerm2(), phi, alpha) && e.termdefeq(t2, teq.getTerm1(), phi, alpha)))
                         res = entry.getValue().val;
                     Debug.close();
                     Debug.nl();
@@ -118,8 +118,8 @@ public class Env<E>{
         ASTType r = sigma.find(name);
         if (r != null && r instanceof ASTTEq teq) {
             DefEq e = new DefEq(sigma);
-            if ((e.termdefeq(t1, teq.getTerm1(), sigma, phi, alpha) && e.termdefeq(t2, teq.getTerm2(), sigma, phi, alpha))
-            || (e.termdefeq(t1, teq.getTerm2(), sigma, phi, alpha) && e.termdefeq(t2, teq.getTerm1(), sigma, phi, alpha)))
+            if ((e.termdefeq(t1, teq.getTerm1(), phi, alpha) && e.termdefeq(t2, teq.getTerm2(), phi, alpha))
+            || (e.termdefeq(t1, teq.getTerm2(), phi, alpha) && e.termdefeq(t2, teq.getTerm1(), phi, alpha)))
                 return true;
         }
         return false;

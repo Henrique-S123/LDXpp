@@ -14,11 +14,11 @@ public final class DefEq {
 
     public DefEq(Env<ASTType> sig) { sigma = sig; }
 
-    public final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> sig, Env<ASTType> phi, AlphaEnv alpha) {
+    public final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> phi, AlphaEnv alpha) {
         return termdefeq(l, r, alpha, phi, new TRefl());
     }
 
-    public final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> sig, Env<ASTType> phi, AlphaEnv alpha, Tactic t) {
+    public final boolean termdefeq(ASTNode l, ASTNode r, Env<ASTType> phi, AlphaEnv alpha, Tactic t) {
         return termdefeq(l, r, alpha, phi, t);
     }
 
@@ -174,11 +174,7 @@ public final class DefEq {
         return termdefeq(l, s, alpha, phi, t);
     }
 
-    public final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> sigma, Env<ASTType> phi) {
-        return typedefeq(l, r, new AlphaEnv(), phi, new HashSet<IdPair>(), new TRefl());
-    }
-
-    public final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> sigma, Env<ASTType> phi, AlphaEnv alpha) {
+    public final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> phi, AlphaEnv alpha) {
         return typedefeq(l, r, alpha, phi, new HashSet<IdPair>(), new TRefl());
     }
 
