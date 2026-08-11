@@ -1,0 +1,21 @@
+let etaUnit:(x:())->(x = () : ()) =
+    fn x:() => { x; refl };
+etaUnit(());;
+
+let etaNonlinPair:(n:(int, int))->(n = (fst(n), snd(n)) : (int, int)) =
+    fn n:(int, int) => {
+        split (x, y) = n; refl
+    };
+etaNonlinPair((2, 3));;
+
+let etaNonlinPair:(n:(int, int))->(n = (fst(n), snd(n)) : (int, int)) =
+    fn n:(int, int) => {
+        leteq e = cong n; refl
+    };
+etaNonlinPair((2, 3));;
+
+let etaNonlinPair:(n:(linint, string))->(n = (fst(n), snd(n)) : (linint, string)) =
+    fn n:(linint, string) => {
+        leteq e = cong n; refl
+    };
+etaNonlinPair((2l, "a"));;

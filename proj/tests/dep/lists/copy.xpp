@@ -23,7 +23,7 @@ type LIST = union { #nil: (), #cons: NODE };
 let l0:LIST = #nil (());
 let l1:LIST = #cons ((1,l0));
 let l2:LIST = #cons ((2,l1));
-let congNonlinPair:(n:(int, LIST))->(n = (fst(n), snd(n)) : (int, LIST)) =
+let etaNonlinPair:(n:(int, LIST))->(n = (fst(n), snd(n)) : (int, LIST)) =
     fn n:(int, LIST) => {
         split (x, y) = n; refl
     };
@@ -35,7 +35,7 @@ letrec copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) {
             #cons(n) ->
                 let res = copy(snd(n));
                 leteq e1 = snd(res);
-                leteq e2 = congNonlinPair(n);
+                leteq e2 = etaNonlinPair(n);
                 let newpair = (fst(n), fst(res));
                 (#cons(newpair), refl)
         }
@@ -91,7 +91,7 @@ type LIST = union { #nil: (), #cons: NODE };
 let l0:LIST = #nil (());
 let l1:LIST = #cons ((1,l0));
 let l2:LIST = #cons ((2,l1));
-let congNonlinPair:(n:(int, LIST))->(n = (fst(n), snd(n)) : (int, LIST)) =
+let etaNonlinPair:(n:(int, LIST))->(n = (fst(n), snd(n)) : (int, LIST)) =
     fn n:(int, LIST) => {
         split (x, y) = n; refl
     };
@@ -103,7 +103,7 @@ letrec copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) {
             #cons(n) ->
                 let res = copy(snd(n));
                 leteq e1 = snd(res);
-                leteq e2 = congNonlinPair(n);
+                leteq e2 = etaNonlinPair(n);
                 let newpair = (fst(n), fst(res));
                 (#cons(newpair), hyp)
         }
