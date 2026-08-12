@@ -43,11 +43,11 @@ public class ASTFunc extends ASTNode  {
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         argtype.check(new PureEnvSet(e));
         ASTType targetdom = null, targetcodom = null;
-        String tid = null, bid = null;
+        String bid = null;
         if (target != null) {
             ASTType tt = e.unfold(target);
-            if (tt instanceof ASTTArrow arrow && (!lin || arrow.isLinear())) { targetdom = arrow.getDom(); targetcodom = arrow.getCodom();
-                    tid = arrow.getId(); bid = arrow.getBid(); }
+            if (tt instanceof ASTTArrow arrow && (!lin || arrow.isLinear())) {
+                targetdom = arrow.getDom(); targetcodom = arrow.getCodom(); bid = arrow.getBid(); }
             else if (lin) throw new TypeCheckError(ErrorMessages.typeMismatch("lollipop", target));
             else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
         }
@@ -81,20 +81,23 @@ public class ASTFunc extends ASTNode  {
     public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
         argtype.check(pe);
         ASTType targetdom = null, targetcodom = null;
-        String tid = null;
+        String bid = null;
         if (target != null) {
             ASTType tt = pe.unfold(target);
-            if (tt instanceof ASTTArrow arrow && (!lin || arrow.isLinear())) { targetdom = arrow.getDom(); targetcodom = arrow.getCodom(); tid = arrow.getId(); }
+            if (tt instanceof ASTTArrow arrow && (!lin || arrow.isLinear())) {
+                targetdom = arrow.getDom(); targetcodom = arrow.getCodom(); bid = arrow.getBid(); }
             else if (lin) throw new TypeCheckError(ErrorMessages.typeMismatch("lollipop", target));
             else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
         }
 
         ASTType targtype = pe.unfold(argtype);
-        pe.openEnvScope(PENV.SIGMA);
         if (targetdom != null && !targetdom.isSubtypeOf(targtype, pe))
             throw new TypeCheckError(ErrorMessages.notSubtypeFunc(targetdom, targtype));
-        pe.bindToEnv(PENV.SIGMA, id, targtype);
+        Binder<ASTType> b = new Binder<ASTType>(targtype);
+        pe.openEnvScope(PENV.SIGMA);
+        pe.bindToEnv(PENV.SIGMA, id, b);
 
+        if (targetcodom != null) targetcodom = targetcodom.inst(bid, new ASTId(id, b.getId()));
         ASTType tb = body.puretypecheck(pe, targetcodom);
         return new ASTTArrow(targtype, tb, id, null, lin);
     }
