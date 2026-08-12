@@ -11,10 +11,7 @@ public class ASTTEq extends ASTType {
     ASTType type;
 
     public ASTTEq(ASTNode t1, ASTNode t2, ASTType t) {
-        term1 = t1;
-        term2 = t2;
-        type = t;
-        lin = false;
+        term1 = t1; term2 = t2; type = t; lin = false;
     }
 
     public ASTNode getTerm1() {

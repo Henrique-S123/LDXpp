@@ -28,14 +28,12 @@ public class ASTTArrow extends ASTType {
 
     public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
         if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe);
-        ASTType odom, ocodom;
-        String oid;
-        if (o instanceof ASTTArrow ot && (!lin || ot.isLinear())) { odom = ot.getDom(); ocodom = ot.getCodom(); oid = ot.getId(); }
-        else return false;
-
-        if (!odom.isSubtypeOf(dom, pe)) return false;
-        if (id != null && oid != null) pe.extendAlpha(id, oid);
-        return codom.isSubtypeOf(ocodom, pe);
+        if (o instanceof ASTTArrow ot && (!lin || ot.isLinear())) {
+            if (!ot.getDom().isSubtypeOf(dom, pe)) return false;
+            if (id != null && ot.getId() != null) pe.extendAlpha(id, ot.getId());
+            return codom.isSubtypeOf(ot.getCodom(), pe);
+        }
+        return false;
     }
 
     public ASTTArrow inst(String instId, ASTNode n) {

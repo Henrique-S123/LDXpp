@@ -4,10 +4,10 @@ import proj.src.ast.ASTNode;
 import proj.src.env.*;
 import proj.src.errors.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ASTTUnion extends ASTType {
-
     Map<String, ASTType> ll;
 
     public ASTTUnion(Map<String, ASTType> llp, boolean l) {
@@ -18,13 +18,12 @@ public class ASTTUnion extends ASTType {
 
     public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
         if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe);
-        Map<String, ASTType> mb;
-        if (o instanceof ASTTUnion ot && (!lin || ot.isLinear())) mb = ot.getMap();
-        else return false;
-
-        for (String s : ll.keySet())
-            if (!(mb.containsKey(s) && ll.get(s).isSubtypeOf(mb.get(s), pe))) return false;
-        return true;
+        if (o instanceof ASTTUnion ot && (!lin || ot.isLinear())) {
+            for (String s : ll.keySet())
+                if (!ot.getMap().containsKey(s) || !ll.get(s).isSubtypeOf(ot.getMap().get(s), pe)) return false;
+            return true;
+        }
+        return false;
     }
 
     public String toString() {
@@ -36,8 +35,9 @@ public class ASTTUnion extends ASTType {
     }
 
     public ASTTUnion inst(String instId, ASTNode n) {
-        ll.forEach((id, type) -> ll.put(id, type.inst(instId, n)));
-        return this;
+        Map<String, ASTType> newll = new HashMap<String, ASTType>();
+        ll.forEach((id, type) -> newll.put(id, type.inst(instId, n)));
+        return new ASTTUnion(newll, lin);
     }
 
     public ASTType check(PureEnvSet pe) throws TypeCheckError {
