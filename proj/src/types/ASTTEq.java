@@ -42,10 +42,7 @@ public class ASTTEq extends ASTType {
     }
 
     public ASTTEq inst(String instId, ASTNode n) {
-        ASTType instType = type.inst(instId, n);
-        ASTNode instTerm1 = term1.subs(instId, n);
-        ASTNode instTerm2 = term2.subs(instId, n);
-        return new ASTTEq(instTerm1, instTerm2, instType);
+        return new ASTTEq(term1.subs(instId, n), term2.subs(instId, n), type.inst(instId, n));
     }
 
     public ASTType check(PureEnvSet pe) throws TypeCheckError {
