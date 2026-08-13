@@ -32,12 +32,8 @@ public class ASTTypeDef extends ASTNode {
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         e.openEnvScope(ENV.PHI);
-        for (String s : ltd.keySet())
-            e.bindToEnv(ENV.PHI, s, ltd.get(s));
-        for (String s : ltd.keySet()) {
-            ASTType t = ltd.get(s);
-            t.check(new PureEnvSet(e));
-        }
+        for (String s : ltd.keySet()) e.bindToEnv(ENV.PHI, s, ltd.get(s));
+        for (String s : ltd.keySet()) ltd.get(s).check(new PureEnvSet(e));
         ASTType ret = this.body.typecheck(e, target);
         e.closeEnvScope(ENV.PHI);
         return ret;
@@ -45,12 +41,8 @@ public class ASTTypeDef extends ASTNode {
 
     public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
         pe.openEnvScope(PENV.PHI);
-        for (String s : ltd.keySet())
-            pe.bindToEnv(PENV.PHI, s, ltd.get(s));
-        for (String s : ltd.keySet()) {
-            ASTType t = ltd.get(s);
-            t.check(pe);
-        }
+        for (String s : ltd.keySet()) pe.bindToEnv(PENV.PHI, s, ltd.get(s));
+        for (String s : ltd.keySet()) ltd.get(s).check(pe);
         return body.puretypecheck(pe, target);
     }
 

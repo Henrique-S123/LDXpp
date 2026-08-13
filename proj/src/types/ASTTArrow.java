@@ -43,10 +43,8 @@ public class ASTTArrow extends ASTType {
     public ASTType check(PureEnvSet pe) throws TypeCheckError {
         dom.check(pe);
         if (id != null) {
-            Binder<ASTType> b = new Binder<ASTType>(dom);
-            bid = b.getId();
             pe.openEnvScope(PENV.SIGMA);
-            pe.bindToEnv(PENV.SIGMA, id, b);
+            bid = pe.bindToEnv(PENV.SIGMA, id, dom);
         }
         codom.check(pe);
         return this;

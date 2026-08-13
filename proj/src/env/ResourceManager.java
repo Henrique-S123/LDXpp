@@ -36,11 +36,6 @@ public final class ResourceManager<E> {
         return copy;
     }
 
-    public void register(String id, E resource) {
-        scopes.peek().live.put(id, new Binder<E>(resource));
-        scopes.peek().consumed.remove(id);
-    }
-
     public void register(String id, Binder<E> resource) {
         scopes.peek().live.put(id, resource);
         scopes.peek().consumed.remove(id);

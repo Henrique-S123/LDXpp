@@ -42,10 +42,8 @@ public class ASTTPair extends ASTType {
     public ASTType check(PureEnvSet pe) throws TypeCheckError {
         first.check(pe);
         if (id != null) {
-            Binder<ASTType> b = new Binder<ASTType>(first);
-            bid = b.getId();
             pe.openEnvScope(PENV.SIGMA);
-            pe.bindToEnv(PENV.SIGMA, id, b);
+            bid = pe.bindToEnv(PENV.SIGMA, id, first);
         }
         second.check(pe);
         return this;

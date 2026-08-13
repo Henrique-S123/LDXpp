@@ -95,17 +95,13 @@ public class EnvSet {
         ) throw new TypeCheckError(ErrorMessages.alreadyDeclaredVariable(id));
     }
 
-    public void bindToEnv(ENV env, String id, ASTType t) throws TypeCheckError {
+    public String bindToEnv(ENV env, String id, ASTType t) throws TypeCheckError {
         if (id == null) throw new TypeCheckError(ErrorMessages.nullId());
-        switch (env) {
-            case GAMMA -> { checkAlreadyDeclared(ENV.DELTA, id); gamma.assoc(id, t); }
-            case DELTA -> { checkAlreadyDeclared(ENV.GAMMA, id); delta.register(id, t); }
-            case PHI -> { checkAlreadyDeclared(ENV.PHI, id); phi.assoc(id, t); }
-            case SIGMA -> sigma.assoc(id, t);
-        }
+        Binder<ASTType> b = new Binder<ASTType>(t);
+        return bindToEnv(env, id, b);
     }
 
-    public void bindToEnv(ENV env, String id, Binder<ASTType> b) throws TypeCheckError {
+    public String bindToEnv(ENV env, String id, Binder<ASTType> b) throws TypeCheckError {
         if (id == null) throw new TypeCheckError(ErrorMessages.nullId());
         switch (env) {
             case GAMMA -> { checkAlreadyDeclared(ENV.DELTA, id); gamma.assoc(id, b); }
@@ -113,6 +109,7 @@ public class EnvSet {
             case PHI -> { checkAlreadyDeclared(ENV.PHI, id); phi.assoc(id, b); }
             case SIGMA -> sigma.assoc(id, b);
         }
+        return b.getId();
     }
 
     public String getFreshId() {
