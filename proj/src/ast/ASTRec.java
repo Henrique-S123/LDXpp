@@ -38,9 +38,8 @@ public class ASTRec extends ASTNode  {
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("rec", tfunctype));
 
         e.openEnvScope(ENV.GAMMA);
+        Binder<ASTType> b = e.bindToEnv(ENV.GAMMA, fid, tfunctype);
         e.openEnvScope(ENV.SIGMA);
-        Binder<ASTType> b = new Binder<ASTType>(tfunctype);
-        e.bindToEnv(ENV.GAMMA, fid, b);
         e.bindToEnv(ENV.SIGMA, fid, b);
         ResourceManager<ASTType> prevDelta = e.popDelta();
         ASTType tfb = funcbody.typecheck(e, tfunctype);
@@ -54,6 +53,9 @@ public class ASTRec extends ASTNode  {
         e.bindToEnv(env, fid, b);
         e.bindToEnv(ENV.SIGMA, e.getFreshId(), new ASTTEq(new ASTId(fid, b.getId()), funcbody, tfunctype));
         ASTType tb = body.typecheck(e, target);
+
+        e.closeEnvScope(env);
+        e.closeEnvScope(ENV.SIGMA);
         return tb;
     }
 
@@ -63,9 +65,8 @@ public class ASTRec extends ASTNode  {
         if (!(tfunctype instanceof ASTTArrow))
             throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("rec", tfunctype));
 
-        Binder<ASTType> b = new Binder<ASTType>(tfunctype);
         pe.openEnvScope(PENV.SIGMA);
-        pe.bindToEnv(PENV.SIGMA, fid, b);
+        Binder<ASTType> b = pe.bindToEnv(PENV.SIGMA, fid, tfunctype);
         
         ASTType tfb = funcbody.puretypecheck(pe, tfunctype);
         if (!tfb.isSubtypeOf(tfunctype, pe))
@@ -73,6 +74,8 @@ public class ASTRec extends ASTNode  {
 
         pe.bindToEnv(PENV.SIGMA, pe.getFreshId(), new ASTTEq(new ASTId(fid, b.getId()), funcbody, tfunctype));
         ASTType tb = body.puretypecheck(pe, target);
+
+        pe.closeEnvScope(PENV.SIGMA);
         return tb;
     }
 

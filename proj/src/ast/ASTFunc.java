@@ -56,15 +56,13 @@ public class ASTFunc extends ASTNode  {
         if (!lin) prevDelta = e.popDelta();
 
         ASTType targtype = e.unfold(argtype);
-        ENV env = (lin && targtype.isLinear()) ? ENV.DELTA : ENV.GAMMA;
-        e.openEnvScope(ENV.SIGMA);
-        e.openEnvScope(env);
-
         if (targetdom != null && !targetdom.isSubtypeOf(targtype, new PureEnvSet(e)))
             throw new TypeCheckError(ErrorMessages.notSubtypeFunc(targetdom, targtype));
-
-        Binder<ASTType> b = new Binder<ASTType>(targtype);
-        e.bindToEnv(env, id, b);
+        
+        ENV env = (lin && targtype.isLinear()) ? ENV.DELTA : ENV.GAMMA;
+        e.openEnvScope(env);
+        Binder<ASTType> b = e.bindToEnv(env, id, targtype);
+        e.openEnvScope(ENV.SIGMA);
         e.bindToEnv(ENV.SIGMA, id, b);
 
         if (targetcodom != null) targetcodom = targetcodom.inst(bid, new ASTId(id, b.getId()));
@@ -73,6 +71,7 @@ public class ASTFunc extends ASTNode  {
         if (!lin) e.pushDelta(prevDelta);
         if (lin && !e.getUnusedScopeLinears().isEmpty())
             throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
+
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
         return new ASTTArrow(targtype, tb, id, null, lin);
@@ -93,12 +92,14 @@ public class ASTFunc extends ASTNode  {
         ASTType targtype = pe.unfold(argtype);
         if (targetdom != null && !targetdom.isSubtypeOf(targtype, pe))
             throw new TypeCheckError(ErrorMessages.notSubtypeFunc(targetdom, targtype));
-        Binder<ASTType> b = new Binder<ASTType>(targtype);
+
         pe.openEnvScope(PENV.SIGMA);
-        pe.bindToEnv(PENV.SIGMA, id, b);
+        Binder<ASTType> b = pe.bindToEnv(PENV.SIGMA, id, targtype);
 
         if (targetcodom != null) targetcodom = targetcodom.inst(bid, new ASTId(id, b.getId()));
         ASTType tb = body.puretypecheck(pe, targetcodom);
+
+        pe.closeEnvScope(PENV.SIGMA);
         return new ASTTArrow(targtype, tb, id, null, lin);
     }
 

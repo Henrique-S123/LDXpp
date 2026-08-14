@@ -33,7 +33,9 @@ public class ASTSeq extends ASTNode {
         if (tf instanceof ASTTUnit) {
             e.openEnvScope(ENV.SIGMA);
             e.bindToEnv(ENV.SIGMA, e.getFreshId(), new ASTTEq(first, new ASTUnit(), tf));
-            return second.typecheck(e, target);
+            ASTType rt = second.typecheck(e, target);
+            e.closeEnvScope(ENV.SIGMA);
+            return rt;
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
 	}
@@ -43,7 +45,9 @@ public class ASTSeq extends ASTNode {
         if (tf instanceof ASTTUnit) {
             pe.openEnvScope(PENV.SIGMA);
             pe.bindToEnv(PENV.SIGMA, pe.getFreshId(), new ASTTEq(first, new ASTUnit(), tf));
-            return second.puretypecheck(pe, target);
+            ASTType rt = second.puretypecheck(pe, target);
+            pe.closeEnvScope(PENV.SIGMA);
+            return rt;
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("seq", tf));
     }

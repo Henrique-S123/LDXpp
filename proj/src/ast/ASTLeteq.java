@@ -40,13 +40,14 @@ public class ASTLeteq extends ASTNode {
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         ASTType t = expr.typecheck(e, null);
         t = e.unfold(t);
-
         if (!(t instanceof ASTTEq)) throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("leteq", t));
+
         e.openEnvScope(ENV.SIGMA);
         e.bindToEnv(ENV.SIGMA, id, t);
 
         ASTType rt = body.typecheck(e, target);
         if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
+
         e.closeEnvScope(ENV.SIGMA);
         return rt;
     }
@@ -55,9 +56,14 @@ public class ASTLeteq extends ASTNode {
         ASTType t = expr.puretypecheck(pe, null);
         t = pe.unfold(t);
         if (!(t instanceof ASTTEq)) throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("leteq", t));
+
         pe.openEnvScope(PENV.SIGMA);
         pe.bindToEnv(PENV.SIGMA, id, t);
-        return body.puretypecheck(pe, target);
+
+        ASTType rt = body.puretypecheck(pe, target);
+
+        pe.closeEnvScope(PENV.SIGMA);
+        return rt;
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {

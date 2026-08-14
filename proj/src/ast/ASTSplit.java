@@ -89,11 +89,15 @@ public class ASTSplit extends ASTNode {
 		ASTType t2 = pe.unfold(tpair.getSecond());
 
 		pe.openEnvScope(PENV.SIGMA);
-		pe.bindToEnv(PENV.SIGMA, id1, t1);
-		pe.bindToEnv(PENV.SIGMA, id2, t2);
-		ASTTEq newterm = new ASTTEq(new ASTPair(new ASTId(id1), new ASTId(id2), linpair), pair, tt);
+		Binder<ASTType> b1 = pe.bindToEnv(PENV.SIGMA, id1, t1);
+		Binder<ASTType> b2 = pe.bindToEnv(PENV.SIGMA, id2, t2);
+		ASTTEq newterm = new ASTTEq(new ASTPair(new ASTId(id1, b1.getId()), new ASTId(id2, b2.getId()), linpair), pair, tt);
 		pe.bindToEnv(PENV.SIGMA, pe.getFreshId(), newterm);
-		return body.puretypecheck(pe, target);
+
+		ASTType rt = body.puretypecheck(pe, target);
+		pe.closeEnvScope(PENV.SIGMA);
+
+		return rt;
     }
 
 	public ASTNode weaknorm(Env<ASTNode> sub) {

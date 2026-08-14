@@ -52,17 +52,16 @@ public class ASTLet extends ASTNode {
 
         ENV env = tt.isLinear() ? ENV.DELTA : ENV.GAMMA;
         e.openEnvScope(env);
+        Binder<ASTType> b = e.bindToEnv(env, id, tt);
         e.openEnvScope(ENV.SIGMA);
-        Binder<ASTType> b = new Binder<ASTType>(tt);
-        e.bindToEnv(env, id, b);
         e.bindToEnv(ENV.SIGMA, id, b);
         e.bindToEnv(ENV.SIGMA, e.getFreshId(), new ASTTEq(new ASTId(id, b.getId()), expr, tt));
 
         ASTType rt = body.typecheck(e, target);
         if (!e.getUnusedScopeLinears().isEmpty()) throw new TypeCheckError(ErrorMessages.unusedLinearValues(e.getUnusedLinears()));
+
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
-
         return rt;
 	}
 
@@ -75,11 +74,14 @@ public class ASTLet extends ASTNode {
             throw new TypeCheckError(ErrorMessages.notSubtype(texp, declType));
         ASTType tt = (declType != null) ? pe.unfold(declType) : texp;
 
-        Binder<ASTType> b = new Binder<ASTType>(tt);
         pe.openEnvScope(PENV.SIGMA);
-        pe.bindToEnv(PENV.SIGMA, id, b);
+        Binder<ASTType> b = pe.bindToEnv(PENV.SIGMA, id, tt);
         pe.bindToEnv(PENV.SIGMA, pe.getFreshId(), new ASTTEq(new ASTId(id, b.getId()), expr, tt));
-        return body.puretypecheck(pe, target);
+
+        ASTType rt = body.puretypecheck(pe, target);
+        
+        pe.closeEnvScope(PENV.SIGMA);
+        return rt;
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {

@@ -58,15 +58,13 @@ public class ASTMatch extends ASTNode {
 			MatchCase c = cases.get(entry.getKey());
 			if (c == null)
 				throw new TypeCheckError(ErrorMessages.missingMatchCase(entry.getKey()));
-
 			env = (matchUsedLinears == null ? e : new EnvSet(en));
 			ASTType tlabel = e.unfold(entry.getValue());
 
 			ENV envChoice = tlabel.isLinear() ? ENV.DELTA : ENV.GAMMA;
 			env.openEnvScope(envChoice);
+			Binder<ASTType> b = env.bindToEnv(envChoice, c.getId(), tlabel);
 			env.openEnvScope(ENV.SIGMA);
-			Binder<ASTType> b = new Binder<ASTType>(tlabel);
-			env.bindToEnv(envChoice, c.getId(), b);
 			env.bindToEnv(ENV.SIGMA, c.getId(), b);
 
 			ASTUnion eqterm = new ASTUnion(entry.getKey(), new ASTId(c.getId(), b.getId()), tt.isLinear());
@@ -114,12 +112,12 @@ public class ASTMatch extends ASTNode {
 			MatchCase c = cases.get(entry.getKey());
 			if (c == null)
 				throw new TypeCheckError(ErrorMessages.missingMatchCase(entry.getKey()));
-
 			ASTType tlabel = pe.unfold(entry.getValue());
-			pe.openEnvScope(PENV.SIGMA);
-			pe.bindToEnv(PENV.SIGMA, c.getId(), tlabel);
 
-			ASTUnion eqterm = new ASTUnion(entry.getKey(), new ASTId(c.getId(), c.getId()), tt.isLinear());
+			pe.openEnvScope(PENV.SIGMA);
+			Binder<ASTType> b = pe.bindToEnv(PENV.SIGMA, c.getId(), tlabel);
+
+			ASTUnion eqterm = new ASTUnion(entry.getKey(), new ASTId(c.getId(), b.getId()), tt.isLinear());
 			pe.bindToEnv(PENV.SIGMA, pe.getFreshId(), new ASTTEq(test, eqterm, tt));
 
 			if (c.getExp() instanceof ASTNever never) never.setFields(pe.getSigma(), entry.getKey(), test);
@@ -135,6 +133,8 @@ public class ASTMatch extends ASTNode {
 				if (!tcase.isSubtypeOf(target, pe))
 					throw new TypeCheckError(ErrorMessages.notSubtype(tcase, target));
 			}
+
+			pe.closeEnvScope(PENV.SIGMA);
 		}
 		return rettype;
 	}
