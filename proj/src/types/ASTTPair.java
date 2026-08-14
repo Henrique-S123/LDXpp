@@ -43,7 +43,7 @@ public class ASTTPair extends ASTType {
         first.check(pe);
         if (id != null) {
             pe.openEnvScope(PENV.SIGMA);
-            bid = pe.bindToEnv(PENV.SIGMA, id, first);
+            bid = pe.bindToEnv(PENV.SIGMA, id, first).getId();
         }
         second.check(pe);
         return this;

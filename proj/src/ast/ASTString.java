@@ -5,17 +5,16 @@ import proj.src.types.*;
 import proj.src.env.*;
 
 public class ASTString extends ASTNode  {
-    private final String s;
+    private final String val;
 
-    public ASTString(String s0) {
-        s = s0;
+    public ASTString(String s) {
+        val = s;
     }
-    public String getVal() {
-      return s;
-    }
+
+    public String getVal() { return val; }
 
     public IValue eval(Env<IValue> e) {
-        return new VString(s);                
+        return new VString(val);                
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) {
@@ -28,6 +27,6 @@ public class ASTString extends ASTNode  {
 
     @Override
     public String toString() {
-        return s;
+        return val;
     }
 }

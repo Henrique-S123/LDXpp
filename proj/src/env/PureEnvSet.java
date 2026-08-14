@@ -68,19 +68,19 @@ public class PureEnvSet {
         ) throw new TypeCheckError(ErrorMessages.alreadyDeclaredVariable(id));
     }
 
-    public String bindToEnv(PENV env, String id, ASTType t) throws TypeCheckError {
+    public Binder<ASTType> bindToEnv(PENV env, String id, ASTType t) throws TypeCheckError {
         if (id == null) throw new TypeCheckError(ErrorMessages.nullId());
         Binder<ASTType> b = new Binder<ASTType>(t);
         return bindToEnv(env, id, b);
     }
 
-    public String bindToEnv(PENV env, String id, Binder<ASTType> b) throws TypeCheckError {
+    public Binder<ASTType> bindToEnv(PENV env, String id, Binder<ASTType> b) throws TypeCheckError {
         if (id == null) throw new TypeCheckError(ErrorMessages.nullId());
         switch (env) {
             case PHI -> { checkAlreadyDeclared(PENV.PHI, id); phi.assoc(id, b); }
             case SIGMA -> sigma.assoc(id, b);
         }
-        return b.getId();
+        return b;
     }
 
     public String getFreshId() {

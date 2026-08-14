@@ -44,7 +44,7 @@ public class ASTTArrow extends ASTType {
         dom.check(pe);
         if (id != null) {
             pe.openEnvScope(PENV.SIGMA);
-            bid = pe.bindToEnv(PENV.SIGMA, id, dom);
+            bid = pe.bindToEnv(PENV.SIGMA, id, dom).getId();
         }
         codom.check(pe);
         return this;

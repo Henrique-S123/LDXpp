@@ -10,21 +10,16 @@ import proj.src.errors.*;
 import java.util.HashMap;
 
 public class ASTTypeDef extends ASTNode {
-    private final HashMap<String, ASTType> ltd;
+    private final HashMap<String, ASTType> ltmap;
     private final ASTNode body;
 
-    public ASTTypeDef(HashMap<String, ASTType> ltdp, ASTNode b) {
-        ltd = ltdp;
-        body = b;
+    public ASTTypeDef(HashMap<String, ASTType> l, ASTNode b) {
+        ltmap = l; body = b;
     }
 
-    public HashMap<String, ASTType> getLtd() {
-        return ltd;
-    }
+    public HashMap<String, ASTType> getLtd() { return ltmap; }
 
-    public ASTNode getBody() {
-        return body;
-    }
+    public ASTNode getBody() { return body; }
     
     public IValue eval(Env<IValue> env) throws InterpreterError {
         return body.eval(env);
@@ -32,8 +27,8 @@ public class ASTTypeDef extends ASTNode {
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         e.openEnvScope(ENV.PHI);
-        for (String s : ltd.keySet()) e.bindToEnv(ENV.PHI, s, ltd.get(s));
-        for (String s : ltd.keySet()) ltd.get(s).check(new PureEnvSet(e));
+        for (String s : ltmap.keySet()) e.bindToEnv(ENV.PHI, s, ltmap.get(s));
+        for (String s : ltmap.keySet()) ltmap.get(s).check(new PureEnvSet(e));
         ASTType ret = this.body.typecheck(e, target);
         e.closeEnvScope(ENV.PHI);
         return ret;
@@ -41,9 +36,11 @@ public class ASTTypeDef extends ASTNode {
 
     public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
         pe.openEnvScope(PENV.PHI);
-        for (String s : ltd.keySet()) pe.bindToEnv(PENV.PHI, s, ltd.get(s));
-        for (String s : ltd.keySet()) ltd.get(s).check(pe);
-        return body.puretypecheck(pe, target);
+        for (String s : ltmap.keySet()) pe.bindToEnv(PENV.PHI, s, ltmap.get(s));
+        for (String s : ltmap.keySet()) ltmap.get(s).check(pe);
+        ASTType ret = this.body.puretypecheck(pe, target);
+        pe.closeEnvScope(PENV.PHI);
+        return ret;
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
@@ -51,11 +48,11 @@ public class ASTTypeDef extends ASTNode {
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-		return new ASTTypeDef(ltd, body.subs(subsId, node));
+		return new ASTTypeDef(ltmap, body.subs(subsId, node));
 	}
 
     @Override
 	public String toString() {
-		return String.format("typedef(%s, %s)", ltd, body);
+		return String.format("typedef(%s, %s)", ltmap, body);
 	}
 }

@@ -5,19 +5,19 @@ import proj.src.types.*;
 import proj.src.env.*;
 
 public class ASTInt extends ASTNode  {
-    private final int v;
+    private final int val;
     private final boolean lin;
 
-    public ASTInt(int v0, boolean l) {
-        v = v0; lin = l;
+    public ASTInt(int v, boolean l) {
+        val = v; lin = l;
     }
 
-    public int getVal() { return v; }
+    public int getVal() { return val; }
 
     public boolean isLinear() { return lin; }
 
     public IValue eval(Env<IValue> e) {
-        return new VInt(v, lin);                
+        return new VInt(val, lin);                
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) {
@@ -30,6 +30,6 @@ public class ASTInt extends ASTNode  {
 
     @Override
     public String toString() {
-        return String.valueOf(v) + (lin ? "l" : "");
+        return String.valueOf(val) + (lin ? "l" : "");
     }
 }
