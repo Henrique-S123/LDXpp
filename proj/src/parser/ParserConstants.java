@@ -129,7 +129,7 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int LLABEL = 64;
   /** RegularExpression Id. */
-  int String = 65;
+  int Str = 65;
   /** RegularExpression Id. */
   int Id = 66;
   /** RegularExpression Id. */
@@ -207,7 +207,7 @@ public interface ParserConstants {
     "\"linunion\"",
     "<LABEL>",
     "<LLABEL>",
-    "<String>",
+    "<Str>",
     "<Id>",
     "<LinNum>",
     "<Num>",

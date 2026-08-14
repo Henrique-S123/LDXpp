@@ -94,19 +94,14 @@ public final class DefEq {
             Debug.log("Checking if parts are equal");
             boolean res = false;
             if (termdefeq(ln.getTest(), rn.getTest(), phi, alpha, t)) {
-                Map<String, MatchCase> left = ln.getCases();
-                Map<String, MatchCase> right = rn.getCases();
-                if (left.size() == right.size()) {
+                Set<String> left = ln.getLabels();
+                Set<String> right = rn.getLabels();
+                if (left.size() == right.size() && left.containsAll(right)) {
                     boolean diff = false;
-                    for (String label : ln.getCases().keySet()) {
-                        MatchCase leftCase = left.get(label);
-                        MatchCase rightCase = right.get(label);
-                        if (rightCase == null ||
-                            !termdefeq(leftCase.getExp(), rightCase.getExp(), phi, alpha.extend(leftCase.getId(), rightCase.getId()), t)) {
-                                diff = true;
-                                break;
+                    for (String label : left)
+                        if (!termdefeq(ln.getCaseExp(label), rn.getCaseExp(label), phi, alpha.extend(ln.getCaseId(label), rn.getCaseId(label)), t)) {
+                                diff = true; break;
                             }
-                    }
                     if (!diff) res = true;
                 }
             }

@@ -5,6 +5,7 @@ import proj.src.env.*;
 import proj.src.types.*;
 import proj.src.debug.Debug;
 
+import java.util.Set;
 import java.util.Map;
 
 public final class StructEq {
@@ -52,16 +53,12 @@ public final class StructEq {
             return termEqStruct(ln.getExpr(), rn.getExpr(), alpha);
         if (l instanceof ASTMatch ln && r instanceof ASTMatch rn) {
             if (termEqStruct(ln.getTest(), rn.getTest(), alpha)) {
-                Map<String, MatchCase> left = ln.getCases();
-                Map<String, MatchCase> right = rn.getCases();
-                if (left.size() != right.size()) return false;
-                for (String label : ln.getCases().keySet()) {
-                    MatchCase leftCase = left.get(label);
-                    MatchCase rightCase = right.get(label);
-                    if (rightCase == null ||
-                        !termEqStruct(leftCase.getExp(), rightCase.getExp(), alpha.extend(leftCase.getId(), rightCase.getId())))
+                Set<String> left = ln.getLabels();
+                Set<String> right = rn.getLabels();
+                if (left.size() != right.size() || !left.containsAll(right)) return false;
+                for (String label : left)
+                    if (!termEqStruct(ln.getCaseExp(label), rn.getCaseExp(label), alpha.extend(ln.getCaseId(label), rn.getCaseId(label))))
                             return false;
-                }
                 return true;
             }
             return false;

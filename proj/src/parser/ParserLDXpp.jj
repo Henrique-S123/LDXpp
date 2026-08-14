@@ -71,7 +71,7 @@ TOKEN :
   |
   < LABEL : "#" ["a"-"z", "A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* > | < LLABEL : "$" ["a"-"z", "A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* >
   |
-  < String: "\"" ( (~["\"","\\"]) | ("\\" ( ["n","t","b","r","f","\\","\""] ) ) )* "\"" >
+  < Str: "\"" ( (~["\"","\\"]) | ("\\" ( ["n","t","b","r","f","\\","\""] ) ) )* "\"" >
   |
   < Id: ["a"-"z","A"-"Z", "_"] ( ["_", "a"-"z","A"-"Z","0"-"9"] )* >
   |
@@ -228,7 +228,7 @@ ASTNode Fact() :
     | n=<Bool> { t = new ASTBool(Boolean.parseBoolean(n.image), false); }
     | n=<LinBool> { t = new ASTBool(Boolean.parseBoolean(n.image.substring(0, n.image.length()-1)), true); }
     | n = <Id> { t = new ASTId(n.image); }
-    | n=<String> { t = new ASTString(n.image.substring(1, n.image.length()-1)); }
+    | n=<Str> { t = new ASTString(n.image.substring(1, n.image.length()-1)); }
     | <LRPAR> { t = new ASTUnit(); }
     | <MINUS> t=Fact() { t = new ASTOp(new ASTInt(0, false), t, "-u"); }
     | <NOT> t=Fact() { t = new ASTOp(new ASTBool(true, false), t, "~"); }
@@ -236,7 +236,7 @@ ASTNode Fact() :
     | t = Funct()
     | (n=<PRINT>|n=<PRINTLN>) t=Fact() { t = new ASTPrint(t, n.image.equals("println")); }
     | (n=<FST>|n=<SND>) <LPAR> t = Let() <RPAR> { t = new ASTChoice(t, n.image.equals("fst")); }
-    | <MATCH> t2 = Let() <LBRA> t = Match(t2)
+    | <MATCH> t2 = Let() t = Match(t2)
     |  n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t, false); }
     |  n = <LLABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t, true); }
     | <LPAR> t = TermList() <RPAR>
@@ -290,16 +290,21 @@ ASTNode TermVertList() :
 ASTNode Match(ASTNode p) :
 {
   Token l, n, n2;
-  ASTNode t, e1, e2;
-  Map<String, MatchCase> cases = new HashMap<String, MatchCase>();
+  ASTMatch t = new ASTMatch(p);
+  ASTNode e1, e2;
+  Set<String> labels = new HashSet<String>();
 }
 {
+  <LBRA>
   (
-    (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = MatchExpr() { cases.put(l.image, new MatchCase(n.image, e1)); }
-          (<VERT> (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = MatchExpr()
-            { if (cases.putIfAbsent(l.image, new MatchCase(n.image, e1)) != null) throw new ParseException("duplicate label");} )*
-    <RBRA> { t = new ASTMatch(p, cases); }
+    (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = MatchExpr() { labels.add(l.image); t.addCase(l.image, n.image, e1); }
+    (
+      <VERT> (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = MatchExpr()
+      { if (labels.contains(l.image)) throw new ParseException("duplicate label");
+        else t.addCase(l.image, n.image, e1); }
+    )*
   )
+  <RBRA>
   { return t; }
 }
 
