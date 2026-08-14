@@ -10,17 +10,12 @@ public class ASTPrint extends ASTNode {
 	private final boolean newline;
 
 	public ASTPrint(ASTNode e, boolean nl) {
-		exp = e;
-		newline = nl;
+		exp = e; newline = nl;
     }
 
-	public ASTNode getExp() {
-		return exp;
-	}
+	public ASTNode getExp() { return exp; }
 
-	public boolean getNewline() {
-		return newline;
-	}
+	public boolean getNewline() { return newline; }
 
     public IValue eval(Env <IValue>e) throws InterpreterError {
 		IValue v0 = exp.eval(e);

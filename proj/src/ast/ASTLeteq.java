@@ -12,22 +12,14 @@ public class ASTLeteq extends ASTNode {
     private final ASTNode expr, body;
 
     public ASTLeteq(String i, ASTNode e, ASTNode b) {
-        id = i;
-        expr = e;
-        body = b;
+        id = i; expr = e; body = b;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
 
-    public ASTNode getExpr() {
-        return expr;
-    }
+    public ASTNode getExpr() { return expr; }
 
-    public ASTNode getBody() {
-        return body;
-    }
+    public ASTNode getBody() { return body; }
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
         Env<IValue> en = e.beginScope();

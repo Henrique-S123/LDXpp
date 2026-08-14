@@ -11,17 +11,12 @@ public class ASTSeq extends ASTNode {
     private final ASTNode first, second;
 
     public ASTSeq(ASTNode f, ASTNode s) {
-		first = f;
-		second = s;
+		first = f; second = s;
     }
 
-    public ASTNode getFirst() {
-        return first;
-    }
+    public ASTNode getFirst() { return first; }
 
-    public ASTNode getSecond() {
-        return second;
-    }
+    public ASTNode getSecond() { return second; }
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
 		first.eval(e);

@@ -15,17 +15,12 @@ public class ASTMatch extends ASTNode {
 	private final Map<String, MatchCase> cases;
 
 	public ASTMatch(ASTNode t, Map<String, MatchCase> cs) {
-		test = t;
-		cases = cs;
+		test = t; cases = cs;
     }
 
-	public ASTNode getTest() {
-		return test;
-	}
+	public ASTNode getTest() { return test; }
 
-	public Map<String, MatchCase> getCases() {
-		return cases;
-	}
+	public Map<String, MatchCase> getCases() { return cases; }
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
 		IValue vt = test.eval(e);

@@ -7,35 +7,26 @@ import proj.src.errors.*;
 
 public class ASTId extends ASTNode	{	
     private final String id;
-    private String binderId;
+    private String bid;
     
-    public ASTId(String id)	{
-        this.id = id;
+    public ASTId(String i)	{
+        id = i;
     }
 
-    public ASTId(String id, String bid) {
-        this.id = id;
-        binderId = bid;
+    public ASTId(String i, String b) {
+        id = i; bid = b;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
 
-    public String getBinderId() {
-        return binderId;
-    }
-
-    public void setBinderId(String bid) {
-        binderId = bid;
-    }
+    public String getBid() { return bid; }
 
     public IValue eval(Env<IValue> env) {
         return env.find(id);
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        if (binderId == null) binderId = e.findBinderId(id);
+        if (bid == null) bid = e.findBinderId(id);
         ASTType ret = e.findVar(id);
         return ret;
     }
@@ -43,7 +34,7 @@ public class ASTId extends ASTNode	{
     public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
         ASTType ret = pe.findVar(id);
         if (ret == null) throw new TypeCheckError(ErrorMessages.idNotFound(id));
-        if (binderId == null) binderId = pe.findBinderId(id);
+        if (bid == null) bid = pe.findBinderId(id);
         return ret;
     }
 
@@ -53,12 +44,12 @@ public class ASTId extends ASTNode	{
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode n = sigma.findEq(binderId);
+        ASTNode n = sigma.findEq(bid);
         return n;
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-        if (binderId.equals(subsId)) return node;
+        if (bid.equals(subsId)) return node;
         return this;
     }
 

@@ -15,14 +15,12 @@ public class ASTNever extends ASTNode  {
 
     public ASTNever() {}
 
-    public IValue eval(Env<IValue> e) throws InterpreterError {
-        throw new InterpreterError(ErrorMessages.unreachableCode());
+    public void setFields(Env<ASTType> env, String l, ASTNode t) {
+        searchEnv = env; label = l; test = t;
     }
 
-    public void setFields(Env<ASTType> env, String l, ASTNode t) {
-        searchEnv = env;
-        label = l;
-        test = t;
+    public IValue eval(Env<IValue> e) throws InterpreterError {
+        throw new InterpreterError(ErrorMessages.unreachableCode());
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {

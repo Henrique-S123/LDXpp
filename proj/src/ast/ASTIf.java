@@ -11,22 +11,14 @@ public class ASTIf extends ASTNode {
     private final ASTNode test, conseq, alt;
 
 	public ASTIf(ASTNode t, ASTNode c, ASTNode a) {
-		test = t;
-		conseq = c;
-		alt = a;
+		test = t; conseq = c; alt = a;
     }
 
-	public ASTNode getTest() {
-		return test;
-	}
+	public ASTNode getTest() { return test; }
 
-	public ASTNode getConseq() {
-		return conseq;
-	}
+	public ASTNode getConseq() { return conseq; }
 
-	public ASTNode getAlt() {
-		return alt;
-	}
+	public ASTNode getAlt() { return alt; }
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
 		IValue vt = test.eval(e);

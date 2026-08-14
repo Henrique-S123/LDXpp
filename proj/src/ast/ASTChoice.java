@@ -11,34 +11,24 @@ public class ASTChoice extends ASTNode  {
     private final boolean choice;
 
     public ASTChoice(ASTNode p, boolean c) {
-        pair = p;
-        choice = c;
+        pair = p; choice = c;
     }
 
-    public ASTNode getPair() {
-        return pair;
-    }
+    public ASTNode getPair() { return pair; }
 
-    public boolean getChoice() {
-        return choice;
-    }
+    public boolean getChoice() { return choice; }
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
         IValue vp = pair.eval(e);
-        if (vp instanceof VPair pair) {
-            return choice ? pair.getFirst() : pair.getSecond();
-        } else {
-            throw new InterpreterError(ErrorMessages.wrongValueToUnary(choice ? "fst" : "snd", vp));
-        }           
+        if (vp instanceof VPair pair) return choice ? pair.getFirst() : pair.getSecond();
+        else throw new InterpreterError(ErrorMessages.wrongValueToUnary(choice ? "fst" : "snd", vp));        
     }
     
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
 		ASTType tp = pair.typecheck(e, null);
         if (tp instanceof ASTTPair tpair && !tpair.isLinear()) {
             if (choice) return tpair.getFirst();
-            ASTNode s = pair, finalpair = pair;
-            while ((s = s.solve(e.getSigma())) != null) finalpair = s;
-            return tpair.getSecond().inst(tpair.getBid(), new ASTChoice(finalpair, true).weaknorm());
+            return tpair.getSecond().inst(tpair.getBid(), new ASTChoice(normalize(e.getSigma()), true).weaknorm());
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice ? "fst" : "snd", tp));
 	}
@@ -47,11 +37,15 @@ public class ASTChoice extends ASTNode  {
         ASTType tp = pair.puretypecheck(pe, null);
         if (tp instanceof ASTTPair tpair && !tpair.isLinear()) {
             if (choice) return tpair.getFirst();
-            ASTNode s = pair, finalpair = pair;
-            while ((s = s.solve(pe.getSigma())) != null) finalpair = s;
-            return tpair.getSecond().inst(tpair.getBid(), new ASTChoice(finalpair, true).weaknorm());
+            return tpair.getSecond().inst(tpair.getBid(), new ASTChoice(normalize(pe.getSigma()), true).weaknorm());
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary(choice ? "fst" : "snd", tp));
+    }
+
+    public ASTNode normalize(Env<ASTType> sig) {
+        ASTNode s = pair, finalpair = pair;
+        while ((s = s.solve(sig)) != null) finalpair = s;
+        return finalpair;
     }
     
     public ASTNode weaknorm(Env<ASTNode> sub) {

@@ -13,28 +13,16 @@ public class ASTSplit extends ASTNode {
 	private final boolean linpair;
 
 	public ASTSplit(ASTNode p, String i1, String i2, ASTNode b, boolean l) {
-		pair = p;
-		id1 = i1;
-		id2 = i2;
-		body = b;
-		linpair = l;
+		pair = p; id1 = i1; id2 = i2; body = b; linpair = l;
     }
 
-	public String getId1() {
-		return id1;
-	}
+	public String getId1() { return id1; }
 
-	public String getId2() {
-		return id2;
-	}
+	public String getId2() { return id2; }
 
-	public ASTNode getPair() {
-		return pair;
-	}
+	public ASTNode getPair() { return pair; }
 
-	public ASTNode getBody() {
-		return body;
-	}
+	public ASTNode getBody() { return body; }
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
 		IValue v = pair.eval(e);

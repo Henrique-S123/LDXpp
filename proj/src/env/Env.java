@@ -77,14 +77,14 @@ public class Env<E>{
         Env<E> curr = this;
         while (curr != null) {
             for (Binder<E> b : curr.bindings.values())
-                if (b.val instanceof ASTTEq teq && teq.getTerm1() instanceof ASTId nid && bid.equals(nid.getBinderId()))
+                if (b.val instanceof ASTTEq teq && teq.getTerm1() instanceof ASTId nid && bid.equals(nid.getBid()))
                     return teq.getTerm2();
             curr = curr.anc;
         }
         curr = this;
         while (curr != null) {
             for (Binder<E> b : curr.bindings.values())
-                if (b.val instanceof ASTTEq teq && teq.getTerm2() instanceof ASTId nid && bid.equals(nid.getBinderId()))
+                if (b.val instanceof ASTTEq teq && teq.getTerm2() instanceof ASTId nid && bid.equals(nid.getBid()))
                     return teq.getTerm1();
 
             curr = curr.anc;

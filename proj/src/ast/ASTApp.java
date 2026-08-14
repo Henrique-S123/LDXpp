@@ -9,17 +9,12 @@ public class ASTApp extends ASTNode  {
     private final ASTNode func, arg;
 
     public ASTApp(ASTNode f, ASTNode a) {
-        func = f;
-        arg = a;
+        func = f; arg = a;
     }
 
-    public ASTNode getFunc() {
-        return func;
-    }
+    public ASTNode getFunc() { return func; }
 
-    public ASTNode getArg() {
-        return arg;
-    }
+    public ASTNode getArg() { return arg; }
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
         IValue vfunc = func.eval(e);

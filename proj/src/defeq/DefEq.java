@@ -44,8 +44,8 @@ public final class DefEq {
 
         if (l instanceof ASTId ln && r instanceof ASTId rn) {
             if (alpha.equiv(ln.getId(), rn.getId())) return true;
-            String bid1 = ln.getBinderId();
-            String bid2 = rn.getBinderId();
+            String bid1 = ln.getBid();
+            String bid2 = rn.getBid();
             Debug.log("LEFT BINDER ID: " + bid1);
             Debug.log("RIGHT BINDER ID: " + bid2);
             if (bid1 != null && bid1.equals(bid2)) return true;

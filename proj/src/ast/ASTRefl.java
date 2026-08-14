@@ -11,8 +11,7 @@ public class ASTRefl extends ASTNode  {
     private final Tactic tactic;
 
     public ASTRefl(ASTNode t, Tactic tac) {
-        term = t;
-        tactic = tac;
+        term = t; tactic = tac;
     }
 
     public IValue eval(Env<IValue> e) {

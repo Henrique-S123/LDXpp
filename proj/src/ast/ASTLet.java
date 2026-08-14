@@ -13,27 +13,16 @@ public class ASTLet extends ASTNode {
     private final ASTType declType;
 
     public ASTLet(String i, ASTNode e, ASTType t, ASTNode b) {
-        id = i;
-        expr = e;
-        declType = t;
-        body = b;
+        id = i; expr = e; declType = t; body = b;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
 
-    public ASTNode getExpr() {
-        return expr;
-    }
+    public ASTNode getExpr() { return expr; }
 
-    public ASTType getDeclType() {
-        return declType;
-    }
+    public ASTType getDeclType() { return declType; }
 
-    public ASTNode getBody() {
-        return body;
-    }
+    public ASTNode getBody() { return body; }
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
         Env<IValue> en = e.beginScope();
