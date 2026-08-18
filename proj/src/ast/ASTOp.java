@@ -86,8 +86,8 @@ public class ASTOp extends ASTNode {
 	}
 
 	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-		ASTType tl = lhs.typecheck(e, null);
-		ASTType tr = rhs.typecheck(e, null);
+		ASTType tl = e.unfold(lhs.typecheck(e, null));
+		ASTType tr = e.unfold(rhs.typecheck(e, null));
 		if (op.equals("+") || op.equals("-") || op.equals("*") || op.equals("/") || op.equals("-u")) return typecheckArithOp(tl, tr);
 		if (op.equals("==") || op.equals("!=") || op.equals(">") || op.equals(">=") || op.equals("<") || op.equals("<=")) return typecheckCmpOp(tl, tr);
 		if (op.equals("&&") || op.equals("||") || op.equals("~")) return typecheckLogicOp(tl, tr);
@@ -95,8 +95,8 @@ public class ASTOp extends ASTNode {
 	}
 
 	public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
-		ASTType tl = lhs.puretypecheck(pe, null);
-		ASTType tr = rhs.puretypecheck(pe, null);
+		ASTType tl = pe.unfold(lhs.puretypecheck(pe, null));
+		ASTType tr = pe.unfold(rhs.puretypecheck(pe, null));
 		if (op.equals("+") || op.equals("-") || op.equals("*") || op.equals("/") || op.equals("-u")) return typecheckArithOp(tl, tr);
 		if (op.equals("==") || op.equals("!=") || op.equals(">") || op.equals(">=") || op.equals("<") || op.equals("<=")) return typecheckCmpOp(tl, tr);
 		if (op.equals("&&") || op.equals("||") || op.equals("~")) return typecheckLogicOp(tl, tr);

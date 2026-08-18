@@ -1,0 +1,15 @@
+type: (x:money, x > fivebucks ≡ true : bool), value: (10, refl)
+
+
+type: 10 > fivebucks ≡ true : bool, value: refl
+
+
+type: (x:money, x > money ≡ true : bool), value: (10, refl)
+
+
+type: (x:money, x > money ≡ true : bool), value: (10, refl)
+
+
+type: 10 > money ≡ true : bool, value: refl
+
+

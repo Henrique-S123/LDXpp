@@ -1,0 +1,31 @@
+type money = int;
+let fivebucks:money = 5;
+type morethanfivebucks = (x:money, ((x>fivebucks)=true:bool));
+let tenbucks:morethanfivebucks = (10, refl);
+tenbucks;;
+
+type money = int;
+let fivebucks:money = 5;
+type morethanfivebucks = (x:money, ((x>fivebucks)=true:bool));
+let tenbucks:morethanfivebucks = (10, refl);
+snd(tenbucks);;
+
+type money = int;
+let money:money = 5;
+type morethanfivebucks = (x:money, ((x>money)=true:bool));
+let tenbucks:morethanfivebucks = (10, refl);
+tenbucks;;
+
+type money = int;
+let money:money = 5;
+type morethanfivebucks = (x:money, ((x>money)=true:bool));
+let money:money = 11;
+let tenbucks:morethanfivebucks = (10, refl);
+tenbucks;;
+
+type money = int;
+let money:money = 5;
+type morethanfivebucks = (x:money, ((x>money)=true:bool));
+let money:money = 11;
+let tenbucks:morethanfivebucks = (10, refl);
+snd(tenbucks);;
