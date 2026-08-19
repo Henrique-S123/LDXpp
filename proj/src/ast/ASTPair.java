@@ -30,8 +30,8 @@ public class ASTPair extends ASTNode {
         String tgtid = null, tgtbid = null;
         if (target != null) {
             ASTType tt = e.unfold(target);
-            if (tt instanceof ASTTPair pair && (!lin || pair.isLinear())) { targetfst = pair.getFirst(); targetsnd = pair.getSecond();
-                    tgtid = pair.getId(); tgtbid = pair.getBid(); }
+            if (tt instanceof ASTTPair pair && (!lin || pair.isLinear())) {
+                targetfst = pair.getFirst(); targetsnd = pair.getSecond(); tgtid = pair.getId(); tgtbid = pair.getBid(); }
             else if (lin) throw new TypeCheckError(ErrorMessages.typeMismatch("tensor", target));
             else throw new TypeCheckError(ErrorMessages.typeMismatch("pair or tensor", target));
         }
@@ -50,9 +50,7 @@ public class ASTPair extends ASTNode {
 
         if (!lin) e.pushDelta(prevDelta);
 
-        ASTType firsttype = targetfst == null ? t1 : targetfst;
-        ASTType secondtype = targetsnd == null ? t2 : targetsnd;
-        return new ASTTPair(firsttype, secondtype, tgtid, tgtbid, lin);
+        return target == null ? new ASTTPair(t1, t2, tgtid, tgtbid, lin) : target;
     }
 
     public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
@@ -60,8 +58,8 @@ public class ASTPair extends ASTNode {
         String tgtid = null, tgtbid = null;
         if (target != null) {
             ASTType tt = pe.unfold(target);
-            if (tt instanceof ASTTPair pair && (!lin || pair.isLinear())) { targetfst = pair.getFirst(); targetsnd = pair.getSecond();
-                    tgtid = pair.getId(); tgtbid = pair.getBid(); }
+            if (tt instanceof ASTTPair pair && (!lin || pair.isLinear())) {
+                targetfst = pair.getFirst(); targetsnd = pair.getSecond(); tgtid = pair.getId(); tgtbid = pair.getBid(); }
             else if (lin) throw new TypeCheckError(ErrorMessages.typeMismatch("tensor", target));
             else throw new TypeCheckError(ErrorMessages.typeMismatch("pair or tensor", target));
         }
@@ -75,9 +73,7 @@ public class ASTPair extends ASTNode {
         if (targetsnd != null && !t2.isSubtypeOf(insttgt2, pe))
             throw new TypeCheckError(ErrorMessages.notSubtype(t2, targetsnd));
         
-        ASTType firsttype = targetfst == null ? t1 : targetfst;
-        ASTType secondtype = targetsnd == null ? t2 : targetsnd;
-        return new ASTTPair(firsttype, secondtype, tgtid, tgtbid, lin);
+        return target == null ? new ASTTPair(t1, t2, tgtid, tgtbid, lin) : target;
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {

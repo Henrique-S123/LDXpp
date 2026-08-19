@@ -76,7 +76,7 @@ public class ASTFunc extends ASTNode  {
 
         e.closeEnvScope(env);
         e.closeEnvScope(ENV.SIGMA);
-        return new ASTTArrow(targtype, tb, id, b.getId(), lin);
+        return target == null ? new ASTTArrow(targtype, tb, id, b.getId(), lin) : target;
     }
 
     public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
@@ -100,9 +100,11 @@ public class ASTFunc extends ASTNode  {
 
         if (targetcodom != null) targetcodom = targetcodom.inst(bid, new ASTId(id, b.getId()));
         ASTType tb = body.puretypecheck(pe, targetcodom);
+        if (targetcodom != null && !tb.isSubtypeOf(targetcodom, pe))
+            throw new TypeCheckError(ErrorMessages.notSubtype(tb, targetcodom));
 
         pe.closeEnvScope(PENV.SIGMA);
-        return new ASTTArrow(targtype, tb, id, b.getId(), lin);
+        return target == null ? new ASTTArrow(targtype, tb, id, b.getId(), lin) : target;
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
