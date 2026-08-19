@@ -1,6 +1,9 @@
 type: 1 ≡ 1 : int, value: refl
 
 
+type: 2 ≡ 2 : int, value: refl
+
+
 class proj.src.errors.TypeCheckError: Terms x and 2 are not definitionally equal
 
 
