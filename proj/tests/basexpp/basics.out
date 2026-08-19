@@ -73,7 +73,7 @@ type: int, value: 7
 type: int, value: 5
 
 
-class proj.src.errors.TypeCheckError: Argument type (z:int)->int is not a subtype of parameter type int->bool
+class proj.src.errors.TypeCheckError: Type int is not a subtype of bool
 
 
 type: int, value: 14
