@@ -25,7 +25,7 @@ public class ASTRec extends ASTNode  {
     public ASTNode getBody() { return body; }
 
     public IValue eval(Env<IValue> e) throws InterpreterError {
-        VRec v = new VRec(e, fid, funcbody, false);
+        VRec v = new VRec(e, fid, funcbody);
         Env<IValue> en = e.beginScope();
         en.assoc(fid, v);
         return body.eval(en);
