@@ -1,36 +1,20 @@
 package proj.src.values;
 
 public class VPair implements IValue {
-    IValue f, s;
+    IValue first, second;
     boolean lin;
 
-    public VPair(IValue f0, IValue s0, boolean l) {
-        f = f0;
-        s = s0;
-        lin = l;
+    public VPair(IValue f, IValue s, boolean l) {
+        first = f; second = s; lin = l;
     }
 
-    public IValue getFirst() {
-        return f;
-    }
+    public IValue getFirst() { return first; }
 
-    public IValue getSecond() {
-        return s;
-    }
+    public IValue getSecond() { return second; }
 
-    public void setFirst(IValue f0) {
-        f = f0;
-    }
-
-    public void setSecond(IValue s0) {
-        s = s0;
-    }
-
-    public boolean islin() {
-        return lin;
-    }
+    public boolean islin() { return lin; }
 
     public String toString() {
-        return String.format("(%s%s%s)", f, lin ? " | " : ", ", s);
+        return String.format("(%s%s%s)", first, lin ? " | " : ", ", second);
     }
 }

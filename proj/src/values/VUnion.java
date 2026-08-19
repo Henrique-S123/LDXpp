@@ -6,18 +6,12 @@ public class VUnion implements IValue {
     boolean lin;
 
     public VUnion(String la, IValue v, boolean l) {
-        label = la;
-        val = v;
-        lin = l;
+        label = la; val = v; lin = l;
     }
 
-    public String getLabel() {
-        return label;
-    }
+    public String getLabel() { return label; }
 
-    public IValue getValue() {
-        return val;
-    }
+    public IValue getValue() { return val; }
     
     public String toString() {
         return String.format("%s(%s)", label, val);

@@ -10,31 +10,18 @@ public class VClos implements IValue {
     boolean lin;
 
     public VClos(Env<IValue> e, String i, ASTNode b, boolean l) {
-        env = e;
-        id = i;
-        body = b;
-        lin = l;
+        env = e; id = i; body = b; lin = l;
     }
 
-    public Env<IValue> getEnv() {
-        return env;
-    }
+    public Env<IValue> getEnv() { return env; }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
 
-    public ASTNode getBody() {
-        return body;
-    }
+    public ASTNode getBody() { return body; }
 
-    public void setBody(ASTNode b) {
-        body = b;
-    }
+    public void setBody(ASTNode b) { body = b; }
 
-    public boolean islin() {
-        return lin;
-    }
+    public boolean islin() { return lin; }
 
     public String toString() {
         String res = lin ? "Linear closure with " : "Closure with ";

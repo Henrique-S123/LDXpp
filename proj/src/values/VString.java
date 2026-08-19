@@ -1,17 +1,15 @@
 package proj.src.values;
 
 public class VString implements IValue {
-    String s;
+    String val;
 
-    public VString(String s0) {
-        s = s0;
+    public VString(String s) {
+        val = s;
     }
 
-    public String getval() {
-        return s;
-    }
+    public String getval() { return val; }
 
     public String toString() {
-        return "\"" + s + "\"";
+        return "\"" + val + "\"";
     }
 }
