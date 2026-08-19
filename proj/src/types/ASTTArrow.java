@@ -30,6 +30,7 @@ public class ASTTArrow extends ASTType {
         if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe);
         if (o instanceof ASTTArrow ot && (!lin || ot.isLinear())) {
             if (!ot.getDom().isSubtypeOf(dom, pe)) return false;
+            if (id != null && ot.getId() != null) pe.extendAlpha(id, ot.getId());
             return codom.isSubtypeOf(ot.getCodom(), pe);
         }
         return false;

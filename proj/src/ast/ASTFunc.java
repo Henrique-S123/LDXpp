@@ -65,7 +65,7 @@ public class ASTFunc extends ASTNode  {
         e.openEnvScope(ENV.SIGMA);
         e.bindToEnv(ENV.SIGMA, id, b);
 
-        if (targetcodom != null) targetcodom = targetcodom.inst(bid, new ASTId(id, b.getId()));
+        if (targetcodom != null && bid != null) targetcodom = targetcodom.inst(bid, new ASTId(id, b.getId()));
         ASTType tb = body.typecheck(e, targetcodom);
         if (targetcodom != null && !tb.isSubtypeOf(targetcodom, new PureEnvSet(e)))
             throw new TypeCheckError(ErrorMessages.notSubtype(tb, targetcodom));
@@ -98,7 +98,7 @@ public class ASTFunc extends ASTNode  {
         pe.openEnvScope(PENV.SIGMA);
         Binder<ASTType> b = pe.bindToEnv(PENV.SIGMA, id, targtype);
 
-        if (targetcodom != null) targetcodom = targetcodom.inst(bid, new ASTId(id, b.getId()));
+        if (targetcodom != null && bid != null) targetcodom = targetcodom.inst(bid, new ASTId(id, b.getId()));
         ASTType tb = body.puretypecheck(pe, targetcodom);
         if (targetcodom != null && !tb.isSubtypeOf(targetcodom, pe))
             throw new TypeCheckError(ErrorMessages.notSubtype(tb, targetcodom));

@@ -43,9 +43,9 @@ public class ASTPair extends ASTNode {
         if (targetfst != null && !t1.isSubtypeOf(targetfst, new PureEnvSet(e)))
             throw new TypeCheckError(ErrorMessages.notSubtype(t1, targetfst));
 
-        ASTType insttgt2 = (tgtbid != null) ? targetsnd.inst(tgtbid, first) : targetsnd;
-        ASTType t2 = second.typecheck(e, insttgt2);
-        if (targetsnd != null && !t2.isSubtypeOf(insttgt2, new PureEnvSet(e)))
+        if (targetsnd != null && tgtbid != null) targetsnd = targetsnd.inst(tgtbid, first);
+        ASTType t2 = second.typecheck(e, targetsnd);
+        if (targetsnd != null && !t2.isSubtypeOf(targetsnd, new PureEnvSet(e)))
             throw new TypeCheckError(ErrorMessages.notSubtype(t2, targetsnd));
 
         if (!lin) e.pushDelta(prevDelta);
@@ -68,9 +68,9 @@ public class ASTPair extends ASTNode {
         if (targetfst != null && !t1.isSubtypeOf(targetfst, pe))
             throw new TypeCheckError(ErrorMessages.notSubtype(t1, targetfst));
 
-        ASTType insttgt2 = (tgtbid != null) ? targetsnd.inst(tgtbid, first) : targetsnd;
-        ASTType t2 = second.puretypecheck(pe, insttgt2);
-        if (targetsnd != null && !t2.isSubtypeOf(insttgt2, pe))
+        if (targetsnd != null && tgtbid != null) targetsnd = targetsnd.inst(tgtbid, first);
+        ASTType t2 = second.puretypecheck(pe, targetsnd);
+        if (targetsnd != null && !t2.isSubtypeOf(targetsnd, pe))
             throw new TypeCheckError(ErrorMessages.notSubtype(t2, targetsnd));
         
         return target == null ? new ASTTPair(t1, t2, tgtid, tgtbid, lin) : target;
