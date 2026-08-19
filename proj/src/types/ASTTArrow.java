@@ -47,6 +47,7 @@ public class ASTTArrow extends ASTType {
             bid = pe.bindToEnv(PENV.SIGMA, id, dom).getId();
         }
         codom.check(pe);
+        if (id != null) pe.closeEnvScope(PENV.SIGMA);
         return this;
     }
 }
