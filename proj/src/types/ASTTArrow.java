@@ -6,8 +6,9 @@ import proj.src.env.PureEnvSet.PENV;
 import proj.src.errors.*;
 
 public class ASTTArrow extends ASTType {
-    ASTType dom, codom;
-    String id, bid;
+    private final ASTType dom, codom;
+    private final String id;
+    private String bid;
 
     public ASTTArrow(ASTType d, ASTType co, String i, String bi, boolean l) {
         dom = d; codom = co; id = i; bid = bi; lin = l;

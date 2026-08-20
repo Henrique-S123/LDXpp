@@ -6,8 +6,9 @@ import proj.src.env.PureEnvSet.PENV;
 import proj.src.errors.*;
 
 public class ASTTPair extends ASTType {
-    ASTType first, second;
-    String id, bid;
+    private final ASTType first, second;
+    private final String id;
+    private String bid;
 
     public ASTTPair(ASTType f, ASTType s, String i, String bi, boolean l) {
         first = f; second = s; id = i; bid = bi; lin = l;

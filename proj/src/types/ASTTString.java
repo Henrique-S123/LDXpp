@@ -3,7 +3,6 @@ package proj.src.types;
 import proj.src.env.*;
 
 public class ASTTString extends ASTType {
-
     public ASTTString() {
         lin = false;
     }

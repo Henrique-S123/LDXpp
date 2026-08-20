@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ASTTUnion extends ASTType {
-    Map<String, ASTType> ll;
+    private final Map<String, ASTType> ll;
 
     public ASTTUnion(Map<String, ASTType> llp, boolean l) {
         ll = llp; lin = l;

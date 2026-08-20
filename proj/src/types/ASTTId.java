@@ -5,20 +5,15 @@ import proj.src.env.*;
 import proj.src.errors.*;
 
 public	class ASTTId extends ASTType	{	
-    String id;	
+    private final String id;	
     
-    public ASTTId(String id) {
-        this.id = id;
-        lin = false;
+    public ASTTId(String i) {
+        id = i; lin = false;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
 
-    public String toString() {
-        return id;
-    }
+    public String toString() { return id; }
 
     public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
         if (!(o instanceof ASTTId)) return pe.unfold(this).isSubtypeOf(o, pe, alpha);

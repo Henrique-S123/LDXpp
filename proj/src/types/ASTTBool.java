@@ -3,7 +3,6 @@ package proj.src.types;
 import proj.src.env.*;
 
 public class ASTTBool extends ASTType {
-
     public ASTTBool(boolean l) {
         lin = l;
     }

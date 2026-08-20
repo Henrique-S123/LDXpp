@@ -7,24 +7,18 @@ import proj.src.errors.*;
 import proj.src.defeq.*;
 
 public class ASTTEq extends ASTType {
-    ASTNode term1, term2;
-    ASTType type;
+    private final ASTNode term1, term2;
+    private final ASTType type;
 
     public ASTTEq(ASTNode t1, ASTNode t2, ASTType t) {
         term1 = t1; term2 = t2; type = t; lin = false;
     }
 
-    public ASTNode getTerm1() {
-        return term1;
-    }
+    public ASTNode getTerm1() { return term1; }
 
-    public ASTNode getTerm2() {
-        return term2;
-    }
+    public ASTNode getTerm2() { return term2; }
 
-    public ASTType getType() {
-        return type;
-    }
+    public ASTType getType() { return type; }
 
     public String toString() {
         return String.format("%s ≡ %s : %s", term1, term2, type);
