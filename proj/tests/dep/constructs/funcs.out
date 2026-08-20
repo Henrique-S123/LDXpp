@@ -16,3 +16,12 @@ type: (a:int, (b:int, a ≡ b : int)), value: (2, (2, refl))
 type: (a:int, (b:int, a ≡ b : int)), value: (2, (2, refl))
 
 
+type: (y:int, y ≡ 2 * 4 : int), value: (8, refl)
+
+
+type: (y:int, y ≡ 2 * x : int), value: (8, refl)
+
+
+type: 2 * x ≡ 2 * x : int, value: refl
+
+
