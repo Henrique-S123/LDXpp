@@ -7,24 +7,20 @@ import java.util.*;
 
 public class PureEnvSet {
     Env<ASTType> phi, sigma;
-    AlphaEnv alpha;
 
     public PureEnvSet() {
         phi = new Env<ASTType>();
         sigma = new Env<ASTType>();
-        alpha = new AlphaEnv();
     }
 
     public PureEnvSet(PureEnvSet o) {
         phi = o.phi.copy();
         sigma = o.sigma.copy();
-        alpha = o.alpha.copy();
     }
 
     public PureEnvSet(EnvSet o) {
         phi = o.phi.copy();
         sigma = o.sigma.copy();
-        alpha = o.alpha.copy();
     }
 
     public static enum PENV { PHI, SIGMA }
@@ -36,10 +32,6 @@ public class PureEnvSet {
 
     public Env<ASTType> getPhi() {
         return phi;
-    }
-
-    public AlphaEnv getAlpha() {
-        return alpha;
     }
 
     /* Open scopes */
@@ -85,10 +77,6 @@ public class PureEnvSet {
 
     public String getFreshId() {
         return UUID.randomUUID().toString();
-    }
-
-    public void extendAlpha(String id1, String id2) {
-        alpha.extend(id1, id2);
     }
 
     /* Find binds */

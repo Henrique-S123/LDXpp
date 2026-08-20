@@ -26,12 +26,12 @@ public class ASTTArrow extends ASTType {
         return String.format("%s-%s>%s", domStr, lin ? "o" : "", codom);
     }
 
-    public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
-        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
         if (o instanceof ASTTArrow ot && (!lin || ot.isLinear())) {
-            if (!ot.getDom().isSubtypeOf(dom, pe)) return false;
-            if (id != null && ot.getId() != null) pe.extendAlpha(id, ot.getId());
-            return codom.isSubtypeOf(ot.getCodom(), pe);
+            if (!ot.getDom().isSubtypeOf(dom, pe, alpha)) return false;
+            if (id != null && ot.getId() != null) alpha.extend(id, ot.getId());
+            return codom.isSubtypeOf(ot.getCodom(), pe, alpha);
         }
         return false;
     }

@@ -16,11 +16,11 @@ public class ASTTUnion extends ASTType {
 
     public Map<String, ASTType> getMap() { return ll; }
 
-    public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
-        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
         if (o instanceof ASTTUnion ot && (!lin || ot.isLinear())) {
             for (String s : ll.keySet())
-                if (!ot.getMap().containsKey(s) || !ll.get(s).isSubtypeOf(ot.getMap().get(s), pe)) return false;
+                if (!ot.getMap().containsKey(s) || !ll.get(s).isSubtypeOf(ot.getMap().get(s), pe, alpha)) return false;
             return true;
         }
         return false;

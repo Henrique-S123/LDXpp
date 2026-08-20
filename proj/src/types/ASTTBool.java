@@ -12,8 +12,8 @@ public class ASTTBool extends ASTType {
         return String.format("%sbool", lin ? "lin" : "");
     }
 
-    public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
-        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
         return (o instanceof ASTTBool ot && (!lin || ot.isLinear()));
     }
 }

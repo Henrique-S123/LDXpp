@@ -30,13 +30,13 @@ public class ASTTEq extends ASTType {
         return String.format("%s ≡ %s : %s", term1, term2, type);
     }
 
-    public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
-        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
         Debug.off();
         DefEq e = new DefEq(pe.getSigma());
-        boolean res = o instanceof ASTTEq eq && e.typedefeq(type, eq.getType(), pe.getPhi(), pe.getAlpha())
-            && e.termdefeq(term1.weaknorm(), eq.getTerm1().weaknorm(), pe.getPhi(), pe.getAlpha())
-            && e.termdefeq(term2.weaknorm(), eq.getTerm2().weaknorm(), pe.getPhi(), pe.getAlpha());
+        boolean res = o instanceof ASTTEq eq && e.typedefeq(type, eq.getType(), pe.getPhi(), alpha)
+            && e.termdefeq(term1.weaknorm(), eq.getTerm1().weaknorm(), pe.getPhi(), alpha)
+            && e.termdefeq(term2.weaknorm(), eq.getTerm2().weaknorm(), pe.getPhi(), alpha);
         Debug.on();
         return res;
     }

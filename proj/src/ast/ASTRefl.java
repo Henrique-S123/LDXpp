@@ -29,7 +29,7 @@ public class ASTRefl extends ASTNode  {
 
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
         DefEq eq = new DefEq(e.getSigma());
-        if (eq.termdefeq(left.weaknorm(), right.weaknorm(), e.getPhi(), e.getAlpha(), tactic)) return target;
+        if (eq.termdefeq(left.weaknorm(), right.weaknorm(), e.getPhi(), new AlphaEnv(), tactic)) return target;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
@@ -44,7 +44,7 @@ public class ASTRefl extends ASTNode  {
 
         ASTNode left = tt.getTerm1(), right = tt.getTerm2();
         DefEq eq = new DefEq(pe.getSigma());
-        if (eq.termdefeq(left.weaknorm(), right.weaknorm(), pe.getPhi(), pe.getAlpha(), tactic)) return target;
+        if (eq.termdefeq(left.weaknorm(), right.weaknorm(), pe.getPhi(), new AlphaEnv(), tactic)) return target;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 

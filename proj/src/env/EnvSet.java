@@ -8,14 +8,12 @@ import java.util.*;
 public class EnvSet {
     Env<ASTType> gamma, phi, sigma;
     ResourceManager<ASTType> delta;
-    AlphaEnv alpha;
 
     public EnvSet() {
         gamma = new Env<ASTType>();
         delta = new ResourceManager<ASTType>();
         phi = new Env<ASTType>();
         sigma = new Env<ASTType>();
-        alpha = new AlphaEnv();
     }
 
     public EnvSet(EnvSet o) {
@@ -23,7 +21,6 @@ public class EnvSet {
         delta = o.delta.copy();
         phi = o.phi.copy();
         sigma = o.sigma.copy();
-        alpha = o.alpha.copy();
     }
 
     public static enum ENV { GAMMA, DELTA, PHI, SIGMA }
@@ -35,10 +32,6 @@ public class EnvSet {
 
     public Env<ASTType> getPhi() {
         return phi;
-    }
-
-    public AlphaEnv getAlpha() {
-        return alpha;
     }
 
     public ResourceManager<ASTType> popDelta() {
@@ -114,10 +107,6 @@ public class EnvSet {
 
     public String getFreshId() {
         return UUID.randomUUID().toString();
-    }
-
-    public void extendAlpha(String id1, String id2) {
-        alpha.extend(id1, id2);
     }
 
     /* Find binds */

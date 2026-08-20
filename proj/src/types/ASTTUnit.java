@@ -12,8 +12,8 @@ public class ASTTUnit extends ASTType {
         return "()";
     }
 
-    public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
-        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
+        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
         return o instanceof ASTTUnit;
     }
 }

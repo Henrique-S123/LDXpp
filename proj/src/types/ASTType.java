@@ -12,6 +12,10 @@ public class ASTType  {
     }
 
     public boolean isSubtypeOf(ASTType o, PureEnvSet pe) {
+        return isSubtypeOf(o, pe, new AlphaEnv());
+    }
+
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
         return false;
     }
 
