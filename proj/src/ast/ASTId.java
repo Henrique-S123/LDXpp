@@ -21,6 +21,8 @@ public class ASTId extends ASTNode	{
 
     public String getBid() { return bid; }
 
+    public void setBid(String b) { bid = b; }
+
     public IValue eval(Env<IValue> env) {
         return env.find(id);
     }
