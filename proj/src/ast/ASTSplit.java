@@ -74,12 +74,16 @@ public class ASTSplit extends ASTNode {
 			throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("split", tt));
 
 		ASTType t1 = pe.unfold(tpair.getFirst());
-		ASTType t2 = pe.unfold(tpair.getSecond());
+		Binder<ASTType> b1 = new Binder<ASTType>(t1);
+
+		ASTTPair instttensor = (tpair.getBid() != null) ? tpair.inst(tpair.getBid(), new ASTId(id1, b1.getId())) : tpair;
+		ASTType t2 = pe.unfold(instttensor.getSecond());
+		Binder<ASTType> b2 = new Binder<ASTType>(t2);
 
 		pe.openEnvScope(PENV.SIGMA);
-		Binder<ASTType> b1 = pe.bindToEnv(PENV.SIGMA, id1, t1);
-		Binder<ASTType> b2 = pe.bindToEnv(PENV.SIGMA, id2, t2);
-		ASTTEq newterm = new ASTTEq(new ASTPair(new ASTId(id1, b1.getId()), new ASTId(id2, b2.getId()), linpair), pair, tt);
+		pe.bindToEnv(PENV.SIGMA, id1, b1);
+		pe.bindToEnv(PENV.SIGMA, id2, b2);
+		ASTTEq newterm = new ASTTEq(new ASTPair(new ASTId(id1, b1.getId()), new ASTId(id2, b2.getId()), linpair), pair, instttensor);
 		pe.bindToEnv(PENV.SIGMA, pe.getFreshId(), newterm);
 
 		ASTType rt = body.puretypecheck(pe, target);
