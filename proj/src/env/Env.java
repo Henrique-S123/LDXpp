@@ -73,7 +73,6 @@ public class Env<E>{
 
     public ASTNode findEq(String bid) {
         // heuristic: the term to solve is usually on the left side.
-        // try: add && !teq.isHyp() to if condition
         Env<E> curr = this;
         while (curr != null) {
             for (Binder<E> b : curr.bindings.values())
@@ -97,8 +96,6 @@ public class Env<E>{
         while (curr != null) {
             for (Map.Entry<String, Binder<E>> entry : curr.bindings.entrySet())
                 if (entry.getValue().val instanceof ASTTEq teq) {
-                    // TODO: try to optimize by not using trivial equalities
-                    // e.g.: add && teq.isHyp() to if condition
                     Debug.log("Testing proof: " + entry.getValue());
                     Debug.open();
                     E res = null;

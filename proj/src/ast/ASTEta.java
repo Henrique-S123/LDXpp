@@ -34,6 +34,7 @@ public class ASTEta extends ASTNode {
         if (type instanceof ASTTUnit) t2 = new ASTUnit();
         else if (type instanceof ASTTPair t && !t.isLinear())
             t2 = new ASTPair(new ASTChoice(t1, true), new ASTChoice(t1, false), false);
+        else return null;
 
         return new ASTTEq(t1, t2, type);
     }
