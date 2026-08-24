@@ -98,9 +98,9 @@ public final class StructEq {
         if (l instanceof ASTTUnion lt && r instanceof ASTTUnion rt && lt.isLinear() == rt.isLinear()) {
             Map<String, ASTType> left = lt.getMap();
             Map<String, ASTType> right = rt.getMap();
-            if (left.size() != right.size()) return false;
+            if (left.size() != right.size() || !left.keySet().containsAll(right.keySet())) return false;
             for (String label : left.keySet())
-                if (right.get(label) == null || !typeEqStruct(left.get(label), right.get(label), alpha.extend(label, label))) return false;
+                if (!typeEqStruct(left.get(label), right.get(label), alpha.extend(label, label))) return false;
             return true;
         }
 

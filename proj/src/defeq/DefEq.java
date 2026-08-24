@@ -48,7 +48,7 @@ public final class DefEq {
             String bid2 = rn.getBid();
             Debug.log("LEFT BINDER ID: " + bid1);
             Debug.log("RIGHT BINDER ID: " + bid2);
-            if (bid1 != null && bid1.equals(bid2)) return true;
+            return (bid1 != null && bid1.equals(bid2));
         }
         if (l instanceof ASTLet ln && r instanceof ASTLet rn)
             return typedefeq(ln.getDeclType(), rn.getDeclType(), phi, alpha, new HashSet<IdPair>(), t)
@@ -59,20 +59,15 @@ public final class DefEq {
             return termdefeq(ln.getLhs(), rn.getLhs(), phi, alpha, t)
                 && termdefeq(ln.getRhs(), rn.getRhs(), phi, alpha, t);
         if (l instanceof ASTIf ln && r instanceof ASTIf rn)
-            if (termdefeq(ln.getTest(), rn.getTest(), phi, alpha, t)
+            return termdefeq(ln.getTest(), rn.getTest(), phi, alpha, t)
                 && termdefeq(ln.getConseq(), rn.getConseq(), phi, alpha, t)
-                && termdefeq(ln.getAlt(), rn.getAlt(), phi, alpha, t)) return true;
+                && termdefeq(ln.getAlt(), rn.getAlt(), phi, alpha, t);
         
         if (l instanceof ASTFunc ln && r instanceof ASTFunc rn && ln.isLinear() == rn.isLinear())
             return typedefeq(ln.getArgtype(), rn.getArgtype(), phi, alpha, new HashSet<IdPair>(), t)
                 && termdefeq(ln.getBody().weaknorm(), rn.getBody().weaknorm(), phi, alpha.extend(ln.getId(), rn.getId()), t);
-        if (l instanceof ASTApp ln && r instanceof ASTApp rn) {
-            Debug.open();
-            Debug.log("Checking if parts are equal");
-            boolean res = termdefeq(ln.getFunc(), rn.getFunc(), phi, alpha, t) && termdefeq(ln.getArg(), rn.getArg(), phi, alpha, t);
-            Debug.close();
-            if (res) return true;
-        }
+        if (l instanceof ASTApp ln && r instanceof ASTApp rn)
+            return termdefeq(ln.getFunc(), rn.getFunc(), phi, alpha, t) && termdefeq(ln.getArg(), rn.getArg(), phi, alpha, t);
         if (l instanceof ASTRec ln && r instanceof ASTRec rn)
             return typedefeq(ln.getFunctype(), rn.getFunctype(), phi, alpha, new HashSet<IdPair>(), t)
                 && termdefeq(ln.getFuncbody(), rn.getFuncbody(), phi, alpha, t)
@@ -82,44 +77,36 @@ public final class DefEq {
             return termdefeq(ln.getFirst(), rn.getFirst(), phi, alpha, t)
                 && termdefeq(ln.getSecond(), rn.getSecond(), phi, alpha, t);
         if (l instanceof ASTChoice ln && r instanceof ASTChoice rn && ln.getChoice() == rn.getChoice())
-            if (termdefeq(ln.getPair(), rn.getPair(), phi, alpha, t)) return true;
+            return termdefeq(ln.getPair(), rn.getPair(), phi, alpha, t);
         if (l instanceof ASTSplit ln && r instanceof ASTSplit rn)
-            if (termdefeq(ln.getPair(), rn.getPair(), phi, alpha, t)
-                && termdefeq(ln.getBody(), rn.getBody(), phi, alpha.extend(ln.getId1(), rn.getId1()).extend(ln.getId2(), rn.getId2()), t)) return true;
+            return (termdefeq(ln.getPair(), rn.getPair(), phi, alpha, t)
+                && termdefeq(ln.getBody(), rn.getBody(), phi, alpha.extend(ln.getId1(), rn.getId1()).extend(ln.getId2(), rn.getId2()), t));
         
         if (l instanceof ASTUnion ln && r instanceof ASTUnion rn && ln.getLabel().equals(rn.getLabel()))
             return termdefeq(ln.getExpr(), rn.getExpr(), phi, alpha, t);
         if (l instanceof ASTMatch ln && r instanceof ASTMatch rn) {
-            Debug.open();
-            Debug.log("Checking if parts are equal");
-            boolean res = false;
             if (termdefeq(ln.getTest(), rn.getTest(), phi, alpha, t)) {
                 Set<String> left = ln.getLabels();
                 Set<String> right = rn.getLabels();
-                if (left.size() == right.size() && left.containsAll(right)) {
-                    boolean diff = false;
-                    for (String label : left)
-                        if (!termdefeq(ln.getCaseExp(label), rn.getCaseExp(label), phi, alpha.extend(ln.getCaseId(label), rn.getCaseId(label)), t)) {
-                                diff = true; break;
-                            }
-                    if (!diff) res = true;
-                }
+                if (left.size() != right.size() || !left.containsAll(right)) return false;
+                for (String label : left)
+                    if (!termdefeq(ln.getCaseExp(label), rn.getCaseExp(label), phi, alpha.extend(ln.getCaseId(label), rn.getCaseId(label)), t))
+                            return false;
+                return true;
             }
-            Debug.close();
-            if (res) return true;
+            return false;
         }
 
         if (l instanceof ASTUnit && r instanceof ASTUnit) return true;
         if (l instanceof ASTSeq ln && r instanceof ASTSeq rn)
-            if (termdefeq(ln.getFirst(), rn.getFirst(), phi, alpha, t)
-                && termdefeq(ln.getSecond(), rn.getSecond(), phi, alpha, t)) return true;
+            return (termdefeq(ln.getFirst(), rn.getFirst(), phi, alpha, t) && termdefeq(ln.getSecond(), rn.getSecond(), phi, alpha, t));
         if (l instanceof ASTPrint ln && r instanceof ASTPrint rn && ln.getNewline() == rn.getNewline())
             return termdefeq(ln.getExp(), rn.getExp(), phi, alpha, t);
 
         if (l instanceof ASTRefl && r instanceof ASTRefl) return true;
         if (l instanceof ASTLeteq ln && r instanceof ASTLeteq rn)
-            if (termdefeq(ln.getExpr(), rn.getExpr(), phi, alpha, t)
-                && termdefeq(ln.getBody(), rn.getBody(), phi, alpha.extend(ln.getId(), rn.getId()), t)) return true;
+            return (termdefeq(ln.getExpr(), rn.getExpr(), phi, alpha, t)
+                && termdefeq(ln.getBody(), rn.getBody(), phi, alpha.extend(ln.getId(), rn.getId()), t));
         
         if (l instanceof ASTTypeDef ln && r instanceof ASTTypeDef rn)
             return ln.getLtd().equals(rn.getLtd()) && termdefeq(ln.getBody(), rn.getBody(), phi, alpha, t);
@@ -144,7 +131,7 @@ public final class DefEq {
         }
         return false;
     }
-    
+
     private final boolean solveLeft(ASTNode l, ASTNode r, Env<ASTType> phi, AlphaEnv alpha, Tactic t) {
         ASTNode s = l.solve(sigma);
         if (s == null) return false;
@@ -203,9 +190,9 @@ public final class DefEq {
         if (l instanceof ASTTUnion lt && r instanceof ASTTUnion rt && lt.isLinear() == rt.isLinear()) {
             Map<String, ASTType> left = lt.getMap();
             Map<String, ASTType> right = rt.getMap();
-            if (left.size() != right.size()) return false;
+            if (left.size() != right.size() || !left.keySet().containsAll(right.keySet())) return false;
             for (String label : left.keySet())
-                if (right.get(label) == null || !typedefeq(left.get(label), right.get(label), phi, alpha, seen, t)) return false;
+                if (!typedefeq(left.get(label), right.get(label), phi, alpha, seen, t)) return false;
             return true;
         }
 
