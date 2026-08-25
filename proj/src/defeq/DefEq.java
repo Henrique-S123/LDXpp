@@ -23,7 +23,7 @@ public final class DefEq {
 
         if (congruent(l, r, phi, alpha, t)) return true;
 
-        if (t instanceof THyp h && useHyp(l, r, phi, alpha, h.getHyp())) return true;
+        if (t instanceof THyp h && useHyp(l, r, phi, alpha, h)) return true;
 
         if (r instanceof ASTId) {
             if (solveRight(l, r, phi, alpha, t)) return true;
@@ -114,7 +114,8 @@ public final class DefEq {
         return false;
     }
 
-    private final boolean useHyp(ASTNode l, ASTNode r, Env<ASTType> phi, AlphaEnv alpha, String name) {
+    private final boolean useHyp(ASTNode l, ASTNode r, Env<ASTType> phi, AlphaEnv alpha, THyp t) {
+        String name = t.getHyp();
         if (name != null) {
             Debug.log(String.format("Checking if %s is a correct proof", name));
             boolean res = sigma.checkProof(name, sigma, l, r, alpha, phi);
@@ -157,14 +158,6 @@ public final class DefEq {
     }
 
     private final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> phi, AlphaEnv alpha, Set<IdPair> seen, Tactic t) {
-        if (typecongruence(l, r, phi, alpha, seen, t)) return true;
-
-        if (unfold(l, r, phi, alpha, seen, t)) return true;
-
-        return false;
-    }
-
-    private boolean typecongruence(ASTType l, ASTType r, Env<ASTType> phi, AlphaEnv alpha, Set<IdPair> seen, Tactic t) {
         if (l instanceof ASTTInt li && r instanceof ASTTInt ri) return li.isLinear() == ri.isLinear();
         if (l instanceof ASTTBool lb && r instanceof ASTTBool rb) return lb.isLinear() == rb.isLinear();
         if (l instanceof ASTTString && r instanceof ASTTString) return true;
@@ -201,12 +194,9 @@ public final class DefEq {
                 && termdefeq(lt.getTerm2(), rt.getTerm2(), phi, alpha, t)
                 && typedefeq(lt.getType(), rt.getType(), phi, alpha, seen, t);
 
-        return false;
-    }
-
-    private boolean unfold(ASTType l, ASTType r, Env<ASTType> phi, AlphaEnv alpha, Set<IdPair> seen, Tactic t) {
         if (l instanceof ASTTId lt) return typedefeq(phi.unfold(lt), r, phi, alpha, seen, t);
         if (r instanceof ASTTId rt) return typedefeq(l, phi.unfold(rt), phi, alpha, seen, t);
+
         return false;
     }
 }
