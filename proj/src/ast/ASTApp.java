@@ -20,23 +20,15 @@ public class ASTApp extends ASTNode  {
         IValue vfunc = func.eval(e);
         if (vfunc instanceof VClos vf) {
             IValue varg = arg.eval(e);
-            if (varg instanceof VUnit)
-                return vf.getBody().eval(vf.getEnv());
             Env<IValue> env = vf.getEnv().beginScope();
             env.assoc(vf.getId(), varg);
             return vf.getBody().eval(env);
-        } else if (vfunc instanceof VRec vr) {
+        } else if (vfunc instanceof VRec vr && vr.getBody() instanceof ASTFunc f) {
             IValue varg = arg.eval(e);
-            if (varg instanceof VUnit)
-                return new ASTApp(vr.getBody(), arg).eval(vr.getEnv());
             Env<IValue> env = vr.getEnv().beginScope();
             env.assoc(vr.getFid(), vr);
-            String pid;
-            ASTNode body;
-            if (vr.getBody() instanceof ASTFunc f) { body = f.getBody(); pid = f.getId(); }
-            else throw new InterpreterError(ErrorMessages.wrongValueToUnary("app", vfunc));
-            env.assoc(pid, varg);
-            return body.eval(env);
+            env.assoc(f.getId(), varg);
+            return f.getBody().eval(env);
         } else {
             throw new InterpreterError(ErrorMessages.wrongValueToUnary("app", vfunc));
         }          
