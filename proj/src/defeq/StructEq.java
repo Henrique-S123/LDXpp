@@ -37,7 +37,7 @@ public final class StructEq {
                 && termEqStruct(ln.getBody().weaknorm(), rn.getBody().weaknorm(), alpha.extend(ln.getId(), rn.getId()));
         if (l instanceof ASTApp ln && r instanceof ASTApp rn)
             return termEqStruct(ln.getFunc(), rn.getFunc(), alpha) && termEqStruct(ln.getArg(), rn.getArg(), alpha);
-        if (l instanceof ASTRec ln && r instanceof ASTRec rn)
+        if (l instanceof ASTLetrec ln && r instanceof ASTLetrec rn)
             return typeEqStruct(ln.getFunctype(), rn.getFunctype(), alpha) && termEqStruct(ln.getFuncbody(), rn.getFuncbody(), alpha)
                 && termEqStruct(ln.getBody(), rn.getBody(), alpha.extend(ln.getFuncid(), rn.getFuncid()));
 

@@ -68,7 +68,7 @@ public final class DefEq {
                 && termdefeq(ln.getBody().weaknorm(), rn.getBody().weaknorm(), phi, alpha.extend(ln.getId(), rn.getId()), t);
         if (l instanceof ASTApp ln && r instanceof ASTApp rn)
             return termdefeq(ln.getFunc(), rn.getFunc(), phi, alpha, t) && termdefeq(ln.getArg(), rn.getArg(), phi, alpha, t);
-        if (l instanceof ASTRec ln && r instanceof ASTRec rn)
+        if (l instanceof ASTLetrec ln && r instanceof ASTLetrec rn)
             return typedefeq(ln.getFunctype(), rn.getFunctype(), phi, alpha, new HashSet<IdPair>(), t)
                 && termdefeq(ln.getFuncbody(), rn.getFuncbody(), phi, alpha, t)
                 && termdefeq(ln.getBody(), rn.getBody(), phi, alpha.extend(ln.getFuncid(), rn.getFuncid()), t);

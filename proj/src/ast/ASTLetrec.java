@@ -7,12 +7,12 @@ import proj.src.env.EnvSet.ENV;
 import proj.src.env.PureEnvSet.PENV;
 import proj.src.errors.*;
 
-public class ASTRec extends ASTNode  {
+public class ASTLetrec extends ASTNode  {
     private final String fid;
     private final ASTType functype;
     private final ASTNode funcbody, body;
 
-    public ASTRec(String f, ASTType t, ASTNode fb, ASTNode b) {
+    public ASTLetrec(String f, ASTType t, ASTNode fb, ASTNode b) {
         fid = f; functype = t; funcbody = fb; body = b;
     }
 
@@ -87,7 +87,7 @@ public class ASTRec extends ASTNode  {
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
-        return new ASTRec(fid, functype, funcbody, body.subs(subsId, node));
+        return new ASTLetrec(fid, functype, funcbody, body.subs(subsId, node));
     }
 
     @Override

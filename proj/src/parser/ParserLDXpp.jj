@@ -141,7 +141,7 @@ ASTNode Let() :
         { if (n.image.equals(n2.image)) throw new ParseException("duplicate id");
           t = new ASTSplit(e1, n.image, n2.image, e2, sep.image.equals("|")); } )
     |
-      ( <LETREC> n=<Id> <COLON> t1 = Type() <LBRA> t = Funct() <RBRA> <SEMIC> e2 = Let() { t = new ASTRec(n.image, t1, t, e2); } )
+      ( <LETREC> n=<Id> <COLON> t1 = Type() <LBRA> t = Funct() <RBRA> <SEMIC> e2 = Let() { t = new ASTLetrec(n.image, t1, t, e2); } )
     |
       {  HashMap<String,ASTType> lbl = new HashMap<String,ASTType>(); }
       ( (LOOKAHEAD(2) <TYPE>  n=<Id>  <EQUAL> t1 = Type()  <SEMIC>

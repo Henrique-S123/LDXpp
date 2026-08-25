@@ -246,7 +246,7 @@ public class Parser implements ParserConstants {
       jj_consume_token(RBRA);
       jj_consume_token(SEMIC);
       e2 = Let();
-                                                                                           t = new ASTRec(n.image, t1, t, e2);
+                                                                                           t = new ASTLetrec(n.image, t1, t, e2);
       break;
     case TYPE:
          HashMap<String,ASTType> lbl = new HashMap<String,ASTType>();
