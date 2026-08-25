@@ -190,8 +190,8 @@ public final class DefEq {
         }
 
         if (l instanceof ASTTEq lt && r instanceof ASTTEq rt)
-            return termdefeq(lt.getTerm1(), rt.getTerm1(), phi, alpha, t)
-                && termdefeq(lt.getTerm2(), rt.getTerm2(), phi, alpha, t)
+            return termdefeq(lt.getTerm1().weaknorm(), rt.getTerm1().weaknorm(), phi, alpha, t)
+                && termdefeq(lt.getTerm2().weaknorm(), rt.getTerm2().weaknorm(), phi, alpha, t)
                 && typedefeq(lt.getType(), rt.getType(), phi, alpha, seen, t);
 
         if (l instanceof ASTTId lt) return typedefeq(phi.unfold(lt), r, phi, alpha, seen, t);
