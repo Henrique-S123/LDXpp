@@ -25,13 +25,8 @@ public final class DefEq {
 
         if (t instanceof THyp h && useHyp(l, r, phi, alpha, h)) return true;
 
-        if (r instanceof ASTId) {
-            if (solveOneSide(false, l, r, phi, alpha, t)) return true;
-            if (solveOneSide(true, l, r, phi, alpha, t)) return true;
-        } else {
-            if (solveOneSide(true, l, r, phi, alpha, t)) return true;
-            if (solveOneSide(false, l, r, phi, alpha, t)) return true;
-        }
+        if (solveTerm(true, l, r, phi, alpha, t)) return true;
+        if (solveTerm(false, l, r, phi, alpha, t)) return true;
 
         Debug.log("Failed to prove equality");
         return false;
@@ -133,15 +128,16 @@ public final class DefEq {
         return false;
     }
 
-    private final boolean solveOneSide(boolean leftSide, ASTNode l, ASTNode r, Env<ASTType> phi, AlphaEnv alpha, Tactic t) {
-        ASTNode s = leftSide ? l.solve(sigma) : r.solve(sigma);
-        if (s == null) return false;
-        s = s.weaknorm();
-        if (StructEq.termEqStruct(leftSide ? l : r, s, alpha)) return false;
-        Debug.log(String.format("Solved %s side", leftSide ? "right" : "left"));
-        return leftSide ? termdefeq(s, r, phi, alpha, t) : termdefeq(l, s, phi, alpha, t);
+    private final boolean solveTerm(boolean left, ASTNode l, ASTNode r, Env<ASTType> phi, AlphaEnv alpha, Tactic t) {
+        ASTNode term = left ? l : r, other = left ? r : l;
+        ASTNode solved = term.solve(sigma);
+        if (solved == null) return false;
+        solved = solved.weaknorm();
+        if (StructEq.termEqStruct(term, solved, alpha)) return false;
+        Debug.log(String.format("Solved %s side", left ? "right" : "left"));
+        return termdefeq(solved, other, phi, alpha, t);
     }
-    
+
     record IdPair(String id1, String id2) {}
 
     public final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> phi, AlphaEnv alpha) {
