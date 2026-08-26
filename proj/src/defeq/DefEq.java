@@ -165,11 +165,10 @@ public final class DefEq {
 
         if (l instanceof ASTTId lt && r instanceof ASTTId rt) {
             if (lt.getId().equals(rt.getId())) return true;
-            if (seen.contains(new IdPair(lt.getId(), rt.getId()))) return true;
-            seen.add(new IdPair(lt.getId(), rt.getId()));
-            ASTType newl = phi.unfold(lt);
-            ASTType newr = phi.unfold(rt);
-            return typedefeq(newl, newr, phi, alpha, seen, t);
+            IdPair p = new IdPair(lt.getId(), rt.getId());
+            if (seen.contains(p)) return true;
+            seen.add(p);
+            return typedefeq(phi.unfold(lt), phi.unfold(rt), phi, alpha, seen, t);
         }
         
         if (l instanceof ASTTArrow lt && r instanceof ASTTArrow rt)
