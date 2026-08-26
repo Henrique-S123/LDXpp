@@ -1,0 +1,7 @@
+:te (int, int) -> (int, (bool | linint)) ? (int, linint) -> (int, (bool | linint));;
+
+:te (int, int) -> (int, (bool | linint)) ? (int, int) -> (int, (linbool | linint));;
+
+:te (int, int) -> (int, (bool | linint)) ? (int, int) -> (linint, (bool | linint));;
+
+:te (int, int) -> (int, (bool | linint)) ? (int, int) -> (int, (bool | linint));;

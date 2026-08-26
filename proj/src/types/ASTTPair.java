@@ -28,11 +28,9 @@ public class ASTTPair extends ASTType {
 
     public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
         if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
-        if (o instanceof ASTTPair ot && (!lin || ot.isLinear())) {
-            if (!first.isSubtypeOf(ot.getFirst(), pe, alpha)) return false;
-            if (id != null && ot.getId() != null) alpha.extend(id, ot.getId());
-            return second.isSubtypeOf(ot.getSecond(), pe, alpha);
-        }
+        if (o instanceof ASTTPair ot && (!lin || ot.isLinear()))
+            return first.isSubtypeOf(ot.getFirst(), pe, alpha) &&
+                second.isSubtypeOf(ot.getSecond(), pe, alpha.extend(id, ot.getId()));
         return false;
     }
 

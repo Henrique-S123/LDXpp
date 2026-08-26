@@ -26,11 +26,11 @@ public final class DefEq {
         if (t instanceof THyp h && useHyp(l, r, phi, alpha, h)) return true;
 
         if (r instanceof ASTId) {
-            if (solveRight(l, r, phi, alpha, t)) return true;
-            if (solveLeft(l, r, phi, alpha, t)) return true;
+            if (solveOneSide(false, l, r, phi, alpha, t)) return true;
+            if (solveOneSide(true, l, r, phi, alpha, t)) return true;
         } else {
-            if (solveLeft(l, r, phi, alpha, t)) return true;
-            if (solveRight(l, r, phi, alpha, t)) return true;
+            if (solveOneSide(true, l, r, phi, alpha, t)) return true;
+            if (solveOneSide(false, l, r, phi, alpha, t)) return true;
         }
 
         Debug.log("Failed to prove equality");
@@ -133,24 +133,15 @@ public final class DefEq {
         return false;
     }
 
-    private final boolean solveLeft(ASTNode l, ASTNode r, Env<ASTType> phi, AlphaEnv alpha, Tactic t) {
-        ASTNode s = l.solve(sigma);
+    private final boolean solveOneSide(boolean leftSide, ASTNode l, ASTNode r, Env<ASTType> phi, AlphaEnv alpha, Tactic t) {
+        ASTNode s = leftSide ? l.solve(sigma) : r.solve(sigma);
         if (s == null) return false;
         s = s.weaknorm();
-        if (StructEq.termEqStruct(l, s, alpha)) return false;
-        Debug.log("Solved left side");
-        return termdefeq(s, r, phi, alpha, t);
+        if (StructEq.termEqStruct(leftSide ? l : r, s, alpha)) return false;
+        Debug.log(String.format("Solved %s side", leftSide ? "right" : "left"));
+        return leftSide ? termdefeq(s, r, phi, alpha, t) : termdefeq(l, s, phi, alpha, t);
     }
-
-    private final boolean solveRight(ASTNode l, ASTNode r, Env<ASTType> phi, AlphaEnv alpha, Tactic t) {
-        ASTNode s = r.solve(sigma);
-        if (s == null) return false;
-        s = s.weaknorm();
-        if (StructEq.termEqStruct(r, s, alpha)) return false;
-        Debug.log("Solved right side");
-        return termdefeq(l, s, phi, alpha, t);
-    }
-
+    
     record IdPair(String id1, String id2) {}
 
     public final boolean typedefeq(ASTType l, ASTType r, Env<ASTType> phi, AlphaEnv alpha) {

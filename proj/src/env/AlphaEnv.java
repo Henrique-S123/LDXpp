@@ -20,12 +20,13 @@ public class AlphaEnv {
     /* Adding new equivalences */
     public AlphaEnv extend(String id1, String id2) {
         if (id1 == null || id2 == null) return this;
-        left = left.beginScope();
-        right = right.beginScope();
+        AlphaEnv res = this.copy();
+        res.left = res.left.beginScope();
+        res.right = res.right.beginScope();
         String newid = UUID.randomUUID().toString();
-        left.assoc(id1, newid);
-        right.assoc(id2, newid);
-        return this;
+        res.left.assoc(id1, newid);
+        res.right.assoc(id2, newid);
+        return res;
     }
 
     /* Testing equivalences */
