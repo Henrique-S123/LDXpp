@@ -71,26 +71,6 @@ public class Env<E>{
         return null;
     }
 
-    public ASTNode findEq(String bid) {
-        // heuristic: the term to solve is usually on the left side.
-        Env<E> curr = this;
-        while (curr != null) {
-            for (Binder<E> b : curr.bindings.values())
-                if (b.val instanceof ASTTEq teq && teq.getTerm1() instanceof ASTId nid && bid.equals(nid.getBid()))
-                    return teq.getTerm2();
-            curr = curr.anc;
-        }
-        curr = this;
-        while (curr != null) {
-            for (Binder<E> b : curr.bindings.values())
-                if (b.val instanceof ASTTEq teq && teq.getTerm2() instanceof ASTId nid && bid.equals(nid.getBid()))
-                    return teq.getTerm1();
-
-            curr = curr.anc;
-        }
-        return null;
-    }
-
     public E findProof(Env<ASTType> sigma, ASTNode t1, ASTNode t2, AlphaEnv alpha, Env<ASTType> phi) {
         Env<E> curr = this;
         while (curr != null) {

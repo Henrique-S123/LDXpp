@@ -124,8 +124,8 @@ public final class DefEq {
                 return true;
             }
             Debug.log("Found no proof.");
+            return false;
         }
-        return false;
     }
 
     private final boolean solveTerm(boolean left, ASTNode l, ASTNode r, Env<ASTType> phi, AlphaEnv alpha, Tactic t) {

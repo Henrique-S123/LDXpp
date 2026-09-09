@@ -46,8 +46,23 @@ public class ASTId extends ASTNode	{
     }
 
     public ASTNode solve(Env<ASTType> sigma) {
-        ASTNode n = sigma.findEq(bid);
-        return n;
+        // heuristic: the term to solve is usually on the left side.
+        Env<ASTType> curr = sigma;
+        while (curr != null) {
+            for (Binder<ASTType> b : curr.getBindings().values())
+                if (b.val instanceof ASTTEq teq && teq.getTerm1() instanceof ASTId nid && bid.equals(nid.getBid()))
+                    return teq.getTerm2();
+            curr = curr.endScope();
+        }
+        curr = sigma;
+        while (curr != null) {
+            for (Binder<ASTType> b : curr.getBindings().values())
+                if (b.val instanceof ASTTEq teq && teq.getTerm2() instanceof ASTId nid && bid.equals(nid.getBid()))
+                    return teq.getTerm1();
+
+            curr = curr.endScope();
+        }
+        return null;
     }
 
     public ASTNode subs(String subsId, ASTNode node) {

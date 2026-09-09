@@ -3,8 +3,8 @@ package proj.src.env;
 import java.util.UUID;
 
 public class Binder<V> {
-    V val;
-    String id;
+    public V val;
+    public String id;
 
     public Binder(V v) {
         val = v;
