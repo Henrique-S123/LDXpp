@@ -136,9 +136,8 @@ public final class DefEq {
                     Debug.log("Testing proof: " + entry.getValue());
                     Debug.open();
                     ASTTEq res = null;
-                    DefEq e = new DefEq(sigma);
-                    if ((e.termdefeq(t1, teq.getTerm1(), phi, alpha) && e.termdefeq(t2, teq.getTerm2(), phi, alpha))
-                    || (e.termdefeq(t1, teq.getTerm2(), phi, alpha) && e.termdefeq(t2, teq.getTerm1(), phi, alpha)))
+                    if ((termdefeq(t1, teq.getTerm1(), phi, alpha) && termdefeq(t2, teq.getTerm2(), phi, alpha))
+                    || (termdefeq(t1, teq.getTerm2(), phi, alpha) && termdefeq(t2, teq.getTerm1(), phi, alpha)))
                         res = teq;
                     Debug.close();
                     Debug.nl();
@@ -152,9 +151,8 @@ public final class DefEq {
     private boolean checkProof(String name, Env<ASTType> sigma, ASTNode t1, ASTNode t2, AlphaEnv alpha, Env<ASTType> phi) {
         ASTType r = sigma.find(name);
         if (r != null && r instanceof ASTTEq teq) {
-            DefEq e = new DefEq(sigma);
-            if ((e.termdefeq(t1, teq.getTerm1(), phi, alpha) && e.termdefeq(t2, teq.getTerm2(), phi, alpha))
-            || (e.termdefeq(t1, teq.getTerm2(), phi, alpha) && e.termdefeq(t2, teq.getTerm1(), phi, alpha)))
+            if ((termdefeq(t1, teq.getTerm1(), phi, alpha) && termdefeq(t2, teq.getTerm2(), phi, alpha))
+            || (termdefeq(t1, teq.getTerm2(), phi, alpha) && termdefeq(t2, teq.getTerm1(), phi, alpha)))
                 return true;
         }
         return false;
