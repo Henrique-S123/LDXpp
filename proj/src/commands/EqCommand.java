@@ -17,6 +17,6 @@ public class EqCommand implements Command {
         ASTNode ln = left.weaknorm();
         ASTNode rn = right.weaknorm();
         DefEq eq = new DefEq(new Env<ASTType>());
-        System.out.println(eq.termdefeq(ln, rn, new Env<ASTType>(), new AlphaEnv()) ? "TRUE" : "FALSE");
+        System.out.println(eq.termdefeq(ln, rn, new PureEnvSet(), new AlphaEnv()) ? "TRUE" : "FALSE");
     }
 }

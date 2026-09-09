@@ -24,24 +24,24 @@ public class ASTNever extends ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-        if (isInconsistent(e.getPhi())) return target;
+        if (isInconsistent(new PureEnvSet(e))) return target;
         throw new TypeCheckError(ErrorMessages.contextNotInconsistent());
     }
 
     public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
-        if (isInconsistent(pe.getPhi())) return target;
+        if (isInconsistent(pe)) return target;
         throw new TypeCheckError(ErrorMessages.contextNotInconsistent());
     }
 
-    public boolean isInconsistent(Env<ASTType> phi) throws TypeCheckError {
+    public boolean isInconsistent(PureEnvSet pe) throws TypeCheckError {
         Set<ASTNode> s = new HashSet<ASTNode>();
         Env<ASTType> curr = searchEnv;
         while (curr != null) {
             for (Binder<ASTType> b : curr.getBindings().values()) {
                 DefEq eq = new DefEq(searchEnv);
-                if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm1(), phi, new AlphaEnv()))
+                if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm1(), pe, new AlphaEnv()))
                     s.add(teq.getTerm2());
-                else if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm2(), phi, new AlphaEnv()))
+                else if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm2(), pe, new AlphaEnv()))
                     s.add(teq.getTerm1());
             }
             curr = curr.endScope();
