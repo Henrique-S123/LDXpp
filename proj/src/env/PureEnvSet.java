@@ -34,6 +34,10 @@ public class PureEnvSet {
         return phi;
     }
 
+    public void setSigma(Env<ASTType> sig) {
+        sigma = sig;
+    }
+
     /* Open scopes */
     public void openEnvScope(PENV env) {
         switch (env) {

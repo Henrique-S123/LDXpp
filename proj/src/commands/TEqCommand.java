@@ -13,7 +13,6 @@ public class TEqCommand implements Command {
     }
 
     public void executeCommand() {
-        DefEq eq = new DefEq(new Env<ASTType>());
-        System.out.println(eq.typedefeq(left, right, new PureEnvSet(), new AlphaEnv()) ? "TRUE" : "FALSE");
+        System.out.println(DefEq.typedefeq(left, right, new PureEnvSet(), new AlphaEnv()) ? "TRUE" : "FALSE");
     }
 }

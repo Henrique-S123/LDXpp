@@ -36,12 +36,12 @@ public class ASTNever extends ASTNode  {
     public boolean isInconsistent(PureEnvSet pe) throws TypeCheckError {
         Set<ASTNode> s = new HashSet<ASTNode>();
         Env<ASTType> curr = searchEnv;
+        pe.setSigma(searchEnv);
         while (curr != null) {
             for (Binder<ASTType> b : curr.getBindings().values()) {
-                DefEq eq = new DefEq(searchEnv);
-                if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm1(), pe, new AlphaEnv()))
+                if (b.getVal() instanceof ASTTEq teq && DefEq.termdefeq(test, teq.getTerm1(), pe, new AlphaEnv()))
                     s.add(teq.getTerm2());
-                else if (b.getVal() instanceof ASTTEq teq && eq.termdefeq(test, teq.getTerm2(), pe, new AlphaEnv()))
+                else if (b.getVal() instanceof ASTTEq teq && DefEq.termdefeq(test, teq.getTerm2(), pe, new AlphaEnv()))
                     s.add(teq.getTerm1());
             }
             curr = curr.endScope();

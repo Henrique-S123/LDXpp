@@ -1,7 +1,6 @@
 package proj.src.commands;
 
 import proj.src.ast.ASTNode;
-import proj.src.types.ASTType;
 import proj.src.defeq.*;
 import proj.src.env.*;
 
@@ -16,7 +15,6 @@ public class EqCommand implements Command {
     public void executeCommand() {
         ASTNode ln = left.weaknorm();
         ASTNode rn = right.weaknorm();
-        DefEq eq = new DefEq(new Env<ASTType>());
-        System.out.println(eq.termdefeq(ln, rn, new PureEnvSet(), new AlphaEnv()) ? "TRUE" : "FALSE");
+        System.out.println(DefEq.termdefeq(ln, rn, new PureEnvSet(), new AlphaEnv()) ? "TRUE" : "FALSE");
     }
 }

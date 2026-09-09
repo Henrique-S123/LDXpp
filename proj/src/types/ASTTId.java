@@ -17,8 +17,7 @@ public	class ASTTId extends ASTType	{
 
     public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
         if (!(o instanceof ASTTId)) return pe.unfold(this).isSubtypeOf(o, pe, alpha);
-        DefEq eq = new DefEq(pe.getSigma());
-        return eq.typedefeq(this, o, pe, alpha);
+        return DefEq.typedefeq(this, o, pe, alpha);
     }
 
     public ASTType check(PureEnvSet pe) throws TypeCheckError {

@@ -8,15 +8,11 @@ import proj.src.debug.Debug;
 import java.util.*;
 
 public final class DefEq {
-    Env<ASTType> sigma;
-
-    public DefEq(Env<ASTType> sig) { sigma = sig; }
-
-    public final boolean termdefeq(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha) {
+    public static final boolean termdefeq(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha) {
         return termdefeq(l, r, pe, alpha, new TRefl());
     }
 
-    public final boolean termdefeq(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha, Tactic t) {
+    public static final boolean termdefeq(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha, Tactic t) {
         Debug.log(String.format("left: %s", l));
         Debug.log(String.format("right: %s", r));
         Debug.nl();
@@ -32,7 +28,7 @@ public final class DefEq {
         return false;
     }
 
-    private final boolean congruent(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha, Tactic t) {
+    private static final boolean congruent(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha, Tactic t) {
         if (l instanceof ASTInt ln && r instanceof ASTInt rn) return ln.getVal() == rn.getVal() && ln.isLinear() == rn.isLinear();
         if (l instanceof ASTBool ln && r instanceof ASTBool rn) return ln.getVal() == rn.getVal() && ln.isLinear() == rn.isLinear();
         if (l instanceof ASTString ln && r instanceof ASTString rn) return ln.getVal().equals(rn.getVal());
@@ -109,7 +105,7 @@ public final class DefEq {
         return false;
     }
 
-    private final boolean useHyp(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha, THyp t) {
+    private static final boolean useHyp(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha, THyp t) {
         String name = t.getHyp();
         if (name != null) {
             Debug.log(String.format("Checking if %s is a correct proof", name));
@@ -128,8 +124,8 @@ public final class DefEq {
         }
     }
 
-    private ASTTEq findProof(ASTNode t1, ASTNode t2, AlphaEnv alpha, PureEnvSet pe) {
-        Env<ASTType> curr = sigma;
+    private static final ASTTEq findProof(ASTNode t1, ASTNode t2, AlphaEnv alpha, PureEnvSet pe) {
+        Env<ASTType> curr = pe.getSigma();
         while (curr != null) {
             for (Map.Entry<String, Binder<ASTType>> entry : curr.getBindings().entrySet())
                 if (entry.getValue().val instanceof ASTTEq teq) {
@@ -148,8 +144,8 @@ public final class DefEq {
         return null;
     }
 
-    private boolean checkProof(String name, ASTNode t1, ASTNode t2, AlphaEnv alpha, PureEnvSet pe) {
-        ASTType r = sigma.find(name);
+    private static final boolean checkProof(String name, ASTNode t1, ASTNode t2, AlphaEnv alpha, PureEnvSet pe) {
+        ASTType r = pe.getSigma().find(name);
         if (r != null && r instanceof ASTTEq teq) {
             if ((termdefeq(t1, teq.getTerm1(), pe, alpha) && termdefeq(t2, teq.getTerm2(), pe, alpha))
             || (termdefeq(t1, teq.getTerm2(), pe, alpha) && termdefeq(t2, teq.getTerm1(), pe, alpha)))
@@ -158,9 +154,9 @@ public final class DefEq {
         return false;
     }
 
-    private final boolean solveTerm(boolean left, ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha, Tactic t) {
+    private static final boolean solveTerm(boolean left, ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha, Tactic t) {
         ASTNode term = left ? l : r, other = left ? r : l;
-        ASTNode solved = term.solve(sigma);
+        ASTNode solved = term.solve(pe.getSigma());
         if (solved == null) return false;
         solved = solved.weaknorm();
         if (StructEq.termEqStruct(term, solved, alpha)) return false;
@@ -170,11 +166,11 @@ public final class DefEq {
 
     record IdPair(String id1, String id2) {}
 
-    public final boolean typedefeq(ASTType l, ASTType r, PureEnvSet pe, AlphaEnv alpha) {
+    public static final boolean typedefeq(ASTType l, ASTType r, PureEnvSet pe, AlphaEnv alpha) {
         return typedefeq(l, r, pe, alpha, new HashSet<IdPair>(), new TRefl());
     }
 
-    private final boolean typedefeq(ASTType l, ASTType r, PureEnvSet pe, AlphaEnv alpha, Set<IdPair> seen, Tactic t) {
+    private static final boolean typedefeq(ASTType l, ASTType r, PureEnvSet pe, AlphaEnv alpha, Set<IdPair> seen, Tactic t) {
         if (l instanceof ASTTInt li && r instanceof ASTTInt ri) return li.isLinear() == ri.isLinear();
         if (l instanceof ASTTBool lb && r instanceof ASTTBool rb) return lb.isLinear() == rb.isLinear();
         if (l instanceof ASTTString && r instanceof ASTTString) return true;
