@@ -52,7 +52,7 @@ public class ASTFunc extends ASTNode  {
             else throw new TypeCheckError(ErrorMessages.typeMismatch("arrow or lollipop", target));
         }
 
-        ResourceManager<ASTType> prevDelta = null;
+        ResourceManager prevDelta = null;
         if (!lin) prevDelta = e.popDelta();
 
         ASTType targtype = e.unfold(argtype);

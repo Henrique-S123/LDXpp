@@ -36,7 +36,7 @@ public class ASTPair extends ASTNode {
             else throw new TypeCheckError(ErrorMessages.typeMismatch("pair or tensor", target));
         }
 
-        ResourceManager<ASTType> prevDelta = null;
+        ResourceManager prevDelta = null;
         if (!lin) prevDelta = e.popDelta();
 
         ASTType t1 = first.typecheck(e, tgtfst);

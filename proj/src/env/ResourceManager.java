@@ -1,11 +1,13 @@
 package proj.src.env;
 
-import java.util.*;
 import proj.src.errors.*;
+import proj.src.types.ASTType;
 
-public final class ResourceManager<E> {
+import java.util.*;
+
+public final class ResourceManager {
     private final class Scope {
-        private final Map<String, Binder<E>> live = new HashMap<>();
+        private final Map<String, Binder<ASTType>> live = new HashMap<>();
         private final Set<String> consumed = new HashSet<>();
         private Scope copy() {
             Scope copy = new Scope();
@@ -21,22 +23,18 @@ public final class ResourceManager<E> {
         openScope();
     }
 
-    public void openScope() {
-        scopes.push(new Scope());;
-    }
+    public void openScope() { scopes.push(new Scope()); }
 
-    public void closeScope() {
-        scopes.pop();
-    }
+    public void closeScope() { scopes.pop(); }
 
-    public ResourceManager<E> copy() {
-        ResourceManager<E> copy = new ResourceManager<>();
+    public ResourceManager copy() {
+        ResourceManager copy = new ResourceManager();
         copy.scopes.clear();
         for (Scope scope : scopes) copy.scopes.addLast(scope.copy());
         return copy;
     }
 
-    public void register(String id, Binder<E> resource) {
+    public void register(String id, Binder<ASTType> resource) {
         scopes.peek().live.put(id, resource);
         scopes.peek().consumed.remove(id);
     }
@@ -46,9 +44,9 @@ public final class ResourceManager<E> {
         return false;
     }
 
-    public E consume(String id) throws TypeCheckError {
+    public ASTType consume(String id) throws TypeCheckError {
         for (Scope scope : scopes) {
-            Binder<E> resource = scope.live.remove(id);
+            Binder<ASTType> resource = scope.live.remove(id);
             if (scope.consumed.contains(id))
                 throw new TypeCheckError(ErrorMessages.alreadyUsedLinear(id));
             if (resource != null) {
@@ -61,7 +59,7 @@ public final class ResourceManager<E> {
 
     public String findBinderId(String id) {
         for (Scope scope : scopes) {
-            Binder<E> resource = scope.live.get(id);
+            Binder<ASTType> resource = scope.live.get(id);
             if (resource != null) return resource.id;
         }
         return null;
@@ -69,17 +67,13 @@ public final class ResourceManager<E> {
 
     public Set<String> getUsedLinears() {
         Set<String> result = new HashSet<String>();
-        for (Scope scope : scopes) {
-            result.addAll(scope.consumed);
-        }
+        for (Scope scope : scopes) result.addAll(scope.consumed);
         return result;
     }
 
     public Set<String> getUnusedLinears() {
         Set<String> result = new HashSet<String>();
-        for (Scope scope : scopes) {
-            result.addAll(scope.live.keySet());
-        }
+        for (Scope scope : scopes) result.addAll(scope.live.keySet());
         return result;
     }
 

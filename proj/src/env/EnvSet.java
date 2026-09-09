@@ -7,11 +7,11 @@ import java.util.*;
 
 public class EnvSet {
     Env<ASTType> gamma, phi, sigma;
-    ResourceManager<ASTType> delta;
+    ResourceManager delta;
 
     public EnvSet() {
         gamma = new Env<ASTType>();
-        delta = new ResourceManager<ASTType>();
+        delta = new ResourceManager();
         phi = new Env<ASTType>();
         sigma = new Env<ASTType>();
     }
@@ -34,13 +34,13 @@ public class EnvSet {
         return phi;
     }
 
-    public ResourceManager<ASTType> popDelta() {
-        ResourceManager<ASTType> tmp = this.delta;
-        this.delta = new ResourceManager<ASTType>();
+    public ResourceManager popDelta() {
+        ResourceManager tmp = this.delta;
+        this.delta = new ResourceManager();
         return tmp;
     }
 
-    public void pushDelta(ResourceManager<ASTType> d) {
+    public void pushDelta(ResourceManager d) {
         delta = d;
     }
 

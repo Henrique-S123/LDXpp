@@ -41,7 +41,7 @@ public class ASTLetrec extends ASTNode  {
         Binder<ASTType> b = e.bindToEnv(ENV.GAMMA, fid, tfunctype);
         e.openEnvScope(ENV.SIGMA);
         e.bindToEnv(ENV.SIGMA, fid, b);
-        ResourceManager<ASTType> prevDelta = e.popDelta();
+        ResourceManager prevDelta = e.popDelta();
         ASTType tfb = funcbody.typecheck(e, tfunctype);
         if (!tfb.isSubtypeOf(tfunctype, new PureEnvSet(e)))
             throw new TypeCheckError(ErrorMessages.notSubtype(tfb, tfunctype));
