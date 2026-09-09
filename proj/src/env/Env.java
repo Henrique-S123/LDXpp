@@ -1,7 +1,5 @@
 package proj.src.env;
 
-import proj.src.types.*;
-
 import java.util.*;
 
 public class Env<E>{
@@ -60,10 +58,6 @@ public class Env<E>{
     public String findBinderId(String id) {
         Binder<E> b = findBinder(id);
         return b == null ? null : b.id;
-    }
-
-    public ASTType unfold(ASTType t) {
-        return (t instanceof ASTTId tid) ? unfold((ASTType) find(tid.getId())) : t;
     }
 
     public String toString() {
