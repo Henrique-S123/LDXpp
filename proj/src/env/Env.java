@@ -1,8 +1,5 @@
 package proj.src.env;
 
-import proj.src.ast.*;
-import proj.src.debug.Debug;
-import proj.src.defeq.DefEq;
 import proj.src.types.*;
 
 import java.util.*;
@@ -21,17 +18,11 @@ public class Env<E>{
         bindings = new HashMap<String, Binder<E>>();
     }
 
-    public Env<E> beginScope(){
-        return new Env<E>(this);
-    }
+    public Env<E> beginScope(){ return new Env<E>(this); }
     
-    public Env<E> endScope(){
-        return anc;
-    }
+    public Env<E> endScope(){ return anc; }
 
-    public Map<String, Binder<E>> getBindings() {
-        return bindings;
-    }
+    public Map<String, Binder<E>> getBindings() { return bindings; }
 
     public Env<E> copy() {
         Env<E> e = new Env<>((this.anc == null ? null : this.anc.copy()));
@@ -51,56 +42,24 @@ public class Env<E>{
         return UUID.randomUUID().toString();
     }
 
-    public E find(String id) {
+    private Binder<E> findBinder(String id) {
         Env<E> curr = this;
         while (curr != null) {
             Binder<E> b = curr.bindings.get(id);
-            if (b != null) return b.val;
+            if (b != null) return b;
             curr = curr.anc;
         }
         return null;
+    }
+
+    public E find(String id) {
+        Binder<E> b = findBinder(id);
+        return b == null ? null : b.val;
     }
 
     public String findBinderId(String id) {
-        Env<E> curr = this;
-        while (curr != null) {
-            Binder<E> b = curr.bindings.get(id);
-            if (b != null) return b.id;
-            curr = curr.anc;
-        }
-        return null;
-    }
-
-    public E findProof(Env<ASTType> sigma, ASTNode t1, ASTNode t2, AlphaEnv alpha, Env<ASTType> phi) {
-        Env<E> curr = this;
-        while (curr != null) {
-            for (Map.Entry<String, Binder<E>> entry : curr.bindings.entrySet())
-                if (entry.getValue().val instanceof ASTTEq teq) {
-                    Debug.log("Testing proof: " + entry.getValue());
-                    Debug.open();
-                    E res = null;
-                    DefEq e = new DefEq(sigma);
-                    if ((e.termdefeq(t1, teq.getTerm1(), phi, alpha) && e.termdefeq(t2, teq.getTerm2(), phi, alpha))
-                    || (e.termdefeq(t1, teq.getTerm2(), phi, alpha) && e.termdefeq(t2, teq.getTerm1(), phi, alpha)))
-                        res = entry.getValue().val;
-                    Debug.close();
-                    Debug.nl();
-                    if (res != null) return res;
-                }
-            curr = curr.anc;
-        }
-        return null;
-    }
-
-    public boolean checkProof(String name, Env<ASTType> sigma, ASTNode t1, ASTNode t2, AlphaEnv alpha, Env<ASTType> phi) {
-        ASTType r = sigma.find(name);
-        if (r != null && r instanceof ASTTEq teq) {
-            DefEq e = new DefEq(sigma);
-            if ((e.termdefeq(t1, teq.getTerm1(), phi, alpha) && e.termdefeq(t2, teq.getTerm2(), phi, alpha))
-            || (e.termdefeq(t1, teq.getTerm2(), phi, alpha) && e.termdefeq(t2, teq.getTerm1(), phi, alpha)))
-                return true;
-        }
-        return false;
+        Binder<E> b = findBinder(id);
+        return b == null ? null : b.id;
     }
 
     public ASTType unfold(ASTType t) {

@@ -113,12 +113,12 @@ public final class DefEq {
         String name = t.getHyp();
         if (name != null) {
             Debug.log(String.format("Checking if %s is a correct proof", name));
-            boolean res = sigma.checkProof(name, sigma, l, r, alpha, phi);
+            boolean res = checkProof(name, sigma, l, r, alpha, phi);
             Debug.log(name + (res ? " is a proof!" : " is not a proof!"));
             return res;
         } else {
             Debug.log("Search Sigma environment for a proof");
-            ASTType proof = sigma.findProof(sigma, l, r, alpha, phi);
+            ASTType proof = findProof(sigma, l, r, alpha, phi);
             if (proof != null) {
                 Debug.log("Found proof: " + proof);
                 return true;
@@ -126,6 +126,38 @@ public final class DefEq {
             Debug.log("Found no proof.");
             return false;
         }
+    }
+
+    private ASTTEq findProof(Env<ASTType> sigma, ASTNode t1, ASTNode t2, AlphaEnv alpha, Env<ASTType> phi) {
+        Env<ASTType> curr = sigma;
+        while (curr != null) {
+            for (Map.Entry<String, Binder<ASTType>> entry : curr.getBindings().entrySet())
+                if (entry.getValue().val instanceof ASTTEq teq) {
+                    Debug.log("Testing proof: " + entry.getValue());
+                    Debug.open();
+                    ASTTEq res = null;
+                    DefEq e = new DefEq(sigma);
+                    if ((e.termdefeq(t1, teq.getTerm1(), phi, alpha) && e.termdefeq(t2, teq.getTerm2(), phi, alpha))
+                    || (e.termdefeq(t1, teq.getTerm2(), phi, alpha) && e.termdefeq(t2, teq.getTerm1(), phi, alpha)))
+                        res = teq;
+                    Debug.close();
+                    Debug.nl();
+                    if (res != null) return res;
+                }
+            curr = curr.endScope();
+        }
+        return null;
+    }
+
+    private boolean checkProof(String name, Env<ASTType> sigma, ASTNode t1, ASTNode t2, AlphaEnv alpha, Env<ASTType> phi) {
+        ASTType r = sigma.find(name);
+        if (r != null && r instanceof ASTTEq teq) {
+            DefEq e = new DefEq(sigma);
+            if ((e.termdefeq(t1, teq.getTerm1(), phi, alpha) && e.termdefeq(t2, teq.getTerm2(), phi, alpha))
+            || (e.termdefeq(t1, teq.getTerm2(), phi, alpha) && e.termdefeq(t2, teq.getTerm1(), phi, alpha)))
+                return true;
+        }
+        return false;
     }
 
     private final boolean solveTerm(boolean left, ASTNode l, ASTNode r, Env<ASTType> phi, AlphaEnv alpha, Tactic t) {
