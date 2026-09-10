@@ -60,7 +60,7 @@ public class EnvSet {
     public void openEnvScope(ENV env) {
         switch (env) {
             case GAMMA -> this.gamma = this.gamma.beginScope();
-            case DELTA -> this.delta.openScope();
+            case DELTA -> this.delta = this.delta.openScope();
             case PHI -> this.phi = this.phi.beginScope();
             case SIGMA -> this.sigma = this.sigma.beginScope();
         }
@@ -70,7 +70,7 @@ public class EnvSet {
     public void closeEnvScope(ENV env) {
         switch (env) {
             case GAMMA -> this.gamma = this.gamma.endScope();
-            case DELTA -> this.delta.closeScope();
+            case DELTA -> this.delta = this.delta.closeScope();
             case PHI -> this.phi = this.phi.endScope();
             case SIGMA -> this.sigma = this.sigma.endScope();
         }

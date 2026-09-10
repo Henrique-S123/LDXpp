@@ -6,78 +6,93 @@ import proj.src.types.ASTType;
 import java.util.*;
 
 public final class ResourceManager {
-    private final class Scope {
-        private final Map<String, Binder<ASTType>> live = new HashMap<>();
-        private final Set<String> consumed = new HashSet<>();
-        private Scope copy() {
-            Scope copy = new Scope();
-            copy.live.putAll(live);
-            copy.consumed.addAll(consumed);
-            return copy;
-        }
-    }
-
-    private final Deque<Scope> scopes = new ArrayDeque<>();
+    ResourceManager anc;
+    Map<String, Binder<ASTType>> live;
+    Set<String> consumed;
 
     public ResourceManager() {
-        openScope();
+        anc = null;
+        live = new HashMap<>();
+        consumed = new HashSet<>();
     }
 
-    public void openScope() { scopes.push(new Scope()); }
+    public ResourceManager(ResourceManager ancestor) {
+        anc = ancestor;
+        live = new HashMap<>();
+        consumed = new HashSet<>();
+    }
 
-    public void closeScope() { scopes.pop(); }
+    public ResourceManager openScope() { return new ResourceManager(this); }
+
+    public ResourceManager closeScope() { return anc; }
 
     public ResourceManager copy() {
-        ResourceManager copy = new ResourceManager();
-        copy.scopes.clear();
-        for (Scope scope : scopes) copy.scopes.addLast(scope.copy());
-        return copy;
+        ResourceManager c = new ResourceManager(this.anc == null ? null : this.anc.copy());
+        c.live = new HashMap<>(live);
+        c.consumed = new HashSet<>(consumed);
+        return c;
     }
 
     public void register(String id, Binder<ASTType> resource) {
-        scopes.peek().live.put(id, resource);
-        scopes.peek().consumed.remove(id);
+        live.put(id, resource);
+        consumed.remove(id);
     }
 
-    public boolean contains(String id) {
-        for (Scope scope : scopes) if (scope.live.containsKey(id)) return true;
-        return false;
-    }
-
-    public ASTType consume(String id) throws TypeCheckError {
-        for (Scope scope : scopes) {
-            Binder<ASTType> resource = scope.live.remove(id);
-            if (scope.consumed.contains(id))
-                throw new TypeCheckError(ErrorMessages.alreadyUsedLinear(id));
-            if (resource != null) {
-                scope.consumed.add(id);
-                return resource.val;
-            }
+    private Binder<ASTType> findBinder(String id) {
+        ResourceManager curr = this;
+        while (curr != null) {
+            Binder<ASTType> b = curr.live.get(id);
+            if (b != null) return b;
+            curr = curr.anc;
         }
         return null;
     }
 
+    public boolean contains(String id) {
+        return findBinder(id) != null;
+    }
+
     public String findBinderId(String id) {
-        for (Scope scope : scopes) {
-            Binder<ASTType> resource = scope.live.get(id);
-            if (resource != null) return resource.id;
+        Binder<ASTType> b = findBinder(id);
+        return b == null ? null : b.id;
+    }
+
+    public ASTType consume(String id) throws TypeCheckError {
+        ResourceManager curr = this;
+        while (curr != null) {
+            Binder<ASTType> resource = curr.live.remove(id);
+            if (curr.consumed.contains(id))
+                throw new TypeCheckError(ErrorMessages.alreadyUsedLinear(id));
+            if (resource != null) {
+                curr.consumed.add(id);
+                return resource.val;
+            }
+            curr = curr.anc;
         }
         return null;
     }
 
     public Set<String> getUsedLinears() {
         Set<String> result = new HashSet<String>();
-        for (Scope scope : scopes) result.addAll(scope.consumed);
+        ResourceManager curr = this;
+        while (curr != null) {
+            result.addAll(curr.consumed);
+            curr = curr.anc;
+        }
         return result;
     }
 
     public Set<String> getUnusedLinears() {
         Set<String> result = new HashSet<String>();
-        for (Scope scope : scopes) result.addAll(scope.live.keySet());
+        ResourceManager curr = this;
+        while (curr != null) {
+            result.addAll(curr.live.keySet());
+            curr = curr.anc;
+        }
         return result;
     }
 
     public Set<String> getUnusedScopeLinears() {
-        return scopes.peek().live.keySet();
+        return live.keySet();
     }
 }
