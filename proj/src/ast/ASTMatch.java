@@ -55,7 +55,6 @@ public class ASTMatch extends ASTNode {
     }
 
 	public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
-		Env<ASTType> prevEnv = e.getSigma();
 		ASTType tt = test.typecheck(e, null), rettype = null, tcase;
 		HashSet<String> matchUsedLinears = null;
 		tt = e.unfold(tt);
@@ -82,7 +81,7 @@ public class ASTMatch extends ASTNode {
 			ASTUnion eqterm = new ASTUnion(entry.getKey(), new ASTId(c.id(), b.getId()), tt.isLinear());
 			env.bindToEnv(ENV.SIGMA, env.getFreshId(), new ASTTEq(test, eqterm, tt));
 
-			if (c.exp() instanceof ASTNever never) never.setFields(prevEnv, entry.getKey(), test);
+			if (c.exp() instanceof ASTNever never) never.setFields(entry.getKey(), test);
 			tcase = c.exp().typecheck(env, target);
 
 			if (matchUsedLinears == null) {
@@ -132,7 +131,7 @@ public class ASTMatch extends ASTNode {
 			ASTUnion eqterm = new ASTUnion(entry.getKey(), new ASTId(c.id(), b.getId()), tt.isLinear());
 			pe.bindToEnv(PENV.SIGMA, pe.getFreshId(), new ASTTEq(test, eqterm, tt));
 
-			if (c.exp() instanceof ASTNever never) never.setFields(pe.getSigma(), entry.getKey(), test);
+			if (c.exp() instanceof ASTNever never) never.setFields(entry.getKey(), test);
 			tcase = c.exp().puretypecheck(pe, target);
 			
 			if (target == null) {
