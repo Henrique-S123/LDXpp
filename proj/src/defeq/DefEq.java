@@ -111,49 +111,37 @@ public final class DefEq {
         String name = t.getHyp();
         if (name != null) {
             Debug.log(String.format("Checking if %s is a correct proof", name));
-            boolean res = checkProof(name, l, r, pe, alpha);
+            ASTType found = pe.getSigma().find(name);
+            boolean res = (found != null) && found instanceof ASTTEq teq && isProof(teq, l, r, pe, alpha);
             Debug.log(name + (res ? " is a proof!" : " is not a proof!"));
             return res;
         } else {
-            Debug.log("Search Sigma environment for a proof");
-            ASTType proof = findProof(l, r, pe, alpha);
-            if (proof != null) {
-                Debug.log("Found proof: " + proof);
-                return true;
+            Debug.log("Searching Sigma environment for a proof");
+            Env<ASTType> curr = pe.getSigma();
+            while (curr != null) {
+                for (Binder<ASTType> e : curr.getBindings().values())
+                    if (e.val instanceof ASTTEq teq) {
+                        ASTTEq res = null;
+                        Debug.log("Testing proof: " + e);
+                        Debug.open();
+                        if (isProof(teq, l, r, pe, alpha)) res = teq;
+                        Debug.close();
+                        Debug.nl();
+                        if (res != null) {
+                            Debug.log("Found proof: " + res);
+                            return true;
+                        }
+                    }
+                curr = curr.endScope();
             }
             Debug.log("Found no proof.");
             return false;
         }
     }
 
-    private static final ASTTEq findProof(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha) {
-        Env<ASTType> curr = pe.getSigma();
-        while (curr != null) {
-            for (Map.Entry<String, Binder<ASTType>> entry : curr.getBindings().entrySet())
-                if (entry.getValue().val instanceof ASTTEq teq) {
-                    Debug.log("Testing proof: " + entry.getValue());
-                    Debug.open();
-                    ASTTEq res = null;
-                    if ((termdefeq(l, teq.getTerm1(), pe, alpha) && termdefeq(r, teq.getTerm2(), pe, alpha))
-                    || (termdefeq(l, teq.getTerm2(), pe, alpha) && termdefeq(r, teq.getTerm1(), pe, alpha)))
-                        res = teq;
-                    Debug.close();
-                    Debug.nl();
-                    if (res != null) return res;
-                }
-            curr = curr.endScope();
-        }
-        return null;
-    }
-
-    private static final boolean checkProof(String name, ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha) {
-        ASTType e = pe.getSigma().find(name);
-        if (e != null && e instanceof ASTTEq teq) {
-            if ((termdefeq(l, teq.getTerm1(), pe, alpha) && termdefeq(r, teq.getTerm2(), pe, alpha))
-            || (termdefeq(l, teq.getTerm2(), pe, alpha) && termdefeq(r, teq.getTerm1(), pe, alpha)))
-                return true;
-        }
-        return false;
+    private static final boolean isProof(ASTTEq e, ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha) {
+        return ((termdefeq(l, e.getTerm1(), pe, alpha)) && termdefeq(r, e.getTerm2(), pe, alpha)) ||
+            ((termdefeq(l, e.getTerm2(), pe, alpha)) && termdefeq(r, e.getTerm1(), pe, alpha));
     }
 
     private static final boolean solveTerm(boolean left, ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha, Tactic t) {
