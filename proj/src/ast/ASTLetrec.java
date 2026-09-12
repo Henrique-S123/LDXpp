@@ -81,10 +81,11 @@ public class ASTLetrec extends ASTNode  {
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
         ASTNode funcnorm = funcbody.weaknorm(sub);
-        if (!(funcnorm instanceof ASTFunc)) return new ASTLetrec(fid, functype, funcnorm, body.weaknorm(sub));
+        if (!(funcnorm instanceof ASTFunc f))
+            return new ASTLetrec(fid, functype, funcnorm, body.weaknorm(sub));
         Env<ASTNode> env = sub.beginScope();
-        if (funcbody instanceof ASTFunc f && f.getNormEnv() == null) f.setNormEnv(env);
-        env.assoc(fid, funcbody);
+        f.setNormEnv(env);
+        env.assoc(fid, f);
         return body.weaknorm(env);
     }
 
