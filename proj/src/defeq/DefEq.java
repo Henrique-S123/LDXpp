@@ -112,7 +112,7 @@ public final class DefEq {
         if (name != null) {
             Debug.log(String.format("Checking if %s is a correct proof", name));
             ASTType found = pe.getSigma().find(name);
-            boolean res = (found != null) && found instanceof ASTTEq teq && isProof(teq, l, r, pe, alpha);
+            boolean res = found instanceof ASTTEq teq && isProof(teq, l, r, pe, alpha);
             Debug.log(name + (res ? " is a proof!" : " is not a proof!"));
             return res;
         } else {

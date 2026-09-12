@@ -39,3 +39,15 @@ type: int, value: 5051
 type: int, value: 211
 
 
+class proj.src.errors.TypeCheckError: Type int is not a subtype of int->int
+
+
+type: int, value: 2
+
+
+type: fakerec(4) ≡ 2 : int, value: refl
+
+
+type: letrec fakerec:int->int {f}; fakerec(4) ≡ 2 : int, value: refl
+
+

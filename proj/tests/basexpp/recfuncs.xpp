@@ -49,3 +49,18 @@ letrec reduce:(int -> int -> int) -> int -> int -> int {
 let tri = reduce (fn n:int, p:int => { println (n+p); n+p }) (1) ;
 tri (20)
 ;;
+
+let f = 2;
+letrec fakerec:int->int {f};
+fakerec(4);;
+
+let f = fn x:int => {2};
+letrec fakerec:int->int {f};
+fakerec(4);;
+
+let f = fn x:int => {2};
+letrec fakerec:int->int {f};
+let e:(fakerec(4) = 2 : int) = refl; e;;
+
+let f = fn x:int => {2};
+let e:((letrec fakerec:int->int {f}; fakerec(4)) = 2 : int) = refl; e;;

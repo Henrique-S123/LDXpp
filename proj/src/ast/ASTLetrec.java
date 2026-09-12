@@ -80,10 +80,17 @@ public class ASTLetrec extends ASTNode  {
     }
 
     public ASTNode weaknorm(Env<ASTNode> sub) {
+        ASTNode funcnorm = funcbody.weaknorm(sub);
+        if (!(funcnorm instanceof ASTFunc)) return new ASTLetrec(fid, functype, funcnorm, body.weaknorm(sub));
         Env<ASTNode> env = sub.beginScope();
         if (funcbody instanceof ASTFunc f && f.getNormEnv() == null) f.setNormEnv(env);
         env.assoc(fid, funcbody);
         return body.weaknorm(env);
+    }
+
+    public ASTLetrec solve(Env<ASTType> sigma) {
+        ASTNode nfunc = funcbody.solve(sigma);
+		return (nfunc == null) ? null : new ASTLetrec(fid, functype, nfunc, body);
     }
 
     public ASTNode subs(String subsId, ASTNode node) {
