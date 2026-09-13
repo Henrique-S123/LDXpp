@@ -24,4 +24,8 @@ public	class ASTTId extends ASTType	{
         if (pe.findAlias(id) == null) throw new TypeCheckError(ErrorMessages.idNotFound(id));
         return this;
     }
+
+    public boolean structEq(ASTType o) {
+        return o instanceof ASTTId ot && id.equals(ot.getId());
+    }
 }	

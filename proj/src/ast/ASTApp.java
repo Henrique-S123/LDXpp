@@ -84,6 +84,10 @@ public class ASTApp extends ASTNode  {
         return new ASTApp(func.subs(subsId, node), arg.subs(subsId, node));
     }
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTApp ot && func.structEq(ot.getFunc()) && arg.structEq(ot.getArg());
+    }
+
     @Override
     public String toString() {
         return String.format("%s(%s)", func, arg);

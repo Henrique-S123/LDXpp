@@ -179,6 +179,19 @@ public class ASTMatch extends ASTNode {
 		return new ASTMatch(test.subs(subsId, node), cases);
 	}
 
+	public boolean structEq(ASTNode o) {
+		if (o instanceof ASTMatch ot && test.structEq(ot.getTest())) {
+			Set<String> left = cases.keySet();
+            Set<String> right = ot.getLabels();
+			if (left.size() != right.size() || !left.containsAll(right)) return false;
+			for (String label : left)
+				if (!getCaseId(label).equals(ot.getCaseId(label)) || !getCaseExp(label).structEq(ot.getCaseExp(label)))
+						return false;
+			return true;
+		}
+		return false; 
+	}
+
 	@Override
 	public String toString() {
 		return String.format("match(%s, %s)", test, cases);

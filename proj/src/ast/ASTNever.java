@@ -52,6 +52,10 @@ public class ASTNever extends ASTNode  {
         return false;
     }
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTNever;
+    }
+
     @Override
     public String toString() {
         return "never";

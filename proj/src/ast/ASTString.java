@@ -25,6 +25,10 @@ public class ASTString extends ASTNode  {
         return new ASTTString();
     }
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTString ot && val == ot.getVal();
+    }
+
     @Override
     public String toString() {
         return val;

@@ -149,7 +149,7 @@ public final class DefEq {
         ASTNode solved = term.solve(pe.getSigma());
         if (solved == null) return false;
         solved = solved.weaknorm();
-        if (StructEq.termEqStruct(term, solved, alpha)) return false;
+        if (term.structEq(solved)) return false;
         Debug.log(String.format("Solved %s side", left ? "right" : "left"));
         return termdefeq(solved, other, pe, alpha, t);
     }

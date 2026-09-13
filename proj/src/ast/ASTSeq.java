@@ -62,6 +62,10 @@ public class ASTSeq extends ASTNode {
         return new ASTSeq(first.subs(subsId, node), second.subs(subsId, node));
     }
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTSeq ot && first.structEq(ot.getFirst()) && second.structEq(ot.getSecond());
+    }
+
     @Override
 	public String toString() {
 		return String.format("%s; %s", first, second);

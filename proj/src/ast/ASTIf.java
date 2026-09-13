@@ -97,6 +97,10 @@ public class ASTIf extends ASTNode {
         return new ASTIf(test.subs(subsId, node), conseq.subs(subsId, node), alt.subs(subsId, node));
     }
 
+	public boolean structEq(ASTNode o) {
+		return o instanceof ASTIf ot && test.structEq(ot.getTest()) && conseq.structEq(ot.getConseq()) && alt.structEq(ot.getAlt());
+	}
+
 	@Override
 	public String toString() {
 		return String.format("if(%s, %s, %s)", test, conseq, alt);

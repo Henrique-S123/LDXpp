@@ -49,6 +49,11 @@ public class ASTUnion extends ASTNode {
 		return new ASTUnion(label, expr.subs(subsId, node), lin);
 	}
 
+	public boolean structEq(ASTNode o) {
+		return o instanceof ASTUnion ot && lin == ot.isLinear() &&
+			label.equals(ot.getLabel()) && expr.structEq(ot.getExpr());
+	}
+
 	@Override
 	public String toString() {
 		return String.format("%s(%s)", label, expr);

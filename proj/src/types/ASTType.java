@@ -26,4 +26,8 @@ public class ASTType  {
     public ASTType check(PureEnvSet pe) throws TypeCheckError {
         return this;
     }
+
+    public boolean structEq(ASTType o) {
+        return false;
+    }
 }

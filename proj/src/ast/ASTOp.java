@@ -200,6 +200,10 @@ public class ASTOp extends ASTNode {
         return new ASTOp(lhs.subs(subsId, node), rhs.subs(subsId, node), op);
     }
 
+	public boolean structEq(ASTNode o) {
+		return o instanceof ASTOp ot && op.equals(ot.getOp()) && lhs.structEq(ot.getLhs()) && rhs.structEq(ot.getRhs());
+	}
+
 	@Override
 	public String toString() {
 		if (op == "-u") return String.format("-%s", rhs);

@@ -15,4 +15,8 @@ public class ASTTBool extends ASTType {
         if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
         return (o instanceof ASTTBool ot && (!lin || ot.isLinear()));
     }
+
+    public boolean structEq(ASTType o) {
+        return o instanceof ASTTBool ot && lin == ot.isLinear();
+    }
 }

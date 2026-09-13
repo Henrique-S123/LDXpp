@@ -48,5 +48,10 @@ public class ASTTEq extends ASTType {
             throw new TypeCheckError(ErrorMessages.notSubtype(type2, type));
         return this;
     }
+
+    public boolean structEq(ASTType o) {
+        return o instanceof ASTTEq ot && type.structEq(ot.getType()) &&
+            term1.structEq(ot.getTerm1()) && term2.structEq(ot.getTerm2());
+    }
 }
 

@@ -84,6 +84,11 @@ public class ASTPair extends ASTNode {
         return new ASTPair(first.subs(subsId, node), second.subs(subsId, node), lin);
     }
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTPair ot && lin == ot.isLinear() &&
+            first.structEq(ot.getFirst()) && second.structEq(ot.getSecond());
+    }
+
     @Override
     public String toString() {
         return String.format("(%s%s %s)", first, (lin) ? " |" : ",", second);

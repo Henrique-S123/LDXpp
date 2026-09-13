@@ -44,4 +44,16 @@ public class ASTTUnion extends ASTType {
         for (ASTType t : ll.values()) t.check(pe);
         return this;
     }
+
+    public boolean structEq(ASTType o) {
+        if (o instanceof ASTTUnion ot && lin == ot.isLinear()) {
+            Map<String, ASTType> left = ll;
+            Map<String, ASTType> right = ot.getMap();
+            if (left.size() != right.size() || !left.keySet().containsAll(right.keySet())) return false;
+            for (String label : left.keySet())
+                if (!left.get(label).structEq(right.get(label))) return false;
+            return true;
+        }
+        return false;
+    }
 }

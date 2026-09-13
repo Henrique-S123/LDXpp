@@ -28,6 +28,10 @@ public class ASTInt extends ASTNode  {
         return new ASTTInt(lin);
     }
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTInt ot && val == ot.getVal() && lin == ot.isLinear();
+    }
+
     @Override
     public String toString() {
         return String.valueOf(val) + (lin ? "l" : "");

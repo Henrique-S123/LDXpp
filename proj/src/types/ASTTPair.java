@@ -48,4 +48,9 @@ public class ASTTPair extends ASTType {
         if (id != null) pe.closeEnvScope(PENV.SIGMA);
         return this;
     }
+
+    public boolean structEq(ASTType o) {
+        return o instanceof ASTTPair ot && lin == ot.isLinear() && bid.equals(ot.getBid()) &&
+            first.structEq(ot.getFirst()) && second.structEq(ot.getSecond());
+    }
 }

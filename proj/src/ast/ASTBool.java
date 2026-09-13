@@ -28,6 +28,10 @@ public class ASTBool extends ASTNode  {
         return new ASTTBool(lin);
     }
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTBool ot && val == ot.getVal() && lin == ot.isLinear();
+    }
+
     @Override
     public String toString() {
         return String.valueOf(val) + (lin ? "l" : "");

@@ -114,6 +114,11 @@ public class ASTSplit extends ASTNode {
 		return new ASTSplit(pair.subs(subsId, node), id1, id2, body.subs(subsId, node), linpair);
 	}
 
+	public boolean structEq(ASTNode o) {
+		return o instanceof ASTSplit ot && id1.equals(ot.getId1()) && id2.equals(ot.getId2()) &&
+			pair.structEq(ot.getPair()) && body.structEq(ot.getBody());
+	}
+
 	@Override
 	public String toString() {
 		return String.format("split (%s|%s) = %s; %s", id1, id2, pair, body);

@@ -42,6 +42,10 @@ public class ASTPrint extends ASTNode {
 		return new ASTPrint(exp.subs(subsId, node), newline);
 	}
 
+	public boolean structEq(ASTNode o) {
+		return o instanceof ASTPrint ot && newline == ot.getNewline() && exp.structEq(ot.getExp());
+	}
+
 	@Override
 	public String toString() {
 		return String.format("print%s(%s)", newline ? "ln" : "", exp);

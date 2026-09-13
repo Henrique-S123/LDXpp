@@ -14,6 +14,10 @@ public class ASTUnit extends ASTNode  {
         return new ASTTUnit();
     }
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTUnit;
+    }
+
     @Override
     public String toString() {
         return "()";

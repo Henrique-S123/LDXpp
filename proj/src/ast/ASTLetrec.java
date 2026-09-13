@@ -98,6 +98,11 @@ public class ASTLetrec extends ASTNode  {
         return new ASTLetrec(fid, functype, funcbody, body.subs(subsId, node));
     }
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTLetrec ot && fid.equals(ot.getFuncid()) && functype.structEq(ot.getFunctype()) &&
+            funcbody.structEq(ot.getFuncbody()) && body.structEq(ot.getBody());
+    }
+
     @Override
     public String toString() {
         return String.format("letrec %s:%s {%s}; %s", fid, functype, funcbody, body);

@@ -15,6 +15,10 @@ public class ASTTInt extends ASTType {
         if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
         return (o instanceof ASTTInt ot && (!lin || ot.isLinear()));
     }
+
+    public boolean structEq(ASTType o) {
+        return o instanceof ASTTInt ot && lin == ot.isLinear();
+    }
 }
 
 

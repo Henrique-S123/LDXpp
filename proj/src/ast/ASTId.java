@@ -70,6 +70,10 @@ public class ASTId extends ASTNode	{
         return this;
     }
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTId ot && bid.equals(ot.getBid());
+    }
+
     @Override
     public String toString() {
         return id;

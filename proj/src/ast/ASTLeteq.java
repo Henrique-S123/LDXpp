@@ -74,6 +74,10 @@ public class ASTLeteq extends ASTNode {
 		return new ASTLeteq(id, expr.subs(subsId, node), body.subs(subsId, node));
 	}
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTLeteq ot && id.equals(ot.getId()) && expr.structEq(ot.getExpr()) && body.structEq(ot.getBody());
+    }
+
     @Override
     public String toString() {
 		return String.format("leteq(%s, %s, %s)", id, expr, body);

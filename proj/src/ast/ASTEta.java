@@ -12,6 +12,10 @@ public class ASTEta extends ASTNode {
         var = v;
     }
 
+    public String getVar() {
+        return var;
+    }
+
     public IValue eval(Env<IValue> e) {
         return new VRefl();
     }
@@ -37,6 +41,10 @@ public class ASTEta extends ASTNode {
         else return null;
 
         return new ASTTEq(t1, t2, type);
+    }
+
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTEta ot && var.equals(ot.getVar());
     }
 
     @Override

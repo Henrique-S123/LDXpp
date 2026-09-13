@@ -49,5 +49,10 @@ public class ASTTArrow extends ASTType {
         if (id != null) pe.closeEnvScope(PENV.SIGMA);
         return this;
     }
+
+    public boolean structEq(ASTType o) {
+        return o instanceof ASTTArrow ot && lin == ot.isLinear() && bid.equals(ot.getBid()) &&
+            dom.structEq(ot.getDom()) && codom.structEq(ot.getCodom());
+    }
 }
 

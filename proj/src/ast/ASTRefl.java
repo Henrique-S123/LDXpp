@@ -46,6 +46,10 @@ public class ASTRefl extends ASTNode  {
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTRefl;
+    }
+
     @Override
     public String toString() {
         return String.format("refl%s", term == null ? "" : "(" + term + ")");

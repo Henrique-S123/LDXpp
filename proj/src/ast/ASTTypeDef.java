@@ -51,6 +51,10 @@ public class ASTTypeDef extends ASTNode {
 		return new ASTTypeDef(ltmap, body.subs(subsId, node));
 	}
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTTypeDef ot && ltmap.equals(ot.getLtd()) && body.structEq(ot.getBody());
+    }
+
     @Override
 	public String toString() {
 		return String.format("typedef(%s, %s)", ltmap, body);

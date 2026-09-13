@@ -33,5 +33,9 @@ public abstract class ASTNode {
     public ASTNode subs(String subsId, ASTNode node) {
         return this;
     }
+
+    public boolean structEq(ASTNode o) {
+        return false;
+    }
 }
 

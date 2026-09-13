@@ -115,6 +115,11 @@ public class ASTFunc extends ASTNode  {
         return new ASTFunc(id, body.subs(subsId, node), argtype, lin, normEnv);
     }
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTFunc ot && lin == ot.isLinear() && id.equals(ot.getId()) &&
+            argtype.structEq(ot.getArgtype()) && body.structEq(ot.getBody());
+    }
+
     @Override
     public String toString() {
         return String.format("%sfn %s:%s =%s> {%s}", lin ? "l" : "", id, argtype, lin ? "o" : "", body);

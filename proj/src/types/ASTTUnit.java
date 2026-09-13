@@ -15,4 +15,8 @@ public class ASTTUnit extends ASTType {
         if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
         return o instanceof ASTTUnit;
     }
+
+    public boolean structEq(ASTType o) {
+        return o instanceof ASTTUnit;
+    }
 }

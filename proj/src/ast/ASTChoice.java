@@ -65,6 +65,10 @@ public class ASTChoice extends ASTNode  {
         return new ASTChoice(pair.subs(subsId, node), choice);
     }
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTChoice ot && choice == ot.getChoice() && pair.structEq(ot.getPair());
+    }
+
     @Override
     public String toString() {
         String s = choice ? "fst %s" : "snd %s";

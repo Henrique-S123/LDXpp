@@ -84,6 +84,11 @@ public class ASTLet extends ASTNode {
 		return new ASTLet(id, expr.subs(subsId, node), declType, body.subs(subsId, node));
 	}
 
+    public boolean structEq(ASTNode o) {
+        return o instanceof ASTLet ot && id.equals(ot.getId()) && declType.structEq(ot.getDeclType()) &&
+            expr.structEq(ot.getExpr()) && body.structEq(ot.getBody());
+    }
+
     @Override
     public String toString() {
         String typeString = (declType == null ? "" : String.format(" %s,", declType));

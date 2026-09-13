@@ -15,4 +15,8 @@ public class ASTTString extends ASTType {
         if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
         return o instanceof ASTTString;
     }
+
+    public boolean structEq(ASTType o) {
+        return o instanceof ASTTString;
+    }
 }
