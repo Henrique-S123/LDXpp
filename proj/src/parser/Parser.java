@@ -584,7 +584,7 @@ public class Parser implements ParserConstants {
       jj_consume_token(LPAR);
       t = Let();
       jj_consume_token(RPAR);
-                                                  t = new ASTChoice(t, n.image.equals("fst"));
+                                                  t = new ASTProj(t, n.image.equals("fst"));
       break;
     case MATCH:
       jj_consume_token(MATCH);

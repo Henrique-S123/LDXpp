@@ -235,7 +235,7 @@ ASTNode Fact() :
     | <IF> t=BA() <LBRA> e1=Let() <RBRA> <ELSE> <LBRA> e2=Let() <RBRA> { t = new ASTIf(t, e1, e2); }
     | t = Funct()
     | (n=<PRINT>|n=<PRINTLN>) t=Fact() { t = new ASTPrint(t, n.image.equals("println")); }
-    | (n=<FST>|n=<SND>) <LPAR> t = Let() <RPAR> { t = new ASTChoice(t, n.image.equals("fst")); }
+    | (n=<FST>|n=<SND>) <LPAR> t = Let() <RPAR> { t = new ASTProj(t, n.image.equals("fst")); }
     | <MATCH> t2 = Let() t = Match(t2)
     |  n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t, false); }
     |  n = <LLABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t, true); }

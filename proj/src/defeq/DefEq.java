@@ -67,7 +67,7 @@ public final class DefEq {
         if (l instanceof ASTPair ln && r instanceof ASTPair rn && ln.isLinear() == rn.isLinear())
             return termdefeq(ln.getFirst(), rn.getFirst(), pe, alpha, t)
                 && termdefeq(ln.getSecond(), rn.getSecond(), pe, alpha, t);
-        if (l instanceof ASTChoice ln && r instanceof ASTChoice rn && ln.getChoice() == rn.getChoice())
+        if (l instanceof ASTProj ln && r instanceof ASTProj rn && ln.getPos() == rn.getPos())
             return termdefeq(ln.getPair(), rn.getPair(), pe, alpha, t);
         if (l instanceof ASTSplit ln && r instanceof ASTSplit rn)
             return (termdefeq(ln.getPair(), rn.getPair(), pe, alpha, t)
