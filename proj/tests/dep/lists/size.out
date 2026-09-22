@@ -1,15 +1,15 @@
-type: (l:LIST, size(l) ≡ 2 : int), value: (#cons((3, #cons((2, #nil(()))))), refl)
+type: (l:LIST, size(l) = 2 : int), value: (#cons((3, #cons((2, #nil(()))))), refl)
 
 
-type: (l:LIST, size(l) ≡ 2 : int), value: (#cons((3, #cons((2, #nil(()))))), refl)
+type: (l:LIST, size(l) = 2 : int), value: (#cons((3, #cons((2, #nil(()))))), refl)
 
 
 class proj.src.errors.TypeCheckError: Terms size(l1) and 2 are not definitionally equal
 
 
-type: (l:LIST, size(l) ≡ 2 : int), value: (#cons((4, #cons((2, #nil(()))))), refl)
+type: (l:LIST, size(l) = 2 : int), value: (#cons((4, #cons((2, #nil(()))))), refl)
 
 
-type: (z:LIST, size(z) ≡ n2 : Nat), value: (#cons((#succ(#succ(#zero(()))), #cons((#succ(#zero(())), #nil(()))))), refl)
+type: (z:LIST, size(z) = n2 : Nat), value: (#cons((#succ(#succ(#zero(()))), #cons((#succ(#zero(())), #nil(()))))), refl)
 
 

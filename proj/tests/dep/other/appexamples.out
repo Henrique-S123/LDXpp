@@ -1,10 +1,10 @@
-type: (x:int, x > 3 ≡ true : bool), value: (5, refl)
+type: (x:int, x > 3 = true : bool), value: (5, refl)
 
 
-type: 5 > 3 ≡ true : bool, value: refl
+type: 5 > 3 = true : bool, value: refl
 
 
-type: (x:int, x > 3 ≡ true : bool), value: (4, refl)
+type: (x:int, x > 3 = true : bool), value: (4, refl)
 
 
 class proj.src.errors.TypeCheckError: Terms 2 > 3 and true are not definitionally equal
@@ -13,21 +13,21 @@ class proj.src.errors.TypeCheckError: Terms 2 > 3 and true are not definitionall
 type: int, value: 8083
 
 
-type: (x:int, 0 <= x && x <= 100 ≡ true : bool), value: (21, refl)
+type: (x:int, 0 <= x && x <= 100 = true : bool), value: (21, refl)
 
 
 class proj.src.errors.TypeCheckError: Terms 0 <= 150 && 150 <= 100 and true are not definitionally equal
 
 
-type: (y:int, y ≡ 3 + 3 : int), value: (6, refl)
+type: (y:int, y = 3 + 3 : int), value: (6, refl)
 
 
-type: 6 ≡ 3 + 3 : int, value: refl
+type: 6 = 3 + 3 : int, value: refl
 
 
 type: int, value: 6
 
 
-type: 6 ≡ 3 + 3 : int, value: refl
+type: 6 = 3 + 3 : int, value: refl
 
 

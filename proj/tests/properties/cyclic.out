@@ -1,3 +1,3 @@
-type: y ≡ 1 : int, value: refl
+type: y = 1 : int, value: refl
 
 

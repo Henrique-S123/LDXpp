@@ -21,7 +21,7 @@ public class ASTTEq extends ASTType {
     public ASTType getType() { return type; }
 
     public String toString() {
-        return String.format("%s ≡ %s : %s", term1, term2, type);
+        return String.format("%s = %s : %s", term1, term2, type);
     }
 
     public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {

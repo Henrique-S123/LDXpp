@@ -1,4 +1,4 @@
-type: (x:Nat, (n:Nat, x ≡ #succ(n) : Nat)), value: (#succ(#zero(())), (#zero(()), refl))
+type: (x:Nat, (n:Nat, x = #succ(n) : Nat)), value: (#succ(#zero(())), (#zero(()), refl))
 
 
 class proj.src.errors.TypeCheckError: Terms n2 and #succ(n0) are not definitionally equal
