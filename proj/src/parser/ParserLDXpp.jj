@@ -37,7 +37,7 @@ TOKEN :
   |
   < LBRA : "{" > | < RBRA : "}" >
   |
-  < REFL: "refl" > | < HYP: "hyp" > | < ETA: "eta" >
+  < REFL: "refl" > | < HYP: "hyp" >
   |
   < LETEQ: "leteq" > | < NEVER: "never" >
   |
@@ -137,9 +137,9 @@ ASTNode Let() :
     |
       ( <LETEQ>  n=<Id> <EQUAL> e1 = BA() <SEMIC> e2 = Let() { t = new ASTLeteq(n.image, e1, e2); } )
     |
-      ( <SPLIT> <LPAR> n=<Id> (sep=<VERT>|sep=<COMMA>) n2=<Id> <RPAR> <EQUAL> e1 = BA() <SEMIC> e2 = Let()
+      ( <SPLIT> <LPAR> n=<Id> (sep=<VERT>) n2=<Id> <RPAR> <EQUAL> e1 = BA() <SEMIC> e2 = Let()
         { if (n.image.equals(n2.image)) throw new ParseException("duplicate id");
-          t = new ASTSplit(e1, n.image, n2.image, e2, sep.image.equals("|")); } )
+          t = new ASTSplit(e1, n.image, n2.image, e2); } )
     |
       ( <LETREC> n=<Id> <COLON> t1 = Type() <EQUAL> t = BA() <SEMIC> e2 = Let() { t = new ASTLetrec(n.image, t1, t, e2); } )
     |
@@ -242,7 +242,6 @@ ASTNode Fact() :
     | <LPAR> t = TermList() <RPAR>
     | <REFL> (LOOKAHEAD(2) <LPAR> t = Fact() <RPAR>)? { t = new ASTRefl(t, new TRefl()); }
     | <HYP> (n=<Id>)? { t = new ASTRefl(null, new THyp(n == null ? null : n.image)); }
-    | <ETA> n=<Id> { t = new ASTEta(n.image); }
     )
    { return t; }
 }

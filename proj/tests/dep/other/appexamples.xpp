@@ -37,8 +37,8 @@ let dup:(x:int)->(y:int, (y = x + x : int)) =
 
 let dup:(x:int)->(y:int, (y = x + x : int)) =
     fn x:int => { (x + x, refl) }
-; split (val, eq) = dup(3); val;;
+; fst(dup(3));;
 
 let dup:(x:int)->(y:int, (y = x + x : int)) =
     fn x:int => { (x + x, refl) }
-; split (val, eq) = dup(3); eq;;
+; snd(dup(3));;

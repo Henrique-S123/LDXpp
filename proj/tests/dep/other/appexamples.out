@@ -28,6 +28,6 @@ type: 6 ≡ 3 + 3 : int, value: refl
 type: int, value: 6
 
 
-type: val ≡ 3 + 3 : int, value: refl
+type: 6 ≡ 3 + 3 : int, value: refl
 
 

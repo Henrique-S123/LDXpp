@@ -98,7 +98,6 @@ public final class DefEq {
             return termdefeq(ln.getExp(), rn.getExp(), pe, alpha, t);
 
         if (l instanceof ASTRefl && r instanceof ASTRefl) return true;
-        if (l instanceof ASTEta && r instanceof ASTEta) return true;
         if (l instanceof ASTLeteq ln && r instanceof ASTLeteq rn)
             return (termdefeq(ln.getExpr(), rn.getExpr(), pe, alpha, t)
                 && termdefeq(ln.getBody(), rn.getBody(), pe, alpha.extend(ln.getId(), rn.getId()), t));
@@ -125,6 +124,8 @@ public final class DefEq {
             ASTNode expansion = new ASTPair(new ASTProj(id, true), new ASTProj(id, false), false);
             return termdefeq(expansion, other, pe, alpha, t);
         }
+        else if (type instanceof ASTTUnit && other instanceof ASTUnit)
+            return true;
 
         return false;
     }
