@@ -22,10 +22,6 @@ type LIST = union { #nil: (), #cons: NODE };
 let l0:LIST = #nil (());
 let l1:LIST = #cons ((1,l0));
 let l2:LIST = #cons ((2,l1));
-let etaNonlinPair:(n:(int, LIST))->(n = (fst(n), snd(n)) : (int, LIST)) =
-    fn n:(int, LIST) => {
-        split (x, y) = n; refl
-    };
 letrec copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) =
     fn l:LIST => {
         match l {
@@ -34,92 +30,6 @@ letrec copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) =
             #cons(n) ->
                 let res = copy(snd(n));
                 leteq e1 = snd(res);
-                leteq e2 = etaNonlinPair(n);
-                let newpair = (fst(n), fst(res));
-                (#cons(newpair), refl)
-        }
-    };
-copy(l2);;
-
-type NODE = (int, LIST);
-type LIST = union { #nil: (), #cons: NODE };
-let l0:LIST = #nil (());
-let l1:LIST = #cons ((1,l0));
-let l2:LIST = #cons ((2,l1));
-letrec copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) =
-    fn l:LIST => {
-        match l {
-            #nil(m) -> m; (l, refl)
-            |
-            #cons(n) ->
-                let res = copy(snd(n));
-                leteq e1 = snd(res);
-                leteq e2 = eta n;
-                let newpair = (fst(n), fst(res));
-                (#cons(newpair), refl)
-        }
-    };
-copy(l2);;
-
-
-
-type NODE = (int, LIST);
-type LIST = union { #nil: (), #cons: NODE };
-let l0:LIST = #nil (());
-let l1:LIST = #cons ((1,l0));
-let l2:LIST = #cons ((2,l1));
-letrec copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) =
-    fn l:LIST => {
-        match l {
-            #nil(m) -> m; (l, refl)
-            |
-            #cons(n) ->
-                let res = copy(snd(n));
-                leteq e1 = snd(res);
-                let newpair = (fst(n), fst(res));
-                (#cons(newpair), hyp)
-        }
-    };
-copy(l2);;
-
-type NODE = (int, LIST);
-type LIST = union { #nil: (), #cons: NODE };
-let l0:LIST = #nil (());
-let l1:LIST = #cons ((1,l0));
-let l2:LIST = #cons ((2,l1));
-let etaNonlinPair:(n:(int, LIST))->(n = (fst(n), snd(n)) : (int, LIST)) =
-    fn n:(int, LIST) => {
-        split (x, y) = n; refl
-    };
-letrec copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) =
-    fn l:LIST => {
-        match l {
-            #nil(m) -> m; (l, refl)
-            |
-            #cons(n) ->
-                let res = copy(snd(n));
-                leteq e1 = snd(res);
-                leteq e2 = etaNonlinPair(n);
-                let newpair = (fst(n), fst(res));
-                (#cons(newpair), hyp)
-        }
-    };
-copy(l2);;
-
-type NODE = (int, LIST);
-type LIST = union { #nil: (), #cons: NODE };
-let l0:LIST = #nil (());
-let l1:LIST = #cons ((1,l0));
-let l2:LIST = #cons ((2,l1));
-letrec copy:(l:LIST)->(lr:LIST, (l = lr : LIST)) =
-    fn l:LIST => {
-        match l {
-            #nil(m) -> m; (l, refl)
-            |
-            #cons(n) ->
-                let res = copy(snd(n));
-                leteq e1 = snd(res);
-                leteq e2 = eta n;
                 let newpair = (fst(n), fst(res));
                 (#cons(newpair), hyp)
         }

@@ -19,6 +19,8 @@ public final class DefEq {
 
         if (congruent(l, r, pe, alpha, t)) return true;
 
+        if (etaEquiv(l, r, pe, alpha, t)) return true;
+
         if (t instanceof THyp h && useHyp(l, r, pe, alpha, h)) return true;
 
         if (solveTerm(true, l, r, pe, alpha, t)) return true;
@@ -103,6 +105,26 @@ public final class DefEq {
         
         if (l instanceof ASTTypeDef ln && r instanceof ASTTypeDef rn)
             return ln.getLtd().equals(rn.getLtd()) && termdefeq(ln.getBody(), rn.getBody(), pe, alpha, t);
+
+        return false;
+    }
+
+    private static final boolean etaEquiv(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha, Tactic t) {
+        ASTId id = null;
+        ASTNode other = null;
+        ASTType type = null;
+
+        if (l instanceof ASTId i) { id = i; other = r; }
+        else if (r instanceof ASTId i) { id = i; other = l; }
+        else return false;
+
+        type = pe.getSigma().find(id.getId());
+        if (type == null) return false;
+
+        if (type instanceof ASTTPair tp && other instanceof ASTPair np && !tp.isLinear() && !np.isLinear()) {
+            ASTNode expansion = new ASTPair(new ASTProj(id, true), new ASTProj(id, false), false);
+            return termdefeq(expansion, other, pe, alpha, t);
+        }
 
         return false;
     }
