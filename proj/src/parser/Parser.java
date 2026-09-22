@@ -241,12 +241,11 @@ public class Parser implements ParserConstants {
       n = jj_consume_token(Id);
       jj_consume_token(COLON);
       t1 = Type();
-      jj_consume_token(LBRA);
-      t = Let();
-      jj_consume_token(RBRA);
+      jj_consume_token(EQUAL);
+      t = BA();
       jj_consume_token(SEMIC);
       e2 = Let();
-                                                                                         t = new ASTLetrec(n.image, t1, t, e2);
+                                                                                  t = new ASTLetrec(n.image, t1, t, e2);
       break;
     case TYPE:
          HashMap<String,ASTType> lbl = new HashMap<String,ASTType>();
@@ -1448,9 +1447,8 @@ public class Parser implements ParserConstants {
     if (jj_scan_token(Id)) return true;
     if (jj_scan_token(COLON)) return true;
     if (jj_3R_14()) return true;
-    if (jj_scan_token(LBRA)) return true;
-    if (jj_3R_15()) return true;
-    if (jj_scan_token(RBRA)) return true;
+    if (jj_scan_token(EQUAL)) return true;
+    if (jj_3R_52()) return true;
     if (jj_scan_token(SEMIC)) return true;
     if (jj_3R_15()) return true;
     return false;

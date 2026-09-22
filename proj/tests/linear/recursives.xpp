@@ -1,27 +1,26 @@
-letrec fact:int-o>int {
+letrec fact:int-o>int =
     lfn x:int =o> {
         if (x==0) {1}
         else {x * fact(x-1)}
-    }
-}; fact(3);;
+    };
+fact(3);;
 
-letrec fact:int-o>int {
+letrec fact:int-o>int =
     lfn x:int =o> {
         if (x==0) {1}
         else {x * fact(x-1)}
-    }
-}; fact(3) + fact(2);;
+    };
+fact(3) + fact(2);;
 
 type NatL = linunion {$zero:(), $succ:NatL};
 let nl1 = $succ($zero(()));
 let nl2 = $succ($succ($zero(())));
-letrec ladd:NatL-o>NatL-o>NatL {
+letrec ladd:NatL-o>NatL-o>NatL =
     lfn a:NatL, b:NatL =o> {
         match a {
             $zero(m) -> m; b
             |
             $succ(m) -> $succ(ladd(m)(b))
         }
-    }
-};
+    };
 ladd(nl2)(nl1);;

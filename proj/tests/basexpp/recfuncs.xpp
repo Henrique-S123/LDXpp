@@ -1,66 +1,61 @@
-letrec fact:int->int {
+letrec fact:int->int =
     fn x:int => {
         if (x==0) { 1 } 
         else { x * (fact(x-1)) } 
-    }
-};
+    };
 fact(5);;
 
-letrec recprint:int->int {
+letrec recprint:int->int =
     fn x:int => {
         if (x==0) { println(0); 0 }
         else { println(x); recprint(x-1) }
-    }
-};
+    };
 recprint(5);;
 
-letrec reduce:(int -> int -> int) -> int -> int -> int {
+letrec reduce:(int -> int -> int) -> int -> int -> int =
     fn g:int->int->int, b:int, k:int => {
         if (k == 0) { b }
         else {
             g (k) (reduce (g) (b) (k-1) )
         }
-    }
-};
+    };
 let fact = reduce (fn n:int, p:int => { n*p }) (1) ;
 fact (10)
 ;;
 
-letrec reduce:(int -> int -> int) -> int -> int -> int {
+letrec reduce:(int -> int -> int) -> int -> int -> int =
     fn g:int->int->int, b:int, k:int => {
         if (k == 0) { b }
         else {
             g (k) (reduce (g) (b) (k-1) )
         }
-    }
-};
+    };
 let tri = reduce (fn n:int, p:int => { n+p }) (1) ;
 tri (100)
 ;;
 
-letrec reduce:(int -> int -> int) -> int -> int -> int {
+letrec reduce:(int -> int -> int) -> int -> int -> int =
     fn g:int->int->int, b:int, k:int => {
         if (k == 0) { b }
         else {
             g (k) (reduce (g) (b) (k-1) )
         }
-    }
-};
+    };
 let tri = reduce (fn n:int, p:int => { println (n+p); n+p }) (1) ;
 tri (20)
 ;;
 
 let f = 2;
-letrec fakerec:int->int {f};
+letrec fakerec:int->int = f;
 fakerec(4);;
 
 let f = fn x:int => {2};
-letrec fakerec:int->int {f};
+letrec fakerec:int->int = f;
 fakerec(4);;
 
 let f = fn x:int => {2};
-letrec fakerec:int->int {f};
+letrec fakerec:int->int = f;
 let e:(fakerec(4) = 2 : int) = refl; e;;
 
 let f = fn x:int => {2};
-let e:((letrec fakerec:int->int {f}; fakerec(4)) = 2 : int) = refl; e;;
+let e:((letrec fakerec:int->int = f; fakerec(4)) = 2 : int) = refl; e;;

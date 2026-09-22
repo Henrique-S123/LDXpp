@@ -1,29 +1,25 @@
-letrec fact:int->int {
+letrec fact:int->int =
     fn x:int => {
         if (x==0) { 1 } 
         else { x * (fact(x-1)) } 
-    }
-};
+    };
 let e:(fact(3) = 6 : int) = refl; e;;
 
-let e:((letrec fact:int->int {
+let e:((letrec fact:int->int =
     fn x:int => {
         if (x==0) {1}
         else {x * fact(x-1)}
-    }
-}; fact(3)) = 6 : int) = refl; e;;
+    }; fact(3)) = 6 : int) = refl; e;;
 
-letrec fact:int->int {
+letrec fact:int->int =
     fn x:int => {
         if (x==0) { 1 } 
         else { x * (fact(x-1)) } 
-    }
-};
+    };
 let e:(fact(3) = 7 : int) = refl; e;;
 
-let e:((letrec fact:int->int {
+let e:((letrec fact:int->int =
     fn x:int => {
         if (x==0) {1}
         else {x * fact(x-1)}
-    }
-}; fact(3)) = 7 : int) = refl; e;;
+    }; fact(3)) = 7 : int) = refl; e;;

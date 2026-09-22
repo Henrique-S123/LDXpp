@@ -2,30 +2,28 @@ type Nat = union { #zero: (), #succ: Nat };
 let n0 = #zero(());
 let n1 = #succ(n0);
 let n2 = #succ(n1);
-letrec add:Nat->Nat->Nat {
+letrec add:Nat->Nat->Nat =
     fn a:Nat, b:Nat => {
         match a {
             #zero(m) -> m; b
             |
             #succ(m) -> #succ(add(m)(b))
         }
-    }
-};
+    };
 add(n2)(n1);;
 
 type Nat = union { #zero: (), #succ: Nat };
 let n0 = #zero(());
 let n1 = #succ(n0);
 let n2 = #succ(n1);
-letrec add:Nat->Nat->Nat {
+letrec add:Nat->Nat->Nat =
     fn a:Nat, b:Nat => {
         match a {
             #zero(m) -> m; b
             |
             #succ(m) -> #succ(add(m)(b))
         }
-    }
-};
+    };
 add(add(n2)(n1))(n2);;
 
 type Nat = union { #zero: (), #succ: Nat };
@@ -33,15 +31,14 @@ let n0 = #zero(());
 let n1 = #succ(n0);
 let n2 = #succ(n1);
 let n3 = #succ(n2);
-letrec add:Nat->Nat->Nat {
+letrec add:Nat->Nat->Nat =
     fn a:Nat, b:Nat => {
         match a {
             #zero(m) -> m; b
             |
             #succ(m) -> #succ(add(m)(b))
         }
-    }
-};
+    };
 let p:(z:Nat, (z=add(n2)(n1):Nat)) = (n3, refl); p;;
 
 type Nat = union { #zero: (), #succ: Nat };
@@ -49,15 +46,14 @@ let n0 = #zero(());
 let n1 = #succ(n0);
 let n2 = #succ(n1);
 let n3 = #succ(n2);
-letrec add:Nat->Nat->Nat {
+letrec add:Nat->Nat->Nat =
     fn a:Nat, b:Nat => {
         match a {
             #zero(m) -> m; b
             |
             #succ(m) -> #succ(add(m)(b))
         }
-    }
-};
+    };
 let p:(z:Nat, (z=add(n2)(n1):Nat)) = (n2, refl); p;;
 
 type Nat = union { #zero: (), #succ: Nat };
@@ -65,13 +61,12 @@ let n0 = #zero(());
 let n1 = #succ(n0);
 let n2 = #succ(n1);
 let n3 = #succ(n2);
-letrec add:Nat->Nat->Nat {
+letrec add:Nat->Nat->Nat =
     fn a:Nat, b:Nat => {
         match a {
             #zero(m) -> m; b
             |
             #succ(m) -> #succ(add(m)(b))
         }
-    }
-};
+    };
 let p:(z:Nat, (z=add(n1)(n1):Nat)) = (n2, refl); p;;
