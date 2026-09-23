@@ -35,7 +35,9 @@ TOKEN :
   |
   < LPAR : "(" > | < RPAR : ")" > | < LRPAR : "()" >
   |
-  < LBRA : "{" > | < RBRA : "}" >
+  < LCUR : "{" > | < RCUR : "}" >
+  |
+  < 
   |
   < REFL: "refl" > | < HYP: "hyp" >
   |
@@ -57,7 +59,7 @@ TOKEN :
   |
   < FST : "fst" > | < SND : "snd" >
   |
-  < MATCH : "match" > | < SPLIT : "split" >
+  < MATCH : "match" >
   |
   < TYPE : "type" >
   |
@@ -244,7 +246,7 @@ ASTNode Fact() :
     | <LRPAR> { t = new ASTUnit(); }
     | <MINUS> t=Fact() { t = new ASTOp(new ASTInt(0, false), t, "-u"); }
     | <NOT> t=Fact() { t = new ASTOp(new ASTBool(true, false), t, "~"); }
-    | <IF> t=BA() <LBRA> t2=Let() <RBRA> <ELSE> <LBRA> t3=Let() <RBRA> { t = new ASTIf(t, t2, t3); }
+    | <IF> t=BA() <LCUR> t2=Let() <RCUR> <ELSE> <LCUR> t3=Let() <RCUR> { t = new ASTIf(t, t2, t3); }
     | t = Funct()
     | (n=<PRINT>|n=<PRINTLN>) t=Fact() { t = new ASTPrint(t, n.image.equals("println")); }
     | (n=<FST>|n=<SND>) <LPAR> t = Let() <RPAR> { t = new ASTProj(t, n.image.equals("fst")); }
@@ -268,11 +270,11 @@ ASTNode Funct() :
   (
     <FN> n=<Id> <COLON> type = Type() { tf = new ASTFunc(n.image, null, type, false); tc = tf; }
             (<COMMA> n=<Id> <COLON> type = Type() { tn = new ASTFunc(n.image, null, type, false); tc.setBody(tn); tc = tn; })*
-            <ARROW> <LBRA> t2 = Let() <RBRA> { tc.setBody(t2); t = tf; }
+            <ARROW> <LCUR> t2 = Let() <RCUR> { tc.setBody(t2); t = tf; }
   |
     <LFN> n=<Id> <COLON> type = Type() { tf = new ASTFunc(n.image, null, type, true); tc = tf; }
             (<COMMA> n=<Id> <COLON> type = Type() { tn = new ASTFunc(n.image, null, type, true); tc.setBody(tn); tc = tn; })*
-            <DLOLLIPOP> <LBRA> t2 = Let() <RBRA> { tc.setBody(t2); t = tf; }
+            <DLOLLIPOP> <LCUR> t2 = Let() <RCUR> { tc.setBody(t2); t = tf; }
   )
   { return t; }
 }
@@ -306,7 +308,7 @@ ASTNode Match(ASTNode p) :
   Set<String> labels = new HashSet<String>();
 }
 {
-  <LBRA>
+  <LCUR>
   (
     (l = <LABEL> | l = <LLABEL>) <LPAR> n = <Id> <RPAR> <SLIMARROW> e1 = MatchExpr() { labels.add(l.image); t.addCase(l.image, n.image, e1); }
     (
@@ -315,7 +317,7 @@ ASTNode Match(ASTNode p) :
         else t.addCase(l.image, n.image, e1); }
     )*
   )
-  <RBRA>
+  <RCUR>
   { return t; }
 }
 
@@ -365,8 +367,8 @@ ASTType TypeF() :
         | <TLBOOL> { t = new ASTTBool(true); }
         | <LRPAR> { t = new ASTTUnit(); }
         | <TSTRING> { t = new ASTTString(); }
-        | <TUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll, false); }
-        | <TLUNION> <LBRA> ll = LabelList() <RBRA> { t = new ASTTUnion(ll, true); }
+        | <TUNION> <LCUR> ll = LabelList() <RCUR> { t = new ASTTUnion(ll, false); }
+        | <TLUNION> <LCUR> ll = LabelList() <RCUR> { t = new ASTTUnion(ll, true); }
         | <LPAR> t = TypeInsidePar() <RPAR>
     )
     { return t; }
