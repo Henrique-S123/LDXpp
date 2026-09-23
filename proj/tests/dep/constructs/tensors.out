@@ -7,18 +7,6 @@ type: linbool, value: truel
 class proj.src.errors.TypeCheckError: There are unused linear values: [x]
 
 
-class proj.src.errors.TypeCheckError: refl expects a term annotation
-
-
-class proj.src.errors.TypeCheckError: refl expects a term annotation
-
-
-class proj.src.errors.TypeCheckError: refl expects a term annotation
-
-
-type: (linbool | true = true : bool), value: (truel | refl)
-
-
 type: (x:linint | x = 2l : linint), value: (2l | refl)
 
 

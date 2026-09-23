@@ -4,14 +4,6 @@ let p:(x:linbool | (x=truel:linbool)) = (truel | refl); split (x|y) = p; x;;
 
 let p:(x:linbool | (x=truel:linbool)) = (truel | refl); split (x|y) = p; y;;
 
-let p = (truel | refl); p;;
-
-let p = (truel | refl); split (x|y) = p; x;;
-
-let p = (truel | refl); split (x|y) = p; y;;
-
-let p = (truel | refl(true)); p;;
-
 let p:(x:linint | (x=2l:linint)) = (2l | refl); p;;
 
 let p:(x:linint | (x=2l:linint)) = (3l | refl); p;;

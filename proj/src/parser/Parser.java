@@ -478,7 +478,7 @@ public class Parser implements ParserConstants {
 
   final public ASTNode Fact() throws ParseException {
   Token n = null;
-  ASTNode t = null, e1, e2, t2;;
+  ASTNode t = null, t2 = null, t3 = null;;
   ASTType type;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case Num:
@@ -523,13 +523,13 @@ public class Parser implements ParserConstants {
       jj_consume_token(IF);
       t = BA();
       jj_consume_token(LBRA);
-      e1 = Let();
+      t2 = Let();
       jj_consume_token(RBRA);
       jj_consume_token(ELSE);
       jj_consume_token(LBRA);
-      e2 = Let();
+      t3 = Let();
       jj_consume_token(RBRA);
-                                                                         t = new ASTIf(t, e1, e2);
+                                                                         t = new ASTIf(t, t2, t3);
       break;
     case FN:
     case LFN:
@@ -600,11 +600,13 @@ public class Parser implements ParserConstants {
       if (jj_2_2(2)) {
         jj_consume_token(LPAR);
         t = Fact();
+        jj_consume_token(EQUAL);
+        t2 = Fact();
         jj_consume_token(RPAR);
       } else {
         ;
       }
-                                                        t = new ASTRefl(t, new TRefl());
+                                                                            t = new ASTRefl(t, t2, new TRefl());
       break;
     case HYP:
       jj_consume_token(HYP);
@@ -616,7 +618,7 @@ public class Parser implements ParserConstants {
         jj_la1[17] = jj_gen;
         ;
       }
-                        t = new ASTRefl(null, new THyp(n == null ? null : n.image));
+                        t = new ASTRefl(null, null, new THyp(n == null ? null : n.image));
       break;
     default:
       jj_la1[18] = jj_gen;
@@ -1716,6 +1718,8 @@ public class Parser implements ParserConstants {
 
   private boolean jj_3_2() {
     if (jj_scan_token(LPAR)) return true;
+    if (jj_3R_12()) return true;
+    if (jj_scan_token(EQUAL)) return true;
     if (jj_3R_12()) return true;
     if (jj_scan_token(RPAR)) return true;
     return false;

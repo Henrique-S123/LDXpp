@@ -7,11 +7,11 @@ import proj.src.env.*;
 import proj.src.errors.*;
 
 public class ASTRefl extends ASTNode  {
-    private final ASTNode term;
+    private final ASTNode term1, term2;
     private final Tactic tactic;
 
-    public ASTRefl(ASTNode t, Tactic tac) {
-        term = t; tactic = tac;
+    public ASTRefl(ASTNode t1, ASTNode t2, Tactic tac) {
+        term1 = t1; term2 = t2; tactic = tac;
     }
 
     public IValue eval(Env<IValue> e) {
@@ -19,30 +19,42 @@ public class ASTRefl extends ASTNode  {
     }
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
+        ASTNode left, right;
+        ASTType ret, termtype;
         if (target == null) {
-            if (term == null) throw new TypeCheckError(ErrorMessages.missingTermAnnotation());
-            return new ASTTEq(term, term, term.typecheck(e, null));
+            if (term1 == null || term2 == null) throw new TypeCheckError(ErrorMessages.missingReflTerms());
+            termtype = term1.puretypecheck(new PureEnvSet(e), null);
+            term2.puretypecheck(new PureEnvSet(e), null);
+            left = term1; right = term2;
+            ret = new ASTTEq(left, right, termtype);
         }
+        else if (target instanceof ASTTEq tt) {
+            left = tt.getTerm1(); right = tt.getTerm2();
+            ret = target;
+        }
+        else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));
 
-        if (!(target instanceof ASTTEq tt))
-            throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));
-        ASTNode left = tt.getTerm1(), right = tt.getTerm2();
-
-        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), new PureEnvSet(e), new AlphaEnv(), tactic)) return target;
+        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), new PureEnvSet(e), new AlphaEnv(), tactic)) return ret;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
     public ASTType puretypecheck(PureEnvSet pe, ASTType target) throws TypeCheckError {
+        ASTNode left, right;
+        ASTType ret, termtype;
         if (target == null) {
-            if (term == null) throw new TypeCheckError(ErrorMessages.missingTermAnnotation());
-            return new ASTTEq(term, term, term.puretypecheck(pe, null));
+            if (term1 == null || term2 == null) throw new TypeCheckError(ErrorMessages.missingReflTerms());
+            termtype = term1.puretypecheck(pe, null);
+            term2.puretypecheck(pe, null);
+            left = term1; right = term2;
+            ret = new ASTTEq(left, right, termtype);
         }
-
-        if (!(target instanceof ASTTEq tt))
-            throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));
-        ASTNode left = tt.getTerm1(), right = tt.getTerm2();
+        else if (target instanceof ASTTEq tt) {
+            left = tt.getTerm1(); right = tt.getTerm2();
+            ret = target;
+        }
+        else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));
         
-        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), pe, new AlphaEnv(), tactic)) return target;
+        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), pe, new AlphaEnv(), tactic)) return ret;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
@@ -52,6 +64,6 @@ public class ASTRefl extends ASTNode  {
 
     @Override
     public String toString() {
-        return String.format("refl%s", term == null ? "" : "(" + term + ")");
+        return String.format("refl");
     }
 }

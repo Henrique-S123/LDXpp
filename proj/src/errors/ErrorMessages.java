@@ -49,8 +49,8 @@ public final class ErrorMessages {
         return String.format("Terms %s and %s have different types: %s and %s", n1, n2, t1, t2);
     }
 
-    public static String missingTermAnnotation() {
-        return "refl expects a term annotation";
+    public static String missingReflTerms() {
+        return "refl expects two terms";
     }
 
     public static String contextNotInconsistent() {
