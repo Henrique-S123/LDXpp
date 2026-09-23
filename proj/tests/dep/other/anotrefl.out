@@ -1,3 +1,6 @@
 type: a = b : int, value: refl
 
 
+class proj.src.errors.TypeCheckError: refl expects two terms
+
+

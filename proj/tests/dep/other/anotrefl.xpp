@@ -1,3 +1,7 @@
 let a = 1;
 let b = 1;
 let e = refl(a = b); e;;
+
+let a = 1;
+let b = 1;
+let e = refl; e;;
