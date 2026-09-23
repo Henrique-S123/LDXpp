@@ -7,7 +7,7 @@ letrec concat:LLIST-o>LLIST-o>LLIST =
             $nil(m) -> m; b
             |
             $cons(m) ->
-                split (val | rest) = m;
+                let (val | rest) = m;
                 $cons((val | concat(rest)(b)))
         }
     };
@@ -17,8 +17,8 @@ letrec rightId:(l:LLIST)-o>(cl:LLIST | (concat(cl)($nil(())) = cl : LLIST)) =
             $nil(m) -> m; ($nil(m) | refl)
             |
             $cons(m) ->
-                split (val | rest) = m;
-                split (rl | eqrl) = rightId(rest);
+                let (val | rest) = m;
+                let (rl | eqrl) = rightId(rest);
                 leteq e = eqrl;
                 let nl = $cons((val | rl));
                 (nl | refl)
@@ -35,7 +35,7 @@ letrec concat:LLIST-o>LLIST-o>LLIST =
             $nil(m) -> m; b
             |
             $cons(m) ->
-                split (val | rest) = m;
+                let (val | rest) = m;
                 $cons((val | concat(rest)(b)))
         }
     };
@@ -45,8 +45,8 @@ letrec rightId:(l:LLIST)-o>(cl:LLIST | (concat(cl)($nil(())) = cl : LLIST)) =
             $nil(m) -> m; ($nil(m) | refl)
             |
             $cons(m) ->
-                split (val | rest) = m;
-                split (rl | eqrl) = rightId(rest);
+                let (val | rest) = m;
+                let (rl | eqrl) = rightId(rest);
                 leteq e = eqrl;
                 let nl = $cons((val | rl));
                 (nl | hyp)

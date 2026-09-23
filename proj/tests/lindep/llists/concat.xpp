@@ -8,7 +8,7 @@ letrec concat:LLIST-o>LLIST-o>LLIST =
             $nil(m) -> m; b
             |
             $cons(m) ->
-                split (val | rest) = m;
+                let (val | rest) = m;
                 $cons((val | concat(rest)(b)))
         }
     };
@@ -35,7 +35,7 @@ letrec sizel:LLIST-o>NatL =
             $nil(m) -> m; $zero(())
             |
             $cons(n) ->
-                split (val | rest) = n;
+                let (val | rest) = n;
                 $succ(sizel(rest))
         }
     };
@@ -45,13 +45,13 @@ letrec concat:(a:LLIST)-o>(b:LLIST)-o>(r:LLIST | (sizel(r) = ladd(sizel(a))(size
             $nil(m) -> m; (b | refl)
             |
             $cons(m) ->
-                split (val | rest) = m;
-                split (rl | eqrl) = concat(rest)(b);
+                let (val | rest) = m;
+                let (rl | eqrl) = concat(rest)(b);
                 let nl = $cons((val | rl));
                 (nl | refl)
         }
     };
-split (res | eq) = concat(l2)(l1);
+let (res | eq) = concat(l2)(l1);
 sizel(res);;
 
 
@@ -75,7 +75,7 @@ letrec sizel:LLIST-o>NatL =
             $nil(m) -> m; $zero(())
             |
             $cons(n) ->
-                split (val | rest) = n;
+                let (val | rest) = n;
                 $succ(sizel(rest))
         }
     };
@@ -85,11 +85,11 @@ letrec concat:(a:LLIST)-o>(b:LLIST)-o>(r:LLIST | (sizel(r) = ladd(sizel(a))(size
             $nil(m) -> m; (b | refl)
             |
             $cons(m) ->
-                split (val | rest) = m;
-                split (rl | eqrl) = concat(rest)(b);
+                let (val | rest) = m;
+                let (rl | eqrl) = concat(rest)(b);
                 let nl = $cons((val | rl));
                 (nl | hyp)
         }
     };
-split (res | eq) = concat(l2)(l1);
+let (res | eq) = concat(l2)(l1);
 sizel(res);;
