@@ -121,10 +121,9 @@ public final class DefEq {
         if (type == null) return false;
 
         if (type instanceof ASTTUnit && other instanceof ASTUnit) return true;
-        else if (type instanceof ASTTPair tp && other instanceof ASTPair np && !tp.isLinear() && !np.isLinear()) {
-            ASTNode expansion = new ASTPair(new ASTProj(id, true), new ASTProj(id, false), false);
-            return termdefeq(expansion, other, pe, alpha, t);
-        }
+        else if (type instanceof ASTTPair tp && other instanceof ASTPair np && !tp.isLinear() && !np.isLinear())
+            return termdefeq(new ASTProj(id, true), np.getFirst(), pe, alpha, t)
+                && termdefeq(new ASTProj(id, false), np.getSecond(), pe, alpha, t);
 
         return false;
     }
