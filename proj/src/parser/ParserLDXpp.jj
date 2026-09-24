@@ -37,8 +37,6 @@ TOKEN :
   |
   < LCUR : "{" > | < RCUR : "}" >
   |
-  < 
-  |
   < REFL: "refl" > | < HYP: "hyp" >
   |
   < LETEQ: "leteq" > | < NEVER: "never" >

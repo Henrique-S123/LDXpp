@@ -120,12 +120,11 @@ public final class DefEq {
         type = pe.getSigma().find(id.getId());
         if (type == null) return false;
 
-        if (type instanceof ASTTPair tp && other instanceof ASTPair np && !tp.isLinear() && !np.isLinear()) {
+        if (type instanceof ASTTUnit && other instanceof ASTUnit) return true;
+        else if (type instanceof ASTTPair tp && other instanceof ASTPair np && !tp.isLinear() && !np.isLinear()) {
             ASTNode expansion = new ASTPair(new ASTProj(id, true), new ASTProj(id, false), false);
             return termdefeq(expansion, other, pe, alpha, t);
         }
-        else if (type instanceof ASTTUnit && other instanceof ASTUnit)
-            return true;
 
         return false;
     }

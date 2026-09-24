@@ -536,13 +536,13 @@ public class Parser implements ParserConstants {
     case IF:
       jj_consume_token(IF);
       t = BA();
-      jj_consume_token(LBRA);
+      jj_consume_token(LCUR);
       t2 = Let();
-      jj_consume_token(RBRA);
+      jj_consume_token(RCUR);
       jj_consume_token(ELSE);
-      jj_consume_token(LBRA);
+      jj_consume_token(LCUR);
       t3 = Let();
-      jj_consume_token(RBRA);
+      jj_consume_token(RCUR);
                                                                          t = new ASTIf(t, t2, t3);
       break;
     case FN:
@@ -672,9 +672,9 @@ public class Parser implements ParserConstants {
                                                     tn = new ASTFunc(n.image, null, type, false); tc.setBody(tn); tc = tn;
       }
       jj_consume_token(ARROW);
-      jj_consume_token(LBRA);
+      jj_consume_token(LCUR);
       t2 = Let();
-      jj_consume_token(RBRA);
+      jj_consume_token(RCUR);
                                                tc.setBody(t2); t = tf;
       break;
     case LFN:
@@ -700,9 +700,9 @@ public class Parser implements ParserConstants {
                                                     tn = new ASTFunc(n.image, null, type, true); tc.setBody(tn); tc = tn;
       }
       jj_consume_token(DLOLLIPOP);
-      jj_consume_token(LBRA);
+      jj_consume_token(LCUR);
       t2 = Let();
-      jj_consume_token(RBRA);
+      jj_consume_token(RCUR);
                                                    tc.setBody(t2); t = tf;
       break;
     default:
@@ -785,7 +785,7 @@ public class Parser implements ParserConstants {
   ASTMatch t = new ASTMatch(p);
   ASTNode e1, e2;
   Set<String> labels = new HashSet<String>();
-    jj_consume_token(LBRA);
+    jj_consume_token(LCUR);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LABEL:
       l = jj_consume_token(LABEL);
@@ -835,7 +835,7 @@ public class Parser implements ParserConstants {
         if (labels.contains(l.image)) {if (true) throw new ParseException("duplicate label");}
         else t.addCase(l.image, n.image, e1);
     }
-    jj_consume_token(RBRA);
+    jj_consume_token(RCUR);
     {if (true) return t;}
     throw new Error("Missing return statement in function");
   }
@@ -976,16 +976,16 @@ public class Parser implements ParserConstants {
       break;
     case TUNION:
       jj_consume_token(TUNION);
-      jj_consume_token(LBRA);
+      jj_consume_token(LCUR);
       ll = LabelList();
-      jj_consume_token(RBRA);
+      jj_consume_token(RCUR);
                                                     t = new ASTTUnion(ll, false);
       break;
     case TLUNION:
       jj_consume_token(TLUNION);
-      jj_consume_token(LBRA);
+      jj_consume_token(LCUR);
       ll = LabelList();
-      jj_consume_token(RBRA);
+      jj_consume_token(RCUR);
                                                      t = new ASTTUnion(ll, true);
       break;
     case LPAR:
@@ -1215,9 +1215,9 @@ public class Parser implements ParserConstants {
 
   private boolean jj_3R_61() {
     if (jj_scan_token(TLUNION)) return true;
-    if (jj_scan_token(LBRA)) return true;
+    if (jj_scan_token(LCUR)) return true;
     if (jj_3R_68()) return true;
-    if (jj_scan_token(RBRA)) return true;
+    if (jj_scan_token(RCUR)) return true;
     return false;
   }
 
@@ -1233,9 +1233,9 @@ public class Parser implements ParserConstants {
 
   private boolean jj_3R_60() {
     if (jj_scan_token(TUNION)) return true;
-    if (jj_scan_token(LBRA)) return true;
+    if (jj_scan_token(LCUR)) return true;
     if (jj_3R_68()) return true;
-    if (jj_scan_token(RBRA)) return true;
+    if (jj_scan_token(RCUR)) return true;
     return false;
   }
 
@@ -1526,9 +1526,9 @@ public class Parser implements ParserConstants {
     if (jj_scan_token(VERT)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(62)) {
+    if (jj_scan_token(61)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(63)) return true;
+    if (jj_scan_token(62)) return true;
     }
     if (jj_scan_token(LPAR)) return true;
     if (jj_scan_token(Id)) return true;
@@ -1545,12 +1545,12 @@ public class Parser implements ParserConstants {
   }
 
   private boolean jj_3R_93() {
-    if (jj_scan_token(LBRA)) return true;
+    if (jj_scan_token(LCUR)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(62)) {
+    if (jj_scan_token(61)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(63)) return true;
+    if (jj_scan_token(62)) return true;
     }
     if (jj_scan_token(LPAR)) return true;
     if (jj_scan_token(Id)) return true;
@@ -1561,7 +1561,7 @@ public class Parser implements ParserConstants {
       xsp = jj_scanpos;
       if (jj_3R_96()) { jj_scanpos = xsp; break; }
     }
-    if (jj_scan_token(RBRA)) return true;
+    if (jj_scan_token(RCUR)) return true;
     return false;
   }
 
@@ -1644,9 +1644,9 @@ public class Parser implements ParserConstants {
       if (jj_3R_99()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(DLOLLIPOP)) return true;
-    if (jj_scan_token(LBRA)) return true;
+    if (jj_scan_token(LCUR)) return true;
     if (jj_3R_15()) return true;
-    if (jj_scan_token(RBRA)) return true;
+    if (jj_scan_token(RCUR)) return true;
     return false;
   }
 
@@ -1661,9 +1661,9 @@ public class Parser implements ParserConstants {
       if (jj_3R_98()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(ARROW)) return true;
-    if (jj_scan_token(LBRA)) return true;
+    if (jj_scan_token(LCUR)) return true;
     if (jj_3R_15()) return true;
-    if (jj_scan_token(RBRA)) return true;
+    if (jj_scan_token(RCUR)) return true;
     return false;
   }
 
@@ -1690,7 +1690,7 @@ public class Parser implements ParserConstants {
     if (jj_scan_token(HYP)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(65)) jj_scanpos = xsp;
+    if (jj_scan_token(64)) jj_scanpos = xsp;
     return false;
   }
 
@@ -1764,13 +1764,13 @@ public class Parser implements ParserConstants {
   private boolean jj_3R_25() {
     if (jj_scan_token(IF)) return true;
     if (jj_3R_50()) return true;
-    if (jj_scan_token(LBRA)) return true;
+    if (jj_scan_token(LCUR)) return true;
     if (jj_3R_15()) return true;
-    if (jj_scan_token(RBRA)) return true;
+    if (jj_scan_token(RCUR)) return true;
     if (jj_scan_token(ELSE)) return true;
-    if (jj_scan_token(LBRA)) return true;
+    if (jj_scan_token(LCUR)) return true;
     if (jj_3R_15()) return true;
-    if (jj_scan_token(RBRA)) return true;
+    if (jj_scan_token(RCUR)) return true;
     return false;
   }
 
@@ -1821,9 +1821,9 @@ public class Parser implements ParserConstants {
     if (jj_scan_token(COMMA)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(62)) {
+    if (jj_scan_token(61)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(63)) return true;
+    if (jj_scan_token(62)) return true;
     }
     if (jj_scan_token(COLON)) return true;
     if (jj_3R_14()) return true;
@@ -1910,9 +1910,9 @@ public class Parser implements ParserConstants {
   private boolean jj_3R_73() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(62)) {
+    if (jj_scan_token(61)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(63)) return true;
+    if (jj_scan_token(62)) return true;
     }
     if (jj_scan_token(COLON)) return true;
     if (jj_3R_14()) return true;
@@ -2163,10 +2163,10 @@ public class Parser implements ParserConstants {
       jj_la1_0 = new int[] {0x396005c1,0x396005c1,0x396005c0,0x0,0x400000,0x0,0x100000,0x80000,0x7e000,0x7e000,0x600,0x600,0x1800,0x1800,0x1400000,0x1400000,0x0,0x0,0x0,0x19600580,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x796005c0,0x1400000,0x0,0x0,0x1400000,0x1400000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0xc05c3e84,0xc05c3e80,0xc05c3e80,0x4,0x0,0x8,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x600,0xc0000,0x0,0xc01c1e80,0x20,0x20,0x1800,0x21,0x21,0x20,0x1,0xc0000000,0x1,0xc0000000,0xc05c3e80,0x3f800000,0x30000,0x30000,0x3f800000,0x3f800000,0x21,0x21,0x20,0x1,0xc0000000,0x20,0xc0000000,0xc0000000,};
+      jj_la1_1 = new int[] {0xe03c3e84,0xe03c3e80,0xe03c3e80,0x4,0x0,0x8,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x600,0xc0000,0x0,0xe01c1e80,0x20,0x20,0x1800,0x21,0x21,0x20,0x1,0x60000000,0x1,0x60000000,0xe03c3e80,0x1fc00000,0x30000,0x30000,0x1fc00000,0x1fc00000,0x21,0x21,0x20,0x1,0x60000000,0x20,0x60000000,0x60000000,};
    }
    private static void jj_la1_init_2() {
-      jj_la1_2 = new int[] {0xf,0xf,0xf,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0xf,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xf,0x2,0x0,0x0,0x2,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_2 = new int[] {0x7,0x7,0x7,0x0,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1,0x7,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7,0x1,0x0,0x0,0x1,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[5];
   private boolean jj_rescan = false;
@@ -2355,7 +2355,7 @@ public class Parser implements ParserConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[68];
+    boolean[] la1tokens = new boolean[67];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -2375,7 +2375,7 @@ public class Parser implements ParserConstants {
         }
       }
     }
-    for (int i = 0; i < 68; i++) {
+    for (int i = 0; i < 67; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
