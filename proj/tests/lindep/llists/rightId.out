@@ -1,6 +1,3 @@
 type: [cl:LLIST, concat(cl)($nil(())) = cl : LLIST], value: [$cons([7l, $nil(())]), refl]
 
 
-type: [cl:LLIST, concat(cl)($nil(())) = cl : LLIST], value: [$cons([7l, $nil(())]), refl]
-
-
