@@ -1,0 +1,25 @@
+type NatL = linunion {$zero:(), $succ:NatL};
+let nl1 = $succ($zero(()));
+let nl2 = $succ($succ($zero(())));
+letrec NatL2Int:NatL->int =
+    fn n:NatL => {
+        match n {
+            $zero(m) -> m; 0
+            |
+            $succ(m) -> 1 + NatL2Int(m)
+        }
+    };
+NatL2Int(nl2) + NatL2Int(nl1);;
+
+type NatL = linunion {$zero:(), $succ:NatL};
+let nl1 = $succ($zero(()));
+let nl2 = $succ($succ($zero(())));
+letrec NatL2Int:NatL->int =
+    fn n:NatL => {
+        match n {
+            $zero(m) -> m; 0
+            |
+            $succ(m) -> 1 + NatL2Int(m)
+        }
+    };
+NatL2Int(nl2) + NatL2Int(nl2);;

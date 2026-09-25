@@ -1,0 +1,6 @@
+type: int, value: 3
+
+
+class proj.src.errors.TypeCheckError: Linear value of 'nl2' has already been consumed and cannot be used again
+
+

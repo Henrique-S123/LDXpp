@@ -1,0 +1,3 @@
+type: [b:LLIST, [c:LLIST, concat(b)(c) = l2 : LLIST]], value: [$cons([$succ($succ($zero(()))), $nil(())]), [$cons([$succ($zero(())), $nil(())]), refl]]
+
+

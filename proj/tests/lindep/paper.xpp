@@ -1,0 +1,68 @@
+type NatL = linunion {$zero:(), $succ:NatL};
+letrec ladd:NatL-o>NatL-o>NatL =
+    lfn a:NatL, b:NatL =o> {
+        match a {
+            $zero(m) -> m; b
+            |
+            $succ(m) -> $succ(ladd(m)(b))
+        }
+    };
+letrec NatL2Int:NatL->int =
+    fn n:NatL => {
+        match n {
+            $zero(m) -> m; 0
+            |
+            $succ(m) -> 1 + NatL2Int(m)
+        }
+    };
+type NODE = [NatL, LLIST];
+type LLIST = linunion { $nil: (), $cons: NODE };
+letrec concat:LLIST-o>LLIST-o>LLIST =
+    lfn a:LLIST, b:LLIST =o> {
+        match a {
+            $nil(m) -> m; b
+            |
+            $cons(m) ->
+                let [val, rest] = m;
+                $cons([val, concat(rest)(b)])
+        }
+    };
+letrec sizecopy:(l:LLIST)-o>[NatL, cl:LLIST, (l = cl : LLIST)] =
+    lfn l:LLIST =o> {
+        match l {
+            $nil(m) -> [$zero(()), $nil(m), refl]
+            |
+            $cons(m) ->
+                let [val, rest] = m;
+                let [sn, rest] = sizecopy(rest);
+                let [rl, eqrl] = rest;
+                leteq e = eqrl;
+                let nl = $cons([val, rl]);
+                [$succ(sn), nl, refl]
+        }
+    };
+type Nat = union { #zero: (), #succ: Nat };
+letrec split:(n:Nat)-o>(a:LLIST)-o>[b:LLIST, c:LLIST, (concat(b)(c) = a : LLIST)] =
+    lfn n:Nat, a:LLIST =o> {
+        match n {
+            #zero(z) -> z; [$nil(()), a, refl]
+            |
+            #succ(ns) ->
+                match a {
+                    $nil(elt) -> elt; [$nil(()), $nil(()), refl]
+                    |
+                    $cons(elt) ->
+                        let [val, rest] = elt;
+                        let [rb, rest] = split(ns)(rest);
+                        let [rc, eihl] = rest;
+                        leteq eih = eihl;
+                        let nrb = $cons([val, rb]);
+                        [nrb, rc, refl]
+                }
+        }
+    };
+let nl1 = $succ($zero(()));
+let nl2 = $succ($succ($zero(())));
+let l2:LLIST = $cons([nl2, $cons([nl1, $nil(())])]);
+let n1:Nat = #succ(#zero(()));
+split(n1)(l2);;
