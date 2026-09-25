@@ -1,21 +1,21 @@
-let p:(x:linbool | (x=truel:linbool)) = (truel | refl); p;;
+let p:[x:linbool, (x=truel:linbool)] = [truel, refl]; p;;
 
-let p:(x:linbool | (x=truel:linbool)) = (truel | refl); let (x|y) = p; x;;
+let p:[x:linbool, (x=truel:linbool)] = [truel, refl]; let (x|y) = p; x;;
 
-let p:(x:linbool | (x=truel:linbool)) = (truel | refl); let (x|y) = p; y;;
+let p:[x:linbool, (x=truel:linbool)] = [truel, refl]; let (x|y) = p; y;;
 
-let p:(x:linint | (x=2l:linint)) = (2l | refl); p;;
+let p:[x:linint, (x=2l:linint)] = [2l, refl]; p;;
 
-let p:(x:linint | (x=2l:linint)) = (3l | refl); p;;
+let p:[x:linint, (x=2l:linint)] = [3l, refl]; p;;
 
-let p:(x:linint | y:linint | (x=y:linint)) = (2l | 2l | refl); p;;
+let p:[x:linint, y:linint, (x=y:linint)] = [2l, 2l, refl]; p;;
 
-let p:(x:linint | y:linint | (x=y:linint)) = (2l | 3l | refl); p;;
+let p:[x:linint, y:linint, (x=y:linint)] = [2l, 3l, refl]; p;;
 
-let p:(x:linint | y:linint | z:linint | (x=y:linint) | (y=z:linint)) = (2l | 2l | 2l | refl | refl); p;;
+let p:[x:linint, y:linint, z:linint, (x=y:linint), (y=z:linint)] = [2l, 2l, 2l, refl, refl]; p;;
 
-let p:(x:linint | y:linint | z:linint | (x=y:linint) | (y=z:linint)) = (2l | 2l | 3l | refl | refl); p;;
+let p:[x:linint, y:linint, z:linint, (x=y:linint), (y=z:linint)] = [2l, 2l, 3l, refl, refl]; p;;
 
-let p:(x:linint | y:linint | z:linint | (x=y:linint) | (y=z:linint)) = (2l | 3l | 2l | refl | refl); p;;
+let p:[x:linint, y:linint, z:linint, (x=y:linint), (y=z:linint)] = [2l, 3l, 2l, refl, refl]; p;;
 
-let p:(x:linint | y:linint | z:linint | (x=y:linint) | (y=z:linint)) = (3l | 2l | 2l | refl | refl); p;;
+let p:[x:linint, y:linint, z:linint, (x=y:linint), (y=z:linint)] = [3l, 2l, 2l, refl, refl]; p;;

@@ -91,6 +91,6 @@ public class ASTPair extends ASTNode {
 
     @Override
     public String toString() {
-        return String.format("(%s%s %s)", first, (lin) ? " |" : ",", second);
+        return String.format("%s%s, %s%s", lin ? "[" : "(", first, second, lin ? "]" : ")");
     }
 }

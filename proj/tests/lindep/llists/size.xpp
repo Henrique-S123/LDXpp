@@ -1,53 +1,53 @@
 type NatL = linunion {$zero:(), $succ:NatL};
-type NODE = (linint | LLIST);
+type NODE = [linint, LLIST];
 type LLIST = linunion { $nil: (), $cons: NODE };
 let l0:LLIST = $nil (());
-let l1:LLIST = $cons ((4l | l0));
-let l2:LLIST = $cons ((7l | l1));
-letrec sizecount:LLIST-o>(linint | NatL) =
+let l1:LLIST = $cons ([4l, l0]);
+let l2:LLIST = $cons ([7l, l1]);
+letrec sizecount:LLIST-o>[linint, NatL] =
     lfn l:LLIST =o> {
         match l {
-            $nil(m) -> (0l | $zero(m))
+            $nil(m) -> [0l, $zero(m)]
             |
             $cons(m) ->
                 let (val | rest) = m;
                 let (rc | rs) = sizecount(rest);
-                (val + rc | $succ(rs))
+                [val + rc, $succ(rs)]
         }
     };
 sizecount(l2);;
 
 type NatL = linunion {$zero:(), $succ:NatL};
-type NODE = (linint | LLIST);
+type NODE = [linint, LLIST];
 type LLIST = linunion { $nil: (), $cons: NODE };
 let l0:LLIST = $nil (());
-let l1:LLIST = $cons ((4l | l0));
-letrec sizecount:LLIST-o>(linint | NatL) =
+let l1:LLIST = $cons ([4l, l0]);
+letrec sizecount:LLIST-o>[linint, NatL] =
     lfn l:LLIST =o> {
         match l {
-            $nil(m) -> (0l | $zero(m))
+            $nil(m) -> [0l, $zero(m)]
             |
             $cons(m) ->
                 let (val | rest) = m;
                 let (rc | rs) = sizecount(rest);
-                (val + rc | $succ(rs))
+                [val + rc, $succ(rs)]
         }
     };
 sizecount(l1);;
 
 type NatL = linunion {$zero:(), $succ:NatL};
-type NODE = (linint | LLIST);
+type NODE = [linint, LLIST];
 type LLIST = linunion { $nil: (), $cons: NODE };
 let l0:LLIST = $nil (());
-letrec sizecount:LLIST-o>(linint | NatL) =
+letrec sizecount:LLIST-o>[linint, NatL] =
     lfn l:LLIST =o> {
         match l {
-            $nil(m) -> (0l | $zero(m))
+            $nil(m) -> [0l, $zero(m)]
             |
             $cons(m) ->
                 let (val | rest) = m;
                 let (rc | rs) = sizecount(rest);
-                (val + rc | $succ(rs))
+                [val + rc, $succ(rs)]
         }
     };
 sizecount(l0);;
@@ -55,23 +55,23 @@ sizecount(l0);;
 
 
 type NatL = linunion {$zero:(), $succ:NatL};
-type NODE = (linint | LLIST);
+type NODE = [linint, LLIST];
 type LLIST = linunion { $nil: (), $cons: NODE };
 let l0:LLIST = $nil (());
-let l1:LLIST = $cons ((4l | l0));
-let l2:LLIST = $cons ((7l | l1));
-letrec sizecopy:(l:LLIST)-o>(NatL | cl:LLIST | (l = cl : LLIST)) =
+let l1:LLIST = $cons ([4l, l0]);
+let l2:LLIST = $cons ([7l, l1]);
+letrec sizecopy:(l:LLIST)-o>[NatL, cl:LLIST, (l = cl : LLIST)] =
     lfn l:LLIST =o> {
         match l {
-            $nil(m) -> ($zero(()) | $nil(m) | refl)
+            $nil(m) -> [$zero(()), $nil(m), refl]
             |
             $cons(m) ->
                 let (val | rest) = m;
                 let (sn | rest) = sizecopy(rest);
                 let (rl | eqrl) = rest;
                 leteq e = eqrl;
-                let nl = $cons((val | rl));
-                ($succ(sn) | nl | refl)
+                let nl = $cons([val, rl]);
+                [$succ(sn), nl, refl]
         }
     };
 sizecopy(l2);;
@@ -79,11 +79,11 @@ sizecopy(l2);;
 
 
 type NatL = linunion {$zero:(), $succ:NatL};
-type NODE = (int | LLIST);
+type NODE = [int, LLIST];
 type LLIST = linunion { $nil: (), $cons: NODE };
 let l0:LLIST = $nil (());
-let l1:LLIST = $cons ((4 | l0));
-let l2:LLIST = $cons ((7 | l1));
+let l1:LLIST = $cons ([4, l0]);
+let l2:LLIST = $cons ([7, l1]);
 letrec sizel:LLIST-o>NatL =
     lfn l:LLIST =o> {
         match l {
@@ -99,10 +99,10 @@ sizel(l2);;
 
 
 type NatL = linunion {$zero:(), $succ:NatL};
-type NODE = (int | LLIST);
+type NODE = [int, LLIST];
 type LLIST = linunion { $nil: (), $cons: NODE };
-let l1:LLIST = $cons ((4 | $nil (())));
-let l2:LLIST = $cons ((7 | $cons ((4 | $nil (())))));
+let l1:LLIST = $cons ([4, $nil (())]);
+let l2:LLIST = $cons ([7, $cons ([4, $nil (())])]);
 letrec sizel:LLIST-o>NatL =
     lfn l:LLIST =o> {
         match l {
@@ -120,7 +120,7 @@ letrec concat:LLIST-o>LLIST-o>LLIST =
             |
             $cons(m) ->
                 let (val | rest) = m;
-                $cons((val | concat(rest)(b)))
+                $cons([val, concat(rest)(b)])
         }
     };
 sizel(concat(l2)(l1));;

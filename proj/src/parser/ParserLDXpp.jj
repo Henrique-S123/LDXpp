@@ -37,6 +37,8 @@ TOKEN :
   |
   < LCUR : "{" > | < RCUR : "}" >
   |
+  < LBRA : "[" > | < RBRA : "]" >
+  |
   < REFL: "refl" > | < HYP: "hyp" >
   |
   < LETEQ: "leteq" > | < NEVER: "never" >
@@ -251,7 +253,8 @@ ASTNode Fact() :
     | <MATCH> t2 = Let() t = Match(t2)
     |  n = <LABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t, false); }
     |  n = <LLABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t, true); }
-    | <LPAR> t = TermList() <RPAR>
+    | <LPAR> t = TermList(false) <RPAR>
+    | <LBRA> t = Let() <COMMA> t2 = TermList(true) <RBRA> { t = new ASTPair(t, t2, true); }
     | <REFL> (LOOKAHEAD(2) <LPAR> t = Fact() <EQUAL> t2 = Fact() <RPAR>)? { t = new ASTRefl(t, t2, new TRefl()); }
     | <HYP> (n=<Id>)? { t = new ASTRefl(null, null, new THyp(n == null ? null : n.image)); }
     )
@@ -277,25 +280,11 @@ ASTNode Funct() :
   { return t; }
 }
 
-ASTNode TermList() :
-{ ASTNode t, t2;
-  Token n; }
+ASTNode TermList(boolean lin) :
+{ ASTNode t, t2; }
 {
-  t = Let() (<COMMA> t2 = TermCommaList() { t = new ASTPair(t, t2, false); }
-            | <VERT> t2 = TermVertList() { t = new ASTPair(t, t2, true); })?
+  t = Let() (<COMMA> t2 = TermList(lin) { t = new ASTPair(t, t2, lin); })?
   { return t; }
-}
-
-ASTNode TermCommaList() :
-{ ASTNode t, t2; }
-{
-  t = Let() (<COMMA> t2 = TermCommaList() { t = new ASTPair(t, t2, false); })? { return t; }
-}
-
-ASTNode TermVertList() :
-{ ASTNode t, t2; }
-{
-  t = Let() (<VERT> t2 = TermVertList() { t = new ASTPair(t, t2, true); })? { return t; }
 }
 
 ASTNode Match(ASTNode p) :
@@ -368,43 +357,38 @@ ASTType TypeF() :
         | <TUNION> <LCUR> ll = LabelList() <RCUR> { t = new ASTTUnion(ll, false); }
         | <TLUNION> <LCUR> ll = LabelList() <RCUR> { t = new ASTTUnion(ll, true); }
         | <LPAR> t = TypeInsidePar() <RPAR>
+        | <LBRA> t = TypeInsideBra() <RBRA>
     )
     { return t; }
 }
 
-ASTType TypeInsidePar() :
+ASTType TypeInsidePar():
 { ASTType t, t2;
   ASTNode te, te2;
   Token n; }
 {
-  n = IdAnnotation()
-    (
-      LOOKAHEAD(Let() <EQUAL>)
-      te = Let() <EQUAL> te2 = Let() <COLON> t = Type() { t = new ASTTEq(te, te2, t); }
-    |
-      t = Type()
-    )
   (
-    <COMMA> t2 = PairType() { t = new ASTTPair(t, t2, n == null ? null : n.image, null, false); }
+    LOOKAHEAD(Let() <EQUAL>)
+    te = Let() <EQUAL> te2 = Let() <COLON> t = Type() { t = new ASTTEq(te, te2, t); }
     |
-    <VERT> t2 = TensorType() { t = new ASTTPair(t, t2, n == null ? null : n.image, null, true); }
-  )?
+    n = IdAnnotation() t = Type() <COMMA> t2 = TypeList(false) { t = new ASTTPair(t, t2, n == null ? null : n.image, null, false); }
+  )
   { return t; }
 }
 
-ASTType PairType() :
+ASTType TypeInsideBra():
 { ASTType t, t2;
   Token n; }
 {
-  n = IdAnnotation() t = Type() (<COMMA> t2 = PairType() { t = new ASTTPair(t, t2, n == null ? null : n.image, null, false); })?
+  n = IdAnnotation() t = Type() <COMMA> t2 = TypeList(true) { t = new ASTTPair(t, t2, n == null ? null : n.image, null, true); }
   { return t; }
 }
 
-ASTType TensorType() :
+ASTType TypeList(boolean lin):
 { ASTType t, t2;
   Token n; }
 {
-  n = IdAnnotation() t = Type() (<VERT> t2 = TensorType() { t = new ASTTPair(t, t2, n == null ? null : n.image, null, true); })?
+  n = IdAnnotation() t = Type() (<COMMA> t2 = TypeList(lin) { t = new ASTTPair(t, t2, n == null ? null : n.image, null, lin); })?
   { return t; }
 }
 

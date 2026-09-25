@@ -49,12 +49,12 @@ class proj.src.errors.TypeCheckError: Linear value of 'f2' has already been cons
 type: linint, value: 2l
 
 
-type: (linint | linint), value: (6l | 8l)
+type: [linint, linint], value: [6l, 8l]
 
 
 class proj.src.errors.TypeCheckError: There are unused linear values: [s2]
 
 
-type: (linint | linint), value: (2l | 1l)
+type: [linint, linint], value: [2l, 1l]
 
 

@@ -1,4 +1,4 @@
-type: (x:linbool | x = truel : linbool), value: (truel, refl)
+type: [x:linbool, x = truel : linbool], value: (truel, refl)
 
 
 class proj.src.errors.TypeCheckError: Terms true and truel are not definitionally equal

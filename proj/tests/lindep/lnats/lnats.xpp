@@ -37,7 +37,7 @@ letrec ladd:NatL-o>NatL-o>NatL =
             $succ(m) -> $succ(ladd(m)(b))
         }
     };
-let p:(z:NatL | sum:NatL | (z=sum:NatL)) = (nl3 | ladd(nl2)(nl1) | refl); p;;
+let p:[z:NatL, sum:NatL, (z=sum:NatL)] = [nl3, ladd(nl2)(nl1), refl]; p;;
 
 type NatL = linunion {$zero:(), $succ:NatL};
 let nl1 = $succ($zero(()));
@@ -51,7 +51,7 @@ letrec ladd:NatL-o>NatL-o>NatL =
             $succ(m) -> $succ(ladd(m)(b))
         }
     };
-let p:(z:NatL | sum:NatL | (z=sum:NatL)) = (nl2 | ladd(nl3)(nl1) | refl); p;;
+let p:[z:NatL, sum:NatL, (z=sum:NatL)] = [nl2, ladd(nl3)(nl1), refl]; p;;
 
 type NatL = linunion {$zero:(), $succ:NatL};
 let nl1 = $succ($zero(()));
@@ -65,4 +65,4 @@ letrec ladd:NatL-o>NatL-o>NatL =
             $succ(m) -> $succ(ladd(m)(b))
         }
     };
-let p:(z:NatL | sum:NatL | (z=sum:NatL)) = (nl2 | ladd(nl1)(nl1x2) | refl); p;;
+let p:[z:NatL, sum:NatL, (z=sum:NatL)] = [nl2, ladd(nl1)(nl1x2), refl]; p;;

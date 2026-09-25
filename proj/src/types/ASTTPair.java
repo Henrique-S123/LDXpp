@@ -23,7 +23,7 @@ public class ASTTPair extends ASTType {
     public String getBid() { return bid; }
 
     public String toString() {
-        return String.format("(%s%s%s %s)", id != null ? id+":" : "", first, lin ? " |" : ",", second);
+        return String.format("%s%s%s, %s%s", lin ? "[" : "(", id != null ? id+":" : "", first, second, lin ? "]" : ")");
     }
 
     public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
