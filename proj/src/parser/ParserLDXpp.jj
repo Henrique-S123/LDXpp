@@ -158,7 +158,7 @@ ASTNode LetStatement() :
   (
     ( n=<Id> (<COLON> t1 = Type())? <EQUAL> e1 = BA() <SEMIC> e2 = Let() { t = new ASTLet(n.image, e1, t1, e2); } )
       |
-    ( <LPAR> n=<Id> <VERT> n2=<Id> <RPAR> <EQUAL> e1 = BA() <SEMIC> e2 = Let()
+    ( <LBRA> n=<Id> <COMMA> n2=<Id> <RBRA> <EQUAL> e1 = BA() <SEMIC> e2 = Let()
           { if (n.image.equals(n2.image)) throw new ParseException("duplicate id");
             t = new ASTSplit(e1, n.image, n2.image, e2); } )
   )

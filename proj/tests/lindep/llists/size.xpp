@@ -10,8 +10,8 @@ letrec sizecount:LLIST-o>[linint, NatL] =
             $nil(m) -> [0l, $zero(m)]
             |
             $cons(m) ->
-                let (val | rest) = m;
-                let (rc | rs) = sizecount(rest);
+                let [val, rest] = m;
+                let [rc, rs] = sizecount(rest);
                 [val + rc, $succ(rs)]
         }
     };
@@ -28,8 +28,8 @@ letrec sizecount:LLIST-o>[linint, NatL] =
             $nil(m) -> [0l, $zero(m)]
             |
             $cons(m) ->
-                let (val | rest) = m;
-                let (rc | rs) = sizecount(rest);
+                let [val, rest] = m;
+                let [rc, rs] = sizecount(rest);
                 [val + rc, $succ(rs)]
         }
     };
@@ -45,8 +45,8 @@ letrec sizecount:LLIST-o>[linint, NatL] =
             $nil(m) -> [0l, $zero(m)]
             |
             $cons(m) ->
-                let (val | rest) = m;
-                let (rc | rs) = sizecount(rest);
+                let [val, rest] = m;
+                let [rc, rs] = sizecount(rest);
                 [val + rc, $succ(rs)]
         }
     };
@@ -66,9 +66,9 @@ letrec sizecopy:(l:LLIST)-o>[NatL, cl:LLIST, (l = cl : LLIST)] =
             $nil(m) -> [$zero(()), $nil(m), refl]
             |
             $cons(m) ->
-                let (val | rest) = m;
-                let (sn | rest) = sizecopy(rest);
-                let (rl | eqrl) = rest;
+                let [val, rest] = m;
+                let [sn, rest] = sizecopy(rest);
+                let [rl, eqrl] = rest;
                 leteq e = eqrl;
                 let nl = $cons([val, rl]);
                 [$succ(sn), nl, refl]
@@ -90,7 +90,7 @@ letrec sizel:LLIST-o>NatL =
             $nil(m) -> m; $zero(())
             |
             $cons(n) ->
-                let (val | rest) = n;
+                let [val, rest] = n;
                 $succ(sizel(rest))
         }
     };
@@ -109,7 +109,7 @@ letrec sizel:LLIST-o>NatL =
             $nil(m) -> m; $zero(())
             |
             $cons(n) ->
-                let (val | rest) = n;
+                let [val, rest] = n;
                 $succ(sizel(rest))
         }
     };
@@ -119,7 +119,7 @@ letrec concat:LLIST-o>LLIST-o>LLIST =
             $nil(m) -> m; b
             |
             $cons(m) ->
-                let (val | rest) = m;
+                let [val, rest] = m;
                 $cons([val, concat(rest)(b)])
         }
     };

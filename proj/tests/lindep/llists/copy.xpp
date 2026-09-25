@@ -9,8 +9,8 @@ letrec copy:(l:LLIST)-o>[lr:LLIST, (l = lr : LLIST)] =
             $nil(n) -> [$nil(n), refl]
             |
             $cons(n) ->
-                let (val | rest) = n;
-                let (cr | eqcr) = copy(rest);
+                let [val, rest] = n;
+                let [cr, eqcr] = copy(rest);
                 leteq e = eqcr;
                 let nl = $cons([val, cr]);
                 [nl, refl]
