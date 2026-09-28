@@ -35,7 +35,7 @@ letrec concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)
                 (#cons((fst(n), fst(res))), refl)
         }
     };
-let p:(z:LIST, (size(z)=size(concat(l0)(l2)):Nat)) = (l2, refl); p;;
+let p:(z:LIST, (size(z)=size(fst(concat(l0)(l2))):Nat)) = (l2, refl); p;;
 
 
 

@@ -34,7 +34,7 @@ public class ASTRefl extends ASTNode  {
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));
 
-        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), new PureEnvSet(e), new AlphaEnv(), tactic)) return ret;
+        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), new PureEnvSet(e), new AlphaEnv(), true)) return ret;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
@@ -54,7 +54,7 @@ public class ASTRefl extends ASTNode  {
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));
         
-        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), pe, new AlphaEnv(), tactic)) return ret;
+        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), pe, new AlphaEnv(), true)) return ret;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
