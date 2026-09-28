@@ -4,6 +4,3 @@ type: LLIST, value: $cons([7l, $cons([4l, $nil(())])])
 type: NatL, value: $succ($succ($succ($zero(()))))
 
 
-type: NatL, value: $succ($succ($succ($zero(()))))
-
-

@@ -39,9 +39,7 @@ TOKEN :
   |
   < LBRA : "[" > | < RBRA : "]" >
   |
-  < REFL: "refl" > | < HYP: "hyp" >
-  |
-  < LETEQ: "leteq" > | < NEVER: "never" >
+  < REFL: "refl" > | < LETEQ: "leteq" > | < NEVER: "never" >
   |
   < EQUAL : "=" > | < VERT : "|" >
   |
@@ -255,8 +253,7 @@ ASTNode Fact() :
     |  n = <LLABEL> <LPAR> t = Let() <RPAR> { t = new ASTUnion(n.image, t, true); }
     | <LPAR> t = TermList(false) <RPAR>
     | <LBRA> t = Let() <COMMA> t2 = TermList(true) <RBRA> { t = new ASTPair(t, t2, true); }
-    | <REFL> (LOOKAHEAD(2) <LPAR> t = Fact() <EQUAL> t2 = Fact() <RPAR>)? { t = new ASTRefl(t, t2, new TRefl()); }
-    | <HYP> (n=<Id>)? { t = new ASTRefl(null, null, new THyp(n == null ? null : n.image)); }
+    | <REFL> (LOOKAHEAD(2) <LPAR> t = Fact() <EQUAL> t2 = Fact() <RPAR>)? { t = new ASTRefl(t, t2); }
     )
    { return t; }
 }

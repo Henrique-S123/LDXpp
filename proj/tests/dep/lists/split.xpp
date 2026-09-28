@@ -33,7 +33,7 @@ letrec concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)
                 let res = concat(snd(n))(lb);
                 leteq e1 = snd(res);
                 let newpair = (fst(n), fst(res));
-                (#cons(newpair), hyp)
+                (#cons(newpair), refl)
         }
     };
 letrec splitlist:(n:Nat)->(a:LIST)->(b:LIST, c:LIST, (fst(concat(b)(c)) = a : LIST)) =
@@ -51,7 +51,7 @@ letrec splitlist:(n:Nat)->(a:LIST)->(b:LIST, c:LIST, (fst(concat(b)(c)) = a : LI
                         let rb = fst(res); let rc = fst(snd(res)); let eihl = snd(snd(res));
                         leteq e = eihl;
                         let nrb = #cons((val, rb));
-                        (nrb, rc, hyp)
+                        (nrb, rc, refl)
                 }
         }
     };

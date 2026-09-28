@@ -8,10 +8,9 @@ import proj.src.errors.*;
 
 public class ASTRefl extends ASTNode  {
     private final ASTNode term1, term2;
-    private final Tactic tactic;
 
-    public ASTRefl(ASTNode t1, ASTNode t2, Tactic tac) {
-        term1 = t1; term2 = t2; tactic = tac;
+    public ASTRefl(ASTNode t1, ASTNode t2) {
+        term1 = t1; term2 = t2;
     }
 
     public IValue eval(Env<IValue> e) {

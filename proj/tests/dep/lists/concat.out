@@ -4,15 +4,6 @@ type: (z:LIST, size(z) = size(fst concat(l0)(l2)) : Nat), value: (#cons((#succ(#
 type: (z:LIST, size(z) = size(fst concat(l0)(l2)) : Nat), value: (#cons((#succ(#succ(#zero(()))), #cons((#succ(#zero(())), #nil(()))))), refl)
 
 
-type: (z:LIST, size(z) = size(fst concat(l0)(l2)) : Nat), value: (#cons((#succ(#succ(#zero(()))), #cons((#succ(#zero(())), #nil(()))))), refl)
-
-
-type: (z:LIST, size(z) = size(fst concat(l0)(l2)) : Nat), value: (#cons((#succ(#succ(#zero(()))), #cons((#succ(#zero(())), #nil(()))))), refl)
-
-
-type: (z:LIST, size(z) = size(fst concat(l0)(l2)) : Nat), value: (#cons((#succ(#succ(#zero(()))), #cons((#succ(#zero(())), #nil(()))))), refl)
-
-
 class proj.src.errors.TypeCheckError: Terms size(l1) and size(fst concat(l0)(l2)) are not definitionally equal
 
 

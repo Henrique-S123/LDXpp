@@ -32,7 +32,7 @@ letrec concat:(la:LIST)->(lb:LIST)->(ln:LIST, (size(ln) = add(size(la))(size(lb)
             #cons(n) ->
                 let res = concat(snd(n))(lb);
                 leteq e1 = snd(res);
-                (#cons((fst(n), fst(res))), hyp)
+                (#cons((fst(n), fst(res))), refl)
         }
     };
 letrec rightId:(l:LIST)->(fst(concat(l)(#nil(()))) = l : LIST) =
@@ -43,7 +43,7 @@ letrec rightId:(l:LIST)->(fst(concat(l)(#nil(()))) = l : LIST) =
             #cons(n) ->
                 let xs = snd(n);
                 leteq res = rightId(xs);
-                hyp
+                refl
         }
     };
 rightId(l2);;
