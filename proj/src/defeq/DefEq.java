@@ -171,7 +171,7 @@ public final class DefEq {
         if (solved == null) return false;
         solved = solved.weaknorm();
         if (term.structEq(solved)) return false;
-        Debug.log(String.format("Solved %s side", left ? "right" : "left"));
+        Debug.log(String.format("Solved %s side", left ? "left" : "right"));
         return termdefeq(solved, other, pe, alpha, t);
     }
 

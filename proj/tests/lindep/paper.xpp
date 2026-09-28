@@ -57,9 +57,9 @@ letrec split:(n:Nat)-o>(a:LLIST)-o>[b:LLIST, c:LLIST, (concat(b)(c) = a : LLIST)
                     $nil(elt) -> elt; [$nil(()), $nil(()), refl]
                     |
                     $cons(elt) ->
-                        let [val, rest] = elt;
-                        let [rb, rest] = split(ns)(rest);
-                        let [rc, eihl] = rest;
+                        let [val, tail] = elt;
+                        let [rb, restpar] = split(ns)(tail);
+                        let [rc, eihl] = restpar;
                         leteq eih = eihl;
                         let nrb = $cons([val, rb]);
                         [nrb, rc, refl]
