@@ -28,8 +28,8 @@ public class ASTTEq extends ASTType {
         if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
         Debug.off();
         boolean res = o instanceof ASTTEq eq && DefEq.typedefeq(type, eq.getType(), pe, alpha)
-            && DefEq.termdefeq(term1.weaknorm(), eq.getTerm1().weaknorm(), pe, alpha)
-            && DefEq.termdefeq(term2.weaknorm(), eq.getTerm2().weaknorm(), pe, alpha);
+            && DefEq.termdefeq(term1.weaknorm(), eq.getTerm1().weaknorm(), pe, alpha, true)
+            && DefEq.termdefeq(term2.weaknorm(), eq.getTerm2().weaknorm(), pe, alpha, true);
         Debug.on();
         return res;
     }

@@ -40,10 +40,10 @@ public class ASTNever extends ASTNode  {
         while (curr != null) {
             for (Binder<ASTType> b : curr.getBindings().values()) {
                 if (b.getVal() instanceof ASTTEq teq && teq.getTerm2() instanceof ASTUnion un
-                    && DefEq.termdefeq(test, teq.getTerm1(), pe, new AlphaEnv()))
+                    && DefEq.termdefeq(test, teq.getTerm1(), pe, new AlphaEnv(), true))
                         s.add(un);
                 else if (b.getVal() instanceof ASTTEq teq && teq.getTerm1() instanceof ASTUnion un
-                    && DefEq.termdefeq(test, teq.getTerm2(), pe, new AlphaEnv()))
+                    && DefEq.termdefeq(test, teq.getTerm2(), pe, new AlphaEnv(), true))
                         s.add(un);
             }
             curr = curr.endScope();

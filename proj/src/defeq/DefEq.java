@@ -8,10 +8,6 @@ import proj.src.debug.Debug;
 import java.util.*;
 
 public final class DefEq {
-    public static final boolean termdefeq(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha) {
-        return termdefeq(l, r, pe, alpha, false);
-    }
-
     public static final boolean termdefeq(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha, boolean hyp) {
         Debug.log(String.format("left: %s", l));
         Debug.log(String.format("right: %s", r));
@@ -152,8 +148,8 @@ public final class DefEq {
     }
 
     private static final boolean isProof(ASTTEq e, ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha) {
-        return ((termdefeq(l, e.getTerm1(), pe, alpha)) && termdefeq(r, e.getTerm2(), pe, alpha, false)) ||
-            ((termdefeq(l, e.getTerm2(), pe, alpha)) && termdefeq(r, e.getTerm1(), pe, alpha, false));
+        return ((termdefeq(l, e.getTerm1(), pe, alpha, false)) && termdefeq(r, e.getTerm2(), pe, alpha, false)) ||
+            ((termdefeq(l, e.getTerm2(), pe, alpha, false)) && termdefeq(r, e.getTerm1(), pe, alpha, false));
     }
 
     private static final boolean solveTerm(boolean left, ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha, boolean hyp) {
