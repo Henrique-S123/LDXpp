@@ -1,6 +1,9 @@
 package proj.src.types;
 
 import proj.src.env.*;
+import proj.src.defeq.IdPair;
+
+import java.util.Set;
 
 public class ASTTString extends ASTType {
     public ASTTString() {
@@ -11,8 +14,8 @@ public class ASTTString extends ASTType {
         return "string";
     }
 
-    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha, Set<IdPair> seen) {
+        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha, seen);
         return o instanceof ASTTString;
     }
 

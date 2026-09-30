@@ -6,6 +6,8 @@ import proj.src.env.*;
 import proj.src.errors.*;
 import proj.src.defeq.*;
 
+import java.util.Set;
+
 public class ASTTEq extends ASTType {
     private final ASTNode term1, term2;
     private final ASTType type;
@@ -24,8 +26,8 @@ public class ASTTEq extends ASTType {
         return String.format("%s = %s : %s", term1, term2, type);
     }
 
-    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha, Set<IdPair> seen) {
+        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha, seen);
         Debug.off();
         boolean res = o instanceof ASTTEq eq && DefEq.typedefeq(type, eq.getType(), pe, alpha)
             && DefEq.termdefeq(term1.weaknorm(), eq.getTerm1().weaknorm(), pe, alpha, true)

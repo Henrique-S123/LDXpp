@@ -3,9 +3,11 @@ package proj.src.types;
 import proj.src.ast.ASTNode;
 import proj.src.env.*;
 import proj.src.errors.*;
+import proj.src.defeq.IdPair;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ASTTUnion extends ASTType {
     private final Map<String, ASTType> ll;
@@ -16,11 +18,11 @@ public class ASTTUnion extends ASTType {
 
     public Map<String, ASTType> getMap() { return ll; }
 
-    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha, Set<IdPair> seen) {
+        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha, seen);
         if (o instanceof ASTTUnion ot && (!lin || ot.isLinear())) {
             for (String s : ll.keySet())
-                if (!ot.getMap().containsKey(s) || !ll.get(s).isSubtypeOf(ot.getMap().get(s), pe, alpha)) return false;
+                if (!ot.getMap().containsKey(s) || !ll.get(s).isSubtypeOf(ot.getMap().get(s), pe, alpha, seen)) return false;
             return true;
         }
         return false;

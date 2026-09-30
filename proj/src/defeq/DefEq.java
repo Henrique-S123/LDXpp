@@ -162,8 +162,6 @@ public final class DefEq {
         return termdefeq(solved, other, pe, alpha, hyp);
     }
 
-    record IdPair(String id1, String id2) {}
-
     public static final boolean typedefeq(ASTType l, ASTType r, PureEnvSet pe, AlphaEnv alpha) {
         return typedefeq(l, r, pe, alpha, new HashSet<IdPair>(), true);
     }

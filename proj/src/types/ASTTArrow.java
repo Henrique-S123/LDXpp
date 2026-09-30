@@ -4,6 +4,9 @@ import proj.src.ast.ASTNode;
 import proj.src.env.*;
 import proj.src.env.PureEnvSet.PENV;
 import proj.src.errors.*;
+import proj.src.defeq.IdPair;
+
+import java.util.Set;
 
 public class ASTTArrow extends ASTType {
     private final ASTType dom, codom;
@@ -27,11 +30,11 @@ public class ASTTArrow extends ASTType {
         return String.format("%s-%s>%s", domStr, lin ? "o" : "", codom);
     }
 
-    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
-        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha, Set<IdPair> seen) {
+        if (o instanceof ASTTId) return isSubtypeOf(pe.unfold(o), pe, alpha, seen);
         if (o instanceof ASTTArrow ot && (!lin || ot.isLinear()))
-            return ot.getDom().isSubtypeOf(dom, pe, alpha) &&
-                codom.isSubtypeOf(ot.getCodom(), pe, alpha.extend(id, ot.getId()));
+            return ot.getDom().isSubtypeOf(dom, pe, alpha, seen) &&
+                codom.isSubtypeOf(ot.getCodom(), pe, alpha.extend(id, ot.getId()), seen);
         return false;
     }
 

@@ -1,8 +1,10 @@
 package proj.src.types;
 
-import proj.src.defeq.DefEq;
 import proj.src.env.*;
 import proj.src.errors.*;
+import proj.src.defeq.IdPair;
+
+import java.util.Set;
 
 public	class ASTTId extends ASTType	{	
     private final String id;	
@@ -15,9 +17,12 @@ public	class ASTTId extends ASTType	{
 
     public String toString() { return id; }
 
-    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha) {
-        if (!(o instanceof ASTTId)) return pe.unfold(this).isSubtypeOf(o, pe, alpha);
-        return DefEq.typedefeq(this, o, pe, alpha);
+    public boolean isSubtypeOf(ASTType o, PureEnvSet pe, AlphaEnv alpha, Set<IdPair> seen) {
+        if (!(o instanceof ASTTId oid)) return pe.unfold(this).isSubtypeOf(o, pe, alpha, seen);
+        IdPair p = new IdPair(id, oid.getId());
+        if (seen.contains(p)) return true;
+        seen.add(p);
+        return pe.unfold(this).isSubtypeOf(pe.unfold(o), pe, alpha, seen);
     }
 
     public ASTType check(PureEnvSet pe) throws TypeCheckError {
