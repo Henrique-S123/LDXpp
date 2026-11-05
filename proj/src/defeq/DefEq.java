@@ -8,6 +8,10 @@ import proj.src.debug.Debug;
 import java.util.*;
 
 public final class DefEq {
+    public static final boolean termdefeq(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha) {
+        return termdefeq(l.weaknorm(), r.weaknorm(), pe, alpha, true);
+    }
+
     public static final boolean termdefeq(ASTNode l, ASTNode r, PureEnvSet pe, AlphaEnv alpha, boolean hyp) {
         Debug.log(String.format("left: %s", l));
         Debug.log(String.format("right: %s", r));

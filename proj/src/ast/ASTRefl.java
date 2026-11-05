@@ -19,21 +19,21 @@ public class ASTRefl extends ASTNode  {
 
     public ASTType typecheck(EnvSet e, ASTType target) throws TypeCheckError {
         ASTNode left, right;
-        ASTType ret, termtype;
+        ASTType rtype, termtype;
         if (target == null) {
             if (term1 == null || term2 == null) throw new TypeCheckError(ErrorMessages.missingReflTerms());
             termtype = term1.puretypecheck(new PureEnvSet(e), null);
             term2.puretypecheck(new PureEnvSet(e), null);
             left = term1; right = term2;
-            ret = new ASTTEq(left, right, termtype);
+            rtype = new ASTTEq(left, right, termtype);
         }
         else if (target instanceof ASTTEq tt) {
             left = tt.getTerm1(); right = tt.getTerm2();
-            ret = target;
+            rtype = target;
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));
 
-        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), new PureEnvSet(e), new AlphaEnv(), true)) return ret;
+        if (DefEq.termdefeq(left, right, new PureEnvSet(e), new AlphaEnv())) return rtype;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
@@ -53,7 +53,7 @@ public class ASTRefl extends ASTNode  {
         }
         else throw new TypeCheckError(ErrorMessages.illegalTypeToUnary("refl", target));
         
-        if (DefEq.termdefeq(left.weaknorm(), right.weaknorm(), pe, new AlphaEnv(), true)) return ret;
+        if (DefEq.termdefeq(left, right, pe, new AlphaEnv())) return ret;
         throw new TypeCheckError(ErrorMessages.termsNotDefeq(left, right));
     }
 
